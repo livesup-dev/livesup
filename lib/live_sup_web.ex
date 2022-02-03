@@ -23,7 +23,6 @@ defmodule LiveSupWeb do
 
       import Plug.Conn
       import LiveSupWeb.Gettext
-      import InspectExtended
       alias LiveSupWeb.Router.Helpers, as: Routes
 
       action_fallback LiveSupWeb.FallbackController
@@ -111,8 +110,6 @@ defmodule LiveSupWeb do
       import LiveSupWeb.ErrorHelpers
       import LiveSupWeb.Gettext
       alias LiveSupWeb.Router.Helpers, as: Routes
-
-      import InspectExtended
 
       # Custom helpers
       import LiveSupWeb.Helpers

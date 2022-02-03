@@ -15,8 +15,8 @@ if [[ -z `psql -Atqc "\\list $PGDATABASE"` ]]; then
   echo "Database $PGDATABASE created."
 fi
 
-cd assets && npm install && cd -
+bin="/app/bin/docker_phx"
+eval "$bin eval \"DockerPhx.Release.migrate\""
 
-mix ecto.migrate
-mix sup.seeds
-exec mix phx.server
+# start the elixir application
+exec "$bin" "start"

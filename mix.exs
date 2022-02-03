@@ -1,16 +1,24 @@
 defmodule LiveSup.MixProject do
   use Mix.Project
 
+  @elixir_requirement "~> 1.13"
+  @version "0.0.1"
+  @description "Add transparency to the services you use and it creates a layer that organizes and simplifies the information you need when you need it"
+
   def project do
     [
       app: :live_sup,
-      version: "0.1.0",
-      elixir: "~> 1.7",
+      name: "Livesup",
+      version: @version,
+      description: @description,
+      elixir: @elixir_requirement,
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      default_release: :livesup,
+      releases: releases()
     ]
   end
 
@@ -56,7 +64,6 @@ defmodule LiveSup.MixProject do
       {:bypass, "~> 2.1", only: :test},
       {:mock, "~> 0.3.0", only: :test},
       {:prom_ex, "~> 1.5.0"},
-      {:inspect_extended, path: "inspect_extended"},
 
       # Additional packages
       {:bcrypt_elixir, "~> 2.0"},
@@ -71,6 +78,24 @@ defmodule LiveSup.MixProject do
       {:ueberauth_google, "~> 0.10"},
       {:ueberauth_github, "~> 0.8"}
     ]
+  end
+
+  ## Releases
+
+  defp releases do
+    [
+      livesup: [
+        include_executables_for: [:unix],
+        include_erts: false,
+        rel_templates_path: "rel/server",
+        steps: [:assemble, &remove_cookie/1]
+      ]
+    ]
+  end
+
+  defp remove_cookie(release) do
+    File.rm!(Path.join(release.path, "releases/COOKIE"))
+    release
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

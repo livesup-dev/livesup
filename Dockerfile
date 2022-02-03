@@ -1,4 +1,6 @@
-FROM elixir:1.13.2
+ARG MIX_ENV="prod"
+
+FROM elixir:1.13.2 as build
 
 RUN apt-get update && \
   apt-get install -y postgresql-client nodejs
@@ -14,24 +16,50 @@ RUN mix local.hex --force \
   && mix local.rebar --force
 
 # Create app directory and copy the Elixir projects into it
-# RUN mkdir /app
-# COPY . /app
+RUN mkdir /app
 WORKDIR /app
 
-COPY mix.exs .
-COPY mix.lock .
+# install Hex + Rebar
+RUN mix do local.hex --force, local.rebar --force
 
-RUN mkdir assets
-COPY assets/package.json assets
+# set build ENV
+ARG MIX_ENV
+ENV MIX_ENV="${MIX_ENV}"
 
-RUN mix deps.get
-# Compile the project
-RUN mix do compile
+# install mix dependencies
+COPY mix.exs mix.lock ./
+COPY config config
+RUN mix deps.get --only $MIX_ENV
+RUN mix deps.compile
 
-# RUN npm install
-RUN cd assets && \
-    npm install
+# build assets
+COPY assets assets
+RUN cd assets && npm install && npm run deploy
+RUN mix phx.digest
+
+# build project and compile
+COPY priv priv
+COPY lib lib
+RUN mix do compile, release livesup
+
+# prepare release image
+FROM alpine:3.14.2 AS app
+
+# install runtime dependencies
+RUN apk add --update bash openssl postgresql-client
 
 EXPOSE 4000
+ENV MIX_ENV=prod
 
-CMD ["/app/entrypoint.sh"]
+# prepare app directory
+RUN mkdir /app
+WORKDIR /app
+
+# copy release to app container
+COPY --from=build /app/_build/prod/rel/livesup .
+COPY entrypoint.sh .
+RUN chown -R nobody: /app
+USER nobody
+
+ENV HOME=/app
+CMD ["bash", "/app/entrypoint.sh"]
