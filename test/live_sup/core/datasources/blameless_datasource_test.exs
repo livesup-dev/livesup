@@ -45,7 +45,7 @@ defmodule LiveSup.Test.Core.Datasources.BlamelessDatasourceTest do
                      },
                      communication_lead: nil,
                      created_at: ~U[2021-11-12 22:15:07.217Z],
-                     created_at_ago: "2 months ago",
+                     created_at_ago: _,
                      description: "Phoenix down",
                      severity: "SEV1: Customers Impacted",
                      slack: %{
@@ -66,7 +66,7 @@ defmodule LiveSup.Test.Core.Datasources.BlamelessDatasourceTest do
                        title: "Sr. Customer Success Engineer"
                      },
                      created_at: ~U[2021-11-08 08:34:30.495Z],
-                     created_at_ago: "2 months ago",
+                     created_at_ago: _,
                      description: "Provisioning queues increasing",
                      severity: "SEV1: Customers Impacted",
                      slack: %{
@@ -82,7 +82,7 @@ defmodule LiveSup.Test.Core.Datasources.BlamelessDatasourceTest do
                      commander: nil,
                      communication_lead: nil,
                      created_at: ~U[2021-11-04 09:11:26.641Z],
-                     created_at_ago: "2 months ago",
+                     created_at_ago: _,
                      description: "Deprov Queues increasing",
                      severity: "SEV2: Urgent Problem",
                      slack: %{
