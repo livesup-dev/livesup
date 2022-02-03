@@ -1,0 +1,46 @@
+<%= LiveSupWeb.Components.DatasourceHeaderComponent.render(%{datasource: @datasource, project: @project}) %>
+<%= if @live_action in [:edit] do %>
+	<.modal return_to={Routes.datasource_path(@socket, :index, @project.id)}>
+        <.live_component
+          module={LiveSupWeb.Project.Components.DatasourceFormComponent}
+          id={@datasource.id}
+          title={@page_title}
+          action={@live_action}
+          return_to={Routes.datasource_path(@socket, :index, @project.id)}
+          datasource={@datasource}
+        />
+    </.modal>
+<% end %>
+<div class="mt-2">
+	<div class="grid grid-cols-1 gap-2 p-4 lg:grid-cols-3 xl:grid-cols-3">
+		<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+			<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+				<div class="shadow overflow-hidden sm:rounded-lg">
+					<div class=" col-span-2 items-center bg-white rounded-md dark:bg-darker">
+						<div class="flex items-center justify-between p-4 border-b dark:border-primary">
+							<h4 class="text-sm font-semibold">DATASOURCE</h4>
+						</div>
+						<div class="items-center p-4 bg-white rounded-md dark:bg-darker max-h-60 overflow-auto">
+							<%= for instance <- @datasources do %>
+							<div class="">
+								<div id={"datasource-#{instance.id}"} class="flex flex-row pb-4">
+									<span class="basis-10/12" href="#"> 
+										<%= instance.name %> 
+									</span>
+									<label for={instance.id} class="basis-2/12 ml-auto cursor-pointer relative">
+										<input type="checkbox" id={instance.id} class="sr-only" checked>
+										<div class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"></div>
+									</label>
+									<span class="basis-3/12 text-blue-500 hover:underline text-right">
+										<%= live_patch "Edit", to: Routes.datasource_path(@socket, :edit, @project.id, instance.id) %>
+									</span>
+								</div>
+							</div>
+							<% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

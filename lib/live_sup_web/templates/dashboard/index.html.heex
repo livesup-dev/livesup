@@ -1,0 +1,5 @@
+<ul>
+    <%= for dashboard <- @dashboards do %>
+        <li><a href={Routes.dashboard_path(LiveSupWeb.Endpoint, :show, dashboard.id)}> <%= dashboard.name %> </a></li>
+    <% end %>
+</ul>

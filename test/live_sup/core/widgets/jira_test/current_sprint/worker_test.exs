@@ -1,0 +1,74 @@
+defmodule LiveSup.Test.Core.Widgets.Jira.CurrentSprint.WorkerTest do
+  use LiveSup.DataCase
+  import Mock
+
+  alias LiveSup.Core.Widgets.Jira.CurrentSprint.{Worker, Handler}
+  alias LiveSup.Schemas.WidgetInstance
+  alias LiveSup.Core.Widgets.{WidgetManager, WidgetData, WorkerTaskSupervisor}
+
+  describe "Chuck Norris Joke widget" do
+    @describetag :widget
+    @describetag :jira_current_sprint_widget
+
+    @handler_response {
+      :ok,
+      %{
+        days_left: -139,
+        endDate: "2021-06-01T17:38:00.000Z",
+        goal: "Some cool goal description.",
+        id: 431,
+        name: "Livesup Sprint 10-21",
+        startDate: "2021-05-18T14:45:51.832Z",
+        state: "active"
+      }
+    }
+
+    @widget_instance %WidgetInstance{
+      id: "37152268-6371-4b7e-b77b-bbfdac76699c",
+      settings: %{"token" => "xxxxx", "board_id" => 123, "domain" => "https://something.com"},
+      widget: %LiveSup.Schemas.Widget{
+        worker_handler: "LiveSup.Core.Widgets.Jira.CurrentSprint.Worker"
+      },
+      datasource_instance: %LiveSup.Schemas.DatasourceInstance{
+        settings: %{},
+        datasource: %LiveSup.Schemas.Datasource{
+          settings: %{}
+        }
+      }
+    }
+
+    setup do
+      WidgetManager.stop_widgets()
+
+      # https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.Sandbox.html#module-shared-mode
+      Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
+
+      :ok
+    end
+
+    test "checking current sprint worker" do
+      with_mock Handler, get_data: fn _arg -> @handler_response end do
+        {:ok, _pid} = WidgetManager.start_widget(@widget_instance)
+
+        WorkerTaskSupervisor.wait_for_completion()
+
+        data = Worker.get_data(@widget_instance)
+
+        assert %WidgetData{
+                 data: %{
+                   days_left: -139,
+                   endDate: "2021-06-01T17:38:00.000Z",
+                   goal: "Some cool goal description.",
+                   id: 431,
+                   name: "Livesup Sprint 10-21",
+                   startDate: "2021-05-18T14:45:51.832Z",
+                   state: "active"
+                 },
+                 state: :ready,
+                 title: "Jira Current Sprint",
+                 updated_in_minutes: _
+               } = data
+      end
+    end
+  end
+end

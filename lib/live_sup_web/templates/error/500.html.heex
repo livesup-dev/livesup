@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>500 Server Error Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+	<link phx-track-static rel="stylesheet" href="/css/app.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+  </head>
+  <body>
+    <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark }">
+      <!-- Loading screen -->
+      <div
+        x-ref="loading"
+        class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-primary-darker"
+      >
+        Loading.....
+      </div>
+      <main
+        aria-labelledby="pageTitle"
+        class="flex items-center justify-center h-screen bg-gray-100 dark:bg-dark dark:text-light"
+      >
+        <div class="p-4 space-y-4">
+          <div class="flex flex-col items-start space-y-3 sm:flex-row sm:space-y-0 sm:items-center sm:space-x-3">
+            <p><svg fill="none" height="228" viewBox="0 0 221 228" width="221" xmlns="http://www.w3.org/2000/svg"><path d="m197.337 100.029s-38.771-1.5523-47.149-65.2834c-7.441-56.5994-72.8186-30.83741-91.7169-8.2756-24.4811 29.227-11.431 79.504-43.1003 85.855s-10.98875 76.967 37.0835 70.208c59.7997-8.408 45.332 26.536 63.2837 41.326 12.883 10.615 65.711.397 67.471-38.136 1.482-32.426 15.16-32.323 24.854-36 13.983-5.303 22.793-43.706-10.726-49.694z" fill="#11273f"/><path d="m65.5377 170.807 38.0913-37.64 7.543 7.634-38.0917 37.639z" fill="#0591b2"/><path d="m50.9867 180.92 29.6352-29.283c.165-.163.4309-.161.5939.004l11.2167 11.351c.163.165.1615.431-.0035.594l-29.6352 29.283c-.165.163-.4309.162-.5939-.003l-11.2167-11.352c-.163-.165-.1615-.431.0035-.594z" fill="#21d3ee"/><path d="m137.389 152.097c-26.205 0-47.4492-21.244-47.4492-47.449 0-26.2059 21.2442-47.4498 47.4492-47.4498 26.206 0 47.45 21.2439 47.45 47.4498 0 26.205-21.244 47.449-47.45 47.449z" fill="#21d3ee"/><path d="m137.293 144.414c-21.93 0-39.7074-17.777-39.7074-39.707 0-21.9295 17.7774-39.707 39.7074-39.707 21.929 0 39.707 17.7775 39.707 39.707 0 21.93-17.778 39.707-39.707 39.707z" fill="#a7e5ee"/><path d="m140.922 78h-7.844l.628 34.897h6.588zm.078 43.217h-8v9.783h8z" fill="#142e4d"/><g fill="#0ab6d4"><path d="m57.1704 61.7531c11.13-3.6077 23.1582 2.4939 26.7805 13.6697 3.6075 11.13-2.494 23.1581-13.6699 26.7802-11.1759 3.622-23.1726-2.539-26.781-13.6696s2.5399-23.1728 13.6704-26.7803zm3.3584 10.3614c-1.2458.4038-2.3436 1.1685-3.1542 2.1972-.8106 1.0286-1.2974 2.2748-1.3987 3.5805s.1874 2.6121.8296 3.7534c.6422 1.1414 1.6089 2.0663 2.7775 2.6575s2.4864.822 3.7864.6631c1.2999-.1588 2.5234-.7002 3.5153-1.5554.9918-.8552 1.7073-1.9857 2.0558-3.2481.3484-1.2624.3141-2.5999-.0987-3.8428-1.1145-3.4386-4.8738-5.32-8.313-4.2054zm8.403 25.926c3.6978-1.1924 6.866-3.6333 8.962-6.9046-3.9222-2.2287-8.0234-2.8495-11.7337-1.6469-3.7102 1.2026-6.7273 4.0803-8.5366 8.2168 3.6165 1.4199 7.6142 1.5382 11.3083.3347z"/><path d="m149.809 163.176c1.933.987 3.53 2.525 4.59 4.419 1.059 1.895 1.532 4.061 1.36 6.225-.171 2.163-.981 4.228-2.326 5.931-1.345 1.704-3.165 2.97-5.23 3.639-2.064.67-4.281.712-6.37.121s-3.955-1.788-5.363-3.439c-1.409-1.652-2.296-3.684-2.55-5.839-.253-2.156.138-4.338 1.125-6.272 1.326-2.59 3.625-4.548 6.392-5.445 2.768-.897 5.779-.66 8.372.66zm-2.556 5.008c-.602-.308-1.282-.429-1.953-.35-.672.08-1.304.357-1.818.797-.514.439-.885 1.021-1.067 1.672s-.167 1.342.044 1.984c.21.643.607 1.208 1.14 1.624.532.417 1.177.666 1.851.716.674.049 1.348-.102 1.936-.436s1.063-.834 1.366-1.439c.402-.805.469-1.737.189-2.592-.281-.855-.887-1.566-1.688-1.977zm-6.396 12.53c1.785.914 3.832 1.18 5.791.751-.618-2.245-1.888-3.969-3.682-4.884-1.793-.916-3.944-.966-6.114-.117.801 1.838 2.218 3.34 4.005 4.249z"/></g></svg></p>
+            <div class="space-y-2">
+              <h1 id="pageTitle" class="flex items-center space-x-2">
+                <svg
+                  aria-hidden="true"
+                  class="w-6 h-6 text-danger-light dark:text-danger"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+                <span class="text-xl font-medium text-gray-600 sm:text-2xl dark:text-light">
+                  500 - Oops! Something went wrong.
+                </span>
+              </h1>
+              <p class="text-base font-normal text-gray-600 dark:text-gray-300">
+                The page you are looking for is temporarily unavailable.
+              </p>
+              <p class="text-base font-normal text-gray-600 dark:text-gray-300">
+                You may return to
+                <a href="/" class="text-blue-600 hover:underline dark:text-blue-500">home page</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+      <div class="fixed bottom-5 left-5">
+        <button
+          aria-hidden="true"
+          @click="toggleTheme"
+          class="p-2 transition-colors duration-200 rounded-full shadow-md bg-primary hover:bg-primary-darker focus:outline-none focus:ring focus:ring-primary"
+        >
+          <svg
+            x-show="isDark"
+            class="w-8 h-8 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+            />
+          </svg>
+          <svg
+            x-show="!isDark"
+            class="w-8 h-8 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <script>
+      const setup = () => {
+        const getTheme = () => {
+          if (window.localStorage.getItem('dark')) {
+            return JSON.parse(window.localStorage.getItem('dark'))
+          }
+          return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+          window.localStorage.setItem('dark', value)
+        }
+
+        const getColor = () => {
+          if (window.localStorage.getItem('color')) {
+            return window.localStorage.getItem('color')
+          }
+          return 'cyan'
+        }
+
+        const setColors = (color) => {
+          const root = document.documentElement
+          root.style.setProperty('--color-primary', `var(--color-${color})`)
+          root.style.setProperty('--color-primary-50', `var(--color-${color}-50)`)
+          root.style.setProperty('--color-primary-100', `var(--color-${color}-100)`)
+          root.style.setProperty('--color-primary-light', `var(--color-${color}-light)`)
+          root.style.setProperty('--color-primary-lighter', `var(--color-${color}-lighter)`)
+          root.style.setProperty('--color-primary-dark', `var(--color-${color}-dark)`)
+          root.style.setProperty('--color-primary-darker', `var(--color-${color}-darker)`)
+          this.selectedColor = color
+          window.localStorage.setItem('color', color)
+        }
+
+        return {
+          loading: true,
+          isDark: getTheme(),
+          toggleTheme() {
+            this.isDark = !this.isDark
+            setTheme(this.isDark)
+          },
+          color: getColor(),
+          setColors,
+        }
+      }
+    </script>
+  </body>
+</html>

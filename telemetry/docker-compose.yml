@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  grafana:
+    image: grafana/grafana:8.2.3
+    depends_on:
+      - prometheus
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/.env
+  prometheus:
+    image: prom/prometheus:v2.31.1
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/config.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter:v0.8.0
+    ports:
+      - '9187:9187'
+    environment:
+      DATA_SOURCE_USER: postgres
+      DATA_SOURCE_PASS: postgres
+      DATA_SOURCE_URI: docker.for.mac.localhost:5432/?sslmode=disable
+volumes:
+  prometheus-data: {}
+  grafana-data: {}

@@ -1,0 +1,49 @@
+
+<%= if assigns[:section] == :dashboard_selection do %>
+    <%= LiveSupWeb.Project.Components.DashboardsHeaderComponent.render(%{project: @project}) %>
+<% end %>
+
+<%= if assigns[:section] == :dashboard do %>
+    <%= LiveSupWeb.Components.DashboardHeaderComponent.render(%{project: @project, dashboard: @dashboard}) %>
+<% end %>
+
+<%= if @live_action in [:index] do %>
+    <.live_component
+        module={LiveSupWeb.Project.Components.DashboardsListComponent}
+        project={@project}
+        dashboards={@dashboards}
+        id="dashboard-list"
+    />
+<% end %>
+
+<%= if @live_action in [:new] do %>
+	<.modal return_to={Routes.dashboard_path(@socket, :index, @project.id)}>
+        <.live_component
+          module={LiveSupWeb.Project.Components.ManageDashboardFormComponent}
+          id="new-dashboard"
+          title={@page_title}
+          action={@live_action}
+          return_to={Routes.dashboard_path(@socket, :index, @project.id)}
+          user={@current_user}
+          project={@project}
+          dashboard={@dashboard}
+        />
+    </.modal>
+<% end %>
+
+<%= if @live_action in [:show] do %>
+    <div class="mt-2 mb-[80px]" >
+      <div id="widget-list" phx-hook="Drag" class="grid grid-cols-1 gap-2 p-4 lg:grid-cols-2 xl:grid-cols-4">
+      <%= for(widget_instance <- @widget_instances) do %>
+        <%= live_render(
+              @socket,
+              Utils.convert_to_module(widget_instance.widget.ui_handler),
+              id: widget_instance.id,
+              session: %{
+                "widget_instance" => widget_instance,
+                "current_user" => @current_user
+              }, container: {:div, draggable: "true", class: "draggable col-span-#{size(widget_instance)}"}) %>
+      <% end %>
+      </div>
+    </div>
+<% end %>

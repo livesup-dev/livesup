@@ -1,0 +1,12 @@
+<h4> Your project: <%= @project.name %></h4>
+<%= if @project.dashboards do %>
+    <ul>
+    <%= for dashboard <- @project.dashboards do %>
+        <li>
+            <a href={Routes.dashboard_path(LiveSupWeb.Endpoint, :show, dashboard.id)}> <%= dashboard.name %> </a>
+        </li>
+    <% end %>
+    </ul>
+<% else %>
+    It seems you don't have any dashboard yet, <button> create one! </button>
+<% end %>

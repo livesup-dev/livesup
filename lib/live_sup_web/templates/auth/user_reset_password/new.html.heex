@@ -1,0 +1,21 @@
+<h3 class="text-xl text-gray-600 dark:text-gray-200 text-center">Forgot your password?</h3>
+
+<%= form_for :user, Routes.user_reset_password_path(@conn, :create), fn f -> %>
+  <div class="mt-4">
+    <%= label f, :email, class: "block text-gray-600 dark:text-gray-200 text-sm font-medium mb-2" %>
+    <%= email_input f, :email, required: true, class: "form-control" %>
+  </div>
+
+  <div class="mt-8">
+    <%= submit "Send instructions to reset password", class: "btn btn-primary w-full" %>
+  </div>
+<% end %>
+
+<div class="mt-6 flex items-center justify-between">
+  <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
+
+  <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "text-xs text-gray-500 dark:text-gray-400 uppercase hover:underline" %>
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "text-xs text-gray-500 dark:text-gray-400 uppercase hover:underline" %>
+
+  <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
+</div>
