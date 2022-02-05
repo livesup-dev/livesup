@@ -293,6 +293,16 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
               "url" => "https://www.githubstatus.com/history.rss",
               "icon" => "/images/widgets/logos/github.png",
               "name" => "Github"
+            },
+            %{
+              "url" => "https://status.launchdarkly.com/history.rss",
+              "icon" => "/images/widgets/logos/launchdarkly.png",
+              "name" => "Launchdarkly"
+            },
+            %{
+              "url" => "https://status.jumpcloud.com/history.rss",
+              "icon" => "/images/widgets/logos/jumpcloud.png",
+              "name" => "Jumpcloud"
             }
           ]
         }
