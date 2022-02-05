@@ -1,8 +1,8 @@
-defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.WorkerTest do
+defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByDate.WorkerTest do
   use LiveSup.DataCase
   import Mock
 
-  alias LiveSup.Core.Widgets.Blameless.IncidentsByType.{
+  alias LiveSup.Core.Widgets.Blameless.IncidentsByDate.{
     Worker,
     Handler
   }
@@ -18,7 +18,7 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.WorkerTest do
       id: "cb3ee793-d45e-4e54-8dda-c56d4ce02f6e",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByType.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByDate.Worker"
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{
@@ -53,7 +53,14 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.WorkerTest do
 
     @handler_response {
       :ok,
-      %{"Datasources" => 1, "Widgets" => 2}
+      [
+        %{created_at: "2021/7/12", type: "Widgets", value: 1},
+        %{created_at: "2021/7/12", type: "Widgets", value: 1},
+        %{created_at: "2021/6/12", type: "Datasources", value: 1},
+        %{created_at: "2021/4/12", type: "Widget", value: 1},
+        %{created_at: "2021/4/12", type: "Datasources", value: 1},
+        %{created_at: "2021/4/12", type: "Datasources", value: 1}
+      ]
     }
 
     setup do
@@ -74,9 +81,9 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.WorkerTest do
         data = Worker.get_data(@widget_instance)
 
         assert %WidgetData{
-                 data: %{"Datasources" => 1, "Widgets" => 2},
+                 data: [%{created_at: "2021/7/12", type: "Widgets", value: 1}, %{created_at: "2021/7/12", type: "Widgets", value: 1}, %{created_at: "2021/6/12", type: "Datasources", value: 1}, %{created_at: "2021/4/12", type: "Widget", value: 1}, %{created_at: "2021/4/12", type: "Datasources", value: 1}, %{created_at: "2021/4/12", type: "Datasources", value: 1}],
                  state: :ready,
-                 title: "Incidents by type",
+                 title: "Incidents by date",
                  updated_in_minutes: _
                } = data
       end

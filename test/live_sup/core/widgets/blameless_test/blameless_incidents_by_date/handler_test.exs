@@ -1,14 +1,14 @@
-defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.HandlerTest do
+defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByDate.HandlerTest do
   use LiveSup.DataCase, async: false
   import Mock
 
-  alias LiveSup.Core.Widgets.Blameless.IncidentsByType.Handler
+  alias LiveSup.Core.Widgets.Blameless.IncidentsByDate.Handler
   alias LiveSup.Core.Datasources.BlamelessDatasource
 
-  describe "Managing blameless incidents by type" do
+  describe "Managing blameless incidents by date" do
     @describetag :widget
-    @describetag :blameless_incidents_by_type_widget
-    @describetag :blameless_incidents_by_type_widget_handler
+    @describetag :blameless_incidents_by_date_widget
+    @describetag :blameless_incidents_by_date_widget_handler
 
     @response [
       %{
@@ -76,7 +76,49 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.HandlerTest do
           full_name: "Hello LiveSup",
           title: "Cloud Support Engineer"
         },
-        created_at: ~U[2021-07-12 08:22:12.985Z],
+        created_at: ~U[2021-06-12 08:22:12.985Z],
+        created_at_ago: "3 months ago",
+        description: "Blameless current incidents plugin is broken!",
+        severity: "SEV2: Urgent Problem",
+        slack: %{
+          channel: "_incident-843",
+          url: "https://livesup.slack.com/archives/C027R80T42E"
+        },
+        status: "RESOLVED",
+        type: "Datasources",
+        updated_at: ~U[2021-07-12 09:54:14.281Z],
+        url: "https://livesup.blameless.io/incidents/843/events"
+      },
+      %{
+        created_at: ~U[2021-04-12 08:22:12.985Z],
+        created_at_ago: "3 months ago",
+        description: "Blameless current incidents plugin is broken!",
+        severity: "SEV2: Urgent Problem",
+        slack: %{
+          channel: "_incident-843",
+          url: "https://livesup.slack.com/archives/C027R80T42E"
+        },
+        status: "RESOLVED",
+        type: "Widget",
+        updated_at: ~U[2021-07-12 09:54:14.281Z],
+        url: "https://livesup.blameless.io/incidents/843/events"
+      },
+      %{
+        created_at: ~U[2021-04-12 08:22:12.985Z],
+        created_at_ago: "3 months ago",
+        description: "Blameless current incidents plugin is broken!",
+        severity: "SEV2: Urgent Problem",
+        slack: %{
+          channel: "_incident-843",
+          url: "https://livesup.slack.com/archives/C027R80T42E"
+        },
+        status: "RESOLVED",
+        type: "Datasources",
+        updated_at: ~U[2021-07-12 09:54:14.281Z],
+        url: "https://livesup.blameless.io/incidents/843/events"
+      },
+      %{
+        created_at: ~U[2021-04-12 08:22:12.985Z],
         created_at_ago: "3 months ago",
         description: "Blameless current incidents plugin is broken!",
         severity: "SEV2: Urgent Problem",
@@ -106,7 +148,14 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.HandlerTest do
 
         assert {
                  :ok,
-                 %{"Datasources" => 1, "Widgets" => 2}
+                 [
+                   %{created_at: "2021/7/12", type: "Widgets", value: 1},
+                   %{created_at: "2021/7/12", type: "Widgets", value: 1},
+                   %{created_at: "2021/6/12", type: "Datasources", value: 1},
+                   %{created_at: "2021/4/12", type: "Widget", value: 1},
+                   %{created_at: "2021/4/12", type: "Datasources", value: 1},
+                   %{created_at: "2021/4/12", type: "Datasources", value: 1}
+                 ]
                } = incidents
       end
     end

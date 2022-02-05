@@ -14,11 +14,17 @@ defmodule LiveSup.Core.Datasources.BlamelessDatasource do
     endpoint = credentials["endpoint"]
     filters = Keyword.get(opts, :filters, %{})
     limit = Keyword.get(opts, :limit, 10)
+    number_of_days = Keyword.get(opts, :number_of_days, 7)
 
     case credentials |> token() do
       {:ok, token} ->
         filters =
-          Map.merge(filters, %{limit: limit, offset: 0, order_by: "-created"})
+          Map.merge(filters, %{
+            limit: limit,
+            offset: 0,
+            order_by: "-created",
+            created_from: last_n_days(number_of_days)
+          })
           |> URI.encode_query()
 
         build_url("/api/v1/incidents?#{filters}", endpoint: endpoint)
@@ -32,18 +38,18 @@ defmodule LiveSup.Core.Datasources.BlamelessDatasource do
   def get_current_incidents(opts \\ []) do
     credentials = Keyword.fetch!(opts, :credentials)
     endpoint = credentials["endpoint"]
+    number_of_days = Keyword.get(opts, :number_of_days, 7)
+    limit = Keyword.get(opts, :limit, 30)
 
     case credentials |> token() do
       {:ok, token} ->
-        date = Timex.shift(Timex.today(), days: -2)
-
         filters =
           %{
-            limit: 10,
+            limit: limit,
             offset: 0,
             order_by: "-created",
             status: "investigating,monitoring,identified",
-            created_from: date |> Timex.to_unix()
+            created_from: last_n_days(number_of_days)
           }
           |> URI.encode_query()
 
@@ -182,5 +188,9 @@ defmodule LiveSup.Core.Datasources.BlamelessDatasource do
 
   def build_url(path, endpoint: endpoint) do
     "#{endpoint}#{path}"
+  end
+
+  defp last_n_days(number_of_days) do
+    Timex.shift(Timex.today(), days: -1 * number_of_days) |> Timex.to_unix()
   end
 end

@@ -1,8 +1,8 @@
-defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.WorkerTest do
+defmodule LiveSup.Test.Core.Widgets.Blameless.LastIncidents.WorkerTest do
   use LiveSup.DataCase
   import Mock
 
-  alias LiveSup.Core.Widgets.Blameless.IncidentsByType.{
+  alias LiveSup.Core.Widgets.Blameless.LastIncidents.{
     Worker,
     Handler
   }
@@ -12,48 +12,103 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.WorkerTest do
 
   describe "Blameless current incidents widget" do
     @describetag :widget
-    @describetag :blameless_last_incidents_widget
+    @describetag :blameless_incidents__by_type_widget
 
     @widget_instance %WidgetInstance{
       id: "cb3ee793-d45e-4e54-8dda-c56d4ce02f6e",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByType.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Blameless.LastIncidents.Worker"
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{
-          "client_id" => "xxx",
-          "client_secret" => "xxx",
-          "audience" => "xxx",
-          "limit" => 2
+          "client_id" => %{
+            "source" => "local",
+            "value" => "xxx",
+            "type" => "string",
+            "required" => true
+          },
+          "client_secret" => %{
+            "source" => "local",
+            "value" => "xxx",
+            "type" => "string",
+            "required" => true
+          },
+          "audience" => %{
+            "source" => "local",
+            "value" => "xxx",
+            "type" => "string",
+            "required" => true
+          },
+          "limit" => %{
+            "source" => "local",
+            "type" => "int",
+            "value" => "5",
+            "required" => true
+          }
         },
         datasource: %LiveSup.Schemas.Datasource{
-          settings: %{
-            "client_id" => %{
-              "type" => "string",
-              "required" => true
-            },
-            "client_secret" => %{
-              "type" => "string",
-              "required" => true
-            },
-            "audience" => %{
-              "type" => "string",
-              "required" => true
-            },
-            "limit" => %{
-              "type" => "int",
-              "default_value" => "5",
-              "required" => true
-            }
-          }
+          settings: %{}
         }
       }
     }
 
     @handler_response {
       :ok,
-      %{"Datasources" => 1, "Widgets" => 2}
+      [
+        %{
+          commander: %{
+            avatar_url: "https://avatars.slack-edge.com/2020-02-05/312300803504_32.jpg",
+            email: "random@livesup.com",
+            full_name: "Julius Random",
+            title: "Network Engineer"
+          },
+          communication_lead: %{
+            avatar_url: "https://avatars.slack-edge.com/2011-11-20/12323211510272_32.jpg",
+            email: "hello@livesup.com",
+            full_name: "Hello LiveSup",
+            title: "Cloud Support Engineer"
+          },
+          created_at: ~U[2021-07-12 08:22:12.985Z],
+          created_at_ago: "3 months ago",
+          description: "Blameless current incidents plugin is broken!",
+          severity: "SEV2: Urgent Problem",
+          slack: %{
+            channel: "_incident-843",
+            url: "https://livesup.slack.com/archives/C027R80T42E"
+          },
+          status: "RESOLVED",
+          type: "Widgets",
+          updated_at: ~U[2021-07-12 09:54:14.281Z],
+          url: "https://livesup.blameless.io/incidents/843/events"
+        },
+        %{
+          commander: %{
+            avatar_url: "https://avatars.slack-edge.com/2020-02-05/312300803504_32.jpg",
+            email: "random@livesup.com",
+            full_name: "Julius Random",
+            title: "Network Engineer"
+          },
+          communication_lead: %{
+            avatar_url: "https://avatars.slack-edge.com/2011-11-20/12323211510272_32.jpg",
+            email: "hello@livesup.com",
+            full_name: "Hello LiveSup",
+            title: "Cloud Support Engineer"
+          },
+          created_at: ~U[2021-07-12 08:22:12.985Z],
+          created_at_ago: "3 months ago",
+          description: "Blameless current incidents plugin is broken!",
+          severity: "SEV2: Urgent Problem",
+          slack: %{
+            channel: "_incident-843",
+            url: "https://livesup.slack.com/archives/C027R80T42E"
+          },
+          status: "RESOLVED",
+          type: "Widgets",
+          updated_at: ~U[2021-07-12 09:54:14.281Z],
+          url: "https://livesup.blameless.io/incidents/843/events"
+        }
+      ]
     }
 
     setup do
@@ -74,9 +129,66 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.WorkerTest do
         data = Worker.get_data(@widget_instance)
 
         assert %WidgetData{
-                 data: %{"Datasources" => 1, "Widgets" => 2},
+                 data: [
+                   %{
+                     commander: %{
+                       avatar_url:
+                         "https://avatars.slack-edge.com/2020-02-05/312300803504_32.jpg",
+                       email: "random@livesup.com",
+                       full_name: "Julius Random",
+                       title: "Network Engineer"
+                     },
+                     communication_lead: %{
+                       avatar_url:
+                         "https://avatars.slack-edge.com/2011-11-20/12323211510272_32.jpg",
+                       email: "hello@livesup.com",
+                       full_name: "Hello LiveSup",
+                       title: "Cloud Support Engineer"
+                     },
+                     created_at: ~U[2021-07-12 08:22:12.985Z],
+                     created_at_ago: "3 months ago",
+                     description: "Blameless current incidents plugin is broken!",
+                     severity: "SEV2: Urgent Problem",
+                     slack: %{
+                       channel: "_incident-843",
+                       url: "https://livesup.slack.com/archives/C027R80T42E"
+                     },
+                     status: "RESOLVED",
+                     type: "Widgets",
+                     updated_at: ~U[2021-07-12 09:54:14.281Z],
+                     url: "https://livesup.blameless.io/incidents/843/events"
+                   },
+                   %{
+                     commander: %{
+                       avatar_url:
+                         "https://avatars.slack-edge.com/2020-02-05/312300803504_32.jpg",
+                       email: "random@livesup.com",
+                       full_name: "Julius Random",
+                       title: "Network Engineer"
+                     },
+                     communication_lead: %{
+                       avatar_url:
+                         "https://avatars.slack-edge.com/2011-11-20/12323211510272_32.jpg",
+                       email: "hello@livesup.com",
+                       full_name: "Hello LiveSup",
+                       title: "Cloud Support Engineer"
+                     },
+                     created_at: ~U[2021-07-12 08:22:12.985Z],
+                     created_at_ago: "3 months ago",
+                     description: "Blameless current incidents plugin is broken!",
+                     severity: "SEV2: Urgent Problem",
+                     slack: %{
+                       channel: "_incident-843",
+                       url: "https://livesup.slack.com/archives/C027R80T42E"
+                     },
+                     status: "RESOLVED",
+                     type: "Widgets",
+                     updated_at: ~U[2021-07-12 09:54:14.281Z],
+                     url: "https://livesup.blameless.io/incidents/843/events"
+                   }
+                 ],
                  state: :ready,
-                 title: "Incidents by type",
+                 title: "Last incidents",
                  updated_in_minutes: _
                } = data
       end

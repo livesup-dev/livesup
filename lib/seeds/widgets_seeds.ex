@@ -51,6 +51,10 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
         attrs: &blameless_incidents_by_type_widget_attrs/1
       },
       %{
+        datasource_slug: "blameless-datasource",
+        attrs: &blameless_incidents_by_date_widget_attrs/1
+      },
+      %{
         datasource_slug: "jira-datasource",
         attrs: &jira_current_sprint_widget_attrs/1
       },
@@ -172,6 +176,24 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 60},
         "limit" => %{"source" => "local", "type" => "int", "value" => 10}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  defp blameless_incidents_by_date_widget_attrs(datasource) do
+    %{
+      name: "Blameless Incidents by date",
+      slug: "blameless-incidents-by-date",
+      feature_image_url: "/images/widgets/blameless-incidents-by-date.png",
+      enabled: true,
+      global: false,
+      ui_handler: "LiveSupWeb.Live.Widgets.Blameless.IncidentsByDateLive",
+      worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByDate.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 60},
+        "limit" => %{"source" => "local", "type" => "int", "value" => 50}
       },
       datasource_id: datasource.id
     }

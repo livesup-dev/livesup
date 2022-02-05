@@ -28,6 +28,12 @@ defmodule Mix.Tasks.LiveSup.Seeds do
     |> LiveSup.Seeds.UsersSeeds.seed()
 
     Mix.env()
+    |> LiveSup.Seeds.TeamsSeeds.seed()
+
+    Mix.env()
+    |> LiveSup.Seeds.ProjectsSeeds.seed()
+
+    Mix.env()
     |> LiveSup.Seeds.InternalDataSeeds.seed()
   end
 end
