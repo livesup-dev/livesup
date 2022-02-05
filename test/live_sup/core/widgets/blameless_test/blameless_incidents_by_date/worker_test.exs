@@ -81,7 +81,14 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByDate.WorkerTest do
         data = Worker.get_data(@widget_instance)
 
         assert %WidgetData{
-                 data: [%{created_at: "2021/7/12", type: "Widgets", value: 1}, %{created_at: "2021/7/12", type: "Widgets", value: 1}, %{created_at: "2021/6/12", type: "Datasources", value: 1}, %{created_at: "2021/4/12", type: "Widget", value: 1}, %{created_at: "2021/4/12", type: "Datasources", value: 1}, %{created_at: "2021/4/12", type: "Datasources", value: 1}],
+                 data: [
+                   %{created_at: "2021/7/12", type: "Widgets", value: 1},
+                   %{created_at: "2021/7/12", type: "Widgets", value: 1},
+                   %{created_at: "2021/6/12", type: "Datasources", value: 1},
+                   %{created_at: "2021/4/12", type: "Widget", value: 1},
+                   %{created_at: "2021/4/12", type: "Datasources", value: 1},
+                   %{created_at: "2021/4/12", type: "Datasources", value: 1}
+                 ],
                  state: :ready,
                  title: "Incidents by date",
                  updated_in_minutes: _
