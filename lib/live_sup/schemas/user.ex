@@ -112,10 +112,7 @@ defmodule LiveSup.Schemas.User do
     |> put_change(:location, default_location())
   end
 
-  defp maybe_set_location(%Ecto.Changeset{data: %__MODULE__{location: location}} = changeset) do
-    changeset
-    |> put_change(:location, Map.merge(default_location(), location))
-  end
+  defp maybe_set_location(%Ecto.Changeset{data: %__MODULE__{location: _location}} = changeset), do: changeset
 
   @doc """
   A user changeset for changing the email.
@@ -190,7 +187,7 @@ defmodule LiveSup.Schemas.User do
     avatar_url || "/images/default-user-avatar.png"
   end
 
-  def location(%__MODULE__{location: location} = user) do
+  def location(%__MODULE__{location: location}) do
     location || default_location()
   end
 

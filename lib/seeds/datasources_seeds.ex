@@ -181,10 +181,10 @@ defmodule LiveSup.Seeds.DatasourcesSeeds do
         slug: "rollbar-datasource",
         enabled: "true",
         settings: %{
-          env: %{type: "string", value: "production"},
-          limit: %{type: "int", value: 5},
-          status: %{type: "string", value: "active"},
-          token: %{type: "string", source: "env", value: "ROLLBAR_TOKEN"}
+          "env" => %{"source" => "local", "type" => "string", "value" => "production"},
+          "limit" => %{"source" => "local", "type" => "int", "value" => 5},
+          "status" => %{"source" => "local", "type" => "string", "value" => "active"},
+          "token" => %{"type" => "string", "source" => "env", "value" => "ROLLBAR_TOKEN"}
         }
       }
     ]

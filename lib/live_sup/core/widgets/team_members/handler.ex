@@ -21,7 +21,7 @@ defmodule LiveSup.Core.Widgets.TeamMembers.Handler do
           full_name: User.full_name(user),
           avatar: User.default_avatar_url(user),
           # TODO: make some calculation to know if it is working hour or not
-          night: time_in_day(now),
+          night: is_night?(now),
           email: user.email,
           datetime: now,
           now_str: Calendar.strftime(now, "%I:%M %p"),
@@ -32,10 +32,10 @@ defmodule LiveSup.Core.Widgets.TeamMembers.Handler do
     {:ok, data}
   end
 
-  defp time_in_day(now) do
-    IO.inspect(now.hour)
+  defp is_night?(now) do
+    hour = now.hour
 
-    if now.hour > '20' || now.hour < '07' do
+    if (hour >= 0 && hour <= 7) || (hour >= 19 && hour <= 23) do
       true
     else
       false
