@@ -112,7 +112,8 @@ defmodule LiveSup.Schemas.User do
     |> put_change(:location, default_location())
   end
 
-  defp maybe_set_location(%Ecto.Changeset{data: %__MODULE__{location: _location}} = changeset), do: changeset
+  defp maybe_set_location(%Ecto.Changeset{data: %__MODULE__{location: _location}} = changeset),
+    do: changeset
 
   @doc """
   A user changeset for changing the email.
