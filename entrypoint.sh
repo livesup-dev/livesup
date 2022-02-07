@@ -15,8 +15,8 @@ if [[ -z `psql -Atqc "\\list $PGDATABASE"` ]]; then
   echo "Database $PGDATABASE created."
 fi
 
-bin="/app/bin/docker_phx"
-eval "$bin eval \"DockerPhx.Release.migrate\""
+bin="/app/bin/livesup"
+eval "$bin eval \"LiveSup.Release.migrate\""
 
 # start the elixir application
 exec "$bin" "start"
