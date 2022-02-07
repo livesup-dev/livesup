@@ -32,8 +32,8 @@
 <% end %>
 
 <%= if @live_action in [:show] do %>
-    <div class="mt-2 mb-[80px]" >
-      <div id="widget-list" phx-hook="Drag" class="grid grid-cols-1 gap-2 p-4 lg:grid-cols-2 xl:grid-cols-4">
+    <div class="m-2 mb-[80px]" >
+      <div id="widget-list" phx-hook="Drag" class="columns-3 gap-x-2">
       <%= for(widget_instance <- @widget_instances) do %>
         <%= live_render(
               @socket,
@@ -42,7 +42,7 @@
               session: %{
                 "widget_instance" => widget_instance,
                 "current_user" => @current_user
-              }, container: {:div, draggable: "true", class: "draggable col-span-#{size(widget_instance)}"}) %>
+              }, container: {:div, draggable: "true", class: "draggable min-h-[200px] p-1 first:mt-0 my-2 break-inside-avoid-column col-span-#{size(widget_instance)}"}) %>
       <% end %>
       </div>
     </div>
