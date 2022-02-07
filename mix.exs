@@ -88,14 +88,9 @@ defmodule LiveSup.MixProject do
         include_executables_for: [:unix],
         include_erts: false,
         rel_templates_path: "rel/server",
-        steps: [:assemble, &remove_cookie/1]
+        steps: [:assemble]
       ]
     ]
-  end
-
-  defp remove_cookie(release) do
-    File.rm!(Path.join(release.path, "releases/COOKIE"))
-    release
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
