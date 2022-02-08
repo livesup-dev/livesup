@@ -9,31 +9,27 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-defmodule Mix.Tasks.LiveSup.Seeds do
-  use Mix.Task
 
-  def run(_) do
-    Mix.Task.run("app.start", [])
+alias LiveSup.Seeds.{
+  DatasourcesSeeds,
+  WidgetsSeeds,
+  GroupsSeeds,
+  UsersSeeds,
+  TeamsSeeds,
+  ProjectsSeeds,
+  InternalDataSeeds
+}
 
-    Mix.env()
-    |> LiveSup.Seeds.DatasourcesSeeds.seed()
+defmodule LiveSup.Seeds do
+  def seed() do
+    # Application.load(:live_sup)
 
-    Mix.env()
-    |> LiveSup.Seeds.WidgetsSeeds.seed()
-
-    Mix.env()
-    |> LiveSup.Seeds.GroupsSeeds.seed()
-
-    Mix.env()
-    |> LiveSup.Seeds.UsersSeeds.seed()
-
-    Mix.env()
-    |> LiveSup.Seeds.TeamsSeeds.seed()
-
-    Mix.env()
-    |> LiveSup.Seeds.ProjectsSeeds.seed()
-
-    Mix.env()
-    |> LiveSup.Seeds.InternalDataSeeds.seed()
+    DatasourcesSeeds.seed()
+    WidgetsSeeds.seed()
+    GroupsSeeds.seed()
+    UsersSeeds.seed()
+    TeamsSeeds.seed()
+    ProjectsSeeds.seed()
+    InternalDataSeeds.seed()
   end
 end

@@ -12,10 +12,9 @@ config :live_sup, ecto_repos: [LiveSup.Repo], generators: [binary_id: true]
 # Configures the endpoint
 config :live_sup, LiveSupWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "gezCztOVJKD3K7/pRxOCsVz2/26KpvIXP6iwcLAtR6kikK55jKMTPDbjxLrheGDc",
   render_errors: [view: LiveSupWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: LiveSup.PubSub,
-  live_view: [signing_salt: "ywIHqVZp"]
+  live_view: [signing_salt: "livesup_ygEB"]
 
 # Configures Elixir's Logger
 config :logger, :console,

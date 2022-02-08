@@ -1,24 +1,14 @@
 defmodule LiveSup.Seeds.TeamsSeeds do
-  use Mix.Task
-
   alias LiveSup.Core.{Accounts, Teams}
 
-  def run(_) do
-    Mix.Task.run("app.start", [])
-
-    Mix.env()
-    |> seed()
-  end
-
-  def seed(:dev) do
-    insert_data()
-  end
-
-  def seed(:prod) do
-    insert_data()
-  end
+  def seed, do: insert_data()
 
   defp insert_data do
+    Teams.get_by_slug("team-a")
+    |> build_team()
+  end
+
+  defp build_team(nil) do
     team =
       %{name: "Team A", slug: "team-a"}
       |> Teams.create!()
@@ -29,4 +19,6 @@ defmodule LiveSup.Seeds.TeamsSeeds do
       Teams.add_member(team, user)
     end)
   end
+
+  defp build_team(_team), do: nil
 end

@@ -10,8 +10,8 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :live_sup, LiveSupWeb.Endpoint,
-  # TODO: This need to be changed
-  url: [host: "sup.gigalixirapp.com", port: 80],
+  http: [ip: {127, 0, 0, 1}, port: 8080],
+  server: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
@@ -58,6 +58,9 @@ config :live_sup, LiveSup.PromEx,
   grafana: :disabled,
   metrics_server: :disabled
 
-# Finally import the config/prod.secret.exs which loads secrets
-# and configuration from environment variables.
-import_config "prod.secret.exs"
+database_url = System.get_env("DATABASE_URL")
+
+config :live_sup, LiveSup.Repo,
+  url: database_url,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
