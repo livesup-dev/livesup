@@ -1,26 +1,26 @@
 ARG MIX_ENV="prod"
 
-FROM elixir:1.13.2 as build
+FROM hexpm/elixir:1.13.2-erlang-24.1.7-debian-bullseye-20210902-slim as build
 
 RUN apt-get update && \
-  apt-get install -y postgresql-client nodejs
+  apt-get install -y curl
 
-RUN mix local.hex --force \
-  && mix archive.install --force hex phx_new 1.6.6 \
-  && apt-get update \
-  && curl -sL https://deb.nodesource.com/setup_14.x | bash \
-  && apt-get install -y apt-utils \
-  && apt-get install -y nodejs \
-  && apt-get install -y build-essential \
-  && apt-get install -y inotify-tools \
-  && mix local.rebar --force
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install --no-install-recommends -y \
+        build-essential git nodejs && \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install hex and rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
 
 # Create app directory and copy the Elixir projects into it
 RUN mkdir /app
 WORKDIR /app
-
-# install Hex + Rebar
-RUN mix do local.hex --force, local.rebar --force
 
 # set build ENV
 ARG MIX_ENV
@@ -35,25 +35,43 @@ RUN mix deps.compile
 # build assets
 COPY assets assets
 RUN cd assets && npm install && npm run deploy
-RUN mix phx.digest
 
 # build project and compile
 COPY priv priv
 COPY lib lib
-RUN mix do compile, release livesup
+RUN mix do compile, phx.digest, release livesup
 
 # prepare release image
-FROM alpine:3.14.2 AS app
+FROM hexpm/elixir:1.13.2-erlang-24.1.7-debian-bullseye-20210902-slim AS app
 
 # install runtime dependencies
-RUN apk add --update bash openssl postgresql-client
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install --no-install-recommends -y \
+        # Runtime dependencies
+        build-essential ca-certificates libncurses5-dev \
+        # In case someone uses `Mix.install/2` and point to a git repo
+        git \
+        # Additional standard tools
+        wget \
+        # We need it to check the state of the db server
+        postgresql-client && \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
 
-EXPOSE 4000
 ENV MIX_ENV=prod
 
 # prepare app directory
 RUN mkdir /app
 WORKDIR /app
+
+# Install hex and rebar for `Mix.install/2` and Mix runtime
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+# Override the default 127.0.0.1 address, so that the app
+# can be accessed outside the container by binding ports
+ENV LIVESUP_IP 0.0.0.0
 
 # copy release to app container
 COPY --from=build /app/_build/prod/rel/livesup .

@@ -10,6 +10,7 @@ module.exports = (env, options) => {
   const devMode = options.mode !== 'production';
 
   return {
+    mode: options.mode || "production",
     optimization: {
       minimizer: [
         new TerserPlugin({ cache: true, parallel: true, sourceMap: devMode }),
@@ -58,7 +59,7 @@ module.exports = (env, options) => {
       new MiniCssExtractPlugin({ filename: '../css/app.css' }),
       new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
     ]
-    .concat()
+      .concat()
     // .concat(devMode ? [new HardSourceWebpackPlugin()] : [])
   }
 };

@@ -28,6 +28,12 @@ defmodule LiveSup.Queries.TeamQuery do
     |> Repo.one!()
   end
 
+  def get_by_slug(slug) do
+    base()
+    |> where([t], t.slug == ^slug)
+    |> Repo.one()
+  end
+
   def members(team_id) do
     query =
       from(

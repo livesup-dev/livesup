@@ -1,23 +1,8 @@
 defmodule LiveSup.Seeds.GroupsSeeds do
-  use Mix.Task
-
   alias LiveSup.Repo
   alias LiveSup.Schemas.Group
 
-  def run(_) do
-    Mix.Task.run("app.start", [])
-
-    Mix.env()
-    |> seed()
-  end
-
-  def seed(:dev) do
-    insert_data()
-  end
-
-  def seed(:prod) do
-    insert_data()
-  end
+  def seed, do: insert_data()
 
   defp insert_data do
     [

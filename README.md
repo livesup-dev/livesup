@@ -14,6 +14,28 @@ Besides the "business goal" mentioned above there are also a few technical goals
 * Build a complex and real application using LiveView that helps others to understand that there is more than a Chat or a TODOs app in this world
 * Build the application using only Elixir and PostgreSQL (don’t you miss those days where applications were way much simpler?)
 
+## Building and running Livesup localy
+
+First let's build the image
+`docker build -t livesup .`
+
+ --pull always \
+
+Then run the app
+```
+docker run --rm \
+    -e DATABASE_URL=postgres://postgres:postgres@docker.for.mac.localhost:5432/livesup \
+    -e PGHOST=docker.for.mac.localhost \
+    -e PGPORT=5432 \
+    -e PGUSER=postgres \
+    -e PGPASSWORD=postgres \
+    -e PGDATABASE=livesup \
+    -p 8080:8080 \
+    livesup
+```
+
+
+
 ## Copyright and License
 
 Copyright (c) 2021, Emiliano Jankowski.

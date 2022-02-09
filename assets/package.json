@@ -1,7 +1,5 @@
 {
-  "repository": {},
-  "description": " ",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "deploy": "NODE_ENV=production webpack --mode production --progress",
     "watch": "NODE_ENV=development webpack --mode development --watch"
@@ -35,6 +33,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss": "^8.4.5",
     "postcss-loader": "^4.2.0",
+    "postcss-import": "^14.0.0",
     "sass": "^1.42.1",
     "sass-loader": "^8.0.2",
     "tailwindcss": "^3.0.6",

@@ -1,25 +1,10 @@
 defmodule LiveSup.Seeds.UsersSeeds do
-  use Mix.Task
-
   alias LiveSup.Repo
   alias LiveSup.Schemas.{User, UserGroup}
   alias LiveSup.Queries.GroupQuery
   alias LiveSup.Core.Accounts
 
-  def run(_) do
-    Mix.Task.run("app.start", [])
-
-    Mix.env()
-    |> seed()
-  end
-
-  def seed(:dev) do
-    insert_data()
-  end
-
-  def seed(:prod) do
-    insert_data()
-  end
+  def seed, do: insert_data()
 
   defp insert_data do
     administrators_group = GroupQuery.get_administrator_group()
