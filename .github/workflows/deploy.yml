@@ -16,7 +16,7 @@ jobs:
         uses: erlef/setup-beam@v1
         with:
           otp-version: '24.1'
-          elixir-version: '1.13.2'
+          elixir-version: '1.13.3'
       - name: Cache Mix
         uses: actions/cache@v2
         with:
@@ -79,6 +79,8 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=edge,branch=main
+            type=ref,event=branch
+            type=ref,event=pr
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
