@@ -34,12 +34,12 @@ RUN mix deps.compile
 
 # build assets
 COPY assets assets
-RUN cd assets && npm install && npm run deploy
+RUN npm install --prefix ./assets && npm run --prefix ./assets deploy
 
 # build project and compile
 COPY priv priv
 COPY lib lib
-RUN mix do compile, phx.digest, release livesup
+RUN mix do compile, release, phx.digest
 
 # prepare release image
 FROM hexpm/elixir:1.13.2-erlang-24.1.7-debian-bullseye-20210902-slim AS app
@@ -65,6 +65,9 @@ ENV MIX_ENV=prod
 RUN mkdir /app
 WORKDIR /app
 
+# extend hex timeout
+ENV HEX_HTTP_TIMEOUT=20
+
 # Install hex and rebar for `Mix.install/2` and Mix runtime
 RUN mix local.hex --force && \
     mix local.rebar --force
@@ -74,7 +77,7 @@ RUN mix local.hex --force && \
 ENV LIVESUP_IP 0.0.0.0
 
 # copy release to app container
-COPY --from=build /app/_build/prod/rel/livesup .
+COPY --from=build /app/_build/prod/rel/live_sup .
 COPY entrypoint.sh .
 RUN chown -R nobody: /app
 USER nobody

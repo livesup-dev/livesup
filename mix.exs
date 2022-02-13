@@ -16,9 +16,7 @@ defmodule LiveSup.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      default_release: :livesup,
-      releases: releases()
+      deps: deps()
     ]
   end
 
@@ -77,19 +75,6 @@ defmodule LiveSup.MixProject do
       {:ueberauth, "~> 0.6"},
       {:ueberauth_google, "~> 0.10"},
       {:ueberauth_github, "~> 0.8"}
-    ]
-  end
-
-  ## Releases
-
-  defp releases do
-    [
-      livesup: [
-        include_executables_for: [:unix],
-        include_erts: false,
-        rel_templates_path: "rel/server",
-        steps: [:assemble]
-      ]
     ]
   end
 

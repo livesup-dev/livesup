@@ -16,12 +16,6 @@ Besides the "business goal" mentioned above there are also a few technical goals
 
 ## Building and running Livesup localy
 
-First let's build the image
-`docker build -t livesup .`
-
- --pull always \
-
-Then run the app
 ```
 docker run --rm \
     -e DATABASE_URL=postgres://postgres:postgres@docker.for.mac.localhost:5432/livesup \
@@ -31,7 +25,8 @@ docker run --rm \
     -e PGPASSWORD=postgres \
     -e PGDATABASE=livesup \
     -p 8080:8080 \
-    livesup
+    --pull always \
+    livesup:edge
 ```
 
 
