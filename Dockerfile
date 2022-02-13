@@ -33,13 +33,18 @@ RUN mix deps.get --only $MIX_ENV
 RUN mix deps.compile
 
 # build assets
-COPY assets assets
-RUN npm install --prefix ./assets && npm run --prefix ./assets deploy
+# COPY assets assets
+COPY assets/package.json assets/package-lock.json ./assets/
+RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
 # build project and compile
 COPY priv priv
+COPY assets assets
 COPY lib lib
+
+RUN npm run --prefix ./assets deploy
 RUN mix phx.digest
+
 RUN mix do compile, release
 
 # prepare release image
