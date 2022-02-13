@@ -39,7 +39,8 @@ RUN npm install --prefix ./assets && npm run --prefix ./assets deploy
 # build project and compile
 COPY priv priv
 COPY lib lib
-RUN mix do compile, release, phx.digest
+RUN mix phx.digest
+RUN mix do compile, release
 
 # prepare release image
 FROM hexpm/elixir:1.13.2-erlang-24.1.7-debian-bullseye-20210902-slim AS app
