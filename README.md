@@ -16,6 +16,8 @@ Besides the "business goal" mentioned above there are also a few technical goals
 
 ## Building and running Livesup localy
 
+If you already have a Postgres server running you can just use the following, replacing the envs with your values
+
 ```
 docker run --rm \
     -e DATABASE_URL=postgres://postgres:postgres@docker.for.mac.localhost:5432/livesup \
@@ -29,6 +31,7 @@ docker run --rm \
     livesup:edge
 ```
 
+Or you could just do `docker-compose up` using the existing [docker-compose.yml](docker-compose.yml) file.
 
 
 ## Copyright and License
