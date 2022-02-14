@@ -4,7 +4,6 @@ defmodule LiveSupWeb.HomeLive do
   import LiveSupWeb.Live.AuthHelper
   import Logger
   alias LiveSup.Core.{Dashboards, Widgets.WidgetManager}
-  alias LiveSup.Schemas.WidgetInstance
   alias LiveSup.Core.Utils
 
   @impl true
