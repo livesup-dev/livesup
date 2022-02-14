@@ -88,8 +88,8 @@ defmodule LiveSup.MixProject do
     [
       setup: ["deps.get", "ecto.setup", "npm install --prefix assets"],
       # , "run priv/repo/seeds.exs"
-      "ecto.setup": ["ecto.create", "ecto.migrate", "live_sup.seeds"],
-      "ecto.reset": ["ecto.drop", "ecto.setup", "live_sup.seeds"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "live_sup.seed"],
+      "ecto.reset": ["ecto.drop", "ecto.setup", "live_sup.seed"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end
