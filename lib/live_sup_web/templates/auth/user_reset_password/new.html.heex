@@ -1,21 +1,21 @@
-<h3 class="text-xl text-gray-600 dark:text-gray-200 text-center">Forgot your password?</h3>
+<h1 class="text-xl font-semibold text-center">Forgot your password?</h1>
 
-<%= form_for :user, Routes.user_reset_password_path(@conn, :create), fn f -> %>
+<%= form_for :user, Routes.user_reset_password_path(@conn, :create), [class: "space-y-6 w-80"], fn f -> %>
   <div class="mt-4">
-    <%= label f, :email, class: "block text-gray-600 dark:text-gray-200 text-sm font-medium mb-2" %>
-    <%= email_input f, :email, required: true, class: "form-control" %>
+    <%= email_input f, :email, required: true, placeholder: "Email address", class: "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:valid:ring-primary-100 focus:invalid:ring-red-500 dark:focus:valid:ring-primary-darker" %>
   </div>
 
   <div class="mt-8">
-    <%= submit "Send instructions to reset password", class: "btn btn-primary w-full" %>
+    <%= submit "Send instructions to reset password", class: "w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker" %>
   </div>
 <% end %>
 
 <div class="mt-6 flex items-center justify-between">
   <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
 
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "text-xs text-gray-500 dark:text-gray-400 uppercase hover:underline" %>
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "text-xs text-gray-500 dark:text-gray-400 uppercase hover:underline" %>
+  <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "text-sm font-semibold text-center uppercase hover:underline" %>
+  <span class="border-b dark:border-gray-600 w-1/12"></span>
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "text-sm font-semibold text-center uppercase hover:underline" %>
 
   <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
 </div>
