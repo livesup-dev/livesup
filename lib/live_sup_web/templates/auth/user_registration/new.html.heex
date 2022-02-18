@@ -1,49 +1,42 @@
-<h3 class="text-xl text-gray-600 dark:text-gray-200 text-center">Register</h3>
+<h1 class="text-xl font-semibold text-center">Register</h1>
 
-<%= form_for @changeset, Routes.user_registration_path(@conn, :create), fn f -> %>
+<%= form_for @changeset, Routes.user_registration_path(@conn, :create), [class: "space-y-6 w-80"], fn f -> %>
   <%= if @changeset.action do %>
-    <div class="alert alert-danger">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
   <div class="mt-4">
-    <%= label f, :email, class: "block text-gray-600 dark:text-gray-200 text-sm font-medium mb-2" %>
-    <%= text_input f, :email, required: true, class: "form-control" %>
+    <%= text_input f, :email, required: true, placeholder: "Email address", class: "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:valid:ring-primary-100 focus:invalid:ring-red-500 dark:focus:valid:ring-primary-darker" %>
     <%= error_tag f, :email %>
   </div>
 
   <div class="mt-4">
-    <%= label f, :first_name, class: "block text-gray-600 dark:text-gray-200 text-sm font-medium mb-2" %>
-    <%= text_input f, :first_name, required: true, class: "form-control" %>
+    <%= text_input f, :first_name, required: true, placeholder: "First Name", class: "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:valid:ring-primary-100 focus:invalid:ring-red-500 dark:focus:valid:ring-primary-darker" %>
     <%= error_tag f, :first_name %>
   </div>
   
    <div class="mt-4">
-    <%= label f, :last_name, class: "block text-gray-600 dark:text-gray-200 text-sm font-medium mb-2" %>
-    <%= text_input f, :last_name, required: true, class: "form-control" %>
+    <%= text_input f, :last_name, required: true, placeholder: "Last Name", class: "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:valid:ring-primary-100 focus:invalid:ring-red-500 dark:focus:valid:ring-primary-darker" %>
     <%= error_tag f, :last_name %>
   </div>
 
   <div class="mt-4">
-    <div class="flex justify-between">
-      <%= label f, :password, class: "block text-gray-600 dark:text-gray-200 text-sm font-medium mb-2" %>
-      <%= link "Forgot password?", to: Routes.user_reset_password_path(@conn, :new), class: "text-xs text-gray-500 dark:text-gray-300 hover:underline" %>
-    </div>
 
-    <%= password_input f, :password, required: true, class: "form-control" %>
+    <%= password_input f, :password, required: true, placeholder: "Password", class: "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:valid:ring-primary-100 focus:invalid:ring-red-500 dark:focus:valid:ring-primary-darker" %>
     <%= error_tag f, :password %>
   </div>
 
   <div class="mt-8">
-    <%= submit "Register", class: "btn btn-primary w-full" %>
+    <%= submit "Register", class: "w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker" %>
   </div>
 <% end %>
 
 <div class="mt-6 flex items-center justify-between">
   <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
 
-  <%= link "Or Log in", to: Routes.user_session_path(@conn, :new), class: "text-xs text-gray-500 dark:text-gray-400 uppercase hover:underline" %>
+  <%= link "Or Log in", to: Routes.user_session_path(@conn, :new), class: "text-sm font-semibold text-center uppercase hover:underline" %>
 
   <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
 </div>
