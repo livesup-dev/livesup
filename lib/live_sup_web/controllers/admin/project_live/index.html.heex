@@ -1,4 +1,4 @@
-<h1>Listing Projects</h1>
+<h1 class="text-2xl m-4">Listing Projects</h1>
 
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.admin_project_index_path(@socket, :index)}>
@@ -13,31 +13,50 @@
   </.modal>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Internal</th>
-      <th>Slug</th>
+<div class="flex flex-col m-4">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden sm:rounded-lg">
+        <table class="divide-y divide-gray-100 dark:divide-dark">
+          <thead class="bg-gray-50 dark:bg-darker">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider ">Name</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Internal</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Slug</th>
+              <th scope="col" class="relative px-6 py-3">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="projects" class="bg-white dark:bg-darker divide-y divide-gray-100 dark:divide-dark">
+          <%= for project <- @projects do %>
+            <tr id={"project-#{project.id}"}>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm"><%= project.name %></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm"><%= project.internal %></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm"><%= project.slug %></div>
+              </td>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="projects">
-    <%= for project <- @projects do %>
-      <tr id={"project-#{project.id}"}>
-        <td><%= project.name %></td>
-        <td><%= project.internal %></td>
-        <td><%= project.slug %></td>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.admin_project_show_path(@socket, :show, project) %></span>
-          <span><%= live_patch "Edit", to: Routes.admin_project_index_path(@socket, :edit, project) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: project.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<span><%= live_patch "New Project", to: Routes.admin_project_index_path(@socket, :new) %></span>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <span class="text-indigo-600 hover:text-indigo-900"><%= live_redirect "Show", to: Routes.admin_project_show_path(@socket, :show, project) %></span>
+                <span class="text-indigo-600 hover:text-indigo-900">|</span>
+                <span class="text-indigo-600 hover:text-indigo-900"><%= live_patch "Edit", to: Routes.admin_project_index_path(@socket, :edit, project) %></span>
+                <span class="text-indigo-600 hover:text-indigo-900">|</span>
+                <span class="text-indigo-600 hover:text-indigo-900"><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: project.id, data: [confirm: "Are you sure?"] %></span>
+              </td>
+            </tr>
+          <% end %>
+          <!-- / listing projects... -->
+          </tbody>
+        </table>
+      </div>
+      <div class="px-6 py-6 whitespace-nowrap text-right text-sm font-medium place-items-end">
+           <%= live_patch "New Project", to: Routes.admin_project_index_path(@socket, :new), class: "w-fit h-fit px-2 py-1 space-x-4 transition-colors border rounded-md hover:text-gray-900 hover:border-gray-900 dark:border-primary dark:hover:text-primary-100 dark:hover:border-primary-light focus:outline-none focus:ring focus:ring-primary-lighter focus:ring-offset-2 dark:focus:ring-offset-dark dark:focus:ring-primary-dark text-gray-500 dark:text-primary-light" %>
+      </div>
+    </div>
+  </div>
+</div>
