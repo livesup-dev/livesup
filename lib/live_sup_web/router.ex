@@ -58,11 +58,6 @@ defmodule LiveSupWeb.Router do
     end
   end
 
-  scope path: "/admin/feature-flags" do
-    pipe_through :mounted_apps
-    forward "/", FunWithFlags.UI.Router, namespace: "admin/feature-flags"
-  end
-
   ## Authentication routes
 
   scope "/oauth", LiveSupWeb do
@@ -144,5 +139,20 @@ defmodule LiveSupWeb.Router do
     get "/users/confirm", Auth.UserConfirmationController, :new
     post "/users/confirm", Auth.UserConfirmationController, :create
     get "/users/confirm/:token", Auth.UserConfirmationController, :confirm
+  end
+
+  scope "/admin", LiveSupWeb.Admin, as: :admin do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live "/projects", ProjectLive.Index, :index
+    live "/projects/new", ProjectLive.Index, :new
+    live "/projects/:id/edit", ProjectLive.Index, :edit
+    live "/projects/:id", ProjectLive.Show, :show
+    live "/projects/:id/show/edit", ProjectLive.Show, :edit
+  end
+
+  scope path: "/admin/feature-flags" do
+    pipe_through :mounted_apps
+    forward "/", FunWithFlags.UI.Router, namespace: "admin/feature-flags"
   end
 end
