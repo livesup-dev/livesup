@@ -10,7 +10,8 @@ defmodule LiveSupWeb.Admin.ProjectLive.FormComponent do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> allow_upload(:avatar, accept: ~w(.jpg .jpeg .png), max_entries: 1)}
   end
 
   @impl true
@@ -24,7 +25,17 @@ defmodule LiveSupWeb.Admin.ProjectLive.FormComponent do
   end
 
   def handle_event("save", %{"project" => project_params}, socket) do
-    save_project(socket, socket.assigns.action, project_params)
+    {entries, _} = uploaded_entries(socket, :avatar)
+    avatar_entry = entries |> Enum.at(0)
+
+    file_path =
+      Phoenix.LiveView.Upload.consume_uploaded_entry(socket, avatar_entry, fn %{path: path} ->
+        dest = Path.join("priv/static/uploads", Path.basename(path))
+        File.cp!(path, dest)
+        Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")
+      end)
+
+    save_project(socket, socket.assigns.action, Map.put(project_params, "avatar_url", file_path))
   end
 
   defp save_project(socket, :edit, project_params) do
@@ -41,7 +52,7 @@ defmodule LiveSupWeb.Admin.ProjectLive.FormComponent do
   end
 
   defp save_project(socket, :new, project_params) do
-    case Projects.create(project_params) do
+    case Projects.create_public_project(project_params) do
       {:ok, _project} ->
         {:noreply,
          socket
