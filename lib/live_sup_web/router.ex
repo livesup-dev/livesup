@@ -144,6 +144,8 @@ defmodule LiveSupWeb.Router do
   scope "/admin", LiveSupWeb.Admin, as: :admin do
     pipe_through [:browser, :require_authenticated_user]
 
+    live "/", HomeLive.Show, :show
+
     live "/projects", ProjectLive.Index, :index
     live "/projects/new", ProjectLive.Index, :new
     live "/projects/:id/edit", ProjectLive.Index, :edit

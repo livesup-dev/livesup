@@ -1,5 +1,6 @@
+
 <div>
-    <%= if @project.dashboards do %>
+    <%= if dashboards?(@dashboards) do %>
         <div>
             <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div class="flex flex-row-4 flex-wrap justify-center">
@@ -171,15 +172,10 @@
                     </svg>
 
                 <div class="text-center lg:w-2/3 w-full">
-                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium dark:text-white text-gray-900">It seems you don't have any Dashboard yet,</h1>
-                <p class="mb-8 leading-relaxed dark:text-white text-gray-900">you're just a few clicks away from connecting to your data and tracking your performance.</p>
-                <div class="flex justify-center">
-                    <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Create your first Dashboard!</button>
-                </div>
+                    <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium dark:text-white text-gray-900">It seems you don't have any Dashboard yet.</h1>
                 </div>
             </div>
         </section>
-         <button>  </button>
     <% end %>
 </div>
 
