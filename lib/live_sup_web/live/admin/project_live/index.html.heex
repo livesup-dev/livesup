@@ -3,7 +3,7 @@
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.admin_project_index_path(@socket, :index)}>
     <.live_component
-      module={LiveSup.Admin.ProjectLive.FormComponent}
+      module={LiveSupWeb.Admin.ProjectLive.FormComponent}
       id={@project.id || :new}
       title={@page_title}
       action={@live_action}
