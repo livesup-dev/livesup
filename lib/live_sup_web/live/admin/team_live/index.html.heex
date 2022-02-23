@@ -1,0 +1,58 @@
+<h1 class="text-2xl m-4">Listing Teams</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.admin_team_index_path(@socket, :index)}>
+    <.live_component
+      module={LiveSupWeb.Admin.TeamLive.FormComponent}
+      id={@team.id || :new}
+      title={@page_title}
+      action={@live_action}
+      team={@team}
+      return_to={Routes.admin_team_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<div class="flex flex-col m-4">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden sm:rounded-lg">
+        <table class="divide-y divide-gray-100 dark:divide-dark">
+          <thead class="bg-gray-50 dark:bg-darker">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider ">Name</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Slug</th>
+              <th scope="col" class="relative px-6 py-3">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="teams" class="bg-white dark:bg-darker divide-y divide-gray-100 dark:divide-dark">
+          <%= for team <- @teams do %>
+            <tr id={"team-#{team.id}"}>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm"><%= team.name %></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm"><%= team.slug %></div>
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <span class="text-indigo-600 hover:text-indigo-900"><%= live_redirect "Show", to: Routes.admin_team_show_path(@socket, :show, team) %></span>
+                <span class="text-indigo-600 hover:text-indigo-900">|</span>
+                <span class="text-indigo-600 hover:text-indigo-900"><%= live_patch "Edit", to: Routes.admin_team_index_path(@socket, :edit, team) %></span>
+                <span class="text-indigo-600 hover:text-indigo-900">|</span>
+                <span class="text-indigo-600 hover:text-indigo-900"><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: team.id, data: [confirm: "Are you sure?"] %></span>
+              </td>
+            </tr>
+          <% end %>
+          <!-- / listing teams... -->
+          </tbody>
+        </table>
+      </div>
+      <div class="px-6 py-6 whitespace-nowrap text-right text-sm font-medium place-items-end">
+           <%= live_patch "New Project", to: Routes.admin_team_index_path(@socket, :new), class: "w-fit h-fit px-2 py-1 space-x-4 transition-colors border rounded-md hover:text-gray-900 hover:border-gray-900 dark:border-primary dark:hover:text-primary-100 dark:hover:border-primary-light focus:outline-none focus:ring focus:ring-primary-lighter focus:ring-offset-2 dark:focus:ring-offset-dark dark:focus:ring-primary-dark text-gray-500 dark:text-primary-light" %>
+      </div>
+    </div>
+  </div>
+</div>

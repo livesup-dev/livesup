@@ -149,6 +149,12 @@ defmodule LiveSupWeb.Router do
     live "/projects/:id/edit", ProjectLive.Index, :edit
     live "/projects/:id", ProjectLive.Show, :show
     live "/projects/:id/show/edit", ProjectLive.Show, :edit
+
+    live "/teams", TeamLive.Index, :index
+    live "/teams/new", TeamLive.Index, :new
+    live "/teams/:id/edit", TeamLive.Index, :edit
+    live "/teams/:id", TeamLive.Show, :show
+    live "/teams/:id/show/edit", TeamLive.Show, :edit
   end
 
   scope path: "/admin/feature-flags" do
