@@ -24,10 +24,6 @@ defmodule LiveSupWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :dashboard_layout do
-    plug :put_root_layout, {LiveSupWeb.LayoutView, :dashboard}
-  end
-
   # scope "/", LiveSupWeb do
   #   pipe_through :browser
 
@@ -98,7 +94,6 @@ defmodule LiveSupWeb.Router do
   scope "/", LiveSupWeb do
     pipe_through [
       :browser,
-      :dashboard_layout,
       :require_authenticated_user,
       :ensure_access_to_project
     ]
