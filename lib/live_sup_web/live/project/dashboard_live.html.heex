@@ -33,7 +33,7 @@
 
 <%= if @live_action in [:show] do %>
     <div class="m-2 mb-[80px]" >
-      <div id="widget-list" phx-hook="Drag" class="columns-4 gap-x-2">
+      <div id="widget-list" phx-hook="Drag" class="xs:columns-1 sm:columns-2 lg:columns-4 gap-x-2">
       <%= for(widget_instance <- @widget_instances) do %>
         <%= live_render(
               @socket,
