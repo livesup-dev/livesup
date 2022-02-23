@@ -17,8 +17,8 @@ import VegaLite from "./vega_lite";
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
-import {Socket} from "phoenix"
-import {LiveSocket} from "phoenix_live_view"
+import { Socket } from "phoenix"
+import { LiveSocket } from "phoenix_live_view"
 import topbar from 'topbar'
 import 'alpinejs'
 import Drag from './dragHook';
@@ -45,10 +45,21 @@ let liveSocket = new LiveSocket('/live', Socket, {
   },
 })
 
-// Show progress bar on live navigation and form submits
-topbar.config({ barColors: { 0: '#29d' }, shadowColor: 'rgba(0, 0, 0, .3)' })
-window.addEventListener('phx:page-loading-start', info => topbar.show())
-window.addEventListener('phx:page-loading-stop', info => topbar.hide())
+// Show progress bar on live navigation and form submits. Only displays if still
+// loading after 120 msec
+topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" })
+
+let topBarScheduled = undefined;
+window.addEventListener("phx:page-loading-start", () => {
+  if (!topBarScheduled) {
+    topBarScheduled = setTimeout(() => topbar.show(), 120);
+  };
+});
+window.addEventListener("phx:page-loading-stop", () => {
+  clearTimeout(topBarScheduled);
+  topBarScheduled = undefined;
+  topbar.hide();
+});
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()

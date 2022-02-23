@@ -1,11 +1,11 @@
-defmodule LiveSupWeb.Project.Components.ProjectFormComponent do
+defmodule LiveSupWeb.Admin.ProjectLive.FormComponent do
   use LiveSupWeb, :live_component
+
   alias LiveSup.Core.Projects
-  alias LiveSup.Schemas.Project
 
   @impl true
-  def update(assigns, socket) do
-    changeset = Projects.change(%Project{})
+  def update(%{project: project} = assigns, socket) do
+    changeset = Projects.change(project)
 
     {:ok,
      socket
@@ -38,16 +38,29 @@ defmodule LiveSupWeb.Project.Components.ProjectFormComponent do
     save_project(socket, socket.assigns.action, Map.put(project_params, "avatar_url", file_path))
   end
 
+  defp save_project(socket, :edit, project_params) do
+    case Projects.update(socket.assigns.project, project_params) do
+      {:ok, _project} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Project updated successfully")
+         |> push_redirect(to: socket.assigns.return_to)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+    end
+  end
+
   defp save_project(socket, :new, project_params) do
     case Projects.create_public_project(project_params) do
       {:ok, _project} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Project creted successfully")
+         |> put_flash(:info, "Project created successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, :changeset, changeset)}
+        {:noreply, assign(socket, changeset: changeset)}
     end
   end
 end

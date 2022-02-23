@@ -1,0 +1,37 @@
+<h1 class="text-2xl m-4">Show Project</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.admin_project_show_path(@socket, :show, @project)}>
+    <.live_component
+      module={LiveSupWeb.Admin.ProjectLive.FormComponent}
+      id={@project.id}
+      title={@page_title}
+      action={@live_action}
+      project={@project}
+      return_to={Routes.admin_project_show_path(@socket, :show, @project)}
+    />
+  </.modal>
+<% end %>
+
+<div class="bg-white dark:bg-darker shadow overflow-hidden sm:rounded-lg m-4">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium"><%= @project.name %></h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">Project details.</p>
+  </div>
+  <div class="border-t border-gray-100 dark:border-dark">
+    <dl>
+      <div class="bg-gray-50 dark:bg-darker px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium">Slug</dt>
+        <dd class="mt-1 text-sm sm:mt-0 sm:col-span-2"><%= @project.slug %></dd>
+      </div>
+      <div class="bg-white dark:bg-dark px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium ">ID</dt>
+        <dd class="mt-1 text-sm sm:mt-0 sm:col-span-2"><%= @project.id %></dd>
+      </div>
+    </dl>
+  </div>
+</div>
+<div class="px-6 py-6 whitespace-nowrap text-right text-sm font-medium place-items-end gap-4">
+           <%= live_patch "Edit", to: Routes.admin_project_show_path(@socket, :edit, @project), class: "w-fit h-fit mr-4 px-2 py-1 space-x-4  border rounded-md hover:text-gray-900 hover:border-gray-900 dark:border-primary dark:hover:text-primary-100 dark:hover:border-primary-light focus:outline-none focus:ring focus:ring-primary-lighter focus:ring-offset-2 dark:focus:ring-offset-dark dark:focus:ring-primary-dark text-gray-500 dark:text-primary-light" %>
+           <%= live_patch "Back", to: Routes.admin_project_index_path(@socket, :index), class: "w-fit h-fit px-2 py-1 border rounded-md hover:text-gray-900 hover:border-gray-900 dark:border-primary dark:hover:text-primary-100 dark:hover:border-primary-light focus:outline-none focus:ring focus:ring-primary-lighter focus:ring-offset-2 dark:focus:ring-offset-dark dark:focus:ring-primary-dark border-gray-900 text-gray-900 dark:border-primary-light dark:text-primary-100" %>
+  </div>

@@ -24,10 +24,6 @@ defmodule LiveSupWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :dashboard_layout do
-    plug :put_root_layout, {LiveSupWeb.LayoutView, :dashboard}
-  end
-
   # scope "/", LiveSupWeb do
   #   pipe_through :browser
 
@@ -56,11 +52,6 @@ defmodule LiveSupWeb.Router do
         metrics: LiveSupWeb.Telemetry,
         ecto_repos: [LiveSup.Repo]
     end
-  end
-
-  scope path: "/admin/feature-flags" do
-    pipe_through :mounted_apps
-    forward "/", FunWithFlags.UI.Router, namespace: "admin/feature-flags"
   end
 
   ## Authentication routes
@@ -103,7 +94,6 @@ defmodule LiveSupWeb.Router do
   scope "/", LiveSupWeb do
     pipe_through [
       :browser,
-      :dashboard_layout,
       :require_authenticated_user,
       :ensure_access_to_project
     ]
@@ -144,5 +134,28 @@ defmodule LiveSupWeb.Router do
     get "/users/confirm", Auth.UserConfirmationController, :new
     post "/users/confirm", Auth.UserConfirmationController, :create
     get "/users/confirm/:token", Auth.UserConfirmationController, :confirm
+  end
+
+  scope "/admin", LiveSupWeb.Admin, as: :admin do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live "/", HomeLive.Show, :show
+
+    live "/projects", ProjectLive.Index, :index
+    live "/projects/new", ProjectLive.Index, :new
+    live "/projects/:id/edit", ProjectLive.Index, :edit
+    live "/projects/:id", ProjectLive.Show, :show
+    live "/projects/:id/show/edit", ProjectLive.Show, :edit
+
+    live "/teams", TeamLive.Index, :index
+    live "/teams/new", TeamLive.Index, :new
+    live "/teams/:id/edit", TeamLive.Index, :edit
+    live "/teams/:id", TeamLive.Show, :show
+    live "/teams/:id/show/edit", TeamLive.Show, :edit
+  end
+
+  scope path: "/admin/feature-flags" do
+    pipe_through :mounted_apps
+    forward "/", FunWithFlags.UI.Router, namespace: "admin/feature-flags"
   end
 end
