@@ -2,6 +2,7 @@ defmodule LiveSupWeb.Admin.ProjectLive.Show do
   use LiveSupWeb, :live_view
 
   alias LiveSup.Core.Projects
+  alias LiveSup.Schemas.Project
 
   @impl true
   def mount(_params, _session, socket) do

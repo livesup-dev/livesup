@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Admin.ProjectLive.HeaderComponent do
+defmodule LiveSupWeb.Admin.ProjectLive.HeaderComponentShow do
   use LiveSupWeb, :component
 
   def render(assigns) do
@@ -7,11 +7,8 @@ defmodule LiveSupWeb.Admin.ProjectLive.HeaderComponent do
       <div class="flex items-center basis-6/12">
         <%= link "Home", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white", to: Routes.home_path(LiveSupWeb.Endpoint, :index) %>
         <%= link "Admin", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white", to: Routes.home_path(LiveSupWeb.Endpoint, :index) %>
-        <span>Projects</span>
-      </div>
-
-      <div class="flex justify-end basis-6/12 text-right items-center">
-        <%= AddButtonComponent.render(%{path: Routes.admin_project_index_path(LiveSupWeb.Endpoint, :new)}) %>
+        <%= link "Projects", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white", to: Routes.admin_project_index_path(LiveSupWeb.Endpoint, :index) %>
+        <span><%= @project.name %></span>
       </div>
     </div>
     """

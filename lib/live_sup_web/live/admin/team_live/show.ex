@@ -2,6 +2,7 @@ defmodule LiveSupWeb.Admin.TeamLive.Show do
   use LiveSupWeb, :live_view
 
   alias LiveSup.Core.Teams
+  alias LiveSup.Schemas.Team
 
   @impl true
   def mount(_params, _session, socket) do
