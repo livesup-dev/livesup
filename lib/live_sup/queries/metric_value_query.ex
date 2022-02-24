@@ -16,8 +16,27 @@ defmodule LiveSup.Queries.MetricValueQuery do
   def by_metric(%Metric{id: id}) do
     from(
       v in MetricValue,
-      where: v.metric_id == ^id
+      join: m in assoc(v, :metric),
+      where: m.id == ^id
     )
     |> Repo.all()
+  end
+
+  def by_metric(slug) when is_binary(slug) do
+    from(
+      v in MetricValue,
+      join: m in assoc(v, :metric),
+      where: m.slug == ^slug
+    )
+    |> Repo.all()
+  end
+
+  def sum(%Metric{id: id}) do
+    from(
+      v in MetricValue,
+      where: v.metric_id == ^id,
+      select: sum(v.value)
+    )
+    |> Repo.one()
   end
 end

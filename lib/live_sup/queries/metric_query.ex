@@ -38,7 +38,7 @@ defmodule LiveSup.Queries.MetricQuery do
     |> Repo.one()
   end
 
-  def get_all() do
+  def all() do
     Repo.all(Metric)
   end
 end
