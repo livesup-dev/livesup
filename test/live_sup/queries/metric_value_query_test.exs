@@ -24,6 +24,14 @@ defmodule LiveSup.Tests.Queries.MetricValueQueryTest do
 
       assert length(metric_values) == 3
     end
+
+    test "sum by metric" do
+      value =
+        "metric-one"
+        |> MetricValueQuery.sum()
+
+      assert value == 15
+    end
   end
 
   defp setup_metrics(_attrs) do
@@ -50,23 +58,22 @@ defmodule LiveSup.Tests.Queries.MetricValueQueryTest do
       |> LiveSup.Queries.MetricQuery.insert!()
       |> setup_metric_values()
     end)
-
   end
 
   defp setup_metric_values(%{id: metric_id}) do
     [
       %{
-        value: 2.53,
+        value: 2,
         metric_id: metric_id,
         value_date: DateHelper.parse_date("2021-07-02 00:00:00")
       },
       %{
-        value: 1.86,
+        value: 5,
         metric_id: metric_id,
         value_date: DateHelper.parse_date("2021-07-03 00:00:00")
       },
       %{
-        value: 1.39,
+        value: 8,
         metric_id: metric_id,
         value_date: DateHelper.parse_date("2021-07-04 00:00:00")
       }

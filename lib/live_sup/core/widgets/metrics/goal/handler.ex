@@ -3,10 +3,14 @@ defmodule LiveSup.Core.Widgets.Metrics.Goal.Handler do
   alias LiveSup.Queries.MetricValueQuery
 
   def get_data(%{"metric" => metric_slug}) do
-    metric =
-      metric_slug
-      |> Metrics.by_slug()
+    metric_slug
+    |> Metrics.by_slug()
+    |> build_metric()
+  end
 
+  defp build_metric(nil), do: {:error, "Metric not found"}
+
+  defp build_metric(metric) do
     current_value = metric |> MetricValueQuery.sum()
 
     {:ok,
