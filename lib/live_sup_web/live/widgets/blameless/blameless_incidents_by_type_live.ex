@@ -27,7 +27,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive do
       end)
 
     # Initialize the specification, optionally with some top-level properties
-    spec = %{
+    %{
       "$schema" => "https://vega.github.io/schema/vega-lite/v5.json",
       "description" => "",
       "data" => %{

@@ -50,6 +50,7 @@ defmodule LiveSup.Seeds.ProjectsSeeds do
     merge_stat_github_authors_widget = get_widget_by_slug("merge-stat-github-authors")
     rollbar_list_of_issues_widget = get_widget_by_slug("rollbar-list-of-isuess")
     team_members_widget = get_widget_by_slug("team-members")
+    metrics_goal_widget = get_widget_by_slug("metrics-goal")
 
     create_private_project()
 
@@ -216,6 +217,13 @@ defmodule LiveSup.Seeds.ProjectsSeeds do
             widget: team_members_widget,
             settings: %{
               "team" => %{"source" => "local", "string" => "string", "value" => team_a.id}
+            },
+            datasource_instance: local_datasource_instance
+          },
+          %{
+            widget: metrics_goal_widget,
+            settings: %{
+              "metric" => %{"source" => "local", "string" => "string", "value" => "test"}
             },
             datasource_instance: local_datasource_instance
           }

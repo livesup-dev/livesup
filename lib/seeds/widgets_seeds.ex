@@ -70,6 +70,10 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
       %{
         datasource_slug: "local-datasource",
         attrs: &team_members_widget_attrs/1
+      },
+      %{
+        datasource_slug: "local-datasource",
+        attrs: &goal_widget_attrs/1
       }
     ]
     |> Enum.each(fn widget ->
@@ -108,6 +112,24 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 5},
         "team" => %{"source" => "local", "string" => "string", "value" => ""}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  defp goal_widget_attrs(datasource) do
+    %{
+      name: "Goal",
+      slug: "metrics-goal",
+      enabled: true,
+      global: false,
+      feature_image_url: "/images/widgets/metric-goal.png",
+      ui_handler: "LiveSupWeb.Live.Widgets.Metrics.GoalLive",
+      worker_handler: "LiveSup.Core.Widgets.Metrics.Goal.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 60},
+        "metric" => %{"source" => "local", "string" => "string", "value" => ""}
       },
       datasource_id: datasource.id
     }

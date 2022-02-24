@@ -7,9 +7,6 @@ export default {
 
         const selector = '#' + this.el.id;
         
-        console.log("Holaaa");
-        console.log(selector);
-        console.log(this.el);
         // new Sortable(this.el, {
         //     animation: 150,
         //     sort: true,

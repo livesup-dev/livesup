@@ -17,7 +17,8 @@ alias LiveSup.Seeds.{
   UsersSeeds,
   TeamsSeeds,
   ProjectsSeeds,
-  InternalDataSeeds
+  InternalDataSeeds,
+  MetricsSeeds
 }
 
 defmodule LiveSup.Seeds do
@@ -26,7 +27,9 @@ defmodule LiveSup.Seeds do
 
     DatasourcesSeeds.seed()
     WidgetsSeeds.seed()
+    WidgetsSeeds.seed()
     GroupsSeeds.seed()
+    MetricsSeeds.seed()
     UsersSeeds.seed()
     TeamsSeeds.seed()
     ProjectsSeeds.seed()
