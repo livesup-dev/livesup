@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Admin.ProjectLive.HeaderComponentShow do
+defmodule LiveSupWeb.Admin.TeamLive.HeaderComponentShow do
   use LiveSupWeb, :component
 
   def render(assigns) do
@@ -7,8 +7,8 @@ defmodule LiveSupWeb.Admin.ProjectLive.HeaderComponentShow do
       <div class="flex items-center basis-6/12">
         <%= link "Home", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white", to: Routes.home_path(LiveSupWeb.Endpoint, :index) %>
         <%= link "Admin", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white", to: Routes.home_path(LiveSupWeb.Endpoint, :index) %>
-        <%= link "Projects", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white", to: Routes.admin_project_index_path(LiveSupWeb.Endpoint, :index) %>
-        <span><%= @project.name %></span>
+        <%= link "Teams", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white", to: Routes.admin_team_index_path(LiveSupWeb.Endpoint, :index) %>
+        <span><%= @team.name %></span>
       </div>
     </div>
     """

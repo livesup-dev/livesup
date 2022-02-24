@@ -1,6 +1,4 @@
-<%= LiveSupWeb.Admin.ProjectLive.HeaderComponentShow.render(%{}) %>
-<h1 class="text-2xl m-4"><%= @project.name %></h1>
-
+<%= LiveSupWeb.Admin.ProjectLive.HeaderComponentShow.render(%{project: @project}) %>
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.admin_project_show_path(@socket, :show, @project)}>
     <.live_component
@@ -17,10 +15,14 @@
   <div class="w-full lg:w-1/2">
     <div class="bg-white dark:bg-darker shadow overflow-hidden sm:rounded-lg">
       <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium">Project details</h3>
+        <h3 class="text-lg leading-6 font-medium">Project Details</h3>
       </div>
       <div class="border-t border-gray-100 dark:border-dark">
         <dl>
+          <div class="bg-gray-50  dark:bg-darker px-4 py-5 grid grid-cols-2 gap-4">
+            <dt class="font-medium">Name:</dt>
+            <dd><%= @project.name %></dd>
+          </div>
           <div class="bg-gray-50  dark:bg-darker px-4 py-5 grid grid-cols-2 gap-4">
             <dt class="font-medium">Slug:</dt>
             <dd><%= @project.slug %></dd>
@@ -28,6 +30,10 @@
           <div class="bg-white dark:bg-darker px-4 py-5 grid grid-cols-2 gap-4">
             <dt class="">Internal:</dt>
             <dd><%= @project.internal %></dd>
+          </div>
+          <div class="bg-white dark:bg-darker px-4 py-5 grid grid-cols-2 gap-4">
+            <dt class="">ID:</dt>
+            <dd><%= @project.id %></dd>
           </div>
           <div class="bg-white dark:bg-darker px-4 py-5 grid grid-cols-2 gap-4">
             <dt class="">Avatar:</dt>
