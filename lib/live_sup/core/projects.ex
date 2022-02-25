@@ -57,6 +57,7 @@ defmodule LiveSup.Core.Projects do
 
   """
   defdelegate create(attrs), to: ProjectQuery
+  defdelegate create!(attrs), to: ProjectQuery
   defdelegate create_internal_default_project(), to: ProjectQuery
 
   def create_public_project(attrs \\ %{}) do
