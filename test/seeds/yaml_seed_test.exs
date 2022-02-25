@@ -4,7 +4,7 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
 
   import LiveSup.Test.Setups
 
-  alias LiveSup.Core.Projects
+  alias LiveSup.Core.{Projects, Dashboards}
 
   describe "Seed from a yaml file" do
     @describetag :yaml_seed
@@ -12,15 +12,17 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
     setup [:setup_groups]
 
     test "data is imported" do
-      result = LiveSup.Seeds.YamlSeed.seed(yaml_data())
+      LiveSup.Seeds.YamlSeed.seed(yaml_data())
 
-      assert :ok == result
-      projects = Projects.all()
+      assert length(Projects.all()) == 1
 
-      assert length(projects)== 1
+      project = Projects.get_with_dashboards!("5727d4e3-b3d4-460c-a3fb-f0180d5c3777")
+      assert %{name: "Awesome Project"} = project
 
-      project = Projects.get!("5727d4e3-b3d4-460c-a3fb-f0180d5c3777")
-      assert project.name == "Awesome Project"
+      assert length(project.dashboards) == 2
+
+      dashboard = Dashboards.get!("469430b6-d754-497d-988e-34079faafd12")
+      assert %{name: "Dashboard 2"} = dashboard
     end
 
     defp yaml_data do
@@ -33,10 +35,12 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
           default: false
           avatar_url: "https://awesome.com/my-awesome-project.jpeg"
           dashboards:
-            - name: "Dashboard 1"
+            - id: af65c472-40cb-4824-8224-708cec8806de
+              name: "Dashboard 1"
               default: false
               widgets: []
-            - name: "Dashboard 2"
+            - id: 469430b6-d754-497d-988e-34079faafd12
+              name: "Dashboard 2"
               default: false
               widgets: []
       """

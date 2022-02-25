@@ -14,20 +14,31 @@ defmodule LiveSup.Seeds.YamlSeed do
     projects
     |> Enum.each(fn project_attrs ->
       project_attrs
-      |> Projects.create_public_project()
+      |> get_or_create_project()
       |> import_dashboards(project_attrs)
     end)
   end
 
-  defp import_dashboards(%Project{} = project, %{"dashboards" => dashboards}) do
+  defp get_or_create_project(%{"id" => id} = attrs) do
+    Projects.get(id) || Projects.create_public_project(attrs)
+  end
+
+  defp import_dashboards({:ok, %Project{} = project}, %{"dashboards" => dashboards}) do
     dashboards
     |> Enum.each(fn dashboard_attrs ->
       project
-      |> Dashboards.create(dashboard_attrs)
+      |> get_or_create_dashboard(dashboard_attrs)
     end)
   end
 
-  defp import_dashboards(project, _), do: nil
+  def get_or_create_dashboard(project, %{"id" => id} = attrs) do
+    case Dashboards.get(id) do
+      {:error, :not_found} -> Dashboards.create(project, attrs)
+      {:ok, dashboard} -> {:ok, dashboard}
+    end
+  end
+
+  # defp import_dashboards(project, _), do: nil
 
   defp parse_yaml(data) do
     {:ok, parsed_data} = YamlElixir.read_from_string(data)

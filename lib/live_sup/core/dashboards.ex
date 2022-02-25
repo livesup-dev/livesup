@@ -5,6 +5,7 @@ defmodule LiveSup.Core.Dashboards do
 
   alias LiveSup.Schemas.{Dashboard, Project, WidgetInstance}
   alias LiveSup.Queries.{DashboardQuery, DashboardWidgetQuery, WidgetInstanceQuery}
+  alias LiveSup.Helpers.StringHelper
 
   @doc """
   Returns the list of dashboards.
@@ -34,11 +35,6 @@ defmodule LiveSup.Core.Dashboards do
 
   defdelegate get!(id), to: DashboardQuery
 
-  def create(attrs) do
-    attrs
-    |> DashboardQuery.create()
-  end
-
   @doc """
   Creates a project.
 
@@ -51,9 +47,15 @@ defmodule LiveSup.Core.Dashboards do
       {:error, %Ecto.Changeset{}}
 
   """
+  def create(attrs) when is_map(attrs) do
+    attrs
+    |> DashboardQuery.create()
+  end
+
   def create(%Project{id: project_id}, attrs \\ %{}) do
     attrs
-    |> Enum.into(%{project_id: project_id})
+    |> StringHelper.keys_to_strings()
+    |> Enum.into(%{"project_id" => project_id})
     |> DashboardQuery.create()
   end
 
