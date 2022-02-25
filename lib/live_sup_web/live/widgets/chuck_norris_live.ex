@@ -8,7 +8,7 @@ defmodule LiveSupWeb.Live.Widgets.ChuckNorrisLive do
       <!-- Chuck Norris -->
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
         <!-- Widget Content -->
-        <div class="flex-auto min-h-[150px]">
+        <div class="flex-auto min-h-[112px]">
           <p class="p-2"><%= widget_data.data %></p>
         </div>
         <!-- /Widget Content -->

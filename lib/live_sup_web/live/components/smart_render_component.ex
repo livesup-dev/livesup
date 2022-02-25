@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
     <div>
       <%= if @widget_data.state == :error do %>
         <!-- Widget Error -->
-        <div class="ring-1 shadow ring-red-500 ring-opacity-50 items-center justify-between bg-white rounded-md dark:bg-darker">
+        <div class="ring-1 shadow ring-red-500 ring-opacity-50 items-center justify-between bg-white rounded-md dark:bg-darker min-h-[200px]">
           <!-- Widget Error Detail -->
             <div class="bg-white rounded-md dark:bg-darker">
               <div class="flex items-center justify-between p-2 border-b dark:border-primary">
@@ -36,7 +36,7 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
 
       <%= if @widget_data.state == :in_progress do %>
         <!-- Widget Loading -->
-        <div class="opacity-50 ring-1 shadow ring-indigo-300 ring-opacity-50 items-center justify-between bg-white rounded-md dark:bg-darker animate-pulse">
+        <div class="opacity-50 ring-1 shadow ring-indigo-300 ring-opacity-50 items-center justify-between bg-white rounded-md dark:bg-darker animate-pulse min-h-[200px]">
           <!-- Widget Loading Detail -->
             <div class="bg-white rounded-md dark:bg-darker">
               <div class="flex items-center justify-between p-2 border-b dark:border-primary">
@@ -60,7 +60,7 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
       <% end %>
 
       <%= if @widget_data.state == :ready do %>
-        <div id={@widget_data.id} class="draggable bg-white rounded-md dark:bg-darker">
+        <div id={@widget_data.id} class="draggable bg-white rounded-md dark:bg-darker min-h-[180px]">
           <%= render_slot(@inner_block, @widget_data) %>
         </div>
       <% end %>
