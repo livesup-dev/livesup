@@ -34,7 +34,8 @@ defmodule LiveSup.Schemas.Project do
     :settings,
     :labels,
     :slug,
-    :avatar_url
+    :avatar_url,
+    :id
   ]
 
   @doc false

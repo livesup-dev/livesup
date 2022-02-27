@@ -28,7 +28,8 @@ defmodule LiveSup.Schemas.Dashboard do
   @optional_fields [
     :default,
     :labels,
-    :settings
+    :settings,
+    :id
   ]
 
   @doc false

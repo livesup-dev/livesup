@@ -62,6 +62,7 @@ defmodule LiveSup.MixProject do
       {:bypass, "~> 2.1", only: :test},
       {:mock, "~> 0.3.0", only: :test},
       {:prom_ex, "~> 1.5.0"},
+      {:yaml_elixir, "~> 2.8.0"},
 
       # Additional packages
       {:bcrypt_elixir, "~> 2.0"},

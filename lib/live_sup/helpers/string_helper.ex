@@ -20,4 +20,11 @@ defmodule LiveSup.Helpers.StringHelper do
   def find_placeholders(str) do
     Regex.scan(~r{\{(.*?)\}}, str) |> Enum.map(&tl/1) |> List.flatten()
   end
+
+  def keys_to_strings(map) do
+    for {key, val} <- map, into: %{}, do: {convert_to_string(key), val}
+  end
+
+  defp convert_to_string(value) when is_binary(value), do: value
+  defp convert_to_string(value) when is_atom(value), do: Atom.to_string(value)
 end

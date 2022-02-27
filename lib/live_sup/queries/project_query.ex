@@ -17,6 +17,11 @@ defmodule LiveSup.Queries.ProjectQuery do
     |> Repo.get!(id)
   end
 
+  def get(id) do
+    base()
+    |> Repo.get(id)
+  end
+
   def get_with_dashboards!(id) do
     get_with_dashboard_query()
     |> Repo.get!(id)
