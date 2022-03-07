@@ -14,6 +14,8 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
+RUN npm install npm@8.5.3 -g
+
 # Install hex and rebar
 RUN mix local.hex --force && \
     mix local.rebar --force
