@@ -17,6 +17,8 @@ defmodule LiveSupWeb.Api.TeamControllerTest do
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
+
+    create_user_and_assign_valid_jwt(%{conn: conn})
   end
 
   describe "index" do

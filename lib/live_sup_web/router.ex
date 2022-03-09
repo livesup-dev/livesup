@@ -63,6 +63,10 @@ defmodule LiveSupWeb.Router do
     pipe_through :api
 
     post "/sessions", SessionController, :create
+  end
+
+  scope "/api", LiveSupWeb.Api, as: :api do
+    pipe_through :api_authenticated
 
     resources "/teams", TeamController
   end

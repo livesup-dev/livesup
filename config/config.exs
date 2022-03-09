@@ -58,9 +58,9 @@ config :live_sup, LiveSupWeb.Api.Guardian,
   secret_key: {System, :get_env, ["GUARDIAN_SECRET"]},
   ttl: {2, :days}
 
-config :live_sup, LiveSupWeb.AuthAccessPipeline,
-  module: Tutorial.Guardian,
-  error_handler: TutorialWeb.AuthErrorHandler
+config :live_sup, LiveSupWeb.Plugs.AuthAccessPipeline,
+  module: LiveSupWeb.Api.Guardian,
+  error_handler: LiveSupWeb.Plugs.AuthErrorHandler
 
 config :ueberauth, Ueberauth,
   base_path: "/oauth",
