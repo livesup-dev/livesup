@@ -54,13 +54,13 @@ config :live_sup, LiveSup.PromEx,
   metrics_server: :disabled
 
 config :live_sup, LiveSupWeb.Api.Guardian,
-      issuer: "livesup",
-      secret_key: {System, :get_env, ["GUARDIAN_SECRET"]},
-      ttl: {2, :days}
+  issuer: "livesup",
+  secret_key: {System, :get_env, ["GUARDIAN_SECRET"]},
+  ttl: {2, :days}
 
 config :live_sup, LiveSupWeb.AuthAccessPipeline,
-      module: Tutorial.Guardian,
-      error_handler: TutorialWeb.AuthErrorHandler
+  module: Tutorial.Guardian,
+  error_handler: TutorialWeb.AuthErrorHandler
 
 config :ueberauth, Ueberauth,
   base_path: "/oauth",
