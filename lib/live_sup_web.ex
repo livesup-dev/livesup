@@ -29,6 +29,18 @@ defmodule LiveSupWeb do
     end
   end
 
+  def api_controller do
+    quote do
+      use Phoenix.Controller, namespace: LiveSupWeb
+
+      import Plug.Conn
+      import LiveSupWeb.Gettext
+      alias LiveSupWeb.Router.Helpers, as: Routes
+
+      action_fallback LiveSupWeb.Api.FallbackController
+    end
+  end
+
   def view do
     quote do
       use Phoenix.View,

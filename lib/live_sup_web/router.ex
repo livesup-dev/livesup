@@ -19,6 +19,10 @@ defmodule LiveSupWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :api_authenticated do
+    plug LiveSupWeb.Plugs.AuthAccessPipeline
+  end
+
   pipeline :mounted_apps do
     plug :accepts, ["html"]
     plug :put_secure_browser_headers
@@ -55,6 +59,17 @@ defmodule LiveSupWeb.Router do
   end
 
   ## Authentication routes
+  scope "/api", LiveSupWeb.Api, as: :api do
+    pipe_through :api
+
+    post "/sessions", SessionController, :create
+  end
+
+  scope "/api", LiveSupWeb.Api, as: :api do
+    pipe_through :api_authenticated
+
+    resources "/teams", TeamController
+  end
 
   scope "/oauth", LiveSupWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]

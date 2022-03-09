@@ -15,7 +15,7 @@ defmodule LiveSup do
         LiveSup.Config.secret!("LIVESUP_SECRET_KEY_BASE") ||
           Base.encode64(:crypto.strong_rand_bytes(48))
 
-    if port = LiveSup.Config.port!("LIVESUP_PORT") do
+    if port = LiveSup.Config.port!("LIVESUP_HTTP_PORT") do
       config :live_sup, LiveSupWeb.Endpoint, http: [port: port]
     end
 

@@ -17,6 +17,10 @@ config :live_sup, LiveSup.Repo,
   migration_lock: nil,
   queue_target: 5000
 
+config :live_sup, LiveSupWeb.Api.Guardian,
+  issuer: "livesup",
+  secret_key: "test_secret"
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :live_sup, LiveSupWeb.Endpoint,

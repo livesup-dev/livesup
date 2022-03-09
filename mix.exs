@@ -73,6 +73,7 @@ defmodule LiveSup.MixProject do
       {:ecto_autoslug_field, "~> 3.0"},
 
       # Auth
+      {:guardian, "~> 2.0"},
       {:ueberauth, "~> 0.6"},
       {:ueberauth_google, "~> 0.10"},
       {:ueberauth_github, "~> 0.8"}

@@ -65,4 +65,20 @@ defmodule LiveSupWeb.ConnCase do
     |> Phoenix.ConnTest.init_test_session(%{})
     |> Plug.Conn.put_session(:user_token, token)
   end
+
+  @doc """
+  Setup helper that registers and assigns a valid jwt for users.
+
+    setup :create_user_and_assign_valid_jwt
+
+  It stores an updated connection and a registered user in the
+  test context.
+  """
+  def create_user_and_assign_valid_jwt(%{conn: conn}) do
+    user = LiveSup.Test.AccountsFixtures.user_fixture()
+    {:ok, jwt, _full_claims} = LiveSupWeb.Api.Guardian.encode_and_sign(user, %{})
+
+    conn = Plug.Conn.put_req_header(conn, "authorization", "bearer: " <> jwt)
+    {:ok, conn: conn, user: user}
+  end
 end

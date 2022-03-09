@@ -9,6 +9,10 @@ config :live_sup, LiveSup.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :live_sup, LiveSupWeb.Api.Guardian,
+  issuer: "livesup",
+  secret_key: "dev_secret"
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
