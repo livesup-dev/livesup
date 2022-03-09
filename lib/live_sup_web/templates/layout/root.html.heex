@@ -14,13 +14,11 @@
           <!-- Navbar -->
           <header class="relative bg-white dark:bg-darker">
             <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
-              <%= render("_mobile_menu_button.html", conn: @conn) %>
               <%= render("_brand.html", conn: @conn) %>
               <%= render("_mobile_submenu_button.html", conn: @conn) %>
               <%= render("_right_buttons.html", conn: @conn) %>
               <%= render("_mobile_submenu.html", conn: @conn) %>
             </div>
-            <%= render("_mobile_main_menu.html", conn: @conn) %>
           </header>
 
           <!-- Main content -->
