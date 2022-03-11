@@ -15,11 +15,7 @@ defmodule LiveSupWeb.Api.TeamControllerTest do
   }
   @invalid_attrs %{name: nil}
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
-
-    create_user_and_assign_valid_jwt(%{conn: conn})
-  end
+  setup [:create_user_and_assign_valid_jwt]
 
   describe "index" do
     @describetag :teams_request

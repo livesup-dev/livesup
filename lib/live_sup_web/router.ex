@@ -69,6 +69,9 @@ defmodule LiveSupWeb.Router do
     pipe_through :api_authenticated
 
     resources "/teams", TeamController
+    resources "/projects", ProjectController
+    resources "/users", UserController
+    resources "/groups", GroupController
   end
 
   scope "/oauth", LiveSupWeb do

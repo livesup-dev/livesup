@@ -8,6 +8,45 @@ defmodule LiveSup.Queries.UserQuery do
     |> Repo.all()
   end
 
+  def get!(id) do
+    base()
+    |> Repo.get!(id)
+  end
+
+  def get(id) do
+    base()
+    |> Repo.get(id)
+  end
+
+  def create!(data) do
+    %User{}
+    |> User.registration_changeset(data)
+    |> Repo.insert!()
+  end
+
+  def create(data) do
+    %User{}
+    |> User.registration_changeset(data)
+    |> Repo.insert()
+  end
+
+  def update(%User{} = model, attrs) do
+    model
+    |> User.update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update!(%User{} = model, attrs) do
+    model
+    |> User.update_changeset(attrs)
+    |> Repo.update!()
+  end
+
+  def delete(model) do
+    model
+    |> Repo.delete()
+  end
+
   def search(%{value: value, not_in_team: team_id}) do
     search_for = "%#{value}%"
 

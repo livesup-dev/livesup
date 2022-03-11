@@ -3,9 +3,7 @@ defmodule LiveSup.Tests.Queries.MetricValueQueryTest do
   use LiveSup.DataCase
 
   alias LiveSup.Helpers.DateHelper
-  alias LiveSup.Schemas.MetricValue
   alias LiveSup.Queries.MetricValueQuery
-  alias LiveSup.Repo
 
   setup [:setup_metrics]
 
