@@ -12,9 +12,15 @@ defmodule LiveSup.Tests.Queries.WidgetInstanceQueryTest do
     @describetag :widget_instance_query
 
     test "return a single widget instance", %{widgets_instances: [widget_instance, _]} do
-      widget_instance_found = %{id: id} = WidgetInstanceQuery.get!(widget_instance.id)
+      widget_instance_found = WidgetInstanceQuery.get!(widget_instance.id)
 
-      assert widget_instance_found = widget_instance
+      assert %{
+               id: widget_instance_found.id,
+               name: widget_instance_found.name
+             } == %{
+               id: widget_instance.id,
+               name: widget_instance.name
+             }
     end
 
     test "return widgets by dashboard", %{

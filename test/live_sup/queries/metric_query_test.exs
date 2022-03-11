@@ -2,9 +2,7 @@ defmodule LiveSup.Tests.Queries.MetricQueryTest do
   use ExUnit.Case, async: true
   use LiveSup.DataCase
 
-  alias LiveSup.Schemas.Metric
   alias LiveSup.Queries.MetricQuery
-  alias LiveSup.Repo
 
   setup [:setup_metrics]
 
@@ -21,7 +19,14 @@ defmodule LiveSup.Tests.Queries.MetricQueryTest do
         "metric-one"
         |> MetricQuery.by_slug()
 
-      assert metric = %{
+      assert %{
+               name: metric.name,
+               slug: metric.slug,
+               target: 1.0,
+               unit: metric.unit,
+               settings: metric.settings,
+               labels: metric.labels
+             } == %{
                name: "Metric One",
                slug: "metric-one",
                target: 1.0,
@@ -32,7 +37,7 @@ defmodule LiveSup.Tests.Queries.MetricQueryTest do
     end
   end
 
-  defp setup_metrics(attrs \\ %{}) do
+  defp setup_metrics(_) do
     [
       %{
         name: "Metric One",

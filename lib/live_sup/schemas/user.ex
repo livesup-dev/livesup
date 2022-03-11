@@ -75,6 +75,22 @@ defmodule LiveSup.Schemas.User do
     |> maybe_set_location()
   end
 
+  def update_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [
+      :email,
+      :first_name,
+      :last_name,
+      :avatar_url,
+      :location,
+      :settings,
+      :provider
+    ])
+    |> validate_required([])
+    |> validate_email()
+    |> maybe_set_location()
+  end
+
   defp validate_email(changeset) do
     changeset
     |> validate_required([:email])

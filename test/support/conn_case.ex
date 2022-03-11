@@ -78,8 +78,9 @@ defmodule LiveSupWeb.ConnCase do
     user = LiveSup.Test.AccountsFixtures.user_fixture()
     {:ok, jwt, _full_claims} = LiveSupWeb.Api.Guardian.encode_and_sign(user, %{})
 
-    conn = Plug.Conn.put_req_header(conn, "authorization", "bearer: " <> jwt)
-           |> Plug.Conn.put_req_header("accept", "application/json")
+    conn =
+      Plug.Conn.put_req_header(conn, "authorization", "bearer: " <> jwt)
+      |> Plug.Conn.put_req_header("accept", "application/json")
 
     {:ok, conn: conn, user: user}
   end
