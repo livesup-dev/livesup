@@ -1,5 +1,6 @@
 defmodule LiveSup.Test.Setups do
   alias LiveSup.Test.{DatasourcesFixtures, ProjectsFixtures, DashboardsFixtures, GroupsFixtures}
+  alias LiveSup.Core.{Groups, Dashboards}
 
   def setup_dashboard(context) do
     project =
@@ -51,7 +52,7 @@ defmodule LiveSup.Test.Setups do
       |> build_widgets_instances()
 
     context[:dashboard]
-    |> LiveSup.Core.Dashboards.add_widgets(widgets_instances)
+    |> Dashboards.add_widgets(widgets_instances)
 
     context
     |> add_to_context(%{widgets_instances: widgets_instances})
@@ -94,9 +95,9 @@ defmodule LiveSup.Test.Setups do
       |> setup_default_internal_project()
       |> setup_dashboard_with_widgets()
 
-    LiveSup.Core.Groups.add_project(context[:project], context[:admin_group])
-    LiveSup.Core.Groups.add_project(context[:project], context[:all_users_group])
-    LiveSup.Core.Groups.add_user(context[:user], context[:all_users_group])
+    Groups.add_project(context[:project], context[:admin_group])
+    Groups.add_project(context[:project], context[:all_users_group])
+    Groups.add_user(context[:user], context[:all_users_group])
 
     context
   end
