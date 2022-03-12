@@ -1,34 +1,43 @@
 defmodule LiveSup.Test.Setups do
+  alias LiveSup.Test.{DatasourcesFixtures, ProjectsFixtures, DashboardsFixtures, GroupsFixtures}
+
   def setup_dashboard(context) do
     project =
       context[:project] ||
-        LiveSup.Test.ProjectsFixtures.project_fixture(get_param(context, :project_attrs))
+        ProjectsFixtures.project_fixture(get_param(context, :project_attrs))
 
     dashboard =
       project
-      |> LiveSup.Test.DashboardsFixtures.dashboard_fixture(get_param(context, :dashboard_attrs))
+      |> DashboardsFixtures.dashboard_fixture(get_param(context, :dashboard_attrs))
 
     context
     |> add_to_context(%{project: project, dashboard: dashboard})
   end
 
+  def setup_datasource(context) do
+    datasource = DatasourcesFixtures.datasource_fixture(context)
+
+    context
+    |> add_to_context(%{datasource: datasource})
+  end
+
   def setup_project(context) do
-    project = LiveSup.Test.ProjectsFixtures.project_fixture()
+    project = ProjectsFixtures.project_fixture()
 
     context
     |> add_to_context(%{project: project})
   end
 
   def setup_groups(context) do
-    admin_group = LiveSup.Test.GroupsFixtures.administrator_group_fixture()
-    all_users_group = LiveSup.Test.GroupsFixtures.all_users_group_fixture()
+    admin_group = GroupsFixtures.administrator_group_fixture()
+    all_users_group = GroupsFixtures.all_users_group_fixture()
 
     context
     |> add_to_context(%{admin_group: admin_group, all_users_group: all_users_group})
   end
 
   def setup_default_internal_project(context) do
-    project = LiveSup.Test.ProjectsFixtures.internal_default_project_fixture()
+    project = ProjectsFixtures.internal_default_project_fixture()
 
     context
     |> add_to_context(%{project: project})
@@ -38,7 +47,7 @@ defmodule LiveSup.Test.Setups do
     context = context |> setup_dashboard()
 
     widgets_instances =
-      LiveSup.Test.DatasourcesFixtures.datasource_fixture()
+      DatasourcesFixtures.datasource_fixture()
       |> build_widgets_instances()
 
     context[:dashboard]
