@@ -56,6 +56,6 @@ defmodule LiveSup.Tests.Queries.MetricQueryTest do
         labels: ["metrics"]
       }
     ]
-    |> Enum.each(fn metric -> metric |> LiveSup.Queries.MetricQuery.insert!() end)
+    |> Enum.each(fn metric -> metric |> LiveSup.Queries.MetricQuery.create!() end)
   end
 end

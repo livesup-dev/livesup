@@ -79,6 +79,7 @@ defmodule LiveSupWeb.Router do
     resources "/users", UserController
     resources "/groups", GroupController
     resources "/widgets", WidgetController
+    resources "/metrics", MetricController
   end
 
   scope "/oauth", LiveSupWeb do

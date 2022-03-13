@@ -3,10 +3,16 @@ defmodule LiveSup.Queries.MetricQuery do
   alias LiveSup.Repo
   alias LiveSup.Schemas.Metric
 
-  def insert!(data) do
+  def create!(data) do
     %Metric{}
-    |> Metric.create_changeset(data)
+    |> Metric.changeset(data)
     |> Repo.insert!()
+  end
+
+  def create(data) do
+    %Metric{}
+    |> Metric.changeset(data)
+    |> Repo.insert()
   end
 
   def update(%Metric{} = model, attrs) do
@@ -39,6 +45,24 @@ defmodule LiveSup.Queries.MetricQuery do
   end
 
   def all() do
-    Repo.all(Metric)
+    base()
+    |> Repo.all()
   end
+
+  def get!(id) do
+    base()
+    |> Repo.get!(id)
+  end
+
+  def get(id) do
+    base()
+    |> Repo.get(id)
+  end
+
+  def delete(project) do
+    project
+    |> Repo.delete()
+  end
+
+  def base, do: from(Metric, as: :metric)
 end

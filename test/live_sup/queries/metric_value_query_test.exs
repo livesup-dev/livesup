@@ -53,7 +53,7 @@ defmodule LiveSup.Tests.Queries.MetricValueQueryTest do
     ]
     |> Enum.each(fn metric ->
       metric
-      |> LiveSup.Queries.MetricQuery.insert!()
+      |> LiveSup.Queries.MetricQuery.create!()
       |> setup_metric_values()
     end)
   end
