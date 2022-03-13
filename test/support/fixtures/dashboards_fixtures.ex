@@ -15,6 +15,7 @@ defmodule LiveSup.Test.DashboardsFixtures do
     project
     |> Dashboards.create(attrs)
     |> elem(1)
+    |> Dashboards.get!()
   end
 
   defp default_attrs do

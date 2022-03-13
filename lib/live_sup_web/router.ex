@@ -69,9 +69,17 @@ defmodule LiveSupWeb.Router do
     pipe_through :api_authenticated
 
     resources "/teams", TeamController
-    resources "/projects", ProjectController
+
+    resources "/projects", ProjectController do
+      resources "/dashboards", DashboardController, only: [:index, :create]
+    end
+
+    resources "/dashboards", DashboardController, except: [:index, :new, :create]
+
     resources "/users", UserController
     resources "/groups", GroupController
+    resources "/widgets", WidgetController
+    resources "/metrics", MetricController
   end
 
   scope "/oauth", LiveSupWeb do

@@ -9,10 +9,12 @@ defmodule LiveSupWeb.Api.GroupControllerTest do
     internal: true,
     name: "some name"
   }
+
   @update_attrs %{
     internal: false,
     name: "some updated name"
   }
+
   @invalid_attrs %{internal: nil, name: nil, slug: nil}
 
   setup [:create_user_and_assign_valid_jwt]

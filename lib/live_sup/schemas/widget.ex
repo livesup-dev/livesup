@@ -3,6 +3,7 @@ defmodule LiveSup.Schemas.Widget do
   import Ecto.Changeset
 
   alias LiveSup.Schemas.{Widget, Datasource, WidgetInstance}
+  alias LiveSup.Schemas.Slugs.WidgetSlug
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -12,7 +13,7 @@ defmodule LiveSup.Schemas.Widget do
     field :description, :string
     field :ui_handler, :string
     field :worker_handler, :string
-    field :slug, :string
+    field :slug, WidgetSlug.Type
     field :feature_image_url, :string
     field :category, :string
     field :enabled, :boolean
@@ -32,13 +33,13 @@ defmodule LiveSup.Schemas.Widget do
     :name,
     :ui_handler,
     :worker_handler,
-    :settings,
     :labels,
     :slug,
     :global
   ]
 
   @optional_fields [
+    :settings,
     :description,
     :feature_image_url,
     :category,
@@ -56,6 +57,7 @@ defmodule LiveSup.Schemas.Widget do
   def changeset(%Widget{} = model, attrs) do
     model
     |> cast(attrs, @required_fields ++ @optional_fields)
+    |> assoc_constraint(:datasource)
     |> validate_required(@required_fields)
   end
 

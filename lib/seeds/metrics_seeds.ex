@@ -16,7 +16,7 @@ defmodule LiveSup.Seeds.MetricsSeeds do
       settings: %{},
       labels: ["metrics"]
     }
-    |> Metrics.insert!()
+    |> Metrics.create!()
     |> insert_metric_values()
   end
 

@@ -1,34 +1,44 @@
 defmodule LiveSup.Test.Setups do
+  alias LiveSup.Test.{DatasourcesFixtures, ProjectsFixtures, DashboardsFixtures, GroupsFixtures}
+  alias LiveSup.Core.{Groups, Dashboards}
+
   def setup_dashboard(context) do
     project =
       context[:project] ||
-        LiveSup.Test.ProjectsFixtures.project_fixture(get_param(context, :project_attrs))
+        ProjectsFixtures.project_fixture(get_param(context, :project_attrs))
 
     dashboard =
       project
-      |> LiveSup.Test.DashboardsFixtures.dashboard_fixture(get_param(context, :dashboard_attrs))
+      |> DashboardsFixtures.dashboard_fixture(get_param(context, :dashboard_attrs))
 
     context
     |> add_to_context(%{project: project, dashboard: dashboard})
   end
 
+  def setup_datasource(context) do
+    datasource = DatasourcesFixtures.datasource_fixture(context)
+
+    context
+    |> add_to_context(%{datasource: datasource})
+  end
+
   def setup_project(context) do
-    project = LiveSup.Test.ProjectsFixtures.project_fixture()
+    project = ProjectsFixtures.project_fixture()
 
     context
     |> add_to_context(%{project: project})
   end
 
   def setup_groups(context) do
-    admin_group = LiveSup.Test.GroupsFixtures.administrator_group_fixture()
-    all_users_group = LiveSup.Test.GroupsFixtures.all_users_group_fixture()
+    admin_group = GroupsFixtures.administrator_group_fixture()
+    all_users_group = GroupsFixtures.all_users_group_fixture()
 
     context
     |> add_to_context(%{admin_group: admin_group, all_users_group: all_users_group})
   end
 
   def setup_default_internal_project(context) do
-    project = LiveSup.Test.ProjectsFixtures.internal_default_project_fixture()
+    project = ProjectsFixtures.internal_default_project_fixture()
 
     context
     |> add_to_context(%{project: project})
@@ -38,11 +48,11 @@ defmodule LiveSup.Test.Setups do
     context = context |> setup_dashboard()
 
     widgets_instances =
-      LiveSup.Test.DatasourcesFixtures.datasource_fixture()
+      DatasourcesFixtures.datasource_fixture()
       |> build_widgets_instances()
 
     context[:dashboard]
-    |> LiveSup.Core.Dashboards.add_widgets(widgets_instances)
+    |> Dashboards.add_widgets(widgets_instances)
 
     context
     |> add_to_context(%{widgets_instances: widgets_instances})
@@ -85,9 +95,9 @@ defmodule LiveSup.Test.Setups do
       |> setup_default_internal_project()
       |> setup_dashboard_with_widgets()
 
-    LiveSup.Core.Groups.add_project(context[:project], context[:admin_group])
-    LiveSup.Core.Groups.add_project(context[:project], context[:all_users_group])
-    LiveSup.Core.Groups.add_user(context[:user], context[:all_users_group])
+    Groups.add_project(context[:project], context[:admin_group])
+    Groups.add_project(context[:project], context[:all_users_group])
+    Groups.add_user(context[:user], context[:all_users_group])
 
     context
   end

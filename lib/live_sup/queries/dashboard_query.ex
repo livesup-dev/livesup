@@ -16,6 +16,11 @@ defmodule LiveSup.Queries.DashboardQuery do
     |> Repo.all()
   end
 
+  def get!(%Dashboard{id: dashboard_id}) do
+    base()
+    |> Repo.get!(dashboard_id)
+  end
+
   def get!(id) do
     base()
     |> Repo.get!(id)
@@ -24,7 +29,6 @@ defmodule LiveSup.Queries.DashboardQuery do
   def get_with_project(id) do
     base()
     |> join(:inner, [d], p in Project, on: d.project_id == p.id)
-    |> preload([:project])
     |> Repo.get(id)
   end
 
@@ -61,5 +65,5 @@ defmodule LiveSup.Queries.DashboardQuery do
     |> Repo.one()
   end
 
-  def base, do: from(Dashboard, as: :dashboard)
+  def base, do: from(Dashboard, as: :dashboard, preload: [:project])
 end
