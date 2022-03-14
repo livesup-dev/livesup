@@ -37,6 +37,10 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
       },
       %{
         datasource_slug: "blameless-datasource",
+        attrs: &blameless_incidents_by_severity_widget_attrs/1
+      },
+      %{
+        datasource_slug: "blameless-datasource",
         attrs: &blameless_incidents_by_date_widget_attrs/1
       },
       %{
@@ -179,6 +183,24 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
       global: false,
       ui_handler: "LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive",
       worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByType.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 60},
+        "limit" => %{"source" => "local", "type" => "int", "value" => 10}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  defp blameless_incidents_by_severity_widget_attrs(datasource) do
+    %{
+      name: "Blameless Incidents by Severity",
+      slug: "blameless-incidents-by-severity",
+      feature_image_url: "/images/widgets/blameless-incidents-by-severity.png",
+      enabled: true,
+      global: false,
+      ui_handler: "LiveSupWeb.Live.Widgets.Blameless.IncidentsBySeverityLive",
+      worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsBySeverity.Worker",
       labels: [],
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 60},
