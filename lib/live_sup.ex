@@ -19,6 +19,10 @@ defmodule LiveSup do
       config :live_sup, LiveSupWeb.Endpoint, http: [port: port]
     end
 
+    if hostname = LiveSup.Config.hostname!("LIVESUP_HOSTNAME") do
+      config :live_sup, LiveSupWeb.Endpoint, url: [host: hostname]
+    end
+
     if ip = LiveSup.Config.ip!("LIVESUP_IP") do
       config :live_sup, LiveSupWeb.Endpoint, http: [ip: ip]
     end

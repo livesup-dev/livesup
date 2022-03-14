@@ -41,6 +41,12 @@ defmodule LiveSup.Config do
     end
   end
 
+  def hostname!(env) do
+    if hostname = System.get_env(env) do
+      hostname
+    end
+  end
+
   @doc """
   Parses and validates the ip from env.
   """
