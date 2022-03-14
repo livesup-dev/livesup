@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive do
+defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsBySeverityLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
   alias VegaLite, as: Vl
 
@@ -10,7 +10,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive do
       <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 grid justify-items-center  min-h-[112px]">
-        <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent, id: "blameless-incidents-by-type-chart", spec: build_spec(widget_data)) %>
+        <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent, id: "blameless-incidents-by-severity-chart", spec: build_spec(widget_data)) %>
       </div>
       <!-- /Widget Content -->
       <!-- /Incidents by Type -->
@@ -23,7 +23,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive do
     data =
       widget_data.data
       |> Enum.map(fn {key, value} ->
-        %{"category" => key, "value" => value}
+        %{"severity" => key, "value" => value}
       end)
 
     # Initialize the specification, optionally with some top-level properties
@@ -38,9 +38,9 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive do
       "encoding" => %{
         "theta" => %{"field" => "value", "type" => "quantitative", "stack" => true},
         "color" => %{
-          "field" => "category",
+          "field" => "severity",
           "type" => "nominal",
-          "legend" => %{"title" => "Type", "labelColor" => "white", "titleColor" => "white"}
+          "legend" => %{"title" => "Severity", "labelColor" => "white", "titleColor" => "white"}
         }
       },
       "layer" => [
@@ -48,7 +48,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive do
           "mark" => %{"type" => "arc", "outerRadius" => 80}
         },
         %{
-          "mark" => %{"type" => "text", "radius" => 100}
+          "mark" => %{"type" => "text", "radius" => 140}
         }
       ]
     }

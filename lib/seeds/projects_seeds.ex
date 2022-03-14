@@ -44,6 +44,7 @@ defmodule LiveSup.Seeds.ProjectsSeeds do
     blameless_current_incidents_widget = get_widget_by_slug("blameless-current-incidents")
     blameless_last_incidents_widget = get_widget_by_slug("blameless-last-incidents")
     blameless_incidents_by_type_widget = get_widget_by_slug("blameless-incidents-by-type")
+    blameless_incidents_by_type_severity = get_widget_by_slug("blameless-incidents-by-severity")
     blameless_incidents_by_date_widget = get_widget_by_slug("blameless-incidents-by-date")
     jira_current_sprint_widget = get_widget_by_slug("jira-current-sprint")
     github_pull_requests_widget = get_widget_by_slug("github-pull-requests")
@@ -164,6 +165,11 @@ defmodule LiveSup.Seeds.ProjectsSeeds do
           },
           %{
             widget: blameless_incidents_by_type_widget,
+            settings: %{},
+            datasource_instance: blameless_datasource_instance
+          },
+          %{
+            widget: blameless_incidents_by_type_severity,
             settings: %{},
             datasource_instance: blameless_datasource_instance
           },
