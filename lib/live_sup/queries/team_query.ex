@@ -22,6 +22,12 @@ defmodule LiveSup.Queries.TeamQuery do
     |> Repo.get!(id)
   end
 
+  def get(id) do
+    base()
+    |> preload(team_members: :user)
+    |> Repo.get(id)
+  end
+
   def get_by_slug!(slug) do
     base()
     |> where([t], t.slug == ^slug)

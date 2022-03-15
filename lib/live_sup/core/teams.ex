@@ -19,6 +19,7 @@ defmodule LiveSup.Core.Teams do
   """
   defdelegate all(), to: TeamQuery
   defdelegate all(project), to: TeamQuery
+  defdelegate get(id), to: TeamQuery
   defdelegate get!(id), to: TeamQuery
   defdelegate get_by_slug!(slug), to: TeamQuery
   defdelegate get_by_slug(slug), to: TeamQuery

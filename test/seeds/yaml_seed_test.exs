@@ -4,7 +4,7 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
 
   import LiveSup.Test.Setups
 
-  alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources}
+  alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources, Teams}
 
   describe "Seed from a yaml file" do
     @describetag :yaml_seed
@@ -26,6 +26,9 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
 
       widget_instances = Dashboards.widgets_instances(dashboard)
       assert length(widget_instances) == 1
+
+      team = Teams.get!("c92310d4-4577-4ce1-3456-be9684628ece")
+      assert %{name: "TPM"} = team
     end
 
     defp yaml_data do
@@ -69,7 +72,18 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
           internal: false
           name: "Awesome Project"
           slug: awesome-project
-
+          projects:
+          - id: c488e97d-7a58-48e3-9696-0d7abbd365c1
+            name: Testing
+            slug: testing
+            internal: false
+            default: false
+            avatar_url: https://www.someimage.com/testing.jpeg
+      teams:
+        - id: c92310d4-4577-4ce1-3456-be9684628ece
+          name: TPM
+          slug: tpm
+          avatar_url: https://amazonaws.com/teams/tpm.jpeg
       """
     end
   end
