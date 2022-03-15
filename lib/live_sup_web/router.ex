@@ -80,6 +80,7 @@ defmodule LiveSupWeb.Router do
     resources "/groups", GroupController
     resources "/widgets", WidgetController
     resources "/metrics", MetricController
+    post "/seed", SeedController, :create
   end
 
   scope "/oauth", LiveSupWeb do

@@ -1,22 +1,25 @@
 defmodule LiveSup.Seeds.YamlSeed do
-  alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets}
+  alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets, Teams}
   alias LiveSup.Schemas.Project
 
   def seed(data) do
     data
     |> parse_yaml()
     |> import_projects()
+    |> import_teams()
 
     :ok
   end
 
-  defp import_projects(%{"projects" => projects}) do
+  defp import_projects(%{"projects" => projects} = data) do
     projects
     |> Enum.each(fn project_attrs ->
       project_attrs
       |> get_or_create_project()
       |> import_dashboards(project_attrs)
     end)
+
+    data
   end
 
   defp get_or_create_project(%{"id" => id} = attrs) do
@@ -31,6 +34,8 @@ defmodule LiveSup.Seeds.YamlSeed do
       |> import_widget(dashboard_attrs)
     end)
   end
+
+  defp import_dashboards({:ok, %Project{} = _project}, _args), do: :ok
 
   def get_or_create_dashboard(project, %{"id" => id} = attrs) do
     case Dashboards.get(id) do
@@ -56,6 +61,20 @@ defmodule LiveSup.Seeds.YamlSeed do
       dashboard
       |> Dashboards.add_widget(widget_instance)
     end)
+  end
+
+  defp import_teams(%{"teams" => teams}) do
+    teams
+    |> Enum.each(fn team_attrs ->
+      team_attrs
+      |> get_or_create_team()
+    end)
+  end
+
+  defp import_teams(_data), do: :ok
+
+  defp get_or_create_team(%{"id" => id} = attrs) do
+    Teams.get(id) || Teams.create(attrs)
   end
 
   # defp import_dashboards(project, _), do: nil

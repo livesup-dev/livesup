@@ -27,6 +27,7 @@ defmodule LiveSup.Schemas.Team do
   ]
 
   @optional_fields [
+    :id,
     :avatar_url,
     :settings,
     :labels,
