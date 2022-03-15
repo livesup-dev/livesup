@@ -2,6 +2,7 @@ defmodule LiveSupWeb.DatasourceController do
   use LiveSupWeb, :controller
   alias LiveSup.Core.{Datasources, Projects}
   alias LiveSup.Policies.ProjectPolicy
+
   def index(conn, %{"id" => project_id}) do
     current_user = conn.assigns.current_user
     project = Projects.get!(project_id)
