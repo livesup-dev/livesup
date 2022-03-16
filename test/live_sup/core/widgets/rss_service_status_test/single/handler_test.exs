@@ -26,11 +26,11 @@ defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.Single.HandlerTest do
       assert {
                :ok,
                %{
-                 created_at: ~U[2021-10-13 11:34:34Z],
+                 created_at: ~U[2022-03-16 19:46:00Z],
                  created_at_ago: _,
-                 status: :operational,
-                 title: "Incident with GitHub Actions",
-                 url: "https://www.githubstatus.com/incidents/81lpnf07bm1q"
+                 status: :incident,
+                 title: "Incident with GitHub Actions, Codespaces, Issues, and Webhooks",
+                 url: "https://www.githubstatus.com/incidents/fpk08rxnqjz2"
                }
              } = data
     end

@@ -12,7 +12,7 @@ defmodule LiveSup.Core.Widgets.RssServiceStatus.Single.Handler do
   def process(feed) do
     last_activity =
       feed.entries
-      |> Enum.filter(fn entry -> DateHelper.diff_in_days(entry[:updated]) >= 1 end)
+      |> Enum.filter(fn entry -> DateHelper.diff_in_days(entry[:updated]) >= 0 end)
       |> Enum.at(0)
       |> build_last_activity()
 
