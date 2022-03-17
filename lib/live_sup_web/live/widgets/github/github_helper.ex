@@ -1,6 +1,8 @@
 defmodule LiveSupWeb.Widgets.Github.GithubHelper do
   alias LiveSup.Helpers.DateHelper
 
+  # TODO: We really need to improve the way we are
+  # defining the color
   def pull_request_color(created_at) do
     number_of_days = DateHelper.diff_in_days(created_at)
 
@@ -12,6 +14,28 @@ defmodule LiveSupWeb.Widgets.Github.GithubHelper do
     end
   end
 
+  def pull_request_color(created_at, "open") do
+    number_of_days = DateHelper.diff_in_days(created_at)
+
+    case number_of_days do
+      n when n <= 3 -> "bg-gray-300"
+      n when n > 20 -> "bg-red-500"
+      n when n > 10 -> "bg-yellow-500"
+      n when n >= 4 -> "bg-green-500"
+    end
+  end
+
+  def pull_request_color(created_at, "closed") do
+    number_of_days = DateHelper.diff_in_days(created_at)
+
+    case number_of_days do
+      n when n <= 3 -> "bg-red-500"
+      n when n > 20 -> "bg-gray-300"
+      n when n > 10 -> "bg-green-500"
+      n when n >= 4 -> "bg-yellow-500"
+    end
+  end
+
   def pull_request_bg_color(counter) do
     case counter do
       n when n <= 3 -> "dark:bg-indigo-900 dark:bg-opacity-80 bg-indigo-100 bg-opacity-60"
@@ -19,6 +43,9 @@ defmodule LiveSupWeb.Widgets.Github.GithubHelper do
       n when n <= 10 -> "dark:bg-indigo-900 dark:bg-opacity-20 bg-indigo-100 bg-opacity-20"
     end
   end
+
+  def state_to_label("open"), do: "opened"
+  def state_to_label("closed"), do: "closed"
 
   def icon("open") do
     """
