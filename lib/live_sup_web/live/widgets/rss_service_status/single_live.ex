@@ -9,7 +9,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.SingleLive do
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
         <!-- Widget Content -->
         <div class="p-2">
-          <%= if widget_data.data.status == 'incident' do %>
+          <%= if widget_data.data.status == :incident do %>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 m-auto" fill="none" viewBox="0 0 24 24" stroke="#F96C6C">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>

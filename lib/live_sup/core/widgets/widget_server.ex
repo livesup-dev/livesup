@@ -7,6 +7,12 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
 
   @callback build_data(Map.t()) :: {:ok, term} | {:error, String.t()}
   @callback default_title() :: String.t()
+
+  @callback public_settings() :: List.t()
+  @callback settings_keys() :: List.t()
+
+  @optional_callbacks public_settings: 0
+
   # @callback get_data() :: {:ok, LiveSup.Core.Widgets.WidgetData.t()} | {:error, String.t()}
 
   defmacro __using__(_) do
@@ -189,7 +195,8 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
           id: widget_instance.id,
           title: title(widget_instance),
           data: data,
-          ui_settings: Widget.ui_settings(widget_instance.widget.ui_settings)
+          ui_settings: Widget.ui_settings(widget_instance.widget.ui_settings),
+          public_settings: find_public_settings(function_exported?(__MODULE__, :public_settings, 0), widget_instance)
         )
       end
 
@@ -201,6 +208,13 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
           ui_settings: Widget.ui_settings(widget_instance.widget.ui_settings)
         )
       end
+
+      defp find_public_settings(true, widget_instance) do
+        widget_instance
+        |> WidgetInstance.get_settings(__MODULE__.public_settings())
+      end
+
+      defp find_public_settings(false, _widget_instance), do: %{}
 
       defp title(widget_instance) do
         title = WidgetInstance.custom_title(widget_instance) || __MODULE__.default_title()

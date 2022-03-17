@@ -7,19 +7,21 @@ defmodule LiveSup.Core.Widgets.WidgetData do
             data: nil,
             title: nil,
             updated_in_minutes: nil,
-            ui_settings: %{}
+            ui_settings: %{},
+            public_settings: %{}
 
   alias LiveSup.Core.Widgets.WidgetData
   alias LiveSup.Helpers.DateHelper
 
-  def build_ready(id: id, title: title, data: data, ui_settings: ui_settings) do
+  def build_ready(id: id, title: title, data: data, ui_settings: ui_settings, public_settings: public_settings) do
     %WidgetData{
       id: id,
       title: title,
       updated_in_minutes: DateHelper.current_minutes(),
       state: :ready,
       data: data,
-      ui_settings: ui_settings
+      ui_settings: ui_settings,
+      public_settings: public_settings
     }
   end
 

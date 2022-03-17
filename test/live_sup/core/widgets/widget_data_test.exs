@@ -10,7 +10,8 @@ defmodule LiveSup.Test.Core.Widgets.WidgetDataTest do
         id: "id",
         title: "this is the title",
         data: %{hello: :there},
-        ui_settings: %{"size" => 2}
+        ui_settings: %{"size" => 2},
+        public_settings: %{}
       )
 
     assert %WidgetData{

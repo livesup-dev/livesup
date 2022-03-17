@@ -28,7 +28,7 @@ defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.Single.HandlerTest do
                %{
                  created_at: ~U[2022-03-16 19:46:00Z],
                  created_at_ago: _,
-                 status: :incident,
+                 status: :operational,
                  title: "Incident with GitHub Actions, Codespaces, Issues, and Webhooks",
                  url: "https://www.githubstatus.com/incidents/fpk08rxnqjz2"
                }

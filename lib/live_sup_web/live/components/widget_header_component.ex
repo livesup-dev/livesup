@@ -7,9 +7,12 @@ defmodule LiveSupWeb.Live.Components.WidgetHeaderComponent do
     <h4 class="text-base font-semibold text-gray-500 dark:text-light"><%= @widget_data.title %></h4>
     <div class="flex items-right space-x-2">
       <%= if @widget_data.icon do %>
-      <span><img class="w-4" src={@widget_data.icon} /></span>
+        <span><img class="w-4" src={@widget_data.icon} /></span>
       <% end %>
-      <%= Phoenix.HTML.raw(@widget_data.icon_svg) %>
+
+      <%= if assigns[:icon_svg] do %>
+        <%= Phoenix.HTML.raw(@icon_svg) %>
+      <% end %>
       </div>
     </div>
     """

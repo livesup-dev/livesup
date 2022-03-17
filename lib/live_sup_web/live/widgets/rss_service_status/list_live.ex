@@ -11,7 +11,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive do
             <div class="flex pt-2 pb-2">
               <p class="basis-1/6 pt-1"><img src={entry[:icon]} width="35px" /></p>
 
-              <%= if entry[:status] == 'incident' do %>
+              <%= if entry[:status] == :incident do %>
                 <p class="basis-3/4"><a href={entry[:url]} target="blank" class="hover:underline"><%= entry[:title] %></a></p>
                 <p class="basis-1/6 pt-1">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 m-auto" fill="none" viewBox="0 0 24 24" stroke="#F96C6C">
