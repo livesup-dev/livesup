@@ -8,7 +8,7 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.CommitsByAuthorsLive do
       <!-- Commits by author -->
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
         <!-- Widget Content -->
-        <div class="p-2 divide-y divide-gray-100 dark:divide-dark ">
+        <div class="p-2 divide-y divide-gray-100 dark:divide-gray-500 ">
           <%= for value <- widget_data.data do %>
             <div class="grid grid-cols-3 pt-1 pb-1">
               <p class="col-span-2 justify-self-start"><%= value["author_name"] %></p>

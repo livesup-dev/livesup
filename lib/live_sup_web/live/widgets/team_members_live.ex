@@ -9,7 +9,9 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
       <!-- Team Members -->
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
         <!-- Widget Content -->
-        <div class="items-center p-2 bg-white rounded-md dark:bg-darker divide-y divide-gray-100 dark:divide-dark">
+        <div class="items-center p-2 bg-white rounded-md dark:bg-darker min-h-[132px]">
+          <%= if Enum.any?(widget_data.data) do %>
+          <div class="divide-y divide-gray-100 dark:divide-gray-500">
               <%= for user <- widget_data.data do %>
                 <div class="flex py-4 first:pt-0 gap-4 flex-wrap dark:divide-blue-300">
                   <div class="flex-none relative">
@@ -38,6 +40,12 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
                   </div>
                 </div>
               <% end %>
+            </div>
+            <% else %>
+
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 m-auto" viewBox="0 0 81 80" ><defs><style>.cls-1{fill:#606161;}</style></defs><title/><g data-name="Layer 7" id="Layer_7"><path class="cls-1" d="M19.75,15.67a6,6,0,1,0-7.51,0A11,11,0,0,0,5,26v1H27V26A11,11,0,0,0,19.75,15.67ZM12,11a4,4,0,1,1,4,4A4,4,0,0,1,12,11ZM7.06,25a9,9,0,0,1,17.89,0Z"/></g></svg>
+              <p class="text-center m-2">No Team Members to Display</p>
+            <% end %>
         </div>
         <!-- /Widget Content -->
       <!-- /Team Members -->

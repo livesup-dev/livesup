@@ -9,7 +9,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive do
       <!-- Incidents by Type -->
       <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
       <!-- Widget Content -->
-      <div class="p-2 grid justify-items-center  min-h-[112px]">
+      <div class="p-2 grid justify-items-center  min-h-[132px]">
         <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent, id: "blameless-incidents-by-type-chart", spec: build_spec(widget_data)) %>
       </div>
       <!-- /Widget Content -->
