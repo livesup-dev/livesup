@@ -9,7 +9,8 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
   def get_pull_requests(owner, repository, opts \\ []) do
     token = Keyword.fetch!(opts, :token)
     endpoint = Keyword.get(opts, :endpoint, @endpoint)
-    filter = Keyword.get(opts, :filter, %{})
+    filter = Keyword.get(opts, :filter, %{}) |> IO.inspect()
+    repository |> IO.inspect()
 
     with {200, pulls, _response} <-
            Tentacat.Pulls.filter(
@@ -42,7 +43,7 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
 
     %{
       title: pull_request["title"],
-      short_title: StringHelper.truncate(pull_request["title"], max_length: 43),
+      short_title: StringHelper.truncate(pull_request["title"], max_length: 55),
       number: pull_request["number"],
       html_url: pull_request["html_url"],
       repo: %{
@@ -98,9 +99,9 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
 
   defp default_filter() do
     %{
-      "per_page" => 10,
-      "page" => 1,
-      "pagination" => "none"
+      per_page: 10,
+      page: 1,
+      pagination: "none"
     }
   end
 end

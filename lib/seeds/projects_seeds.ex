@@ -129,7 +129,39 @@ defmodule LiveSup.Seeds.ProjectsSeeds do
           },
           %{
             widget: rss_service_status_list_widget,
-            settings: %{},
+            settings: %{
+              "services" => %{
+                source: "local",
+                type: "array",
+                value: [
+                  %{
+                    "url" => "https://status.quay.io/history.rss",
+                    "icon" => "/images/widgets/logos/quay.png",
+                    "name" => "Quay"
+                  },
+                  %{
+                    "url" => "https://status.rollbar.com/history.rss",
+                    "icon" => "/images/widgets/logos/rollbar.png",
+                    "name" => "Rollbar"
+                  },
+                  %{
+                    "url" => "https://www.githubstatus.com/history.rss",
+                    "icon" => "/images/widgets/logos/github.png",
+                    "name" => "Github"
+                  },
+                  %{
+                    "url" => "https://status.launchdarkly.com/history.rss",
+                    "icon" => "/images/widgets/logos/launchdarkly.png",
+                    "name" => "Launchdarkly"
+                  },
+                  %{
+                    "url" => "https://status.jumpcloud.com/history.rss",
+                    "icon" => "/images/widgets/logos/jumpcloud.png",
+                    "name" => "Jumpcloud"
+                  }
+                ]
+              }
+            },
             datasource_instance: rss_datasource_instance
           },
           %{

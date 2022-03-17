@@ -66,7 +66,7 @@ defmodule LiveSup.Seeds.YamlSeed do
           "widget_slug" => widget_slug,
           "id" => widget_instance_id,
           "settings" => settings
-        } = widget_attrs
+        }
       ) do
     datasource = Datasources.get_by_slug!(datasource_slug)
     {:ok, datasource_instance} = Datasources.create_instance(datasource)
@@ -99,12 +99,8 @@ defmodule LiveSup.Seeds.YamlSeed do
   defp import_teams(_data), do: :ok
 
   defp get_or_create_team(%{"id" => id} = attrs) do
-    attrs |> IO.inspect()
-    Teams.get(id) |> IO.inspect()
     Teams.get(id) || Teams.create(attrs)
   end
-
-  # defp import_dashboards(project, _), do: nil
 
   defp parse_yaml(data) do
     {:ok, parsed_data} = YamlElixir.read_from_string(data)

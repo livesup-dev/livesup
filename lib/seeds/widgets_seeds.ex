@@ -307,33 +307,7 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
         "services" => %{
           source: "local",
           type: "array",
-          value: [
-            %{
-              "url" => "https://status.quay.io/history.rss",
-              "icon" => "/images/widgets/logos/quay.png",
-              "name" => "Quay"
-            },
-            %{
-              "url" => "https://status.rollbar.com/history.rss",
-              "icon" => "/images/widgets/logos/rollbar.png",
-              "name" => "Rollbar"
-            },
-            %{
-              "url" => "https://www.githubstatus.com/history.rss",
-              "icon" => "/images/widgets/logos/github.png",
-              "name" => "Github"
-            },
-            %{
-              "url" => "https://status.launchdarkly.com/history.rss",
-              "icon" => "/images/widgets/logos/launchdarkly.png",
-              "name" => "Launchdarkly"
-            },
-            %{
-              "url" => "https://status.jumpcloud.com/history.rss",
-              "icon" => "/images/widgets/logos/jumpcloud.png",
-              "name" => "Jumpcloud"
-            }
-          ]
+          value: []
         }
       },
       datasource_id: rss_datasource.id
@@ -387,9 +361,7 @@ defmodule LiveSup.Seeds.WidgetsSeeds do
       labels: [],
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 60},
-        "owner" => %{"source" => "local", "type" => "string", "value" => "phoenixframework"},
-        "repository" => %{"source" => "local", "type" => "string", "value" => "phoenix"},
-        "state" => %{"source" => "local", "type" => "string", "value" => "closed"}
+        "limit" => %{"source" => "local", "type" => "int", "value" => 10}
       },
       ui_settings: %{"size" => 1},
       datasource_id: github_datasource.id

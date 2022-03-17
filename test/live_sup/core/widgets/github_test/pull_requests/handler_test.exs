@@ -19,7 +19,8 @@ defmodule LiveSup.Test.Core.Widgets.Github.PullRequests.HandlerTest do
             "owner" => "phoenixframework",
             "repository" => "phoenix",
             "state" => "open",
-            "token" => "xxxx"
+            "token" => "xxxx",
+            "limit" => 10
           }
           |> Handler.get_data()
 
@@ -54,7 +55,8 @@ defmodule LiveSup.Test.Core.Widgets.Github.PullRequests.HandlerTest do
             "owner" => "phoenixframework",
             "repository" => "phoenix",
             "state" => "closed",
-            "token" => "xxxx"
+            "token" => "xxxx",
+            "limit" => 10
           }
           |> Handler.get_data()
 
