@@ -100,7 +100,7 @@ defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.List.WorkerTest do
           <title>GitHub Status - Incident History</title>
           <link>https://www.githubstatus.com</link>
           <description>Statuspage</description>
-          <pubDate>Tue, 14 Dec 2021 08:03:42 +0000</pubDate>
+          <pubDate>Tue, 11 Dec 2021 08:03:42 +0000</pubDate>
           <item>
             <title>Incident with GitHub Actions</title>
             <description>

@@ -11,6 +11,7 @@ defmodule LiveSup.Core.Widgets.RssServiceStatus.List.Worker do
   def build_data(%{"services" => services}) do
     services
     |> Enum.map(&process_service/1)
+    |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :lt))
     |> (fn new_struct -> {:ok, new_struct} end).()
   end
 

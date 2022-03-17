@@ -35,7 +35,9 @@ defmodule LiveSup.Seeds.YamlSeed do
     end)
   end
 
+  defp import_dashboards(nil, _args), do: :ok
   defp import_dashboards({:ok, %Project{} = _project}, _args), do: :ok
+  defp import_dashboards(%Project{} = project, args), do: import_dashboards({:ok, project}, args)
 
   def get_or_create_dashboard(project, %{"id" => id} = attrs) do
     case Dashboards.get(id) do
@@ -47,21 +49,44 @@ defmodule LiveSup.Seeds.YamlSeed do
   def import_widget({:ok, dashboard}, %{"widgets" => widgets}) do
     widgets
     |> Enum.each(fn widget_attrs ->
-      datasource = Datasources.get_by_slug!(widget_attrs["datasource_slug"])
-      {:ok, datasource_instance} = Datasources.create_instance(datasource)
-      widget = Widgets.get_by_slug!(widget_attrs["widget_slug"])
+      %{"id" => widget_instance_id} = widget_attrs
+      widget_instance = Widgets.get_instance(widget_instance_id)
 
-      {:ok, widget_instance} =
-        Widgets.create_instance(
-          widget,
-          datasource_instance,
-          widget_attrs["settings"]
-        )
-
-      dashboard
-      |> Dashboards.add_widget(widget_instance)
+      if widget_instance == nil do
+        dashboard
+        |> create_widget_instance(widget_attrs)
+      end
     end)
   end
+
+  def create_widget_instance(
+        dashboard,
+        %{
+          "datasource_slug" => datasource_slug,
+          "widget_slug" => widget_slug,
+          "id" => widget_instance_id,
+          "settings" => settings
+        } = widget_attrs
+      ) do
+    datasource = Datasources.get_by_slug!(datasource_slug)
+    {:ok, datasource_instance} = Datasources.create_instance(datasource)
+    widget = Widgets.get_by_slug!(widget_slug)
+
+    widget_instance_attrs = Widgets.build_instance_attrs(widget, datasource_instance)
+
+    widget_instance =
+      Map.merge(widget_instance_attrs, %{
+        settings: settings,
+        id: widget_instance_id
+      })
+
+    {:ok, widget_instance} = Widgets.create_instance(widget_instance)
+
+    dashboard
+    |> Dashboards.add_widget(widget_instance)
+  end
+
+  def find_or_create_widget_instance(_, _), do: :ok
 
   defp import_teams(%{"teams" => teams}) do
     teams

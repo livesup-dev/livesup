@@ -35,7 +35,8 @@ defmodule LiveSup.Schemas.WidgetInstance do
 
   @optional_fields [
     :enabled,
-    :widget_id
+    :widget_id,
+    :id
   ]
 
   # def enabled?(%WidgetInstance{} = model) do

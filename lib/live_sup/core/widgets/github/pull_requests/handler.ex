@@ -1,15 +1,15 @@
 defmodule LiveSup.Core.Widgets.Github.PullRequests.Handler do
   alias LiveSup.Core.Datasources.GithubDatasource
 
-  def get_data(%{"owner" => _, "repository" => _, "state" => state, "token" => _} = args) do
+  def get_data(%{"owner" => _, "repository" => _, "state" => _state, "token" => _} = args) do
     with {:ok, pulls} <- args |> get_pulls() do
-      pulls |> process_pulls(state)
+      pulls |> process_pulls()
     else
       {:error, error} -> {:error, error}
     end
   end
 
-  def process_pulls(pulls, state) do
+  def process_pulls(pulls) do
     data =
       pulls
       |> Enum.filter(&(!is_nil(&1)))
@@ -36,6 +36,6 @@ defmodule LiveSup.Core.Widgets.Github.PullRequests.Handler do
   end
 
   defp build_filter("closed") do
-    %{state: "open", sort: "pdated", dir: "desc"}
+    %{state: "closed", sort: "created", dir: "desc"}
   end
 end

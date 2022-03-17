@@ -8,18 +8,18 @@ defmodule LiveSup.Queries.WidgetInstanceQuery do
     |> Repo.all()
   end
 
-  def get!(id) do
-    query =
-      from(
-        wi in WidgetInstance,
-        join: w in assoc(wi, :widget),
-        join: di in assoc(wi, :datasource_instance),
-        join: d in assoc(di, :datasource),
-        where: wi.id == ^id,
-        preload: [:widget, datasource_instance: {di, datasource: d}]
-      )
+  def get!(id), do: id |> get_query |> Repo.one!()
+  def get(id), do: id |> get_query |> Repo.one()
 
-    query |> Repo.one!()
+  defp get_query(id) do
+    from(
+      wi in WidgetInstance,
+      join: w in assoc(wi, :widget),
+      join: di in assoc(wi, :datasource_instance),
+      join: d in assoc(di, :datasource),
+      where: wi.id == ^id,
+      preload: [:widget, datasource_instance: {di, datasource: d}]
+    )
   end
 
   def create(attrs) do

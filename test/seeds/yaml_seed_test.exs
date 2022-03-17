@@ -43,11 +43,9 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
               name: "Dashboard 1"
               widgets:
                 -
+                  id: 8622c22c-5535-4502-a526-cef8f64ae57a
                   datasource_slug: weather-api-datasource
                   widget_slug: weather
-                  enabled: true
-                  feature_image_url: /images/widgets/weather.png
-                  global: false
                   labels: []
                   name: Weather
                   settings:

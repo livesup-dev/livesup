@@ -39,6 +39,7 @@ defmodule LiveSup.Core.Widgets do
   """
   def get!(id), do: WidgetQuery.get!(id)
   def get_instance!(id), do: WidgetInstanceQuery.get!(id)
+  def get_instance(id), do: WidgetInstanceQuery.get(id)
 
   @doc """
   Creates a widget.
@@ -135,6 +136,18 @@ defmodule LiveSup.Core.Widgets do
   def create_instance(attrs) do
     attrs
     |> WidgetInstanceQuery.create()
+  end
+
+  def build_instance_attrs(
+        %Widget{} = widget,
+        %DatasourceInstance{} = datasource_instance
+      ) do
+    %{
+      name: widget.name,
+      enabled: widget.enabled,
+      widget_id: widget.id,
+      datasource_instance_id: datasource_instance.id
+    }
   end
 
   def update_instance(%WidgetInstance{} = widget_instance, attrs) do
