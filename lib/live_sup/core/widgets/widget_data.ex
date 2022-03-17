@@ -13,7 +13,13 @@ defmodule LiveSup.Core.Widgets.WidgetData do
   alias LiveSup.Core.Widgets.WidgetData
   alias LiveSup.Helpers.DateHelper
 
-  def build_ready(id: id, title: title, data: data, ui_settings: ui_settings, public_settings: public_settings) do
+  def build_ready(
+        id: id,
+        title: title,
+        data: data,
+        ui_settings: ui_settings,
+        public_settings: public_settings
+      ) do
     %WidgetData{
       id: id,
       title: title,

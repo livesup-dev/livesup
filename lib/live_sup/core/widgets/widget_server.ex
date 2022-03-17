@@ -196,7 +196,11 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
           title: title(widget_instance),
           data: data,
           ui_settings: Widget.ui_settings(widget_instance.widget.ui_settings),
-          public_settings: find_public_settings(function_exported?(__MODULE__, :public_settings, 0), widget_instance)
+          public_settings:
+            find_public_settings(
+              function_exported?(__MODULE__, :public_settings, 0),
+              widget_instance
+            )
         )
       end
 
