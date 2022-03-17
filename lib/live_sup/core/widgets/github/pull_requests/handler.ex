@@ -32,10 +32,10 @@ defmodule LiveSup.Core.Widgets.Github.PullRequests.Handler do
   end
 
   defp build_filter("open") do
-    %{state: "open", sort: "created", dir: "asc"}
+    %{state: "open", sort: "created", direction: "asc"}
   end
 
   defp build_filter("closed") do
-    %{state: "closed", sort: "created", dir: "desc"}
+    %{state: "closed", sort: "created", direction: "desc"}
   end
 end

@@ -99,6 +99,8 @@ defmodule LiveSup.Seeds.YamlSeed do
   defp import_teams(_data), do: :ok
 
   defp get_or_create_team(%{"id" => id} = attrs) do
+    attrs |> IO.inspect()
+    Teams.get(id) |> IO.inspect()
     Teams.get(id) || Teams.create(attrs)
   end
 

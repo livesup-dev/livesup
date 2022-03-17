@@ -16,7 +16,7 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
              client(endpoint, token),
              owner,
              repository,
-             Map.merge(default_filter(), filter) |> IO.inspect()
+             Map.merge(default_filter(), filter) |> IO.inspect(label: :github_out)
            ) do
       {:ok, pulls |> process_pulls()}
     else

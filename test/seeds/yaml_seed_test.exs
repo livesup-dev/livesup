@@ -29,6 +29,9 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
 
       team = Teams.get!("c92310d4-4577-4ce1-3456-be9684628ece")
       assert %{name: "TPM"} = team
+
+      widget_instance = Widgets.get_instance!("8622c22c-5535-4502-a526-cef8f64ae57a")
+      assert %{name: "Weather"} = widget_instance
     end
 
     defp yaml_data do
