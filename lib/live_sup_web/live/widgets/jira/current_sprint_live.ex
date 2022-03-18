@@ -8,7 +8,7 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintLive do
       <!-- Jira Current Sprint -->
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
         <!-- Widget Content -->
-        <div class="p-2 text-left min-h-[112px]">
+        <div class="p-2 text-left min-h-[132px]">
           <span class="text-center text-lg"><%= widget_data.data.name %></span>
           <%= if widget_data.data.goal do %>
             <p class="text-sm text-stone-400"><%= widget_data.data.goal %></p>

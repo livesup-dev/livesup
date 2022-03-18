@@ -8,7 +8,7 @@ defmodule LiveSupWeb.Live.Widgets.LordOfTheRingQuoteLive do
       <!-- Lord of the ring quote -->
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
         <!-- Widget Content -->
-        <div class="flex-auto p-2 min-h-[112px]">
+        <div class="flex-auto p-2 min-h-[132px]">
           <p><%= widget_data.data.quote %></p>
         </div>
         <!-- /Widget Content -->

@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive do
     ~H"""
     <.live_component module={SmartRenderComponent} id="core-health-status" let={widget_data} widget_data={@widget_data}>
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
-        <div class="flex-auto divide-y divide-gray-100 dark:divide-dark p-2">
+        <div class="flex-auto divide-y divide-gray-100 dark:divide-gray-500 p-2">
           <%= for {entry, counter} <- Enum.with_index(widget_data.data) do %>
             <div class="flex pt-2 pb-2">
               <p class="basis-1/6 pt-1"><img src={entry[:icon]} width="35px" /></p>
