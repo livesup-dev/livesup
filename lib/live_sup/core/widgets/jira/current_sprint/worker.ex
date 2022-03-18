@@ -5,6 +5,10 @@ defmodule LiveSup.Core.Widgets.Jira.CurrentSprint.Worker do
 
   @default_title "Jira Current Sprint"
 
+  @impl true
+  def public_settings, do: []
+
+  @impl true
   def settings_keys, do: ["board_id", "token", "domain"]
 
   @impl true

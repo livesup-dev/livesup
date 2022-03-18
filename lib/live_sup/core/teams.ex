@@ -29,6 +29,7 @@ defmodule LiveSup.Core.Teams do
   defdelegate update!(team, attrs), to: TeamQuery
   defdelegate delete(team), to: TeamQuery
   defdelegate members(team), to: TeamQuery
+  defdelegate upsert(attrs), to: TeamQuery
 
   def change(%Team{} = team, attrs \\ %{}) do
     Team.changeset(team, attrs)

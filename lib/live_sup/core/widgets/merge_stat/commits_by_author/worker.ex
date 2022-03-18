@@ -6,6 +6,10 @@ defmodule LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker do
 
   @default_title "Commits by Author"
 
+  @impl true
+  def public_settings, do: []
+
+  @impl true
   def settings_keys, do: ["repo", "limit"]
 
   @impl true

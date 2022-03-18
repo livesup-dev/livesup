@@ -6,7 +6,11 @@ defmodule LiveSup.Core.Widgets.Blameless.LastIncidents.Worker do
 
   @default_title "Last incidents"
 
+  @impl true
   def settings_keys, do: ["client_id", "client_secret", "audience", "endpoint", "limit"]
+
+  @impl true
+  def public_settings, do: []
 
   @impl true
   def build_data(settings) do

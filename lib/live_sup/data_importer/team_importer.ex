@@ -1,17 +1,19 @@
 defmodule LiveSup.DataImporter.TeamImporter do
   alias LiveSup.Core.Teams
 
-  def import(%{"teams" => teams}) do
+  def import(%{"teams" => teams} = data) do
     teams
     |> Enum.each(fn team_attrs ->
       team_attrs
       |> get_or_create_team()
     end)
+
+    data
   end
 
-  def import(_data), do: :ok
+  def import(data), do: data
 
   defp get_or_create_team(%{"id" => id} = attrs) do
-    Teams.get(id) || Teams.create(attrs)
+    Teams.upsert(attrs)
   end
 end

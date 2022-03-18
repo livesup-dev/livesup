@@ -7,6 +7,10 @@ defmodule LiveSup.Core.Widgets.Wordpress.DirectorySizes.Worker do
 
   @default_title "Wordpress directory sizes"
 
+  @impl true
+  def public_settings, do: ["team"]
+
+  @impl true
   def settings_keys, do: WordpressConfig.keys()
 
   @impl true

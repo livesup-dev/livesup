@@ -2,6 +2,11 @@ defmodule LiveSup.Queries.MetricValueQuery do
   import Ecto.Query
   alias LiveSup.Repo
   alias LiveSup.Schemas.{MetricValue, Metric}
+  alias LiveSup.Queries.MetricValueQuery
+
+  def get!(id) do
+    base() |> Repo.get!(id)
+  end
 
   def all() do
     Repo.all(MetricValue)
@@ -11,6 +16,12 @@ defmodule LiveSup.Queries.MetricValueQuery do
     %MetricValue{}
     |> MetricValue.create_changeset(data)
     |> Repo.insert!()
+  end
+
+  def upsert(data) do
+    %MetricValue{}
+    |> MetricValue.create_changeset(data)
+    |> Repo.insert(on_conflict: :nothing)
   end
 
   def by_metric(%Metric{id: id}) do
@@ -49,4 +60,6 @@ defmodule LiveSup.Queries.MetricValueQuery do
     )
     |> Repo.one()
   end
+
+  def base, do: from(MetricValue, as: :metric_value_query)
 end

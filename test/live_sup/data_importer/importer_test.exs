@@ -4,10 +4,11 @@ defmodule LiveSup.Test.DataImporter.Importer do
 
   import LiveSup.Test.Setups
 
-  alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources, Teams}
+  alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources, Teams, Metrics}
+  alias LiveSup.Queries.MetricValueQuery
 
   describe "Import from a yaml file" do
-    @describetag :yaml_seed
+    @describetag :importer
 
     setup [:setup_groups, :weather_widget_fixture]
 
@@ -32,6 +33,15 @@ defmodule LiveSup.Test.DataImporter.Importer do
 
       widget_instance = Widgets.get_instance!("8622c22c-5535-4502-a526-cef8f64ae57a")
       assert %{name: "Weather"} = widget_instance
+
+      metric = Metrics.get!("1dadc794-f202-47fd-aa83-3fff64e93edc")
+      assert %{name: "Acquire 10,000 Users"} = metric
+
+      metric_value = MetricValueQuery.get!("b463a353-9955-43bb-a447-7eb53504143e")
+      assert %{value: 5.0e3} = metric_value
+
+      # Make sure it does not fail when running twice
+      LiveSup.DataImporter.Importer.import(yaml_data())
     end
 
     defp yaml_data do
@@ -85,6 +95,21 @@ defmodule LiveSup.Test.DataImporter.Importer do
           name: TPM
           slug: tpm
           avatar_url: https://amazonaws.com/teams/tpm.jpeg
+      metrics:
+        - id: 1dadc794-f202-47fd-aa83-3fff64e93edc
+          name: Acquire 10,000 Users
+          slug: acquire-10000-users
+          target: 10000
+          unit: count
+          labels:
+            - rocks
+          values:
+            - id: b463a353-9955-43bb-a447-7eb53504143e
+              value: 5000
+              value_date: 2022-03-18 00:00:00
+            - id: 8f871123-54fd-4749-9030-fd520c016bbd
+              value: 2000
+              value_date: 2022-03-14 00:00:00
       """
     end
   end

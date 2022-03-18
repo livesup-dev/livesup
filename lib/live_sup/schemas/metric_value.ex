@@ -24,7 +24,8 @@ defmodule LiveSup.Schemas.MetricValue do
   ]
 
   @optional_fields [
-    :settings
+    :settings,
+    :id
   ]
 
   def changeset(%MetricValue{} = model, attrs) do

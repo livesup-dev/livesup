@@ -6,6 +6,10 @@ defmodule LiveSup.Core.Widgets.Rollbar.ListOfIssues.Worker do
 
   @default_title "Rollbar issues"
 
+  @impl true
+  def public_settings, do: []
+
+  @impl true
   def settings_keys, do: ["env", "limit", "status", "token"]
 
   @impl true

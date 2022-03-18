@@ -7,6 +7,7 @@ defmodule LiveSup.Core.Widgets.Github.PullRequests.Worker do
 
   @impl true
   def settings_keys, do: ["owner", "repository", "token", "state", "limit"]
+
   @impl true
   def public_settings, do: ["owner", "repository", "state"]
 

@@ -30,7 +30,8 @@ defmodule LiveSup.Schemas.Metric do
   @optional_fields [
     :slug,
     :settings,
-    :labels
+    :labels,
+    :id
   ]
 
   def changeset(%Metric{} = model, attrs) do

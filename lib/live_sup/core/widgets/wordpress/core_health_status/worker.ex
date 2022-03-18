@@ -7,6 +7,10 @@ defmodule LiveSup.Core.Widgets.Wordpress.CoreHealthStatus.Worker do
 
   @default_title "Wordpress Core Health"
 
+  @impl true
+  def public_settings, do: []
+
+  @impl true
   def settings_keys, do: WordpressConfig.keys()
 
   @impl true

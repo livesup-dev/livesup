@@ -9,8 +9,7 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
   def get_pull_requests(owner, repository, opts \\ []) do
     token = Keyword.fetch!(opts, :token)
     endpoint = Keyword.get(opts, :endpoint, @endpoint)
-    filter = Keyword.get(opts, :filter, %{}) |> IO.inspect()
-    repository |> IO.inspect()
+    filter = Keyword.get(opts, :filter, %{})
 
     with {200, pulls, _response} <-
            Tentacat.Pulls.filter(

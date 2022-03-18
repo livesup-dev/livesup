@@ -7,6 +7,10 @@ defmodule LiveSup.Core.Widgets.LordOfTheRingQuote.Worker do
 
   @default_title "Lord of the Ring"
 
+  @impl true
+  def public_settings, do: []
+
+  @impl true
   def settings_keys, do: []
 
   @impl true

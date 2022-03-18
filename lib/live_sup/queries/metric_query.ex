@@ -9,6 +9,12 @@ defmodule LiveSup.Queries.MetricQuery do
     |> Repo.insert!()
   end
 
+  def upsert(data) do
+    %Metric{}
+    |> Metric.changeset(data)
+    |> Repo.insert(on_conflict: :nothing)
+  end
+
   def create(data) do
     %Metric{}
     |> Metric.changeset(data)

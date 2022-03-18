@@ -5,6 +5,10 @@ defmodule LiveSup.Core.Widgets.RssServiceStatus.List.Worker do
 
   @default_title "Rss Services Status"
 
+  @impl true
+  def public_settings, do: []
+
+  @impl true
   def settings_keys, do: ["services"]
 
   @impl true

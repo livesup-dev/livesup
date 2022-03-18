@@ -6,6 +6,10 @@ defmodule LiveSup.Core.Widgets.Weather.Worker do
 
   @default_title "Weather"
 
+  @impl true
+  def public_settings, do: ["team"]
+
+  @impl true
   def settings_keys, do: ["key", "location"]
 
   @impl true

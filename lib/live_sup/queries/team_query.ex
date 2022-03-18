@@ -16,6 +16,12 @@ defmodule LiveSup.Queries.TeamQuery do
     |> Repo.insert()
   end
 
+  def upsert(data) do
+    %Team{}
+    |> Team.changeset(data)
+    |> Repo.insert(on_conflict: :nothing)
+  end
+
   def get!(id) do
     base()
     |> preload(team_members: :user)
