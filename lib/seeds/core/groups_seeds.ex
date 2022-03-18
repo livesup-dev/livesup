@@ -1,4 +1,4 @@
-defmodule LiveSup.Seeds.GroupsSeeds do
+defmodule LiveSup.Seeds.Core.GroupsSeeds do
   alias LiveSup.Repo
   alias LiveSup.Schemas.Group
 

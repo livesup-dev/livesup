@@ -7,6 +7,7 @@ defmodule LiveSup.Core.Metrics do
   defdelegate create(data), to: MetricQuery
   defdelegate create!(data), to: MetricQuery
   defdelegate get!(id), to: MetricQuery
+  defdelegate get(id), to: MetricQuery
   defdelegate delete(id), to: MetricQuery
   defdelegate update(metric, attrs), to: MetricQuery
 

@@ -1,17 +1,8 @@
-defmodule LiveSup.Seeds.YamlSeed do
+defmodule LiveSup.DataImporter.ProjectImporter do
   alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets, Teams}
   alias LiveSup.Schemas.Project
 
-  def seed(data) do
-    data
-    |> parse_yaml()
-    |> import_projects()
-    |> import_teams()
-
-    :ok
-  end
-
-  defp import_projects(%{"projects" => projects} = data) do
+  def import(%{"projects" => projects} = data) do
     projects
     |> Enum.each(fn project_attrs ->
       project_attrs
@@ -64,10 +55,10 @@ defmodule LiveSup.Seeds.YamlSeed do
         %{
           "datasource_slug" => datasource_slug,
           "widget_slug" => widget_slug,
-          "id" => widget_instance_id,
-          "settings" => settings
-        }
+          "id" => widget_instance_id
+        } = attrs
       ) do
+    settings = attrs["settings"] || %{}
     datasource = Datasources.get_by_slug!(datasource_slug)
     {:ok, datasource_instance} = Datasources.create_instance(datasource)
     widget = Widgets.get_by_slug!(widget_slug)
@@ -87,23 +78,4 @@ defmodule LiveSup.Seeds.YamlSeed do
   end
 
   def find_or_create_widget_instance(_, _), do: :ok
-
-  defp import_teams(%{"teams" => teams}) do
-    teams
-    |> Enum.each(fn team_attrs ->
-      team_attrs
-      |> get_or_create_team()
-    end)
-  end
-
-  defp import_teams(_data), do: :ok
-
-  defp get_or_create_team(%{"id" => id} = attrs) do
-    Teams.get(id) || Teams.create(attrs)
-  end
-
-  defp parse_yaml(data) do
-    {:ok, parsed_data} = YamlElixir.read_from_string(data)
-    parsed_data
-  end
 end

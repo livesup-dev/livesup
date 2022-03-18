@@ -1,4 +1,4 @@
-defmodule LiveSup.Seeds.WidgetsSeeds do
+defmodule LiveSup.Seeds.Core.WidgetsSeeds do
   alias LiveSup.Repo
   alias LiveSup.Schemas.Widget
   alias LiveSup.Core.Datasources

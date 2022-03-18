@@ -10,29 +10,11 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias LiveSup.Seeds.{
-  DatasourcesSeeds,
-  WidgetsSeeds,
-  GroupsSeeds,
-  UsersSeeds,
-  TeamsSeeds,
-  ProjectsSeeds,
-  InternalDataSeeds,
-  MetricsSeeds
-}
+alias LiveSup.Seeds
 
 defmodule LiveSup.Seeds do
   def seed() do
-    # Application.load(:live_sup)
-
-    DatasourcesSeeds.seed()
-    WidgetsSeeds.seed()
-    WidgetsSeeds.seed()
-    GroupsSeeds.seed()
-    MetricsSeeds.seed()
-    UsersSeeds.seed()
-    TeamsSeeds.seed()
-    ProjectsSeeds.seed()
-    InternalDataSeeds.seed()
+    Seeds.Core.seed()
+    Seeds.Demo.seed()
   end
 end

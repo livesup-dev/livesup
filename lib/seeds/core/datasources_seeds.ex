@@ -1,4 +1,4 @@
-defmodule LiveSup.Seeds.DatasourcesSeeds do
+defmodule LiveSup.Seeds.Core.DatasourcesSeeds do
   alias LiveSup.Repo
   alias LiveSup.Schemas.Datasource
   def seed, do: insert_data()

@@ -1,4 +1,4 @@
-defmodule LiveSup.Test.Seeds.YamlSeed do
+defmodule LiveSup.Test.DataImporter.Importer do
   use ExUnit.Case, async: true
   use LiveSup.DataCase
 
@@ -6,13 +6,13 @@ defmodule LiveSup.Test.Seeds.YamlSeed do
 
   alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources, Teams}
 
-  describe "Seed from a yaml file" do
+  describe "Import from a yaml file" do
     @describetag :yaml_seed
 
     setup [:setup_groups, :weather_widget_fixture]
 
     test "data is imported" do
-      LiveSup.Seeds.YamlSeed.seed(yaml_data())
+      LiveSup.DataImporter.Importer.import(yaml_data())
 
       assert length(Projects.all()) == 1
 
