@@ -11,13 +11,13 @@ defmodule LiveSup.Core.Widgets.Metrics.Goal.Handler do
   defp build_metric(nil), do: {:error, "Metric not found"}
 
   defp build_metric(metric) do
-    current_value = metric |> MetricValueQuery.sum()
+    current_value = metric |> MetricValueQuery.last()
 
     {:ok,
      %{
        name: metric.name,
        target: metric.target,
-       current_value: current_value
+       current_value: current_value.value
      }}
   end
 end
