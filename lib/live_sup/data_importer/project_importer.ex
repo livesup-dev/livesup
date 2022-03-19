@@ -1,5 +1,5 @@
 defmodule LiveSup.DataImporter.ProjectImporter do
-  alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets, Teams}
+  alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets}
   alias LiveSup.Schemas.Project
 
   def import(%{"projects" => projects} = data) do

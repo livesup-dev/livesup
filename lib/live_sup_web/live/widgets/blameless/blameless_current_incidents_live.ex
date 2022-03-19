@@ -1,6 +1,5 @@
 defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
-  alias LiveSupWeb.Widgets.Blameless.BlamelessHelper
 
   @impl true
   def render_widget(assigns) do
@@ -12,7 +11,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
           <div class="items-center p-2 bg-white rounded-md dark:bg-darker min-h-[132px]">
           <%= if Enum.any?(widget_data.data) do %>
             <div class="divide-y divide-gray-100 dark:divide-gray-500">
-              <%= for {incident, counter} <- Enum.with_index(widget_data.data) do %>
+              <%= for {incident, _counter} <- Enum.with_index(widget_data.data) do %>
                 <div class="flex py-4 first:pt-0 gap-4 flex-wrap dark:divide-blue-300">
                   <div class="flex">
                     <div class="flex-auto">

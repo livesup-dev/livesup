@@ -1,6 +1,5 @@
 defmodule LiveSupWeb.Live.Widgets.Blameless.LastIncidentsLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
-  alias LiveSupWeb.Widgets.Blameless.BlamelessHelper
 
   @impl true
   def render_widget(assigns) do

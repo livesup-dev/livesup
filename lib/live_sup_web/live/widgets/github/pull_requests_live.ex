@@ -12,7 +12,7 @@ defmodule LiveSupWeb.Live.Widgets.Github.PullRequestsLive do
           <div class="items-center p-2 bg-white rounded-md dark:bg-darker min-h-[132px]">
           <%= if Enum.any?(widget_data.data) do %>
             <div class="flex-auto divide-y divide-gray-100 dark:divide-dark p-1">
-              <%= for {pull_request, counter} <- Enum.with_index(widget_data.data) do %>
+              <%= for {pull_request, _counter} <- Enum.with_index(widget_data.data) do %>
                 <div class="flex p-2">
                   <div class={"flex h-auto w-2 #{GithubHelper.pull_request_color(pull_request[:created_at], widget_data.public_settings["state"])}"}></div>
                   <div class="flex-auto pl-2">

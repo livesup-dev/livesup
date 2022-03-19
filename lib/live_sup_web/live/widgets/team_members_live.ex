@@ -1,6 +1,5 @@
 defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
-  alias LiveSup.Helpers.DateHelper
 
   @impl true
   def render_widget(assigns) do

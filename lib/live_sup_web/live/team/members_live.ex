@@ -2,10 +2,10 @@ defmodule LiveSupWeb.Teams.MembersLive do
   use LiveSupWeb, :live_view
 
   alias LiveSup.Core.Teams
-  alias LiveSup.Schemas.{User, Team}
+  alias LiveSup.Schemas.User
 
   @impl true
-  def mount(%{"id" => team_id}, session, socket) do
+  def mount(%{"id" => team_id}, _session, socket) do
     {:ok,
      socket
      |> assign_title()

@@ -3,7 +3,6 @@ defmodule LiveSupWeb.SetupLive.Components.ProjectComponent do
 
   alias LiveSup.Schemas.Project
   alias LiveSup.Core.Projects
-  import Logger
 
   @impl true
   def update(%{current_user: current_user}, socket) do

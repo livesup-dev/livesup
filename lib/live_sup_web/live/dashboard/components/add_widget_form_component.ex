@@ -25,7 +25,7 @@ defmodule LiveSupWeb.Dashboard.Components.AddWidgetFormComponent do
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"widget_instance" => widget_instance_params} = params, socket) do
+  def handle_event("save", %{"widget_instance" => widget_instance_params}, socket) do
     save_widget_instance(socket, socket.assigns.action, widget_instance_params)
   end
 

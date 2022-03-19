@@ -10,6 +10,8 @@ defmodule LiveSup.DataImporter.MetricImporter do
     end)
   end
 
+  def import(data), do: data
+
   # def import(_data), do: :ok
 
   defp get_or_create_metric(attrs) do
