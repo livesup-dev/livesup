@@ -47,6 +47,10 @@ defmodule LiveSup.Schemas.Project do
   end
 
   def default_avatar_url(%__MODULE__{avatar_url: avatar_url}) do
-    avatar_url || "/images/default-project-avatar.png"
+    avatar_url || default_avatar_url()
+  end
+
+  def default_avatar_url() do
+    "/images/default-project-avatar.png"
   end
 end

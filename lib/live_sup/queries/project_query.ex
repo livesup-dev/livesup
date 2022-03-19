@@ -89,6 +89,7 @@ defmodule LiveSup.Queries.ProjectQuery do
     |> with_groups(user_id)
     |> with_dashboards()
     |> union(^internal_project_query)
+    |> order_by(fragment("name"))
     |> Repo.all()
   end
 

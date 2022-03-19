@@ -87,8 +87,10 @@ defmodule LiveSup.Schemas.WidgetInstance do
 
   defp find_value(%{"type" => "int", "value" => value, "source" => "local"})
        when is_binary(value) do
-    {int_val, ""} = Integer.parse(value)
-    int_val
+    case Integer.parse(value) do
+      {int_val, ""} -> int_val
+      :error -> raise "#{value} is not a valid int"
+    end
   end
 
   defp find_value(%{"type" => "int", "value" => value}), do: value

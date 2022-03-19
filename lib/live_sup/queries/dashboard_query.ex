@@ -7,6 +7,7 @@ defmodule LiveSup.Queries.DashboardQuery do
   def by_project(%Project{id: project_id}) do
     base()
     |> where([p], p.project_id == ^project_id)
+    |> order_by([dashboard], dashboard.name)
     |> Repo.all()
   end
 
