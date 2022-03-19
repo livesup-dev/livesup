@@ -37,8 +37,6 @@ defmodule LiveSupWeb.SetupLive.Components.ProjectComponent do
   end
 
   def handle_event("project_selected", %{"project" => project_id}, socket) do
-    Logger.info("project selected: #{project_id}")
-
     socket
     |> notify_parent({:project_selected, project_id})
   end

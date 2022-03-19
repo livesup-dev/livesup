@@ -22,10 +22,12 @@ import { LiveSocket } from "phoenix_live_view"
 import topbar from 'topbar'
 import 'alpinejs'
 import Drag from './dragHook';
+import PlotlyHook from './plotlyHook';
 
 let Hooks = {
   VegaLite,
-  Drag
+  Drag,
+  PlotlyHook
 }
 // Hooks.Example = { mounted() { } }
 
