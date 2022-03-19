@@ -61,7 +61,6 @@ defmodule LiveSup.Queries.MetricValueQuery do
     |> Repo.one()
   end
 
-
   def last(%Metric{id: id}) do
     from(
       v in MetricValue,
@@ -71,7 +70,6 @@ defmodule LiveSup.Queries.MetricValueQuery do
     )
     |> Repo.one()
   end
-
 
   def base, do: from(MetricValue, as: :metric_value_query)
 end

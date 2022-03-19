@@ -9,8 +9,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
       <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 grid justify-items-center">
-        <div id={"gauge-#{@widget_data.id}"} phx-hook="PlotlyHook" phx-update="ignore" data-id={@widget_data.id}>
-        </div>
+        <%= live_component(LiveSupWeb.Output.PlotlyStaticComponent, id: "#{widget_data.id}-gauge", spec: build_spec(widget_data)) %>
       </div>
       <!-- /Widget Content -->
       <!-- /Metrics Goal -->
@@ -19,23 +18,16 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
     """
   end
 
-  def build_spec(%{data: widget_data}) do
+  def build_spec(widget_data) do
     %{
-      "$schema" => "https://vega.github.io/schema/vega-lite/v5.json",
-      "title" => %{"text" => widget_data[:name], "color" => "white"},
-      "data" => %{
-        "values" => [
-          %{"target" => widget_data[:target], "current_value" => widget_data[:current_value]}
-        ]
-      },
-      "background" => nil,
-      "mark" => %{"type" => "arc", "tooltip" => true},
-      "encoding" => %{
-        "theta" => %{
-          "field" => "current_value",
-          "type" => "quantitative",
-          "scale" => %{"domain" => [0, widget_data[:target]]}
-        }
+      domain: %{x: [0, 1], y: [0, 1]},
+      value: widget_data.data[:current_value],
+      title: %{text: widget_data.data[:name]},
+      type: "indicator",
+      mode: "gauge+number+delta",
+      delta: %{reference: widget_data.data[:target]},
+      gauge: %{
+        axis: %{range: [nil, widget_data.data[:target]]}
       }
     }
   end

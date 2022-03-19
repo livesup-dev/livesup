@@ -78,6 +78,10 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       %{
         datasource_slug: "local-datasource",
         attrs: &goal_widget_attrs/1
+      },
+      %{
+        datasource_slug: "local-datasource",
+        attrs: &gauge_widget_attrs/1
       }
     ]
     |> Enum.each(fn widget ->
@@ -129,6 +133,24 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       global: false,
       feature_image_url: "/images/widgets/metric-goal.png",
       ui_handler: "LiveSupWeb.Live.Widgets.Metrics.GoalLive",
+      worker_handler: "LiveSup.Core.Widgets.Metrics.Goal.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 60},
+        "metric" => %{"source" => "local", "string" => "string", "value" => ""}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  defp gauge_widget_attrs(datasource) do
+    %{
+      name: "Gauge",
+      slug: "metrics-gauge",
+      enabled: true,
+      global: false,
+      feature_image_url: "/images/widgets/metric-gauge.png",
+      ui_handler: "LiveSupWeb.Live.Widgets.Metrics.GaugeLive",
       worker_handler: "LiveSup.Core.Widgets.Metrics.Goal.Worker",
       labels: [],
       settings: %{
