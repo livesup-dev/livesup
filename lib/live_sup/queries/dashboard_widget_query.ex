@@ -38,13 +38,22 @@ defmodule LiveSup.Queries.DashboardWidgetQuery do
     |> Repo.update()
   end
 
-  def by_dashboard_and_widget(dashboard_id, widget_instance_id) do
-    base
+  def by_dashboard_and_widget!(dashboard_id, widget_instance_id) do
+    base()
     |> where(
       [dw],
       dw.dashboard_id == ^dashboard_id and dw.widget_instance_id == ^widget_instance_id
     )
     |> Repo.one!()
+  end
+
+  def by_dashboard_and_widget(dashboard_id, widget_instance_id) do
+    base()
+    |> where(
+      [dw],
+      dw.dashboard_id == ^dashboard_id and dw.widget_instance_id == ^widget_instance_id
+    )
+    |> Repo.one()
   end
 
   def delete(model) do

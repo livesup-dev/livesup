@@ -6,6 +6,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
 
   alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources, Teams, Metrics}
   alias LiveSup.Queries.MetricValueQuery
+  alias LiveSup.Schemas.{Dashboard, WidgetInstance}
 
   describe "Import from a yaml file" do
     @describetag :importer
@@ -40,16 +41,38 @@ defmodule LiveSup.Test.DataImporter.Importer do
       metric_value = MetricValueQuery.get!("b463a353-9955-43bb-a447-7eb53504143e")
       assert %{value: 5.0e3} = metric_value
 
+      dashboard_widget =
+        Dashboards.get_instance(
+          %Dashboard{id: "af65c472-40cb-4824-8224-708cec8806de"},
+          %WidgetInstance{id: "8622c22c-5535-4502-a526-cef8f64ae57a"}
+        )
+
+      assert %{
+               dashboard_id: "af65c472-40cb-4824-8224-708cec8806de",
+               widget_instance_id: "8622c22c-5535-4502-a526-cef8f64ae57a"
+             } = dashboard_widget
+
+      dashboard_widget =
+        Dashboards.get_instance(
+          %Dashboard{id: "469430b6-d754-497d-988e-34079faafd12"},
+          %WidgetInstance{id: "8622c22c-5535-4502-a526-cef8f64ae57a"}
+        )
+
+      assert %{
+               dashboard_id: "469430b6-d754-497d-988e-34079faafd12",
+               widget_instance_id: "8622c22c-5535-4502-a526-cef8f64ae57a"
+             } = dashboard_widget
+
       # Make sure it does not fail when running twice
       LiveSup.DataImporter.Importer.import(yaml_data())
     end
 
-    test "import without metris" do
-      LiveSup.DataImporter.Importer.import(yaml_without_metrics_data())
+    # test "import without metris" do
+    #   LiveSup.DataImporter.Importer.import(yaml_without_metrics_data())
 
-      team = Teams.get!("c92310d4-4577-4ce1-3456-be9684628ece")
-      assert %{name: "TPM"} = team
-    end
+    #   team = Teams.get!("c92310d4-4577-4ce1-3456-be9684628ece")
+    #   assert %{name: "TPM"} = team
+    # end
 
     defp yaml_without_metrics_data do
       """
@@ -78,8 +101,6 @@ defmodule LiveSup.Test.DataImporter.Importer do
                       type: int
                       value: 43200
                   slug: weather
-                  ui_handler: LiveSupWeb.Live.Widgets.WeatherLive"
-                  worker_handler: LiveSup.Core.Widgets.Weather.Worker
             -
               default: false
               id: 469430b6-d754-497d-988e-34079faafd12
@@ -138,7 +159,23 @@ defmodule LiveSup.Test.DataImporter.Importer do
               default: false
               id: 469430b6-d754-497d-988e-34079faafd12
               name: "Dashboard 2"
-              widgets: []
+              widgets:
+                -
+                  id: 8622c22c-5535-4502-a526-cef8f64ae57a
+                  datasource_slug: weather-api-datasource
+                  widget_slug: weather
+                  labels: []
+                  name: Weather
+                  settings:
+                    location:
+                      source: local
+                      type: string
+                      value: ""
+                    runs_every:
+                      source: local
+                      type: int
+                      value: 43200
+                  slug: weather
           default: false
           id: 5727d4e3-b3d4-460c-a3fb-f0180d5c3777
           internal: false

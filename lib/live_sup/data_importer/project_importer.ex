@@ -1,6 +1,6 @@
 defmodule LiveSup.DataImporter.ProjectImporter do
   alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets}
-  alias LiveSup.Schemas.Project
+  alias LiveSup.Schemas.{Project, WidgetInstance, DashboardWidget}
 
   def import(%{"projects" => projects} = data) do
     projects
@@ -41,17 +41,22 @@ defmodule LiveSup.DataImporter.ProjectImporter do
     widgets
     |> Enum.each(fn widget_attrs ->
       %{"id" => widget_instance_id} = widget_attrs
-      widget_instance = Widgets.get_instance(widget_instance_id)
 
-      if widget_instance == nil do
-        dashboard
-        |> create_widget_instance(widget_attrs)
-      end
+      Widgets.get_instance(widget_instance_id)
+      |> add_widget(widget_attrs)
+      |> add_widget_instance_to_dashboard(dashboard)
     end)
   end
 
+  def add_widget(%WidgetInstance{} = widget_instance, _widget_attrs) do
+    widget_instance
+  end
+
+  def add_widget(nil, widget_attrs) do
+    create_widget_instance(widget_attrs)
+  end
+
   def create_widget_instance(
-        dashboard,
         %{
           "datasource_slug" => datasource_slug,
           "widget_slug" => widget_slug,
@@ -73,8 +78,18 @@ defmodule LiveSup.DataImporter.ProjectImporter do
 
     {:ok, widget_instance} = Widgets.create_instance(widget_instance)
 
-    dashboard
-    |> Dashboards.add_widget(widget_instance)
+    widget_instance
+  end
+
+  def add_widget_instance_to_dashboard(widget_instance, dashboard) do
+    case Dashboards.get_instance(dashboard, widget_instance) do
+      nil ->
+        dashboard
+        |> Dashboards.add_widget(widget_instance)
+
+      %DashboardWidget{} ->
+        nil
+    end
   end
 
   def find_or_create_widget_instance(_, _), do: :ok

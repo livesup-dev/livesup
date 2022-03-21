@@ -133,6 +133,11 @@ defmodule LiveSup.Core.Dashboards do
     end)
   end
 
+  def get_instance(%Dashboard{id: dashboard_id}, %WidgetInstance{id: widget_instance_id}) do
+    dashboard_id
+    |> DashboardWidgetQuery.by_dashboard_and_widget(widget_instance_id)
+  end
+
   def default(%Project{} = project) do
     project |> DashboardQuery.default()
   end
