@@ -15,5 +15,5 @@ defmodule LiveSup.DataImporter.Cleaner do
     data
   end
 
-  def clean(_), do: true
+  def clean(data), do: data
 end
