@@ -93,6 +93,11 @@ defmodule LiveSup.Core.Dashboards do
     |> DashboardQuery.delete()
   end
 
+  def delete_all(%Project{} = project) do
+    project
+    |> DashboardQuery.delete_all()
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking dashboard changes.
 

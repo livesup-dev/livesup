@@ -1,9 +1,15 @@
 defmodule LiveSup.DataImporter.Importer do
-  alias LiveSup.DataImporter.{ProjectImporter, TeamImporter, MetricImporter}
+  alias LiveSup.DataImporter.{
+    ProjectImporter,
+    TeamImporter,
+    MetricImporter,
+    Cleaner
+  }
 
   def import(data) do
     data
     |> parse_yaml()
+    |> Cleaner.clean()
     |> ProjectImporter.import()
     |> TeamImporter.import()
     |> MetricImporter.import()

@@ -55,11 +55,22 @@ defmodule LiveSup.Queries.DashboardQuery do
     |> Repo.delete()
   end
 
-  def default(%Project{} = project) do
+  def delete_all(%Project{id: project_id}) do
     query =
       from(
         d in Dashboard,
-        where: d.default == true and d.project_id == ^project.id
+        where: d.project_id == ^project_id
+      )
+
+    query
+    |> Repo.delete_all()
+  end
+
+  def default(%Project{id: project_id}) do
+    query =
+      from(
+        d in Dashboard,
+        where: d.default == true and d.project_id == ^project_id
       )
 
     query

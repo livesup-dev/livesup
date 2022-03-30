@@ -48,6 +48,8 @@ defmodule LiveSup.DataImporter.ProjectImporter do
     end)
   end
 
+  def import_widget({:ok, _dashboard}, _), do: true
+
   def add_widget(%WidgetInstance{} = widget_instance, _widget_attrs) do
     widget_instance
   end

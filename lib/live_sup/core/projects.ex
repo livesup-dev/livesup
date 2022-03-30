@@ -5,6 +5,7 @@ defmodule LiveSup.Core.Projects do
 
   alias LiveSup.Schemas.Project
   alias LiveSup.Queries.{ProjectQuery, GroupQuery, ProjectGroupQuery}
+  alias LiveSup.Core.Dashboards
 
   @doc """
   Returns the list of projects.
@@ -115,5 +116,9 @@ defmodule LiveSup.Core.Projects do
   """
   def change(%Project{} = project, attrs \\ %{}) do
     Project.changeset(project, attrs)
+  end
+
+  def delete_dashboards(%Project{} = project) do
+    project |> Dashboards.delete_all()
   end
 end
