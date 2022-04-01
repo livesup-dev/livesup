@@ -1,4 +1,5 @@
 <%= LiveSupWeb.Admin.ProjectLive.HeaderComponentShow.render(%{project: @project}) %>
+<%= LiveSupWeb.Admin.Components.FormMessageComponent.render(%{flash: @flash}) %>
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.admin_project_show_path(@socket, :show, @project)}>
     <.live_component

@@ -25,7 +25,18 @@ defmodule LiveSupWeb.Admin.ProjectLive.FormComponent do
   end
 
   def handle_event("save", %{"project" => project_params}, socket) do
-    {entries, _} = uploaded_entries(socket, :avatar)
+    avatar_map =
+      uploaded_entries(socket, :avatar)
+      |> handle_avatar(socket)
+
+    save_project(socket, socket.assigns.action, Map.merge(project_params, avatar_map))
+  end
+
+  defp handle_avatar({nil, _}, _socket), do: %{}
+  defp handle_avatar({[], _}, _socket), do: %{}
+
+  defp handle_avatar({entries, _}, socket) do
+    IO.inspect(entries)
     avatar_entry = entries |> Enum.at(0)
 
     file_path =
@@ -35,7 +46,9 @@ defmodule LiveSupWeb.Admin.ProjectLive.FormComponent do
         Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")
       end)
 
-    save_project(socket, socket.assigns.action, Map.put(project_params, "avatar_url", file_path))
+    %{
+      "avatar_url" => file_path
+    }
   end
 
   defp save_project(socket, :edit, project_params) do
