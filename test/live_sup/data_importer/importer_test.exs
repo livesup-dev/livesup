@@ -105,52 +105,6 @@ defmodule LiveSup.Test.DataImporter.Importer do
     """
   end
 
-  defp yaml_without_metrics_data do
-    """
-    remove_existing_projects: true
-    projects:
-      -
-        avatar_url: "https://awesome.com/my-awesome-project.jpeg"
-        dashboards:
-          -
-            default: false
-            id: af65c472-40cb-4824-8224-708cec8806de
-            name: "Dashboard 1"
-            widgets:
-              -
-                id: 8622c22c-5535-4502-a526-cef8f64ae57a
-                datasource_slug: weather-api-datasource
-                widget_slug: weather
-                labels: []
-                name: Weather
-                settings:
-                  location:
-                    source: local
-                    type: string
-                    value: ""
-                  runs_every:
-                    source: local
-                    type: int
-                    value: 43200
-                slug: weather
-          -
-            default: false
-            id: 469430b6-d754-497d-988e-34079faafd12
-            name: "Dashboard 2"
-            widgets: []
-        default: false
-        id: 5727d4e3-b3d4-460c-a3fb-f0180d5c3777
-        internal: false
-        name: "Awesome Project"
-        slug: awesome-project
-    teams:
-      - id: c92310d4-4577-4ce1-3456-be9684628ece
-        name: TPM
-        slug: tpm
-        avatar_url: https://amazonaws.com/teams/tpm.jpeg
-    """
-  end
-
   defp yaml_data do
     """
     projects:
