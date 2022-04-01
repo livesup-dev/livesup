@@ -213,4 +213,7 @@ defmodule LiveSup.Schemas.User do
   end
 
   def default_location(), do: @default_location
+
+  def external_provider?(%__MODULE__{provider: nil}), do: false
+  def external_provider?(%__MODULE__{provider: _}), do: true
 end
