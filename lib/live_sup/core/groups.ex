@@ -108,6 +108,13 @@ defmodule LiveSup.Core.Groups do
     |> Repo.insert!()
   end
 
+  def add_user_to_default_group(%User{} = user) do
+    group = GroupQuery.get_all_users_group()
+
+    user
+    |> add_user(group)
+  end
+
   def add_project(%Project{} = project, %Group{} = group) do
     ProjectGroup.changeset(%ProjectGroup{}, %{
       project_id: project.id,

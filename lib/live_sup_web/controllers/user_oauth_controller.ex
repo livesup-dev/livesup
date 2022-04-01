@@ -2,7 +2,6 @@ defmodule LiveSupWeb.UserOauthController do
   use LiveSupWeb, :controller
   plug Ueberauth
 
-  alias Ueberauth.Strategy.Helpers
   alias LiveSup.Core.Accounts
   alias LiveSupWeb.Auth.UserAuth
 
