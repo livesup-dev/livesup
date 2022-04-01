@@ -1,7 +1,13 @@
 defmodule LiveSup.DataImporter.Cleaner do
-  alias LiveSup.Core.{Projects, Dashboards}
+  alias LiveSup.Core.{Projects, Dashboards, Teams}
 
-  def clean(%{"remove_existing_projects" => true} = data) do
+  def clean(data) do
+    data
+    |> clean_projects()
+    |> clean_teams()
+  end
+
+  def clean_projects(%{"remove_existing_projects" => true} = data) do
     Projects.all()
     |> Enum.each(fn project ->
       project
@@ -14,6 +20,16 @@ defmodule LiveSup.DataImporter.Cleaner do
 
     data
   end
+  def clean_projects(data), do: data
 
-  def clean(data), do: data
+  def clean_teams(%{"remove_existing_teams" => true} = data) do
+    Teams.all()
+    |> Enum.each(fn team ->
+      team
+      |> Teams.delete()
+    end)
+
+    data
+  end
+  def clean_teams(data), do: data
 end
