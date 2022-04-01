@@ -6,7 +6,7 @@ defmodule LiveSup.Core.Accounts do
   import Ecto.Query, warn: false
   alias LiveSup.Repo
   alias LiveSup.Schemas.{User, UserToken}
-  alias LiveSup.Core.Accounts.UserNotifier
+  alias LiveSup.Core.{Accounts.UserNotifier, Groups}
 
   def fetch_or_create_user(attrs) do
     case get_user_by_email(attrs.email) do
@@ -17,7 +17,19 @@ defmodule LiveSup.Core.Accounts do
         %User{}
         |> User.registration_changeset(attrs)
         |> Repo.insert()
+        |> add_user_to_group()
     end
+  end
+
+  defp add_user_to_group({:ok, user}) do
+    user
+    |> Groups.add_user_to_default_group()
+
+    {:ok, user}
+  end
+
+  defp add_user_to_group(_) do
+    {:error, "Error adding user to the group"}
   end
 
   @doc """
