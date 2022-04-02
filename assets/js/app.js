@@ -23,11 +23,13 @@ import topbar from 'topbar'
 import 'alpinejs'
 import Drag from './dragHook';
 import PlotlyHook from './plotlyHook';
+import GoogleMapHook from './googleMapHook';
 
 let Hooks = {
   VegaLite,
   Drag,
-  PlotlyHook
+  PlotlyHook,
+  GoogleMapHook
 }
 // Hooks.Example = { mounted() { } }
 

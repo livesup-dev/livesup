@@ -4,7 +4,6 @@ defmodule LiveSupWeb.Test.Live.WelcomeLive do
   import Phoenix.LiveViewTest
   import LiveSup.Test.TeamsFixtures
 
-
   defp create_teams(_) do
     team_a = team_fixture(%{name: "Team A"})
     team_b = team_fixture(%{name: "Team B"})
@@ -17,7 +16,7 @@ defmodule LiveSupWeb.Test.Live.WelcomeLive do
     setup [:register_and_log_in_user, :create_teams]
 
     test "lists all teams", %{conn: conn, team_a: team_a, team_b: team_b} do
-      {:ok, _index_live, html} = live(conn, Routes.welcome_path(conn, :index))
+      {:ok, _index_live, html} = live(conn, Routes.welcome_path(conn, :teams))
 
       assert html =~ team_a.name
       assert html =~ team_b.name

@@ -31,7 +31,7 @@ defmodule LiveSup.Core.Widgets.RssServiceStatus.List.Worker do
     |> Map.put(:service_name, name)
   end
 
-  defp process_data({:error, error}, %{"icon" => icon, "name" => name, "url" => url}) do
+  defp process_data({:error, _error}, %{"icon" => icon, "name" => name, "url" => url}) do
     %{
       service_name: name,
       icon: icon,
