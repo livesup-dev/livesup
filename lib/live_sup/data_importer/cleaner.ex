@@ -20,16 +20,21 @@ defmodule LiveSup.DataImporter.Cleaner do
 
     data
   end
+
   def clean_projects(data), do: data
 
   def clean_teams(%{"remove_existing_teams" => true} = data) do
     Teams.all()
     |> Enum.each(fn team ->
       team
+      |> Teams.delete_members()
+
+      team
       |> Teams.delete()
     end)
 
     data
   end
+
   def clean_teams(data), do: data
 end
