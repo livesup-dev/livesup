@@ -207,7 +207,7 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
                     console.log("Returned place contains no geometry");
                     return;
                   }
-
+                  console.log("placed the marker");
                   const icon = {
                     url: place.icon,
                     size: new google.maps.Size(71, 71),
