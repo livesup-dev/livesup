@@ -1,4 +1,3 @@
-
 defmodule LiveSup.Core.Datasources.GoogleTimezoneDatasource do
   alias LiveSup.Core.Datasources.HttpDatasource
 

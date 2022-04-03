@@ -45,9 +45,9 @@ config :fun_with_flags, :cache_bust_notifications,
   client: LiveSup.PubSub
 
 config :live_sup,
-  :config,
-  mock_api_host: "http://docker.for.mac.localhost:8080",
-  google_map_key: "GOOGLE_MAP_KEY"
+       :config,
+       mock_api_host: "http://docker.for.mac.localhost:8080",
+       google_map_key: "GOOGLE_MAP_KEY"
 
 config :live_sup, LiveSup.PromEx,
   disabled: false,
