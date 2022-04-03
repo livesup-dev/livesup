@@ -73,9 +73,13 @@ defmodule LiveSupWeb.WelcomeLive do
     save_location(user_id, location, socket)
   end
 
-  defp save_location(user_id, location, socket) do
+  defp save_location(user_id, %{lat: lat, lng: lng} = location, socket) do
+    {:ok, %{time_zone_id: time_zone_id}} = LiveSup.Core.Utils.get_timezone_from_location(lat, lng)
+
+    data = Map.put(location, :timezone, time_zone_id)
+
     Users.get!(user_id)
-    |> Users.update(%{location: location})
+    |> Users.update(%{location: data})
 
     {:noreply,
      socket

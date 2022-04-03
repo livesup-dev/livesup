@@ -179,9 +179,15 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
                   return;
                 }
 
+                const address_types = [
+                    "administrative_area_level_1", "administrative_area_level_2", "administrative_area_level_3",
+                    "administrative_area_level_4", "administrative_area_level_5", "administrative_area_level_6",
+                    "administrative_area_level_7", "locality", "sublocality"
+                ]
+
                 // TODO: This is ugly as hell
                 places[0].address_components.find(address_component =>  {
-                    if (address_component.types[0] == "locality") {
+                    if (address_types.includes(address_component.types[0])) {
                         document.getElementById("location-form_address_state").value = address_component.long_name;
                     }
 
