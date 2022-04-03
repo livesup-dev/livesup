@@ -49,7 +49,6 @@ defmodule LiveSupWeb.WelcomeLive do
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
-    IO.inspect(user_params)
     associate_teams(socket, user_params)
   end
 

@@ -9,8 +9,6 @@ defmodule LiveSup.Core.Datasources.GoogleTimezoneDatasource do
       args
       |> Keyword.get(:url, @url)
 
-      build_url(url, key, lat, lng) |> IO.inspect()
-
     case HttpDatasource.get(url: build_url(url, key, lat, lng), headers: []) do
       {:ok, response} -> process(response)
       {:error, error} -> process_error(error)
