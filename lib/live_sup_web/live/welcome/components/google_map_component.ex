@@ -1,7 +1,6 @@
 defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
   use LiveSupWeb, :component
 
-  @impl true
   def render(assigns) do
     assigns =
       assigns
@@ -15,16 +14,6 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
       placeholder="Search Box"
     />
     <div id="map" style="height: 100%;"></div>
-
-    <input
-      id="address_lat"
-      type="hidden"
-    />
-
-    <input
-      id="address_lng"
-      type="hidden"
-    />
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script
@@ -190,8 +179,19 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
                   return;
                 }
 
-                document.getElementById("address_lat").value = places[0].geometry.location.lat();
-                document.getElementById("address_lng").value = places[0].geometry.location.lng();
+                // TODO: This is ugly as hell
+                places[0].address_components.find(address_component =>  {
+                    if (address_component.types[0] == "locality") {
+                        document.getElementById("location-form_address_state").value = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "country") {
+                        document.getElementById("location-form_address_country").value = address_component.long_name;
+                    }
+                });
+
+                document.getElementById("location-form_address_lat").value = places[0].geometry.location.lat();
+                document.getElementById("location-form_address_lng").value = places[0].geometry.location.lng();
 
                 // Clear out the old markers.
                 markers.forEach((marker) => {
@@ -207,7 +207,6 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
                     console.log("Returned place contains no geometry");
                     return;
                   }
-                  console.log("placed the marker");
                   const icon = {
                     url: place.icon,
                     size: new google.maps.Size(71, 71),

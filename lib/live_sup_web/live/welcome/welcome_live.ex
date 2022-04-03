@@ -33,12 +33,50 @@ defmodule LiveSupWeb.WelcomeLive do
   end
 
   defp apply_action(socket, :location, _) do
+    %{id: user_id} = socket.assigns.current_user
+
+    user = user_id |> Users.get!()
+
+    changeset = User.update_changeset(user, %{})
+
     socket
+    |> assign(:changeset, changeset)
   end
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
+    IO.inspect(user_params)
     associate_teams(socket, user_params)
+  end
+
+  @impl true
+  def handle_event("save_location", %{"user" => user_params}, socket) do
+    %{
+      "address_country" => country,
+      "address_lat" => lat,
+      "address_lng" => lng,
+      "address_state" => state,
+      "id" => user_id
+    } = user_params
+
+    location = %{
+      country: country,
+      lat: lat,
+      lng: lng,
+      state: state
+    }
+
+    save_location(user_id, location, socket)
+  end
+
+  defp save_location(user_id, location, socket) do
+    Users.get!(user_id)
+    |> Users.update(%{location: location})
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "Location updated successfully")
+     |> push_redirect(to: Routes.project_path(socket, :index))}
   end
 
   defp associate_teams(socket, %{"id" => user_id, "teams" => teams}) do
