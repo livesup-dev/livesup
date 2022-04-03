@@ -130,6 +130,7 @@ defmodule LiveSupWeb.Router do
 
     live "/welcome/teams", WelcomeLive, :teams
     live "/welcome/location", WelcomeLive, :location
+    live "/welcome/thank-you", WelcomeLive, :thank_you
 
     live "/projects", Project.ProjectLive, :index
     live "/projects/new", Project.ProjectLive, :new

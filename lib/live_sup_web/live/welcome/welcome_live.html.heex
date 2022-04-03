@@ -1,3 +1,12 @@
+<%= if @live_action == :thank_you do %>
+  <p>THANK YOU</p>
+  For your time.
+
+  <%= live_redirect to: Routes.project_path(@socket, :index), class: "w-10 h-10 block relative ml-2 p-2 transition-colors duration-200 rounded-full text-primary-lighter dark:bg-darker hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker" do %>
+      Go to projects
+  <% end %>
+<% end %>
+
 <%= if @live_action == :teams do %>
 
   <div>

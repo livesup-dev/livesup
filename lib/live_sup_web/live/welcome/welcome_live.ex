@@ -32,6 +32,10 @@ defmodule LiveSupWeb.WelcomeLive do
     |> assign(:changeset, changeset)
   end
 
+  defp apply_action(socket, :thank_you, _) do
+    socket
+  end
+
   defp apply_action(socket, :location, _) do
     %{id: user_id} = socket.assigns.current_user
 
@@ -76,7 +80,7 @@ defmodule LiveSupWeb.WelcomeLive do
     {:noreply,
      socket
      |> put_flash(:info, "Location updated successfully")
-     |> push_redirect(to: Routes.project_path(socket, :index))}
+     |> push_redirect(to: Routes.welcome_path(socket, :thank_you))}
   end
 
   defp associate_teams(socket, %{"id" => user_id, "teams" => teams}) do
