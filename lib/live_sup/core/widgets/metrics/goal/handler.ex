@@ -11,6 +11,8 @@ defmodule LiveSup.Core.Widgets.Metrics.Goal.Handler do
   defp build_metric(nil, metric_slug), do: {:error, "Metric not found: #{metric_slug}"}
 
   defp build_metric(metric, _metric_slug) do
+    # TODO: This needs to be dynamic, somehing you can
+    # configure in the settings
     current_value = metric |> MetricValueQuery.last()
 
     {:ok,
