@@ -17,6 +17,13 @@ defmodule LiveSup.Config do
     end
   end
 
+  def google_map_key! do
+    System.get_env("GOOGLE_MAP_KEY") ||
+      raise """
+      environment variable GOOGLE_MAP_KEY is missing.
+      """
+  end
+
   def db_ssl!(env) do
     if ssl = System.get_env(env) do
       if ssl == "true" do

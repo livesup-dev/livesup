@@ -10,6 +10,7 @@ defmodule LiveSup.Queries.UserQuery do
 
   def get!(id) do
     base()
+    |> preload(:team_members)
     |> Repo.get!(id)
   end
 

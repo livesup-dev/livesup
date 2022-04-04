@@ -1,6 +1,5 @@
 defmodule LiveSup.Core.Datasources.WordpressDatasource do
   alias LiveSup.Core.Datasources.HttpDatasource
-  alias LiveSup.Core.Widgets.Wordpress.WordpressConfig
 
   def directory_sizes(%{
         user: user,

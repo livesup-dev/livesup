@@ -2,7 +2,7 @@ defmodule LiveSup.Queries.TeamQuery do
   import Ecto.Query
 
   alias LiveSup.Repo
-  alias LiveSup.Schemas.{Team, User, Project}
+  alias LiveSup.Schemas.{Team, User, Project, TeamMember}
 
   def create!(data) do
     %Team{}
@@ -73,6 +73,14 @@ defmodule LiveSup.Queries.TeamQuery do
   def delete(model) do
     model
     |> Repo.delete()
+  end
+
+  def delete_members(%Team{id: team_id}) do
+    from(
+      tm in TeamMember,
+      where: tm.team_id == ^team_id
+    )
+    |> Repo.delete_all()
   end
 
   def by_slug(slug) do

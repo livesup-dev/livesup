@@ -36,7 +36,6 @@ defmodule LiveSupWeb.Admin.ProjectLive.FormComponent do
   defp handle_avatar({[], _}, _socket), do: %{}
 
   defp handle_avatar({entries, _}, socket) do
-    IO.inspect(entries)
     avatar_entry = entries |> Enum.at(0)
 
     file_path =

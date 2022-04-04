@@ -28,6 +28,7 @@ defmodule LiveSup.Core.Teams do
   defdelegate update(team, attrs), to: TeamQuery
   defdelegate update!(team, attrs), to: TeamQuery
   defdelegate delete(team), to: TeamQuery
+  defdelegate delete_members(team), to: TeamQuery
   defdelegate members(team), to: TeamQuery
   defdelegate upsert(attrs), to: TeamQuery
 

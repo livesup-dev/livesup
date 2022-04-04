@@ -49,7 +49,7 @@ defmodule LiveSup.Schemas.Widget do
     :datasource_id
   ]
 
-  def enabled?(%Widget{} = model) do
+  def enabled?(%Widget{} = _model) do
     # TODO: We need to check the datasource, if it is enabled,
     # then we use the widget flag, otherwise it should be disabled.
   end

@@ -9,7 +9,9 @@ defmodule LiveSup.Schemas.User do
     "city" => "Es Castell",
     "state" => "Balearic Islands",
     "country" => "Spain",
-    "zip_code" => "07720"
+    "zip_code" => "07720",
+    "lat" => 39.9991163,
+    "lng" => 3.8389047
   }
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -210,6 +212,10 @@ defmodule LiveSup.Schemas.User do
 
   def address(%__MODULE__{location: location}) do
     "#{location["state"]}, #{location["country"]}"
+  end
+
+  def address_point(%__MODULE__{location: location}) do
+    "#{location["lat"]}, #{location["lng"]}"
   end
 
   def default_location(), do: @default_location
