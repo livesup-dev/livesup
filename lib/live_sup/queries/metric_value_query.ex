@@ -2,10 +2,13 @@ defmodule LiveSup.Queries.MetricValueQuery do
   import Ecto.Query
   alias LiveSup.Repo
   alias LiveSup.Schemas.{MetricValue, Metric}
-  alias LiveSup.Queries.MetricValueQuery
 
   def get!(id) do
     base() |> Repo.get!(id)
+  end
+
+  def delete_all() do
+    base() |> Repo.delete_all()
   end
 
   def all() do

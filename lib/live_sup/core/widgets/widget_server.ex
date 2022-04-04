@@ -189,8 +189,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
       end
 
       defp build_model({:ok, data}, widget_instance) do
-        custom_title = WidgetInstance.custom_title(widget_instance)
-
         WidgetData.build_ready(
           id: widget_instance.id,
           title: title(widget_instance),

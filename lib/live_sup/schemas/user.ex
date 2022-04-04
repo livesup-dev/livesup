@@ -77,7 +77,7 @@ defmodule LiveSup.Schemas.User do
     |> maybe_set_location()
   end
 
-  def update_changeset(user, attrs, opts \\ []) do
+  def update_changeset(user, attrs) do
     user
     |> cast(attrs, [
       :email,

@@ -5,12 +5,12 @@ defmodule LiveSup.Core.Widgets.Metrics.Goal.Handler do
   def get_data(%{"metric" => metric_slug}) do
     metric_slug
     |> Metrics.by_slug()
-    |> build_metric()
+    |> build_metric(metric_slug)
   end
 
-  defp build_metric(nil), do: {:error, "Metric not found"}
+  defp build_metric(nil, metric_slug), do: {:error, "Metric not found: #{metric_slug}"}
 
-  defp build_metric(metric) do
+  defp build_metric(metric, _metric_slug) do
     current_value = metric |> MetricValueQuery.last()
 
     {:ok,

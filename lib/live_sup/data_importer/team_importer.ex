@@ -13,7 +13,7 @@ defmodule LiveSup.DataImporter.TeamImporter do
 
   def import(data), do: data
 
-  defp get_or_create_team(%{"id" => id} = attrs) do
+  defp get_or_create_team(attrs) do
     Teams.upsert(attrs)
   end
 end

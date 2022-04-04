@@ -13,6 +13,8 @@ defmodule LiveSup.DataImporter.ProjectImporter do
     data
   end
 
+  def import(data), do: data
+
   defp get_or_create_project(%{"id" => id} = attrs) do
     Projects.get(id) || Projects.create_public_project(attrs)
   end

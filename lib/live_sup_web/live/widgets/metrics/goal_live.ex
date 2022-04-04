@@ -22,7 +22,6 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GoalLive do
   def build_spec(%{data: widget_data}) do
     %{
       "$schema" => "https://vega.github.io/schema/vega-lite/v5.json",
-      "title" => %{"text" => widget_data[:name], "color" => "white"},
       "data" => %{
         "values" => [
           %{"target" => widget_data[:target], "current_value" => widget_data[:current_value]}

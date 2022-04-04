@@ -29,6 +29,11 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
             "type" => "int",
             "value" => "43200",
             "source" => "local"
+          },
+          "title" => %{
+            "type" => "string",
+            "value" => "Some custom title",
+            "source" => "local"
           }
         },
         datasource: %LiveSup.Schemas.Datasource{
@@ -55,6 +60,8 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
     assert WidgetInstance.get_setting(widget_instance, "runs_every") == 43200
 
     assert WidgetInstance.get_setting(widget_instance, "audience") == "super_secret"
+
+    assert WidgetInstance.custom_title(widget_instance) == "Some custom title"
 
     System.put_env("SUPER_SECRET_TOKEN", "111")
 

@@ -22,7 +22,6 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
     %{
       domain: %{x: [0, 1], y: [0, 1]},
       value: widget_data.data[:current_value],
-      title: %{text: widget_data.data[:name]},
       type: "indicator",
       mode: "gauge+number+delta",
       delta: %{reference: widget_data.data[:target]},

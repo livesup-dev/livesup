@@ -81,7 +81,7 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
     |> where([di], di.project_id == ^project_id)
   end
 
-  defp by_datasource_query(query \\ base(), datasource_id) do
+  defp by_datasource_query(query, datasource_id) do
     query
     |> where([di], di.datasource_id == ^datasource_id)
   end

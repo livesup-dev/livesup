@@ -27,7 +27,7 @@ export default {
           color: '#FFF'
         },
         width: 400,
-        height: 300,
+        height: 200,
         margin: {
           t: 0,
           b: 0

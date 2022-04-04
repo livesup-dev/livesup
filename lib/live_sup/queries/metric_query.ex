@@ -70,5 +70,10 @@ defmodule LiveSup.Queries.MetricQuery do
     |> Repo.delete()
   end
 
+  def delete_all() do
+    base()
+    |> Repo.delete_all()
+  end
+
   def base, do: from(Metric, as: :metric)
 end

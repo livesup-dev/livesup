@@ -7,10 +7,9 @@ defmodule LiveSup.Core.Datasources.RssDatasource do
   def fetch(url) do
     url = build_url(url: url, feature_flag: @feature_flag_name)
 
-    request =
-      Finch.build(:get, url)
-      |> Finch.request(SupFinch)
-      |> parse_response()
+    Finch.build(:get, url)
+    |> Finch.request(SupFinch)
+    |> parse_response()
   end
 
   defp parse_response({:ok, %{body: body, status: 200}}), do: parse(body)

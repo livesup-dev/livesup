@@ -39,6 +39,11 @@ defmodule LiveSup.Queries.WidgetInstanceQuery do
     |> Repo.delete()
   end
 
+  def delete_all() do
+    base()
+    |> Repo.delete_all()
+  end
+
   def by_dashboard(%Dashboard{id: dashboard_id}) do
     dashboard_id |> by_dashboard
   end
