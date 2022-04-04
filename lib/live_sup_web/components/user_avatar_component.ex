@@ -36,6 +36,7 @@ defmodule LiveSupWeb.Components.UserAvatarComponent do
         aria-orientation="vertical"
         aria-label="User menu"
     >
+        <%= link "Settings", to: Routes.user_settings_path(LiveSupWeb.Endpoint, :update), class: "block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary" %>
         <%= link "Logout", to: Routes.user_session_path(LiveSupWeb.Endpoint, :delete), method: :delete, class: "block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary" %>
     </div>
     </div>
