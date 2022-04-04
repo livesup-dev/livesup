@@ -29,7 +29,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.BulletGaugeLive do
         bar: %{ color: "#d9d2e9" }
       },
       value: widget_data.data[:current_value],
-      delta: %{reference: widget_data.data[:target]},
+      delta: %{reference: widget_data.data[:target], position: "top"},
       domain: %{x: [0, 1], y: [0, 1]},
       mode: "number+gauge+delta",
       width: 500,
