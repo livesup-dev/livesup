@@ -26,8 +26,8 @@ export default {
         font: {
           color: '#FFF'
         },
-        width: 400,
-        height: 200,
+        width: spec["width"] || 400,
+        height: spec["height"] || 200,
         margin: {
           t: 0,
           b: 0
@@ -35,7 +35,9 @@ export default {
         paper_bgcolor: "rgba(0,0,0,0)",
         plot_bgcolor: "rgba(0,0,0,0)"
       };
-      Plotly.newPlot(this.el, data, layout);
+
+      var config = { responsive: true };
+      Plotly.newPlot(this.el, data, layout, config);
     });
   }
 };
