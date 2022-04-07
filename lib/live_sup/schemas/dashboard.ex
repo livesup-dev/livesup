@@ -12,6 +12,7 @@ defmodule LiveSup.Schemas.Dashboard do
     field :labels, {:array, :string}
     field :settings, :map
     field :default, :boolean
+    field :avatar_url, :string
 
     belongs_to :project, Project
     has_many :dashboards_widgets, DashboardWidget
@@ -29,7 +30,8 @@ defmodule LiveSup.Schemas.Dashboard do
     :default,
     :labels,
     :settings,
-    :id
+    :id,
+    :avatar_url
   ]
 
   @doc false
@@ -37,5 +39,13 @@ defmodule LiveSup.Schemas.Dashboard do
     dashboard
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required([:name])
+  end
+
+  def default_avatar_url(%__MODULE__{avatar_url: avatar_url}) do
+    avatar_url || default_avatar_url()
+  end
+
+  def default_avatar_url() do
+    "/images/default-dashboard-avatar.png"
   end
 end
