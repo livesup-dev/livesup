@@ -23,12 +23,12 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.BulletGaugeLive do
       type: "indicator",
       gauge: %{
         shape: "bullet",
-        axis: %{ range: [nil, widget_data.data[:target]] },
+        axis: %{range: [nil, widget_data.data[:target]]},
         bgcolor: "white",
-        steps: [%{ range: [0, widget_data.data[:target]], color: "#1d3c62" }],
-        bar: %{ color: "#d9d2e9" },
+        steps: [%{range: [0, widget_data.data[:target]], color: "#1d3c62"}],
+        bar: %{color: "#d9d2e9"}
       },
-      number: %{ prefix: "%" },
+      number: %{prefix: "%"},
       value: widget_data.data[:current_value],
       delta: %{reference: widget_data.data[:target], position: "top"},
       domain: %{x: [0, 1], y: [0, 1]},
