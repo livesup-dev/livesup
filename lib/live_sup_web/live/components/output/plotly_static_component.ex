@@ -10,7 +10,7 @@ defmodule LiveSupWeb.Output.PlotlyStaticComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div id={"plotly-#{@id}"} phx-hook="PlotlyHook" phx-update="ignore" data-id={@id}>
+    <div id={"plotly-#{@id}"} phx-hook="PlotlyHook" phx-update="ignore" data-id={@id} class="w-full">
     </div>
     """
   end

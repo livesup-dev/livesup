@@ -8,7 +8,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.BulletGaugeLive do
       <!-- Metrics Goal -->
       <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
       <!-- Widget Content -->
-      <div class="p-2 grid justify-items-center">
+      <div class="p-2 w-full">
         <%= live_component(LiveSupWeb.Output.PlotlyStaticComponent, id: "#{widget_data.id}-gauge", spec: build_spec(widget_data)) %>
       </div>
       <!-- /Widget Content -->
@@ -33,8 +33,8 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.BulletGaugeLive do
       delta: %{reference: widget_data.data[:target], position: "top"},
       domain: %{x: [0, 1], y: [0, 1]},
       mode: "number+gauge+delta",
-      width: 500,
-      height: 100
+      width: 450,
+      height: 116
     }
   end
 end

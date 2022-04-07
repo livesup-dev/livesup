@@ -9,11 +9,11 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
     ~H"""
     <input
       id="pac-input"
-      class="controls"
+      class="controls mt-2"
       type="text"
       placeholder="Search Box"
     />
-    <div id="map" style="height: 100%;"></div>
+    <div id="gmap" class="h-full" phx-update="ignore"></div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script
@@ -33,7 +33,7 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
               const searchBox = new google.maps.places.SearchBox(input);
 
               // Styles a map in night mode.
-              const map = new google.maps.Map(document.getElementById("map"), {
+              const map = new google.maps.Map(document.getElementById("gmap"), {
                   center: initLatlng,
                   zoom: 12,
                   styles: [{
