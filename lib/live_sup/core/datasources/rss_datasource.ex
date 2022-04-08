@@ -14,6 +14,7 @@ defmodule LiveSup.Core.Datasources.RssDatasource do
 
   defp parse_response({:ok, %{body: body, status: 200}}), do: parse(body)
   defp parse_response({:ok, %{body: body, status: _}}), do: {:error, body}
+  defp parse_response({:error, %Mint.TransportError{reason: :timeout}}), do: {:error, "timeout"}
 
   def parse(body), do: ElixirFeedParser.parse(body)
 end

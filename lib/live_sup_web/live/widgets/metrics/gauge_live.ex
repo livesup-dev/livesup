@@ -1,5 +1,6 @@
 defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
+  alias LiveSupWeb.Live.Widgets.Metrics.MetricsHelper
 
   @impl true
   def render_widget(assigns) do
@@ -19,15 +20,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
   end
 
   def build_spec(widget_data) do
-    %{
-      domain: %{x: [0, 1], y: [0, 1]},
-      value: widget_data.data[:current_value],
-      type: "indicator",
-      mode: "gauge+number+delta",
-      delta: %{reference: widget_data.data[:target]},
-      gauge: %{
-        axis: %{range: [nil, widget_data.data[:target]]}
-      }
-    }
+    IO.inspect(widget_data)
+    widget_data |> MetricsHelper.build_gauge()
   end
 end

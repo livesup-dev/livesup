@@ -38,7 +38,7 @@ defmodule LiveSup.Core.Widgets.RssServiceStatus.List.Worker do
       title: "Error reading the service status",
       url: url,
       status: :error,
-      created_at: nil,
+      created_at: LiveSup.Helpers.DateHelper.today(),
       created_at_ago: nil
     }
   end
