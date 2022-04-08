@@ -11,7 +11,7 @@ defmodule LiveSupWeb.Test.Live.Widgets.MetricsHelperTest do
       icon: nil,
       icon_svg: nil,
       id: "bcee4d7d-f2b8-4b2a-9325-97f4299bf0e4",
-      public_settings: %{"metric" => "p95-api-latency"},
+      public_settings: %{"metric" => "p95-api-latency", "range_color_order" => "asc"},
       state: :ready,
       title: "P95 Api Latency",
       ui_settings: %{"size" => 1},

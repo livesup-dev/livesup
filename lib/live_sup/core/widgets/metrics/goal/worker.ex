@@ -7,7 +7,7 @@ defmodule LiveSup.Core.Widgets.Metrics.Goal.Worker do
   @default_title "Goal"
 
   @impl true
-  def public_settings, do: ["metric"]
+  def public_settings, do: ["metric", "range_color_order"]
 
   @impl true
   def settings_keys, do: ["metric"]

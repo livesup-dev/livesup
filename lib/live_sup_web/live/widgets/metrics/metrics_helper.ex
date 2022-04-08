@@ -1,12 +1,13 @@
 defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
-  def build_gauge(%{data: %{target: target}} = widget_data) do
+  def build_gauge(%{data: %{target: target}, public_settings: public_settings} = widget_data) do
     limit = target |> trunc()
 
     step =
       (target / 3)
       |> round()
 
-    colors = ["#12B431", "#DDD72C", "#EC8116"]
+    range_color_order = Map.get(public_settings, "range_color_order", "asc")
+    colors = colors(range_color_order)
 
     ranges = Enum.to_list(0..limit//step)
 
@@ -42,9 +43,12 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
     }
   end
 
-  def delete_if_invalid_range(ranges) when length(ranges) > 3 do
+  defp delete_if_invalid_range(ranges) when length(ranges) > 3 do
     ranges |> List.delete_at(length(ranges) - 1)
   end
 
-  def delete_if_invalid_range(ranges), do: ranges
+  defp delete_if_invalid_range(ranges), do: ranges
+
+  defp colors("asc"), do: ["#12B431", "#DDD72C", "#EC8116"]
+  defp colors("desc"), do: ["#EC8116", "#DDD72C", "#12B431"]
 end
