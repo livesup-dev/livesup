@@ -46,7 +46,18 @@ defmodule LiveSupWeb.Project.DashboardLive do
     |> assign_project(project)
     |> assign_dashboards(project)
     |> assign_section()
+    |> redirect_if_one_dashboard()
   end
+
+  def redirect_if_one_dashboard(socket) when length(socket.assigns.dashboards) == 1 do
+    %{id: dashboard_id} =
+      socket.assigns.dashboards
+      |> Enum.at(0)
+
+    redirect(socket, to: Routes.dashboard_path(socket, :show, dashboard_id))
+  end
+
+  def redirect_if_one_dashboard(socket) when length(socket.assigns.dashboards) != 1, do: socket
 
   defp apply_action(socket, :new, %{"id" => project_id}) do
     project = Projects.get!(project_id)
