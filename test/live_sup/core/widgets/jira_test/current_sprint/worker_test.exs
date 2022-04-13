@@ -6,7 +6,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.CurrentSprint.WorkerTest do
   alias LiveSup.Schemas.WidgetInstance
   alias LiveSup.Core.Widgets.{WidgetManager, WidgetData, WorkerTaskSupervisor}
 
-  describe "Chuck Norris Joke widget" do
+  describe "Jira widget" do
     @describetag :widget
     @describetag :jira_current_sprint_widget
 
