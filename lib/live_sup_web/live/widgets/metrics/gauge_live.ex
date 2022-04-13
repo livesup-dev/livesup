@@ -20,6 +20,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
   end
 
   def build_spec(widget_data) do
+    IO.inspect(widget_data)
     widget_data |> MetricsHelper.build_gauge()
   end
 end
