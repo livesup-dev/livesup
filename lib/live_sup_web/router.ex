@@ -128,6 +128,7 @@ defmodule LiveSupWeb.Router do
     # get "/projects/:project_id/dashboards", DashboardController, :index
     # get "/dashboards/:dashboard_id", DashboardController, :show
 
+    live "/welcome", WelcomeLive, :home
     live "/welcome/teams", WelcomeLive, :teams
     live "/welcome/location", WelcomeLive, :location
     live "/welcome/thank-you", WelcomeLive, :thank_you

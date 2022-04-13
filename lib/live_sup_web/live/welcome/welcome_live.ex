@@ -20,6 +20,10 @@ defmodule LiveSupWeb.WelcomeLive do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
+  defp apply_action(socket, :home, _) do
+    socket |> redirect(to: "/welcome/teams")
+  end
+
   defp apply_action(socket, :teams, _) do
     %{id: user_id} = socket.assigns.current_user
 
@@ -95,6 +99,7 @@ defmodule LiveSupWeb.WelcomeLive do
     {:noreply,
      socket
      |> put_flash(:info, "Teams added successfully")
-     |> push_redirect(to: Routes.welcome_path(socket, :location))}
+     # We need to do a redirection so the google map can actually be loaded.
+     |> redirect(to: "/welcome/location")}
   end
 end

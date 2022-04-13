@@ -36,6 +36,7 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
               const map = new google.maps.Map(document.getElementById("gmap"), {
                   center: initLatlng,
                   zoom: 12,
+                  mapTypeControl: false,
                   styles: [{
                           elementType: "geometry",
                           stylers: [{

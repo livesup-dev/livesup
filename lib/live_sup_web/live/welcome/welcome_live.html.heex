@@ -42,7 +42,7 @@
 									</div>
 									<h3 class="text-lg text-white text-center bg-darker align-center">
 										<%= checkbox f, String.to_atom(team.slug), name: "user[teams][]", checked_value: team.id, hidden_input: false %>
-										<%= label f, team.name, class: "inline-block text-gray-600 dark:text-gray-200 font-medium align-text-bottom" %>
+										<%= label f, team.name, class: "inline-block text-gray-600 dark:text-gray-200 font-medium align-text-bottom bg-darker" %>
 									</h3>
 								</div>
 							<% end %>
@@ -59,7 +59,8 @@
 
 			<%= if @live_action == :location do %>
 				<div class="px-4 py-5 sm:px-6">
-					<h2 class="text-lg leading-6 font-medium">Please select the teams you belong to</h2>
+					<h2 class="text-lg leading-6 font-medium justify-center">Would you mind to tell us what city you live in?</h2>
+					<h4>Use the search box below</h4>
 				</div>
 				<div class="border-t border-gray-100 dark:border-dark min-h-[70vh]">
 					<div class="max-w-2xl mx-auto pt-4 pb-10 px-4 sm:pt-6 sm:px-6 lg:max-w-7xl">

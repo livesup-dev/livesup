@@ -19,7 +19,7 @@ defmodule LiveSupWeb.UserOauthController do
 
     case Accounts.fetch_or_create_user(user_params) do
       {:ok, user} ->
-        UserAuth.log_in_user(conn, user)
+        UserAuth.welcome_user(conn, user)
 
       _ ->
         conn
