@@ -34,7 +34,7 @@ defmodule LiveSupWeb.Test.Live.Widgets.MetricsHelperTest do
       result = @widget_data |> MetricsHelper.build_gauge()
 
       assert %{
-               delta: %{reference: 600.0},
+               delta: %{reference: 562.0},
                domain: %{x: [0, 1], y: [0, 1]},
                gauge: %{
                  axis: %{range: [nil, 600.0]},
@@ -56,7 +56,7 @@ defmodule LiveSupWeb.Test.Live.Widgets.MetricsHelperTest do
       result = @widget_data_small_target |> MetricsHelper.build_gauge()
 
       assert %{
-               delta: %{reference: 8.0},
+               delta: %{reference: 2.8200000000000003},
                domain: %{x: [0, 1], y: [0, 1]},
                gauge: %{
                  axis: %{range: [nil, 8.0]},
