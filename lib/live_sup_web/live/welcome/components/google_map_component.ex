@@ -9,7 +9,7 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
     ~H"""
     <input
       id="pac-input"
-      class="controls mt-2"
+      class="absolute z-10 controls"
       type="text"
       placeholder="Search Box"
     />
