@@ -1,5 +1,8 @@
 defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
-  def build_gauge(%{data: %{target: target}, public_settings: public_settings} = widget_data) do
+  def build_gauge(
+        %{data: %{target: target, current_value: current_value}, public_settings: public_settings} =
+          widget_data
+      ) do
     limit = target |> trunc()
 
     step =
@@ -29,12 +32,13 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
         }
       end)
 
+    # TODO: Delta need to be improved. It should be a setting
     %{
       domain: %{x: [0, 1], y: [0, 1]},
-      value: widget_data.data[:current_value],
+      value: current_value,
       type: "indicator",
       mode: "gauge+number+delta",
-      delta: %{reference: target},
+      delta: %{reference: current_value - (target - current_value)},
       gauge: %{
         bar: %{color: "#173557"},
         axis: %{range: [nil, target]},
