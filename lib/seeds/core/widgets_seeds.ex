@@ -86,6 +86,10 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       %{
         datasource_slug: "local-datasource",
         attrs: &bullet_gauge_widget_attrs/1
+      },
+      %{
+        datasource_slug: "pager-duty-datasource",
+        attrs: &pager_duty_on_call_widget_attrs/1
       }
     ]
     |> Enum.each(fn widget ->
@@ -124,6 +128,24 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 5},
         "team" => %{"source" => "local", "string" => "string", "value" => ""}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  defp pager_duty_on_call_widget_attrs(datasource) do
+    %{
+      name: "On Call",
+      slug: "pager-duty-on-call",
+      enabled: true,
+      global: false,
+      feature_image_url: "/images/widgets/pager-duty-on-call",
+      ui_handler: "LiveSupWeb.Live.Widgets.PagerDuty.OnCallLive",
+      worker_handler: "LiveSup.Core.Widgets.PagerDuty.OnCall.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 600},
+        "schedule_ids" => %{"source" => "local", "string" => "string", "value" => ""}
       },
       datasource_id: datasource.id
     }

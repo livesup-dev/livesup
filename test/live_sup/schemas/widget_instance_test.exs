@@ -34,6 +34,16 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
             "type" => "string",
             "value" => "Some custom title",
             "source" => "local"
+          },
+          "ids" => %{
+            "type" => "array",
+            "value" => "hola,chau",
+            "source" => "local"
+          },
+          "ids_single" => %{
+            "type" => "array",
+            "value" => "hola",
+            "source" => "local"
           }
         },
         datasource: %LiveSup.Schemas.Datasource{
@@ -58,6 +68,10 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
     assert WidgetInstance.get_setting(widget_instance, "token") == "1234"
 
     assert WidgetInstance.get_setting(widget_instance, "runs_every") == 43200
+
+    assert WidgetInstance.get_setting(widget_instance, "ids") == ["hola", "chau"]
+
+    assert WidgetInstance.get_setting(widget_instance, "ids_single") == ["hola"]
 
     assert WidgetInstance.get_setting(widget_instance, "audience") == "super_secret"
 

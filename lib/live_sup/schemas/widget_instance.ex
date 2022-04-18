@@ -93,6 +93,12 @@ defmodule LiveSup.Schemas.WidgetInstance do
     end
   end
 
+  defp find_value(%{"type" => "array", "value" => value, "source" => "local"})
+       when is_binary(value) do
+    value
+    |> String.split(",")
+  end
+
   defp find_value(%{"type" => "int", "value" => value}), do: value
   defp find_value(%{"source" => "env", "value" => env_var}), do: System.get_env(env_var)
   defp find_value(%{"source" => "local", "value" => value}), do: value
