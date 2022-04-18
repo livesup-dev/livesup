@@ -1,5 +1,5 @@
 <div class="flex flex-col m-4">
-	<div class="w-full lg:w-1/2 m-auto">
+	<div class="w-full lg:w-11/12 m-auto">
     	<div class="bg-white dark:bg-darker shadow overflow-hidden sm:rounded-lg">
 			<%= if @live_action == :thank_you do %>
 				<div class="border-t border-gray-100 dark:border-dark">
@@ -20,73 +20,71 @@
 			<% end %>
 
 			<%= if @live_action == :teams do %>
-				<div class="px-4 py-5 sm:px-6">
-					<h2 class="text-lg leading-6 font-medium">Please select the teams you belong to</h2>
-				</div>
-				<div class="border-t border-gray-100 dark:border-dark">
 					<.form
 					let={f}
 					for={@changeset}
 					id="user-form"
 					phx-submit="save"
-					class="space-y-6 w-full">
-
-					<%= hidden_input f, :id %>
-					<div class="max-w-2xl mx-auto pb-6 px-4 sm:px-6 lg:max-w-7xl">
-						<div class="flex flex-row-4 flex-wrap justify-items-center">
-								<%= for team <- @teams do %>
-								<div class="p-2 xs:basis-1 sm:basis-1/3 lg:basis-1/4 min-w-80 w-80 relative">
-									<div class="hover:scale-105 ease-in-out duration-100 delay-75  rounded overflow-hidden">
-										<img src={Team.default_avatar_url(team)} alt="" class="p-4 bg-gray-200 w-full h-48 min-w-full min-h-48 object-center object-contain group-hover:opacity-75">
-										
-									</div>
-									<h3 class="text-lg text-white text-center bg-darker align-center">
-										<%= checkbox f, String.to_atom(team.slug), name: "user[teams][]", checked_value: team.id, hidden_input: false %>
-										<%= label f, team.name, class: "inline-block text-gray-600 dark:text-gray-200 font-medium align-text-bottom bg-darker" %>
-									</h3>
+					class="w-full">
+						<div class="px-4 py-4 sm:px-6 flex flex-row space-x-2">
+							<h2 class="text-2xl font-medium basis-3/4">Please select the teams you belong to</h2>
+							<div class="text-right basis-1/4">
+								<%= submit "Save", phx_disable_with: "Saving...", class: "w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker"%>
+							</div>
+						</div>
+						<div class="border-t border-gray-100 dark:border-dark space-y-6">
+							<%= hidden_input f, :id %>
+							<div class="mx-auto pb-6 px-4 sm:px-6">
+								<div class="flex flex-row-4 flex-wrap justify-items-center">
+										<%= for team <- @teams do %>
+										<div class="p-2 xs:basis-1 sm:basis-1/3 lg:basis-1/6 min-w-80 w-80 relative">
+											<div class="hover:scale-105 ease-in-out duration-100 delay-75  rounded overflow-hidden">
+												<img src={Team.default_avatar_url(team)} alt="" class="p-4 bg-gray-200 w-full h-48 min-w-full min-h-48 object-center object-contain group-hover:opacity-75">
+												
+											</div>
+											<h3 class="text-lg text-white text-center bg-darker align-center">
+												<%= checkbox f, String.to_atom(team.slug), name: "user[teams][]", checked_value: team.id, hidden_input: false %>
+												<%= label f, team.name, class: "inline text-gray-600 dark:text-gray-200 font-medium align-text-bottom bg-darker" %>
+											</h3>
+										</div>
+									<% end %>
+									
 								</div>
-							<% end %>
-							
+							</div>
 						</div>
-						<div class="text-center">
-						<%= submit "Save", phx_disable_with: "Saving...", class: "w-1/2 px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker"%>
-						</div>
-					</div>
 					</.form>
-				</div>
 			<% end %>
 
 
 			<%= if @live_action == :location do %>
-				<div class="px-4 py-5 sm:px-6">
-					<h2 class="text-lg leading-6 font-medium justify-center">Would you mind to tell us what city you live in?</h2>
-					<h4>Use the search box below</h4>
-				</div>
-				<div class="border-t border-gray-100 dark:border-dark min-h-[70vh]">
-					<div class="max-w-2xl mx-auto pt-4 pb-10 px-4 sm:pt-6 sm:px-6 lg:max-w-7xl">
-						<div class="flex flex-row-4 flex-wrap justify-items-center min-h-[50vh]">
 						<.form
 							let={f}
 							for={@changeset}
 							id="location-form"
 							phx-submit="save_location"
-							class="space-y-6 w-full">
-
-							<!-- TODO: This is ugnly as hell -->
-							<%= hidden_input f, :id %>
-							<%= hidden_input f, :address_lat %>
-							<%= hidden_input f, :address_lng %>
-							<%= hidden_input f, :address_state %>
-							<%= hidden_input f, :address_country %>
-
-							<%= LiveSupWeb.Live.Welcome.Components.GoogleMapComponent.render(%{}) %>
-							<div class="text-center">
-								<%= submit "Save", phx_disable_with: "Saving...", class: "w-1/2 m-auto px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker"%>
+							class="w-full min-h-[70vh]">
+							<div class="px-4 py-4 sm:px-6 flex flex-row space-x-2">
+								<div class="basis-3/4">
+									<h2 class="text-2xl leading-6 font-medium justify-center">Would you mind to tell us what city you live in?</h2>
+								</div>
+								<div class="text-right basis-1/4">
+									<%= submit "Save", phx_disable_with: "Saving...", class: "w-1/2 m-auto px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker"%>
+								</div>
 							</div>
-							</.form>
-						</div>
-					</div>
-				</div>
+							<div class="border-t border-gray-100 dark:border-dark min-h-[70vh]">
+										<!-- TODO: This is ugnly as hell -->
+										<%= hidden_input f, :id %>
+										<%= hidden_input f, :address_lat %>
+										<%= hidden_input f, :address_lng %>
+										<%= hidden_input f, :address_state %>
+										<%= hidden_input f, :address_country %>
+										<h4 class="px-4 py-2">Use the search box to find your city and select it from the list. Do not click on the map.</h4>
+										<div class="relative">
+											<%= LiveSupWeb.Live.Welcome.Components.GoogleMapComponent.render(%{}) %>
+										</div>
+							</div>
+						</.form>
+						
 			<% end %>
 		</div>
 	</div>

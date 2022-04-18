@@ -9,11 +9,11 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
     ~H"""
     <input
       id="pac-input"
-      class="absolute z-10 controls"
+      class="absolute z-10 controls text-black min-w-1/5"
       type="text"
       placeholder="Search Box"
     />
-    <div id="gmap" class="h-full" phx-update="ignore"></div>
+    <div id="gmap" class="min-h-[300px] md:min-h-[500px] h-full" phx-update="ignore"></div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script
