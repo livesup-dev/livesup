@@ -15,6 +15,5 @@ alias LiveSup.Seeds
 defmodule LiveSup.Seeds do
   def seed() do
     Seeds.Core.seed()
-    Seeds.Demo.seed()
   end
 end
