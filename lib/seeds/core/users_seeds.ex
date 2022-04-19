@@ -1,4 +1,4 @@
-defmodule LiveSup.Seeds.UsersSeeds do
+defmodule LiveSup.Seeds.Core.UsersSeeds do
   alias LiveSup.Repo
   alias LiveSup.Schemas.{User, UserGroup}
   alias LiveSup.Queries.GroupQuery

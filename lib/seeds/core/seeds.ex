@@ -2,7 +2,8 @@ alias LiveSup.Seeds.Core.{
   DatasourcesSeeds,
   WidgetsSeeds,
   GroupsSeeds,
-  InternalDataSeeds
+  InternalDataSeeds,
+  UsersSeeds
 }
 
 defmodule LiveSup.Seeds.Core do
@@ -11,5 +12,6 @@ defmodule LiveSup.Seeds.Core do
     WidgetsSeeds.seed()
     GroupsSeeds.seed()
     InternalDataSeeds.seed()
+    UsersSeeds.seed()
   end
 end
