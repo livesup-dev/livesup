@@ -2,7 +2,7 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
   use ExUnit.Case
   use LiveSup.DataCase
 
-  alias LiveSup.Schemas.WidgetInstance
+  alias LiveSup.Schemas.{WidgetInstance, Widget}
 
   @default_keys %{
     "key" => "hello",
@@ -13,6 +13,15 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
   setup do
     widget_instance = %WidgetInstance{
       settings: @default_keys,
+      widget: %Widget{
+        settings: %{
+          "widget_value" => %{
+            "type" => "string",
+            "source" => "local",
+            "value" => "1234"
+          }
+        }
+      },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{
           "token" => %{
@@ -74,6 +83,8 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
     assert WidgetInstance.get_setting(widget_instance, "ids_single") == ["hola"]
 
     assert WidgetInstance.get_setting(widget_instance, "audience") == "super_secret"
+
+    assert WidgetInstance.get_setting(widget_instance, "widget_value") == "1234"
 
     assert WidgetInstance.custom_title(widget_instance) == "Some custom title"
 

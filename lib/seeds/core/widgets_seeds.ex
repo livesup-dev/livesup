@@ -341,17 +341,21 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.Single.Worker",
       labels: [],
       settings: %{
-        "runs_every" => %{"source" => "local", "type" => "int", "value" => 60},
+        "runs_every" => %{
+          "source" => "local",
+          "type" => "int",
+          "value" => 60
+        },
         "url" => %{
           "source" => "local",
-          type: "string",
-          value: ""
+          "type" => "string",
+          "value" => ""
         },
         "title" => %{"source" => "local", "type" => "string", "value" => ""},
         "icon" => %{
           "source" => "local",
-          type: "string",
-          value: ""
+          "type" => "string",
+          "value" => ""
         }
       },
       datasource_id: rss_datasource.id

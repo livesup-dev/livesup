@@ -70,9 +70,12 @@ defmodule LiveSup.Schemas.WidgetInstance do
     |> find_values()
   end
 
+  # TOOD: Improve this function to manage those cases
+  # where the relationships are not loaded
   defp build_settings(instance) do
     instance.datasource_instance.datasource.settings
     |> Map.merge(instance.datasource_instance.settings)
+    |> Map.merge(instance.widget.settings)
     |> Map.merge(instance.settings)
   end
 
