@@ -36,7 +36,7 @@ export default {
         plot_bgcolor: "rgba(0,0,0,0)"
       };
 
-      var config = { responsive: true };
+      var config = { responsive: true, displayModeBar: false };
       Plotly.newPlot(this.el, data, layout, config);
     });
   }

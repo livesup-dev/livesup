@@ -4,7 +4,7 @@ defmodule LiveSup.Core.Datasources.RollbarDatasource do
 
   @url "https://api.rollbar.com/api/1"
 
-  def get_issues(%{"env" => env, "limit" => limit, "status" => status}, args \\ []) do
+  def get_issues(%{"env" => env, "limit" => limit, "status" => status} = params, args \\ []) do
     url =
       args
       |> Keyword.get(:url, @url)
@@ -15,14 +15,24 @@ defmodule LiveSup.Core.Datasources.RollbarDatasource do
 
     status = status || "active"
 
+    projects_params = params |> build_projects_param()
+
+    IO.inspect("#{url}/items?level=error&status=#{status}&environment=#{env}&#{projects_params}")
+
     case HttpDatasource.get(
-           url: "#{url}/items?level=error&status=#{status}&environment=#{env}",
+           url: "#{url}/items?level=error&status=#{status}&environment=#{env}&#{projects_params}",
            headers: headers(token)
          ) do
       {:ok, response} -> {:ok, process_response(response, limit)}
       {:error, error} -> {:error, process_error(error)}
     end
   end
+
+  defp build_projects_param(%{"projects" => projects}) do
+    Plug.Conn.Query.encode(%{projects: projects})
+  end
+
+  defp build_projects_param(_), do: ""
 
   def process_response(%{"result" => %{"items" => items}}, limit) do
     items

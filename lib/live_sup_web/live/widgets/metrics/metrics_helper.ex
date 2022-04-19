@@ -1,7 +1,9 @@
 defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
   def build_gauge(
-        %{data: %{target: target, current_value: current_value}, public_settings: public_settings} =
-          widget_data
+        %{
+          data: %{target: target, current_value: current_value, unit: unit},
+          public_settings: public_settings
+        } = widget_data
       ) do
     limit = target |> trunc()
 
@@ -39,6 +41,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
       type: "indicator",
       mode: "gauge+number+delta",
       delta: %{reference: current_value - (target - current_value)},
+      number: %{suffix: unit},
       gauge: %{
         bar: %{color: "#173557"},
         axis: %{range: [nil, target]},

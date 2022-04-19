@@ -19,6 +19,7 @@ defmodule LiveSup.Core.Widgets.Metrics.Goal.Handler do
      %{
        name: metric.name,
        target: metric.target,
+       unit: metric.unit,
        current_value: current_value.value
      }}
   end

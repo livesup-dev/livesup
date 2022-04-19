@@ -93,7 +93,7 @@ aria-label="Secondary"
       class="block transition-opacity duration-200 rounded-full focus:outline-none focus:ring dark:focus:opacity-100"
     >
       <span class="sr-only">User menu</span>
-      <img class="w-10 h-10 rounded-full" src="/images/search/avatar.jpg" alt="Ahmed Kamel" />
+      <img class="w-10 h-10 rounded-full" src={LiveSup.Schemas.User.default_avatar_url(@conn.assigns.current_user)} alt={LiveSup.Schemas.User.full_name(@conn.assigns.current_user)} />
     </button>
 
     <!-- User dropdown menu -->

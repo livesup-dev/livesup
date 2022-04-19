@@ -62,6 +62,34 @@ defmodule LiveSup.Test.Core.Datasources.RollbarDatasourceTest do
               ]} = data
     end
 
+    @tag :rollbar_issues
+    test "Get list of issues by project", %{bypass: bypass} do
+      Bypass.expect_once(bypass, "GET", "/items", fn conn ->
+        Plug.Conn.resp(conn, 200, response_by_project())
+      end)
+
+      data =
+        RollbarDatasource.get_issues(
+          %{"env" => "production", "limit" => 5, "status" => "active", "project" => 1234},
+          url: endpoint_url(bypass.port),
+          token: "xxxx"
+        )
+
+      assert {:ok,
+              [
+                %{
+                  counter: 3,
+                  last_occurrence: ~U[2021-11-18 22:14:33Z],
+                  last_occurrence_ago: _,
+                  short_title: "UndefinedFunctionError: function Nooooooooooooo...",
+                  title:
+                    "UndefinedFunctionError: function Noooooooooooooo.noooooo/0 is undefined (module Noooooooooooooo is not available)",
+                  total_occurrences: 1,
+                  url: "https://rollbar.com/[TBD]/items/3/"
+                }
+              ]} = data
+    end
+
     test "Failing to get directory sizes", %{bypass: bypass} do
       Bypass.expect_once(bypass, "GET", "/items", fn conn ->
         Plug.Conn.resp(conn, 401, error_response())
@@ -75,6 +103,49 @@ defmodule LiveSup.Test.Core.Datasources.RollbarDatasourceTest do
         )
 
       assert {:error, "invalid access token"} = data
+    end
+
+    defp response_by_project() do
+      """
+      {
+        "err": 0,
+        "result": {
+            "items": [
+                {
+                    "public_item_id": null,
+                    "integrations_data": null,
+                    "level_lock": 0,
+                    "controlling_id": 1152746872,
+                    "last_activated_timestamp": 1637273673,
+                    "assigned_user_id": null,
+                    "group_status": 1,
+                    "hash": "3d4e473e2470092b00726dc168e219579998ebd2",
+                    "id": 1152746872,
+                    "environment": "production",
+                    "title_lock": 0,
+                    "title": "UndefinedFunctionError: function Noooooooooooooo.noooooo/0 is undefined (module Noooooooooooooo is not available)",
+                    "last_occurrence_id": 200137760519,
+                    "last_occurrence_timestamp": 1637273673,
+                    "platform": "unknown",
+                    "first_occurrence_timestamp": 1637273673,
+                    "project_id": 529489,
+                    "resolved_in_version": null,
+                    "status": "active",
+                    "unique_occurrences": null,
+                    "group_item_id": null,
+                    "framework": "unknown",
+                    "total_occurrences": 1,
+                    "level": "error",
+                    "counter": 3,
+                    "last_modified_by": 272205,
+                    "first_occurrence_id": 200137760519,
+                    "activating_occurrence_id": 200137760519,
+                    "last_resolved_timestamp": null
+                }
+            ]
+        }
+      }
+      """
     end
 
     def response() do

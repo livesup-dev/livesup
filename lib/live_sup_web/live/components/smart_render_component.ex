@@ -60,7 +60,7 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
       <% end %>
 
       <%= if @widget_data.state == :ready do %>
-        <div id={@widget_data.id} class="draggable bg-white rounded-md dark:bg-darker min-h-[202px]">
+        <div id={@widget_data.id} class="bg-white rounded-md dark:bg-darker min-h-[202px]">
           <%= render_slot(@inner_block, @widget_data) %>
         </div>
       <% end %>
