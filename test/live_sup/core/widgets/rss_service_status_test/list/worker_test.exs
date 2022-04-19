@@ -30,7 +30,8 @@ defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.List.WorkerTest do
         }
       },
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.List.Worker"
+        worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.List.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

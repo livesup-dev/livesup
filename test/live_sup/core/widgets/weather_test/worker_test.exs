@@ -25,7 +25,8 @@ defmodule LiveSup.Test.Core.Widgets.Weather.WorkerTest do
       id: "bd62eea2-875a-4a86-b31b-c8a1983c1de4",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Weather.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Weather.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},
@@ -39,7 +40,8 @@ defmodule LiveSup.Test.Core.Widgets.Weather.WorkerTest do
       id: "ed640b39-cf82-4e3a-8504-b10fb5563279",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Weather.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Weather.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

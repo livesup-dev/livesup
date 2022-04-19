@@ -7,7 +7,7 @@ defmodule LiveSupWeb.Test.Live.Widgets.MetricsHelperTest do
     @describetag :metrics_helper
 
     @widget_data %LiveSup.Core.Widgets.WidgetData{
-      data: %{current_value: 581.0, name: "P95 API Latency", target: 600.0},
+      data: %{current_value: 581.0, name: "P95 API Latency", target: 600.0, unit: "ms"},
       icon: nil,
       icon_svg: nil,
       id: "bcee4d7d-f2b8-4b2a-9325-97f4299bf0e4",
@@ -19,7 +19,7 @@ defmodule LiveSupWeb.Test.Live.Widgets.MetricsHelperTest do
     }
 
     @widget_data_small_target %LiveSup.Core.Widgets.WidgetData{
-      data: %{current_value: 5.41, name: "Linux OS Provision Speed", target: 8.0},
+      data: %{current_value: 5.41, name: "Linux OS Provision Speed", target: 8.0, unit: "ms"},
       icon: nil,
       icon_svg: nil,
       id: "0c0e32b5-e3e5-4218-be8d-62bb142c2f9d",
@@ -47,7 +47,8 @@ defmodule LiveSupWeb.Test.Live.Widgets.MetricsHelperTest do
                },
                mode: "gauge+number+delta",
                type: "indicator",
-               value: 581.0
+               value: 581.0,
+               number: %{suffix: "ms"}
              } == result
     end
 
@@ -69,7 +70,8 @@ defmodule LiveSupWeb.Test.Live.Widgets.MetricsHelperTest do
                },
                mode: "gauge+number+delta",
                type: "indicator",
-               value: 5.41
+               value: 5.41,
+               number: %{suffix: "ms"}
              } == result
     end
   end

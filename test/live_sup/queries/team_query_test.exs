@@ -6,8 +6,6 @@ defmodule LiveSup.Tests.Queries.TeamQueryTest do
   alias LiveSup.Test.{TeamsFixtures, AccountsFixtures}
   alias LiveSup.Core.Teams
 
-  import LiveSup.Test.Setups
-
   def setup_teams(_) do
     user = AccountsFixtures.user_fixture()
 

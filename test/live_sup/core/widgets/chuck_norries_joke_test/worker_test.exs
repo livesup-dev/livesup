@@ -14,7 +14,8 @@ defmodule LiveSup.Test.Core.Widgets.WorkerTest do
       id: "e15638c7-c777-4531-997a-8f9ce971ff08",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.ChuckNorrisJoke.Worker"
+        worker_handler: "LiveSup.Core.Widgets.ChuckNorrisJoke.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

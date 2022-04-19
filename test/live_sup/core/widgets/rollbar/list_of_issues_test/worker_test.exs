@@ -47,7 +47,8 @@ defmodule LiveSup.Test.Core.Widgets.Rollbar.ListOfIssues.WorkerTest do
       id: "bcb7e1ed-9d8d-4726-a35a-df46b78c0007",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Rollbar.ListOfIssues.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Rollbar.ListOfIssues.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},
@@ -61,7 +62,8 @@ defmodule LiveSup.Test.Core.Widgets.Rollbar.ListOfIssues.WorkerTest do
       id: "e0c1f3bc-e72c-4fac-9bff-95dcd7362bbc",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Rollbar.ListOfIssues.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Rollbar.ListOfIssues.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

@@ -44,7 +44,8 @@ defmodule LiveSup.Test.Core.Widgets.Github.PullRequests.WorkerTest do
         "state" => %{"source" => "local", "type" => "string", "value" => "open"}
       },
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Github.PullRequests.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Github.PullRequests.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

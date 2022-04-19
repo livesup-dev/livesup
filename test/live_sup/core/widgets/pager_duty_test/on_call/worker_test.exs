@@ -31,7 +31,8 @@ defmodule LiveSup.Test.Core.Widgets.PagerDuty.OnCall.WorkerTest do
       id: "f7933b41-7590-4622-af8a-b31660b55544",
       settings: %{"token" => "xxxxx", "schedule_ids" => ["1234"]},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.PagerDuty.OnCall.Worker"
+        worker_handler: "LiveSup.Core.Widgets.PagerDuty.OnCall.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

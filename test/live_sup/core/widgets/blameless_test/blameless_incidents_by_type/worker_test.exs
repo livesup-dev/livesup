@@ -18,7 +18,8 @@ defmodule LiveSup.Test.Core.Widgets.Blameless.IncidentsByType.WorkerTest do
       id: "cb3ee793-d45e-4e54-8dda-c56d4ce02f6e",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByType.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByType.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{

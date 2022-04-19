@@ -27,7 +27,8 @@ defmodule LiveSup.Test.Core.Widgets.Jira.CurrentSprint.WorkerTest do
       id: "37152268-6371-4b7e-b77b-bbfdac76699c",
       settings: %{"token" => "xxxxx", "board_id" => 123, "domain" => "https://something.com"},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Jira.CurrentSprint.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Jira.CurrentSprint.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

@@ -42,7 +42,8 @@ defmodule LiveSup.Test.Core.Widgets.Wordpress.DirectorySizes.WorkerTest do
       id: "17973dd8-0945-4fd2-874c-d94eb6adc8aa",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Wordpress.DirectorySizes.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Wordpress.DirectorySizes.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},
@@ -56,7 +57,8 @@ defmodule LiveSup.Test.Core.Widgets.Wordpress.DirectorySizes.WorkerTest do
       id: "e0c1f3bc-e72c-4fac-9bff-95dcd7362bbc",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.Wordpress.DirectorySizes.Worker"
+        worker_handler: "LiveSup.Core.Widgets.Wordpress.DirectorySizes.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

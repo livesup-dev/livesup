@@ -35,7 +35,8 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.WorkerTest do
       id: "91b5e49d-5b5a-4894-be50-1c9299b6d70d",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker"
+        worker_handler: "LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},
@@ -49,7 +50,8 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.WorkerTest do
       id: "e0c1f3bc-e72c-4fac-9bff-95dcd7362bbc",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker"
+        worker_handler: "LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

@@ -17,8 +17,6 @@ defmodule LiveSup.Core.Datasources.RollbarDatasource do
 
     projects_params = params |> build_projects_param()
 
-    IO.inspect("#{url}/items?level=error&status=#{status}&environment=#{env}&#{projects_params}")
-
     case HttpDatasource.get(
            url: "#{url}/items?level=error&status=#{status}&environment=#{env}&#{projects_params}",
            headers: headers(token)

@@ -39,7 +39,8 @@ defmodule LiveSup.Test.Core.Widgets.WidgetManagerTest do
       id: "487b8ee0-4027-4b48-bdd1-d2924b853d46",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.ChuckNorrisJoke.Worker"
+        worker_handler: "LiveSup.Core.Widgets.ChuckNorrisJoke.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},
@@ -55,7 +56,8 @@ defmodule LiveSup.Test.Core.Widgets.WidgetManagerTest do
       name: "mahon",
       widget: %LiveSup.Schemas.Widget{
         worker_handler: "LiveSup.Core.Widgets.Weather.Worker",
-        global: false
+        global: false,
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},
@@ -71,7 +73,8 @@ defmodule LiveSup.Test.Core.Widgets.WidgetManagerTest do
       name: "es-castell",
       widget: %LiveSup.Schemas.Widget{
         worker_handler: "LiveSup.Core.Widgets.Weather.Worker",
-        global: false
+        global: false,
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

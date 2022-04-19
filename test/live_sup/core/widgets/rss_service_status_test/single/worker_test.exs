@@ -27,7 +27,8 @@ defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.Single.WorkerTest do
       id: "955ef326-ab34-4163-afa3-d2a30aff0d0c",
       settings: %{"url" => "https://www.githubstatus.com/history.rss"},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.Single.Worker"
+        worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.Single.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},
@@ -52,7 +53,8 @@ defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.Single.WorkerTest do
       id: "ede1976a-69e5-43f1-8250-697f3ef66129",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
-        worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.Single.Worker"
+        worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.Single.Worker",
+        settings: %{}
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},
