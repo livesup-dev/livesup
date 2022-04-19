@@ -30,8 +30,8 @@ defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
             email: oncall_attrs["user"]["email"],
             avatar_url: oncall_attrs["user"]["avatar_url"]
           },
-          start: "2022-04-11T09:00:00Z",
-          end: "2022-04-18T09:00:00Z"
+          start: oncall_attrs["start"],
+          end: oncall_attrs["end"]
         }
       end)
 
