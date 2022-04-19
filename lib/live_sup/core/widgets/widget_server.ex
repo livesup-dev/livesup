@@ -264,6 +264,7 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
         {:via, Registry, {WidgetRegistry.name(), "#{widget_instance_id}:#{user_id}"}}
       end
 
+      # Converting it to miliseconds
       defp calculate_next_cycle_delay(widget_instance) do
         run_every =
           widget_instance

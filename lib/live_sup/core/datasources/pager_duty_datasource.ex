@@ -9,7 +9,7 @@ defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
       |> Keyword.get(:url, @url)
 
     schedule_ids_params = Plug.Conn.Query.encode(%{schedule_ids: schedule_ids})
-    path = "oncalls?time_zone=UTC&total=false&#{schedule_ids_params}"
+    path = "oncalls?time_zone=UTC&total=false&#{schedule_ids_params}&include[]=users"
 
     case HttpDatasource.get(url: build_url(url, path), headers: headers(token)) do
       {:ok, response} -> process(response)
@@ -26,7 +26,9 @@ defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
           name: oncall_attrs["schedule"],
           user: %{
             id: oncall_attrs["user"]["id"],
-            name: oncall_attrs["user"]["summary"]
+            name: oncall_attrs["user"]["summary"],
+            email: oncall_attrs["user"]["email"],
+            avatar_url: oncall_attrs["user"]["avatar_url"]
           },
           start: "2022-04-11T09:00:00Z",
           end: "2022-04-18T09:00:00Z"
@@ -35,6 +37,9 @@ defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
 
     {:ok, data}
   end
+
+  defp process_error(%{"error" => %{"code" => code, "message" => message}}),
+    do: {:error, "#{code}: #{message}"}
 
   defp process_error(error), do: {:error, error}
 

@@ -170,6 +170,25 @@ defmodule LiveSup.Seeds.Core.DatasourcesSeeds do
           "status" => %{"source" => "local", "type" => "string", "value" => "active"},
           "token" => %{"type" => "string", "source" => "env", "value" => "ROLLBAR_TOKEN"}
         }
+      },
+      %{
+        name: "PagerDuty",
+        slug: "pager-duty-datasource",
+        enabled: "true",
+        settings: %{
+          "token" => %{
+            "source" => "env",
+            "value" => "PAGERDUTY_TOKEN",
+            "type" => "string",
+            "required" => true
+          },
+          "schedule_ids" => %{
+            "source" => "local",
+            "value" => "PLBW9ZW",
+            "type" => "array",
+            "required" => true
+          }
+        }
       }
     ]
     |> Enum.map(fn data ->

@@ -42,4 +42,13 @@ defmodule LiveSup.Helpers.DateHelper do
     Timex.today()
     |> Timex.format!("%FT%T%:z", :strftime)
   end
+
+  def date_without_year(date) do
+    {:ok, value} =
+      date
+      |> parse_date()
+      |> Timex.format("{M}/{D}")
+
+    value
+  end
 end
