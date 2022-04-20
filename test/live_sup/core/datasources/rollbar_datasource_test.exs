@@ -37,7 +37,7 @@ defmodule LiveSup.Test.Core.Datasources.RollbarDatasourceTest do
                   title:
                     "UndefinedFunctionError: function Noooooooooooooo.noooooo/0 is undefined (module Noooooooooooooo is not available)",
                   total_occurrences: 1,
-                  url: "https://rollbar.com/[TBD]/items/3/"
+                  url: "https://rollbar.com//items/3/"
                 },
                 %{
                   counter: 2,
@@ -47,7 +47,7 @@ defmodule LiveSup.Test.Core.Datasources.RollbarDatasourceTest do
                   title:
                     "UndefinedFunctionError: function Whaaaaat.really/0 is undefined (module Whaaaaat is not available)",
                   total_occurrences: 1,
-                  url: "https://rollbar.com/[TBD]/items/2/"
+                  url: "https://rollbar.com//items/2/"
                 },
                 %{
                   counter: 1,
@@ -57,7 +57,7 @@ defmodule LiveSup.Test.Core.Datasources.RollbarDatasourceTest do
                   title:
                     "UndefinedFunctionError: function DoesNotExist.for_sure/0 is undefined (module DoesNotExist is not available)",
                   total_occurrences: 2,
-                  url: "https://rollbar.com/[TBD]/items/1/"
+                  url: "https://rollbar.com//items/1/"
                 }
               ]} = data
     end
@@ -85,7 +85,7 @@ defmodule LiveSup.Test.Core.Datasources.RollbarDatasourceTest do
                   title:
                     "UndefinedFunctionError: function Noooooooooooooo.noooooo/0 is undefined (module Noooooooooooooo is not available)",
                   total_occurrences: 1,
-                  url: "https://rollbar.com/[TBD]/items/3/"
+                  url: "https://rollbar.com//items/3/"
                 }
               ]} = data
     end

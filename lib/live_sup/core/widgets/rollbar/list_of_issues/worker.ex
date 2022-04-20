@@ -10,7 +10,7 @@ defmodule LiveSup.Core.Widgets.Rollbar.ListOfIssues.Worker do
   def public_settings, do: []
 
   @impl true
-  def settings_keys, do: ["env", "limit", "status", "token", "projects"]
+  def settings_keys, do: ["env", "limit", "status", "token", "item_prefix"]
 
   @impl true
   def build_data(settings) do

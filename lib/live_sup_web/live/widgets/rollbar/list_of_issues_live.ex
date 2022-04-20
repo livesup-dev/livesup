@@ -12,12 +12,12 @@ defmodule LiveSupWeb.Live.Widgets.Rollbar.ListOfIssuesLive do
               <%= if Enum.any?(widget_data.data) do %>
                 <div class="gap-2 pb-2 flex">
                   <span class="text-x font-bold basis-1/2">Error</span>
-                  <span class="font-bold text-center basis-1/4">Ocurrences</span>
+                  <span class="font-bold text-center basis-1/4">Total</span>
                   <span class="font-bold text-center basis-1/4">Last</span>
                 </div>
                 <%= for issue <- widget_data.data do %>
                 <div class="gap-2 py-2 flex">
-                  <a class="text-blue-500 hover:underline text-stone-400 items-center basis-1/2" href={issue[:url]}><%= issue[:short_title] %></a>
+                  <a class="text-blue-500 hover:underline text-stone-400 items-center basis-1/2" target="_blank" href={issue[:url]}><%= issue[:short_title] %></a>
                   <span class="justify-center items-center basis-1/4"><%= issue[:total_occurrences] %></span>
                   <span class="justify-center items-center basis-1/4"><%= issue[:last_occurrence_ago] %></span>
                 </div>
