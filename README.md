@@ -1,10 +1,24 @@
-# LiveSup (Summing UP)
+<p align="center">
+  <img src="assets/static/images/logo-mid.png" height="128">
+  
+  <h1 align="center">LiveSup (Summing UP)</h1>
+  
+  <p align="center">
+    We live in the Cloud era, today's applications are about connecting APIs. To manage, monitor, control your app you probably need to log in into 10 different services (or more!). It's even harder if you are new to the team or organization you work with. LiveSup tries to add transparency to the services you use and it creates a layer that organizes and simplifies the information you need when you need it.
+  </p>
+</p>
 
-![Build Status](https://github.com/livesup-dev/livesup/actions/workflows/test.yml/badge.svg)
+<p align="center">
+  <a href="#">
+    <img alt="Build Status" src="https://github.com/livesup-dev/livesup/actions/workflows/test.yml/badge.svg">
+  </a>
+</p>
 
-Disclaimer: it’s our first experience with LiveView so we are open to scrutiny/suggestions! Take this with a grain of salt :wink:
+---
 
-As you well now, we live in the Cloud era, today's applications are about connecting APIs. To manage, monitor, control your app you probably need to log in into 10 different services (or more!). It's even harder if you are new to the team or organization you work with. LiveSup tries to add transparency to the services you use and it creates a layer that organizes and simplifies the information you need when you need it.
+Disclaimer: it’s our first experience with Elixir/Phoenix so we are open to scrutiny/suggestions! Take this with a grain of salt :wink:
+
+---
 
 ## Goals
 
