@@ -28,7 +28,7 @@ defmodule LiveSupWeb.Live.Widgets.Github.PullRequestsLive do
               <path d="M37.1667 54.6667L21.5 39L26.1667 34.3333L37.1667 45.3333L71.5 11L76.1667 15.6667L37.1667 54.6667Z" fill="#21D3EE"/>
               <path opacity="0.3" d="M40.5 6.66675C31.6594 6.66675 23.181 10.1786 16.9298 16.4299C10.6786 22.6811 7.16666 31.1595 7.16666 40.0001C7.16666 48.8406 10.6786 57.3191 16.9298 63.5703C23.181 69.8215 31.6594 73.3334 40.5 73.3334C49.3405 73.3334 57.819 69.8215 64.0702 63.5703C70.3214 57.3191 73.8333 48.8406 73.8333 40.0001C73.8333 31.1595 70.3214 22.6811 64.0702 16.4299C57.819 10.1786 49.3405 6.66675 40.5 6.66675Z" fill="#21D3EE"/>
             </svg>
-            <p class="text-center m-2 text-sm ">No Pull Requests to Display</p>
+            <p class="text-center m-2 text-sm ">No <strong><%= widget_data.public_settings["state"] %></strong> pull requests to display</p>
           <% end %>
           </div>
         <.live_component module={WidgetFooterComponent} id={"#{widget_data.id}-footer"} widget_data={widget_data} />

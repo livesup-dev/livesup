@@ -15,26 +15,22 @@ defmodule LiveSup.Core.Datasources.RollbarDatasource do
 
     status = status || "active"
 
-    projects_params = params |> build_projects_param()
+    item_prefix = params |> prefix()
 
     case HttpDatasource.get(
-           url: "#{url}/items?level=error&status=#{status}&environment=#{env}&#{projects_params}",
+           url: "#{url}/items?level=error&status=#{status}&environment=#{env}",
            headers: headers(token)
          ) do
-      {:ok, response} -> {:ok, process_response(response, limit)}
+      {:ok, response} -> {:ok, process_response(response, limit, item_prefix)}
       {:error, error} -> {:error, process_error(error)}
     end
   end
 
-  defp build_projects_param(%{"projects" => projects}) do
-    Plug.Conn.Query.encode(%{projects: projects})
-  end
-
-  defp build_projects_param(_), do: ""
-
-  def process_response(%{"result" => %{"items" => items}}, limit) do
+  def prefix(%{"item_prefix" => item_prefix}), do: item_prefix
+  def prefix(_), do: ""
+  def process_response(%{"result" => %{"items" => items}}, limit, item_prefix) do
     items
-    |> Enum.map(fn item -> build_issue(item) end)
+    |> Enum.map(fn item -> build_issue(item, item_prefix) end)
     |> Enum.take(limit)
   end
 
@@ -42,7 +38,7 @@ defmodule LiveSup.Core.Datasources.RollbarDatasource do
 
   def process_error(message), do: message
 
-  def build_issue(%{"last_occurrence_timestamp" => last_occurrence_timestamp} = issue) do
+  def build_issue(%{"last_occurrence_timestamp" => last_occurrence_timestamp} = issue, item_prefix) do
     last_occurrence =
       last_occurrence_timestamp
       |> DateTime.from_unix!()
@@ -54,11 +50,11 @@ defmodule LiveSup.Core.Datasources.RollbarDatasource do
       total_occurrences: issue["total_occurrences"],
       last_occurrence: last_occurrence,
       last_occurrence_ago: from_now(last_occurrence),
-      url: "https://rollbar.com/[TBD]/items/#{issue["counter"]}/"
+      url: "https://rollbar.com/#{item_prefix}/items/#{issue["counter"]}/"
     }
   end
 
-  defp from_now(date), do: DateHelper.from_now(date)
+  defp from_now(date), do: DateHelper.from_now(date, :short)
 
   def headers(token) do
     [
