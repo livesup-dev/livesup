@@ -28,6 +28,7 @@ defmodule LiveSup.Core.Datasources.RollbarDatasource do
 
   def prefix(%{"item_prefix" => item_prefix}), do: item_prefix
   def prefix(_), do: ""
+
   def process_response(%{"result" => %{"items" => items}}, limit, item_prefix) do
     items
     |> Enum.map(fn item -> build_issue(item, item_prefix) end)
@@ -38,7 +39,10 @@ defmodule LiveSup.Core.Datasources.RollbarDatasource do
 
   def process_error(message), do: message
 
-  def build_issue(%{"last_occurrence_timestamp" => last_occurrence_timestamp} = issue, item_prefix) do
+  def build_issue(
+        %{"last_occurrence_timestamp" => last_occurrence_timestamp} = issue,
+        item_prefix
+      ) do
     last_occurrence =
       last_occurrence_timestamp
       |> DateTime.from_unix!()

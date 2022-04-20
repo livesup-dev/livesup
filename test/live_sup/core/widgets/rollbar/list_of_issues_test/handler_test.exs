@@ -21,7 +21,13 @@ defmodule LiveSup.Test.Core.Widgets.Rollbar.ListOfIssues.HandlerTest do
 
       data =
         Handler.get_data(
-          %{"env" => "production", "limit" => 3, "status" => "active", "token" => "xxx", "item_prefix" => "livesup"},
+          %{
+            "env" => "production",
+            "limit" => 3,
+            "status" => "active",
+            "token" => "xxx",
+            "item_prefix" => "livesup"
+          },
           url: endpoint_url(bypass.port)
         )
 
