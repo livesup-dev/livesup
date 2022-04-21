@@ -8,31 +8,88 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
       <!-- Current Incidents -->
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
         <!-- Widget Content -->
-          <div class="items-center p-2 bg-white rounded-md dark:bg-darker min-h-[132px]">
+        <div class="min-h-[132px] items-center rounded-md bg-white p-2 dark:bg-darker">
           <%= if Enum.any?(widget_data.data) do %>
-            <div class="divide-y divide-gray-100 dark:divide-gray-500">
+            <div class="shadow-md shadow-red-500 ring-1 ring-red-500 rounded-lg p-4 my-4">
               <%= for {incident, _counter} <- Enum.with_index(widget_data.data) do %>
-                <div class="flex py-4 first:pt-0 gap-4 flex-wrap dark:divide-blue-300">
-                  <div class="flex">
-                    <div class="flex-auto">
-                      <p><span class="font-mono text-sm text-black dark:text-white"><%= incident[:created_at_ago] %> - </span>
-                      <a href={incident[:url]} class="hover:underline text-black dark:text-primary"><%= incident[:description] %></a></p>
-                      <p><span class="font-mono text-sm text-black dark:text-white">Slack: </span>
-                      <a href={incident.slack[:url]} class="hover:underline text-black dark:text-primary"><%= incident.slack[:channel] %></a></p>
-                    </div>
-                  </div>
-                  <%= if incident.commander do %>
-                    <div class="flex-none relative">
-                      <img src={incident.commander[:avatar_url]} class="w-10 h-10 rounded-full transition-opacity duration-200 "/>
-                    </div>
-                    <div class="grow">
-                      <p class="text-sm">
-                        <strong>Commander</strong> <br>
-                        <span><%= incident.commander[:full_name] %></span> <br>
-                        <span class="text-xs"><%= incident.commander[:title] %></span>
+                <h3 class="text-lg mb-4">
+                  <a href={incident[:url]} class="hover:underline text-black dark:text-primary block" target="_blank"><%= incident[:description] %></a>
+                  <span class="font-mono text-xs text-black dark:text-white block"><%= incident[:created_at_ago] %></span>
+                </h3>
+                <div class="flex flex-row gap-4">
+                  <div class="flex flex-col gap-4 w-1/2">
+                    <div>
+                      <p class="uppercase font-medium text-sm text-gray-500">Severity</p>
+                      <p class="text-base">
+                        <%= incident[:severity] %>
                       </p>
                     </div>
-                  <% end %>
+                    <div>
+                      <p class="uppercase font-medium text-sm text-gray-500">Commander</p>
+                      <%= if incident.commander && incident.commander[:full_name] do %>
+                      <p class="text-base">
+                        <img src={incident.commander[:avatar_url]} class="w-6 h-6 rounded-full transition-opacity duration-200 inline-block mr-2"/>
+                        <span class="inline"><%= incident.commander[:full_name] %></span>
+                        <span class="text-xs inline">(<%= incident.commander[:title] %>)</span>
+                      </p>
+                      <% else %>
+                        <p class="text-base">N/A</p>
+                      <% end %>
+
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-4  w-1/2">
+                    <div>
+                      <p class="uppercase font-medium text-sm text-gray-500">Status</p>
+                      <p class="text-base">
+                        <svg id="emYLh5A2QIZ1" class="w-3 h-3 inline " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3 3" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><ellipse rx="1.5" ry="1.5" transform="translate(1.5 1.5)" class={"fill-yellow-300 fill-incident-#{String.downcase(incident[:status])}"} stroke-width="0"/></svg>
+                        <span class="text-base align-middle"><%= incident[:status] %></span>
+                      </p>
+                    </div>
+                    <div>
+                      <p class="uppercase font-medium text-sm text-gray-500">War Room</p>
+                      <p class="text-base">
+                        <%= if incident.slack && incident.slack[:url] do %>
+                          <span class="font-mono text-sm text-black dark:text-white block">
+                            <a href={incident.slack[:url]} target="_blank" class="hover:underline text-black dark:text-primary inline-block">
+                              <svg class="w-6 h-6 rounded-full inline-block mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                viewBox="60 60 140 140" style="enable-background:new 60 60 140 140; display:inline-block;" xml:space="preserve">
+                                <style type="text/css">
+                                  .st0{fill:#E01E5A;}
+                                  .st1{fill:#36C5F0;}
+                                  .st2{fill:#2EB67D;}
+                                  .st3{fill:#ECB22E;}
+                                </style>
+                                <g>
+                                  <g>
+                                    <path class="st0" d="M99.4,151.2c0,7.1-5.8,12.9-12.9,12.9c-7.1,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9h12.9V151.2z"/>
+                                    <path class="st0" d="M105.9,151.2c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v32.3c0,7.1-5.8,12.9-12.9,12.9
+                                      s-12.9-5.8-12.9-12.9V151.2z"/>
+                                  </g>
+                                  <g>
+                                    <path class="st1" d="M118.8,99.4c-7.1,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v12.9H118.8z"/>
+                                    <path class="st1" d="M118.8,105.9c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9H86.5c-7.1,0-12.9-5.8-12.9-12.9
+                                      s5.8-12.9,12.9-12.9H118.8z"/>
+                                  </g>
+                                  <g>
+                                    <path class="st2" d="M170.6,118.8c0-7.1,5.8-12.9,12.9-12.9c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9h-12.9V118.8z"/>
+                                    <path class="st2" d="M164.1,118.8c0,7.1-5.8,12.9-12.9,12.9c-7.1,0-12.9-5.8-12.9-12.9V86.5c0-7.1,5.8-12.9,12.9-12.9
+                                      c7.1,0,12.9,5.8,12.9,12.9V118.8z"/>
+                                  </g>
+                                  <g>
+                                    <path class="st3" d="M151.2,170.6c7.1,0,12.9,5.8,12.9,12.9c0,7.1-5.8,12.9-12.9,12.9c-7.1,0-12.9-5.8-12.9-12.9v-12.9H151.2z"/>
+                                    <path class="st3" d="M151.2,164.1c-7.1,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9h32.3c7.1,0,12.9,5.8,12.9,12.9
+                                      c0,7.1-5.8,12.9-12.9,12.9H151.2z"/>
+                                  </g>
+                                </g>
+                              </svg><%= incident.slack[:channel] %>
+                            </a>
+                          </span>
+                        <% end %>
+                      </p>
+
+                    </div>
+                  </div>
                 </div>
               <% end %>
             </div>

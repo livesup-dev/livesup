@@ -14,7 +14,7 @@ defmodule LiveSup.Core.Datasources.BlamelessDatasource do
     endpoint = credentials["endpoint"]
     filters = Keyword.get(opts, :filters, %{})
     limit = Keyword.get(opts, :limit, 10)
-    number_of_days = Keyword.get(opts, :number_of_days, 7)
+    number_of_days = Keyword.get(opts, :number_of_days, 100)
 
     case credentials |> token() do
       {:ok, token} ->
