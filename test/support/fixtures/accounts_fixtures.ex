@@ -10,7 +10,7 @@ defmodule LiveSup.Test.AccountsFixtures do
   def user_fixture(attrs \\ %{}) do
     email = unique_user_email()
 
-    {:ok, user} =
+    user_attrs =
       attrs
       |> Enum.into(%{
         email: email,
@@ -20,7 +20,11 @@ defmodule LiveSup.Test.AccountsFixtures do
         location: %{},
         settings: %{}
       })
-      |> LiveSup.Core.Accounts.register_user()
+
+    {:ok, user} =
+      %LiveSup.Schemas.User{}
+      |> LiveSup.Schemas.User.registration_changeset(user_attrs)
+      |> LiveSup.Repo.insert()
 
     user
   end

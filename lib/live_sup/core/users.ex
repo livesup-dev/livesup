@@ -9,4 +9,6 @@ defmodule LiveSup.Core.Users do
   defdelegate create!(atts), to: UserQuery
   defdelegate delete(id), to: UserQuery
   defdelegate update(user, attrs), to: UserQuery
+  defdelegate update!(user, attrs), to: UserQuery
+  defdelegate onboard!(user), to: UserQuery
 end

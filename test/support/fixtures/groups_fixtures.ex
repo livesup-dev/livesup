@@ -20,6 +20,20 @@ defmodule LiveSup.Test.GroupsFixtures do
   end
 
   def all_users_group_fixture(attrs \\ %{}) do
+    # group =
+    #   Groups.get_by_slug("all-users")
+    #   |> IO.inspect()
+
+    # case group do
+    #   nil ->
+    #     attrs
+    #     |> Enum.into(all_users_default_attrs())
+    #     |> Groups.create()
+    #     |> elem(1)
+
+    #   _ ->
+    #     group
+    # end
     attrs
     |> Enum.into(all_users_default_attrs())
     |> Groups.create()

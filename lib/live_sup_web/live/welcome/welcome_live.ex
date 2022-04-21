@@ -82,7 +82,8 @@ defmodule LiveSupWeb.WelcomeLive do
     data = Map.put(location, :timezone, time_zone_id)
 
     Users.get!(user_id)
-    |> Users.update(%{location: data})
+    |> Users.update!(%{location: data})
+    |> Users.onboard!()
 
     {:noreply,
      socket
