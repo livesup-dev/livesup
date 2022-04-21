@@ -24,9 +24,19 @@ Disclaimer: it’s our first experience with Elixir/Phoenix so we are open to sc
 
 Besides the "business goal" mentioned above there are also a few technical goals behind this development. 
 
-* Build a rich and dynamic application without javascript
-* Build a complex and real application using LiveView that helps others to understand that there is more than a Chat or a TODOs app in this world
-* Build the application using only Elixir and PostgreSQL (don’t you miss those days where applications were way much simpler?)
+* Have fun! (This is really the main goal!)
+* Build a rich and dynamic application without javascript (or as little as possible)
+* Build a more "complex" and "real" application that helps others understand that you can do much more than just a chat or a ToDo app with a Elixir/phoenix :)
+
+## How data is structure
+
+Livesup has a very flexible data structure that lets you organise the data in the way you want. The top level component is a "Project". A Project can be part of more projects (not supported in the UI), and it can have several dashboards, each dashboard has widgets. 
+
+![](https://github.com/livesup-dev/livesup-internal/blob/main/docs/images/projects-data-structure.png)
+
+Projects are associated to users through Groups. So you can control who can see what. Any new signup will be associated to an internal group called `All Users`. And any new project will be associated to that group by default, unless a different group is choosen.
+
+![](https://github.com/livesup-dev/livesup-internal/blob/main/docs/images/users-projects.png)
 
 ## Building and running Livesup localy
 
