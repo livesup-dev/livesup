@@ -36,6 +36,13 @@ defmodule LiveSup.Core.Groups do
   """
   def get!(id), do: GroupQuery.get!(id)
 
+  def get_by_slug(slug), do: GroupQuery.get_by_slug(slug)
+
+  def get_all_users_default_group() do
+    "all-users"
+    |> get_by_slug()
+  end
+
   @doc """
   Creates a group.
 

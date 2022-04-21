@@ -18,6 +18,12 @@ defmodule LiveSup.Queries.GroupQuery do
     |> Repo.get!(id)
   end
 
+  def get_by_slug(slug) do
+    base()
+    |> where([g], g.slug == ^slug)
+    |> Repo.one()
+  end
+
   def create(attrs) do
     %Group{}
     |> Group.changeset(attrs)

@@ -98,6 +98,12 @@ defmodule LiveSup.Core.Accounts do
 
   """
   def register_user(attrs) do
+    with {:ok, user} <- insert_user(attrs) do
+      {:ok, user} |> add_user_to_group()
+    end
+  end
+
+  defp insert_user(attrs) do
     %User{}
     |> User.registration_changeset(attrs)
     |> Repo.insert()

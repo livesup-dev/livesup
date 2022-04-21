@@ -3,7 +3,8 @@ defmodule LiveSup.Test.Core.AccountsTest do
   use LiveSup.DataCase
 
   alias LiveSup.Core.Accounts
-  import LiveSup.Test.AccountsFixtures
+  import LiveSup.Test.{AccountsFixtures}
+  alias LiveSup.Test.GroupsFixtures
   alias LiveSup.Schemas.{User, UserToken}
 
   describe "get_user_by_email/1" do
@@ -49,6 +50,12 @@ defmodule LiveSup.Test.Core.AccountsTest do
   end
 
   describe "register_user/1" do
+    @describetag :register_user
+    setup do
+      GroupsFixtures.all_users_group_fixture()
+      :ok
+    end
+
     test "requires email and password to be set" do
       {:error, changeset} = Accounts.register_user(%{})
 

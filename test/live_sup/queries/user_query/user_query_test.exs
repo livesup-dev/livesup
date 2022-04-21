@@ -15,6 +15,24 @@ defmodule LiveSup.Tests.Queries.UserQueryTest do
 
       assert length(all_users) == 3
     end
+
+    test "update/2" do
+      user = UserQuery.get_by_email("john@livesup.com")
+
+      {:ok, saved_user} = UserQuery.update(user, %{first_name: "Emiliano"})
+
+      user = UserQuery.get_by_email("john@livesup.com")
+      assert user.first_name == "Emiliano"
+    end
+
+    test "update!/2" do
+      user = UserQuery.get_by_email("john@livesup.com")
+
+      UserQuery.update!(user, %{first_name: "Emiliano"})
+
+      user = UserQuery.get_by_email("john@livesup.com")
+      assert user.first_name == "Emiliano"
+    end
   end
 
   def setup_users(context) do

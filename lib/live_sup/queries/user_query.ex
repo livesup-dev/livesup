@@ -43,6 +43,16 @@ defmodule LiveSup.Queries.UserQuery do
     |> Repo.update!()
   end
 
+  def get_by_email(email) when is_binary(email) do
+    Repo.get_by(User, email: email)
+  end
+
+  def onboard!(%User{} = model) do
+    model
+    |> User.update_changeset(%{state: "onboarded"})
+    |> Repo.update!()
+  end
+
   def delete(model) do
     model
     |> Repo.delete()

@@ -27,6 +27,7 @@ defmodule LiveSup.Schemas.User do
     field :password, :string, virtual: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    field :state, :string
 
     field :location, :map, default: @default_location
 
@@ -69,7 +70,8 @@ defmodule LiveSup.Schemas.User do
       :avatar_url,
       :location,
       :settings,
-      :provider
+      :provider,
+      :state
     ])
     |> validate_required([])
     |> validate_email()
@@ -86,12 +88,16 @@ defmodule LiveSup.Schemas.User do
       :avatar_url,
       :location,
       :settings,
-      :provider
+      :provider,
+      :state
     ])
     |> validate_required([])
     |> validate_email()
     |> maybe_set_location()
   end
+
+  def onboarded_state, do: "onboarded"
+  def onboarded?(%__MODULE__{state: state}), do: state == onboarded_state()
 
   defp validate_email(changeset) do
     changeset
