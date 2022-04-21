@@ -39,14 +39,23 @@ module.exports = {
           dark: colors.green[700],
           darker: colors.green[800],
         },
+		alert: {
+			DEFAULT: colors.orange[600], 
+			50: colors.orange[50],
+			100: colors.orange[100],
+			light: colors.orange[500],
+			lighter: colors.orange[400],
+			dark: colors.orange[700],
+			darker: colors.orange[800],
+		},
         warning: {
-          DEFAULT: colors.orange[600],
-          50: colors.orange[50],
-          100: colors.orange[100],
-          light: colors.orange[500],
-          lighter: colors.orange[400],
-          dark: colors.orange[700],
-          darker: colors.orange[800],
+          DEFAULT: colors.yellow[600],
+          50: colors.yellow[50],
+          100: colors.yellow[100],
+          light: colors.yellow[500],
+          lighter: colors.yellow[400],
+          dark: colors.yellow[700],
+          darker: colors.yellow[800],
         },
         danger: {
           DEFAULT: colors.red[600],
@@ -66,6 +75,11 @@ module.exports = {
           dark: colors.cyan[700],
           darker: colors.cyan[800],
         },
+		incident: {
+			DEFAULT: colors.yellow[400],
+			investigating: colors.yellow[400],
+			monitoring: colors.green[400]
+		}
       },
     },
   },
