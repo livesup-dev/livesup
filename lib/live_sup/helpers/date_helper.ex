@@ -16,6 +16,8 @@ defmodule LiveSup.Helpers.DateHelper do
 
     # TODO: This is ugly as hell
     cond do
+      String.contains?(str_date, "second ago") -> String.replace(str_date, " second ago", "s")
+      String.contains?(str_date, "seconds ago") -> String.replace(str_date, " seconds ago", "s")
       String.contains?(str_date, "minute ago") -> String.replace(str_date, " minute ago", "m")
       String.contains?(str_date, "minutes ago") -> String.replace(str_date, " minutes ago", "m")
       String.contains?(str_date, "hour ago") -> String.replace(str_date, " hour ago", "h")
