@@ -32,11 +32,11 @@ Besides the "business goal" mentioned above there are also a few technical goals
 
 Livesup has a very flexible data structure that lets you organise the data in the way you want. The top level component is a "Project". A Project can be part of more projects (not supported in the UI), and it can have several dashboards, each dashboard has widgets. 
 
-![](https://github.com/livesup-dev/livesup-internal/blob/main/docs/images/projects-data-structure.png)
+![](/docs/images/projects-data-structure.png)
 
 Projects are associated to users through Groups. So you can control who can see what. Any new signup will be associated to an internal group called `All Users`. And any new project will be associated to that group by default, unless a different group is choosen.
 
-![](https://github.com/livesup-dev/livesup-internal/blob/main/docs/images/users-projects.png)
+![](/docs/images/users-projects.png)
 
 ## Building and running Livesup localy
 
