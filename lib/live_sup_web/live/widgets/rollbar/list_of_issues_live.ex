@@ -8,20 +8,22 @@ defmodule LiveSupWeb.Live.Widgets.Rollbar.ListOfIssuesLive do
       <!-- Rollbar list of issues -->
         <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
         <div class="items-center p-4 bg-white rounded-md dark:bg-darker">
-          <div class="grid grid-cols-1 dark:divide-blue-300">
+          <div class="">
               <%= if Enum.any?(widget_data.data) do %>
                 <div class="gap-2 pb-2 flex">
-                  <span class="text-x font-bold basis-1/2">Error</span>
-                  <span class="font-bold text-center basis-1/4">Total</span>
-                  <span class="font-bold text-center basis-1/4">Last</span>
+                  <span class="text-x font-bold basis-9/12">Error</span>
+                  <span class="font-bold text-center basis-2/12">Total</span>
+                  <span class="font-bold text-center basis-1/12">Last</span>
                 </div>
-                <%= for issue <- widget_data.data do %>
-                <div class="gap-2 py-2 flex">
-                  <a class="text-blue-500 hover:underline text-stone-400 items-center basis-1/2" target="_blank" href={issue[:url]}><%= issue[:short_title] %></a>
-                  <span class="justify-center items-center basis-1/4"><%= issue[:total_occurrences] %></span>
-                  <span class="justify-center items-center basis-1/4"><%= issue[:last_occurrence_ago] %></span>
+                <div class="divide-y divide-gray-100 dark:divide-gray-500 ">
+                  <%= for issue <- widget_data.data do %>
+                  <div class="gap-4 py-2 flex">
+                    <a class="text-black dark:text-primary hover:underline break-all basis-9/12" target="_blank" href={issue[:url]}><%= issue[:short_title] %></a>
+                    <span class="justify-center text-center basis-2/12"><%= issue[:total_occurrences] %></span>
+                    <span class="justify-center text-center basis-1/12"><%= issue[:last_occurrence_ago] %></span>
+                  </div>
+                  <% end %>
                 </div>
-                <% end %>
               <% else %>
                 <svg class="h-20 w-20 m-auto" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M66.5 34.6667C66.8333 36.3334 67.1667 38.3334 67.1667 40.0001C67.1667 54.6668 55.1667 66.6668 40.5 66.6668C25.8333 66.6668 13.8333 54.6668 13.8333 40.0001C13.8333 25.3334 25.8333 13.3334 40.5 13.3334C45.8333 13.3334 51.1667 15.0001 55.1667 17.6667L59.8333 13.0001C54.5 9.00008 47.8333 6.66675 40.5 6.66675C22.1667 6.66675 7.16666 21.6667 7.16666 40.0001C7.16666 58.3334 22.1667 73.3334 40.5 73.3334C58.8333 73.3334 73.8333 58.3334 73.8333 40.0001C73.8333 36.3334 73.1667 32.6667 72.1667 29.3334L66.5 34.6667Z" fill="#21D3EE"/>
