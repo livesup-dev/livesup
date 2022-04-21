@@ -27,11 +27,13 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                     <div>
                       <p class="uppercase font-medium text-sm text-gray-500">Commander</p>
                       <%= if incident.commander && incident.commander[:full_name] do %>
-                      <p class="text-base">
-                        <img src={incident.commander[:avatar_url]} class="w-6 h-6 rounded-full transition-opacity duration-200 inline-block mr-2"/>
-                        <span class="inline"><%= incident.commander[:full_name] %></span>
-                        <span class="text-xs inline">(<%= incident.commander[:title] %>)</span>
-                      </p>
+                      <div class="flex">
+                        <img src={incident.commander[:avatar_url]} class="w-6 h-6 rounded-full transition-opacity duration-200 flex-none mr-2"/>
+                        <p class="text-base flex-grow">
+                          <span class="block"><%= incident.commander[:full_name] %></span>
+                          <span class="text-xs block">(<%= incident.commander[:title] %>)</span>
+                        </p>
+                      </div>
                       <% else %>
                         <p class="text-base">N/A</p>
                       <% end %>
@@ -52,7 +54,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                         <%= if incident.slack && incident.slack[:url] do %>
                           <span class="font-mono text-sm text-black dark:text-white block">
                             <a href={incident.slack[:url]} target="_blank" class="hover:underline text-black dark:text-primary inline-block">
-                              <svg class="w-6 h-6 rounded-full inline-block mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                              <svg class="w-4 h-4 rounded-full inline-block mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="60 60 140 140" style="enable-background:new 60 60 140 140; display:inline-block;" xml:space="preserve">
                                 <style type="text/css">
                                   .st0{fill:#E01E5A;}
