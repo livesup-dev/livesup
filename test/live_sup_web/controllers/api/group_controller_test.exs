@@ -4,7 +4,6 @@ defmodule LiveSupWeb.Api.GroupControllerTest do
   import LiveSup.Test.GroupsFixtures
 
   alias LiveSup.Schemas.Group
-  alias LiveSup.Core.Groups
 
   @create_attrs %{
     internal: true,

@@ -1,4 +1,4 @@
-defmodule LiveSup.Seeds.Core.InternalDataSeeds do
+defmodule LiveSup.Seeds.InternalDataSeeds do
   alias LiveSup.Repo
   alias LiveSup.Schemas.{ProjectGroup, Project}
   alias LiveSup.Queries.{ProjectQuery, GroupQuery}

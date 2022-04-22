@@ -19,7 +19,7 @@ defmodule LiveSup.Tests.Queries.UserQueryTest do
     test "update/2" do
       user = UserQuery.get_by_email("john@livesup.com")
 
-      {:ok, saved_user} = UserQuery.update(user, %{first_name: "Emiliano"})
+      {:ok, _saved_user} = UserQuery.update(user, %{first_name: "Emiliano"})
 
       user = UserQuery.get_by_email("john@livesup.com")
       assert user.first_name == "Emiliano"

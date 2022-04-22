@@ -1,5 +1,4 @@
 alias LiveSup.Seeds.{
-  UsersSeeds,
   TeamsSeeds,
   ProjectsSeeds,
   MetricsSeeds
@@ -8,7 +7,6 @@ alias LiveSup.Seeds.{
 defmodule LiveSup.Seeds.Demo do
   def seed() do
     MetricsSeeds.seed()
-    UsersSeeds.seed()
     TeamsSeeds.seed()
     ProjectsSeeds.seed()
   end
