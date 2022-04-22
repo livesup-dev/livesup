@@ -20,6 +20,9 @@ Disclaimer: it’s our first experience with Elixir/Phoenix so we are open to sc
 
 ---
 
+Join our community on [Slack](https://join.slack.com/t/livesup-community/shared_invite/zt-17j1hujw7-iBfqKPDd7yYw6jczyFr0Kg) if you have questions, or just to say hi 🎉.
+
+
 ## Goals
 
 Besides the "business goal" mentioned above there are also a few technical goals behind this development. 
