@@ -92,6 +92,109 @@ defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
                data
     end
 
+    @tag :jira_projects_statuses
+    test "Get project statuses", %{bypass: bypass} do
+      Bypass.expect_once(
+        bypass,
+        "GET",
+        "/rest/api/3/project/145/statuses",
+        fn conn ->
+          Plug.Conn.resp(conn, 200, statuses_response())
+        end
+      )
+
+      {:ok, data} =
+        JiraDatasource.get_project_status(
+          "145",
+          token: "xxxx",
+          domain: endpoint_url(bypass.port)
+        )
+
+      assert [
+               %{id: "10576", name: "Published"},
+               %{id: "10575", name: "Ready for Publish"},
+               %{id: "10571", name: "Review"}
+             ] = data
+    end
+
+    defp statuses_response() do
+      """
+      [
+        {
+            "self": "https://livesup.atlassian.net/rest/api/2/issuetype/10207",
+            "id": "10207",
+            "name": "Story",
+            "subtask": false,
+            "statuses": [
+                {
+                    "self": "https://livesup.atlassian.net/rest/api/2/status/10576",
+                    "description": "",
+                    "iconUrl": "https://livesup.atlassian.net/",
+                    "name": "Published",
+                    "untranslatedName": "Published",
+                    "id": "10576",
+                    "statusCategory": {
+                        "self": "https://livesup.atlassian.net/rest/api/2/statuscategory/3",
+                        "id": 3,
+                        "key": "done",
+                        "colorName": "green",
+                        "name": "Done"
+                    },
+                    "scope": {
+                        "type": "PROJECT",
+                        "project": {
+                            "id": "10472"
+                        }
+                    }
+                },
+                {
+                    "self": "https://livesup.atlassian.net/rest/api/2/status/10575",
+                    "description": "",
+                    "iconUrl": "https://livesup.atlassian.net/",
+                    "name": "Ready for Publish",
+                    "untranslatedName": "Ready for Publish",
+                    "id": "10575",
+                    "statusCategory": {
+                        "self": "https://livesup.atlassian.net/rest/api/2/statuscategory/4",
+                        "id": 4,
+                        "key": "indeterminate",
+                        "colorName": "yellow",
+                        "name": "In Progress"
+                    },
+                    "scope": {
+                        "type": "PROJECT",
+                        "project": {
+                            "id": "10472"
+                        }
+                    }
+                },
+                {
+                    "self": "https://livesup.atlassian.net/rest/api/2/status/10571",
+                    "description": "",
+                    "iconUrl": "https://livesup.atlassian.net/",
+                    "name": "Review",
+                    "untranslatedName": "Review",
+                    "id": "10571",
+                    "statusCategory": {
+                        "self": "https://livesup.atlassian.net/rest/api/2/statuscategory/4",
+                        "id": 4,
+                        "key": "indeterminate",
+                        "colorName": "yellow",
+                        "name": "In Progress"
+                    },
+                    "scope": {
+                        "type": "PROJECT",
+                        "project": {
+                            "id": "10472"
+                        }
+                    }
+                }
+              ]
+            }
+        ]
+      """
+    end
+
     defp endpoint_url(port), do: "http://localhost:#{port}"
   end
 end

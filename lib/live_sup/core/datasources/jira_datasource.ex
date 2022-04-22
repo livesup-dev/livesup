@@ -10,17 +10,6 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   #
   @api_path "/rest/api/3"
   @agile_api_path "/rest/agile/1.0"
-
-  @status ["In Progress", "Complete", "Open", "Blocked", "In Review", "Validating"]
-  @open_status ["In Progress", "Open", "Blocked", "In Review", "Scoping"]
-  @blocked_status ["Blocked"]
-  @close_status ["Complete"]
-
-  def status, do: @status
-  def open_status, do: @open_status
-  def blocked_status, do: @blocked_status
-  def close_status, do: @close_status
-
   def search_user(email, token: token, domain: domain) do
     case HttpDatasource.get(
            url: build_url("/user/search?query=#{email}", domain: domain, base_path: @api_path),
@@ -108,6 +97,34 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
       {:ok, response} -> parse_issues(response)
       {:error, error} -> {:error, error}
     end
+  end
+
+  def get_project_status(project, token: token, domain: domain) do
+    case HttpDatasource.get(
+           url:
+             build_url(
+               "/project/#{project}/statuses",
+               domain: domain,
+               base_path: @api_path
+             ),
+           headers: headers(token)
+         ) do
+      {:ok, response} -> response |> Enum.at(0) |> parse_statuses()
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  defp parse_statuses(%{"statuses" => statuses}) do
+    data =
+      statuses
+      |> Enum.map(fn status_attr ->
+        %{
+          id: status_attr["id"],
+          name: status_attr["name"]
+        }
+      end)
+
+    {:ok, data}
   end
 
   defp parse_sprint(jira_sprints) do
