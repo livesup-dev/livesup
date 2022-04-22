@@ -8,7 +8,7 @@
             return JSON.parse(window.localStorage.getItem('dark'))
           }
 
-          return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+          return true;
         }
 
         const setTheme = (value) => {
