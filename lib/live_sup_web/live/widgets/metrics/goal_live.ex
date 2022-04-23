@@ -9,7 +9,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GoalLive do
       <!-- Metrics Goal -->
       <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
       <!-- Widget Content -->
-      <div class="p-2 grid justify-items-center">
+      <div class="p-2 grid justify-items-center min-h-[132px]">
         <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent, id: "#{widget_data.id}-chart", spec: build_spec(widget_data)) %>
       </div>
       <!-- /Widget Content -->
