@@ -48,6 +48,10 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
         attrs: &jira_current_sprint_widget_attrs/1
       },
       %{
+        datasource_slug: "jira-datasource",
+        attrs: &jira_current_sprint__stats_widget_attrs/1
+      },
+      %{
         datasource_slug: "github-datasource",
         attrs: &github_pull_requests_widget_attrs/1
       },
@@ -381,6 +385,24 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
         }
       },
       datasource_id: rss_datasource.id
+    }
+  end
+
+  defp jira_current_sprint__stats_widget_attrs(jira_datasource) do
+    %{
+      name: "Jira Current Sprint Stats",
+      slug: "jira-current-sprint-stats",
+      feature_image_url: "/images/widgets/jira-current-sprint-stats.png",
+      enabled: true,
+      global: false,
+      ui_handler: "LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive",
+      worker_handler: "LiveSup.Core.Widgets.Jira.CurrentSprintStats.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 120},
+        "board_id" => %{"source" => "local", "type" => "string", "value" => "145"}
+      },
+      datasource_id: jira_datasource.id
     }
   end
 
