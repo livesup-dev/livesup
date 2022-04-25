@@ -11,15 +11,6 @@ defmodule LiveSup.Test.Core.Widgets.Jira.CurrentSprintStats.HandlerTest do
     @describetag :jira_current_sprint_stats_widget
     @describetag :jira_current_sprint_stats_widget_handler
 
-    @project_statuses [
-      %{id: "10576", name: "Published"},
-      %{id: "10575", name: "Ready for Publish"},
-      %{id: "10571", name: "Review"},
-      %{id: "10539", name: "Done"},
-      %{id: "10538", name: "In Progress"},
-      %{id: "10537", name: "To Do"}
-    ]
-
     test "getting the current sprint stats" do
       with_mock JiraDatasource,
         get_current_sprint_issues: fn _project, _args -> {:ok, jira_issues()} end do

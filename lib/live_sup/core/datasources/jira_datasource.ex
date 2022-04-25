@@ -121,6 +121,7 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
         issue_type |> parse_statuses()
       end)
       |> Enum.uniq_by(fn status -> status[:id] end)
+      |> List.flatten()
 
     {:ok, data}
   end
