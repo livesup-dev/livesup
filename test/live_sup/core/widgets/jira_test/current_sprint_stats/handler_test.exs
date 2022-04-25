@@ -21,16 +21,11 @@ defmodule LiveSup.Test.Core.Widgets.Jira.CurrentSprintStats.HandlerTest do
     ]
 
     test "getting the current sprint stats" do
-      with_mocks([
-        {JiraDatasource, [],
-         [get_project_status: fn _project, _args -> {:ok, @project_statuses} end]},
-        {JiraDatasource, [],
-         [get_current_sprint_issues: fn _board, _args -> {:ok, jira_issues()} end]}
-      ]) do
+      with_mock JiraDatasource,
+        get_current_sprint_issues: fn _project, _args -> {:ok, jira_issues()} end do
         data =
           %{
             "board_id" => 431,
-            "project" => "123",
             "token" => "xxxx",
             "domain" => "https://livesup.awesome"
           }
@@ -38,15 +33,11 @@ defmodule LiveSup.Test.Core.Widgets.Jira.CurrentSprintStats.HandlerTest do
 
         assert {
                  :ok,
-                 %{
-                   days_left: -139,
-                   endDate: "2021-06-01T17:38:00.000Z",
-                   goal: "Some cool goal description.",
-                   id: 431,
-                   name: "Livesup Sprint 10-21",
-                   startDate: "2021-05-18T14:45:51.832Z",
-                   state: "active"
-                 }
+                 [
+                   %{count: 7, status: "Done"},
+                   %{count: 1, status: "In Progress"},
+                   %{count: 2, status: "Review"}
+                 ]
                } = data
       end
     end

@@ -6,6 +6,7 @@ defmodule LiveSup.Core.Widgets.Jira.CurrentSprintStats.Worker do
   @default_title "Current Sprint Stats"
 
   @impl true
+  @spec public_settings :: []
   def public_settings, do: []
 
   @impl true
