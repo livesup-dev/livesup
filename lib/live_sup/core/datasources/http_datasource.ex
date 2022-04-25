@@ -37,7 +37,8 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
     e in ArgumentError -> {:error, StringHelper.truncate(e.message, max_length: 50)}
   end
 
-  defp execute({:error, %Mint.TransportError{reason: :nxdomain}}), do: {:error, "nxdomain: wasn't able to resolve the domain through DNS."}
+  defp execute({:error, %Mint.TransportError{reason: :nxdomain}}),
+    do: {:error, "nxdomain: wasn't able to resolve the domain through DNS."}
 
   defp execute({_, %Finch.Response{headers: headers}} = request) do
     content_type = headers |> find_content_type()
