@@ -68,12 +68,12 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   end
 
   def get_current_sprint_issues(board_id, token: token, domain: domain) do
-    {:ok, current_sprint} = board_id |> get_current_sprint(token: token)
+    {:ok, %{id: current_sprint_id}} = board_id |> get_current_sprint(token: token, domain: domain)
 
     case HttpDatasource.get(
            url:
              build_url(
-               "/sprint/#{current_sprint[:id]}/issue?fields=resolution,status,assignee,creator,description,summary,created",
+               "/sprint/#{current_sprint_id}/issue?fields=resolution,status,assignee,creator,description,summary,created",
                domain: domain,
                base_path: @agile_api_path
              ),
@@ -109,22 +109,30 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
              ),
            headers: headers(token)
          ) do
-      {:ok, response} -> response |> Enum.at(0) |> parse_statuses()
+      {:ok, response} -> response |> build_statuses()
       {:error, error} -> {:error, error}
     end
   end
 
-  defp parse_statuses(%{"statuses" => statuses}) do
+  defp build_statuses(issues_types) do
     data =
-      statuses
-      |> Enum.map(fn status_attr ->
-        %{
-          id: status_attr["id"],
-          name: status_attr["name"]
-        }
+      issues_types
+      |> Enum.map(fn issue_type ->
+        issue_type |> parse_statuses()
       end)
+      |> Enum.uniq_by(fn status -> status[:id] end)
 
     {:ok, data}
+  end
+
+  defp parse_statuses(%{"statuses" => statuses}) do
+    statuses
+    |> Enum.map(fn status_attr ->
+      %{
+        id: status_attr["id"],
+        name: status_attr["name"]
+      }
+    end)
   end
 
   defp parse_sprint(jira_sprints) do
@@ -144,40 +152,27 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   end
 
   defp parse_issues(%{"issues" => issues}) do
-    issues
-    |> Enum.map(fn issue ->
-      {author, created_at} = issue |> find_author()
-      assignee = issue |> find_assignee()
-      components = issue |> parse_components()
+    data =
+      issues
+      |> Enum.map(fn issue ->
+        {author, created_at} = issue |> find_author()
+        assignee = issue |> find_assignee()
+        components = issue |> parse_components()
 
-      %{
-        key: issue["key"],
-        summary: issue["fields"]["summary"],
-        status: issue["fields"]["status"]["name"],
-        status_order: status_order(issue["fields"]["status"]["name"]),
-        author: author,
-        assignee: assignee,
-        created_at: created_at,
-        components: components,
-        created_at_ago: created_at |> DateHelper.from_now()
-      }
-    end)
+        %{
+          key: issue["key"],
+          summary: issue["fields"]["summary"],
+          status: issue["fields"]["status"]["name"],
+          author: author,
+          assignee: assignee,
+          created_at: created_at,
+          components: components,
+          created_at_ago: created_at |> DateHelper.from_now()
+        }
+      end)
+
+    {:ok, data}
   end
-
-  # We need to find a way to make these jira status
-  # dynamically manage
-  defp status_order("In Progress"), do: 1
-  defp status_order("In Review"), do: 2
-  defp status_order("IN REVIEW"), do: 2
-  defp status_order("Open"), do: 3
-  defp status_order("Validating"), do: 4
-  defp status_order("Blocked"), do: 5
-  defp status_order("Scoping"), do: 6
-  defp status_order("Complete"), do: 7
-  defp status_order("Done"), do: 8
-  defp status_order("Staging"), do: 9
-  defp status_order("Discovery"), do: 10
-  defp status_order("Product Review"), do: 11
 
   def find_author(%{"fields" => %{"creator" => creator, "created" => created}}) do
     author = %{

@@ -13,7 +13,7 @@ defmodule LiveSup.Core.Widgets.Jira.CurrentSprintStats.Handler do
     |> parse_stats(statuses)
   end
 
-  defp parse_stats(issues, statuses) do
+  defp parse_stats({:ok, issues}, statuses) do
     statuses
     |> Enum.map(fn status ->
       count = count_issues_by_status(issues, status)

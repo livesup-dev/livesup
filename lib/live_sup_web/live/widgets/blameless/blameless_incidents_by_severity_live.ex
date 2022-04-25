@@ -1,6 +1,5 @@
 defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsBySeverityLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
-  alias VegaLite, as: Vl
 
   @impl true
   def render_widget(assigns) do
