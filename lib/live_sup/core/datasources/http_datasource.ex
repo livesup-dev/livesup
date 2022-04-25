@@ -37,6 +37,8 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
     e in ArgumentError -> {:error, StringHelper.truncate(e.message, max_length: 50)}
   end
 
+  defp execute({:error, %Mint.TransportError{reason: :nxdomain}}), do: {:error, "nxdomain: wasn't able to resolve the domain through DNS."}
+
   defp execute({_, %Finch.Response{headers: headers}} = request) do
     content_type = headers |> find_content_type()
 
@@ -50,7 +52,7 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
       {:ok, %Finch.Response{body: body, status: 400 = status}} ->
         {:error, "#{status}: #{body}"}
 
-      {:ok, %Finch.Response{body: body, status: 500} = response} ->
+      {:ok, %Finch.Response{body: body, status: 500} = _response} ->
         {:error, "500: #{body |> error_message()}"}
 
       {:ok, %Finch.Response{body: body}} ->
@@ -65,7 +67,7 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
   defp error_message(nil), do: "Something happened, but we don't have too many details"
   defp error_message(body), do: body
 
-  defp parse(body), do: {:ok, Jason.decode!(body)}
+  defp parse(body), do: {:ok, body |> Jason.decode!()}
   defp parse_error(body, "application/xml;charset=UTF-8"), do: {:error, body}
   defp parse_error(body, "text/html; charset=utf-8"), do: {:error, body}
   defp parse_error(body, _), do: {:error, body |> Jason.decode!()}

@@ -20,7 +20,7 @@
         <%= label f, :avatar %>
         <%= live_file_input @uploads.avatar %>
         <%= for entry <- @uploads.avatar.entries do %>
-            <%= for err <- upload_errors(@uploads.avatar, entry) do %>
+            <%= for _err <- upload_errors(@uploads.avatar, entry) do %>
                 <p class="alert alert-danger">
                     <progress value={entry.progress} max="100"> <%= entry.progress %>% </progress>
                 </p>

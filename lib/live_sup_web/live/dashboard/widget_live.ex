@@ -71,11 +71,6 @@ defmodule LiveSupWeb.Dashboard.WidgetLive do
     |> assign(:widget, nil)
   end
 
-  defp assign_section(socket) do
-    socket
-    |> assign(section: :dashboard_widgets)
-  end
-
   defp assign_empty_widget_instance(socket) do
     socket
     |> assign(widget_instance: nil)

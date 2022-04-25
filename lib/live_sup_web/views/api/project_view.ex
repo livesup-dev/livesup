@@ -14,7 +14,6 @@ defmodule LiveSupWeb.Api.ProjectView do
     %{
       id: project.id,
       name: project.name,
-      name: project.name,
       avatar_url: project.avatar_url,
       internal: project.internal
     }

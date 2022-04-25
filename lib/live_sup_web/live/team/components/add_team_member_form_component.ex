@@ -27,7 +27,7 @@ defmodule LiveSupWeb.Team.Components.AddTeamMemberFormComponent do
 
   @impl true
   def handle_event("add_member", %{"team-id" => team_id, "user-id" => user_id}, socket) do
-    {:ok, team_member} = Teams.add_member(%Team{id: team_id}, %User{id: user_id})
+    {:ok, _team_member} = Teams.add_member(%Team{id: team_id}, %User{id: user_id})
     {:noreply, socket}
   end
 end

@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsBySeverityLive do
+defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
 
   @impl true
@@ -9,7 +9,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsBySeverityLive do
       <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 grid justify-items-center  min-h-[132px]">
-        <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent, id: "blameless-incidents-by-severity-chart", spec: build_spec(widget_data)) %>
+        <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent, id: "blameless-incidents-by-type-chart", spec: build_spec(widget_data)) %>
       </div>
       <!-- /Widget Content -->
       <!-- /Incidents by Type -->
@@ -19,27 +19,27 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsBySeverityLive do
   end
 
   def build_spec(widget_data) do
-    data =
-      widget_data.data
-      |> Enum.map(fn {key, value} ->
-        %{"severity" => key, "value" => value}
-      end)
+    # data =
+    #   widget_data.data
+    #   |> Enum.map(fn {key, value} ->
+    #     %{"status" => key, "count" => value}
+    #   end)
 
     # Initialize the specification, optionally with some top-level properties
     %{
       "$schema" => "https://vega.github.io/schema/vega-lite/v5.json",
       "description" => "",
       "data" => %{
-        "values" => data
+        "values" => widget_data.data
       },
       "background" => nil,
       "mark" => "arc",
       "encoding" => %{
-        "theta" => %{"field" => "value", "type" => "quantitative", "stack" => true},
+        "theta" => %{"field" => "count", "type" => "quantitative", "stack" => true},
         "color" => %{
-          "field" => "severity",
+          "field" => "status",
           "type" => "nominal",
-          "legend" => %{"title" => "Severity", "labelColor" => "white", "titleColor" => "white"}
+          "legend" => %{"title" => "Type", "labelColor" => "white", "titleColor" => "white"}
         }
       },
       "layer" => [
@@ -47,7 +47,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsBySeverityLive do
           "mark" => %{"type" => "arc", "outerRadius" => 80}
         },
         %{
-          "mark" => %{"type" => "text", "radius" => 140}
+          "mark" => %{"type" => "text", "radius" => 100}
         }
       ]
     }
