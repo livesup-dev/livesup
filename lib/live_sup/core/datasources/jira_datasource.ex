@@ -68,17 +68,17 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   end
 
   def get_current_sprint_issues(board_id, token: token, domain: domain) do
-    with {:ok, %{id: current_sprint_id}} <- board_id |> get_current_sprint(token: token, domain: domain) do
-
+    with {:ok, %{id: current_sprint_id}} <-
+           board_id |> get_current_sprint(token: token, domain: domain) do
       case HttpDatasource.get(
-            url:
-              build_url(
-                "/sprint/#{current_sprint_id}/issue?fields=resolution,status,assignee,creator,description,summary,created",
-                domain: domain,
-                base_path: @agile_api_path
-              ),
-            headers: headers(token)
-          ) do
+             url:
+               build_url(
+                 "/sprint/#{current_sprint_id}/issue?fields=resolution,status,assignee,creator,description,summary,created",
+                 domain: domain,
+                 base_path: @agile_api_path
+               ),
+             headers: headers(token)
+           ) do
         {:ok, response} -> parse_issues(response)
         {:error, error} -> {:error, error}
       end
