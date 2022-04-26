@@ -42,6 +42,13 @@ Besides the "business goal" mentioned above there are also a few technical goals
 
 Livesup is an application that lets you concentrate information from different services or datastores in a dashboard. The information is displayed with predefined widgets. Each widget is responsible for reading and displaying the data correctly. For instance the `Github Pull Requests` widget will fetch the last n open/close pull requests from a repository and will display accordingly.
 
+The app has 3 main "sections": 
+* An API(/api) that let you perform some actions like:
+  * Manage users
+  * Manage teams
+  * Manage projects
+  * (Seeding)[#seeding]
+
 ## What is it not?
 
 Livesup is NOT meant to replace any of the datasources it consumes. It is not meant to be used as a debugging tool or an advanced troubleshooting service.
@@ -74,6 +81,47 @@ docker run --rm \
 ```
 
 Or you could just do `docker-compose up` using the existing [docker-compose.yml](docker-compose.yml) file.
+
+## Seeding
+
+Since we don't have a proper 
+
+Since we don't have a proper UI yet to manage all the components. The easiest way to seed the app is to use an YAML definition. You can see the demo [here](/docs/demo-seed.yaml). 
+ 
+There are 2 ways you can import that file. 
+* Console
+Log in into the console and do: 
+
+```
+YamlElixir.read_from_file('docs/demo-seed.yaml')
+|> LiveSup.LiveSup.DataImporter.Importer.import()
+```
+
+* API
+
+To use the API you first need to have a valid token, to do that, you can use the following curl command (change the host accordingly):
+
+```
+curl --location --request POST 'http://localhost:4000/api/sessions' \
+--header 'accept: application/json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "emiliano@summing-up.com",
+    "password": "Very@Safe@Password"
+}'
+```
+
+Grab the token and convert the yaml file into json. You can use `jq --raw-input --slurp < demo-seed.yaml`
+
+```
+curl --location --request POST 'http://localhost:4000/api/seed' \
+--header 'Authorization: Bearer YOUR-TOKEN-HERE' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "data":"....."
+  }'
+```
+
 
 
 ## Copyright and License

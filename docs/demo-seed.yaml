@@ -1,0 +1,91 @@
+remove_existing_projects: false
+remove_existing_teams: false
+remove_existing_metrics: false
+remove_existing_widgets_instances: true
+projects:
+  - id: 5b75ff88-43fd-4a94-9ec6-6bb4211c5b46
+    name: My Cool Project
+    slug: my-cool-project
+    internal: false
+    default: false
+    avatar_url: https://picsum.photos/200/300
+    dashboards:
+      - id: 92ab7435-626e-4c87-915c-fab6d46efc16
+        name: Default
+        avatar_url: https://picsum.photos/200/300
+        default: false
+        widgets:
+          -
+            id: 0be259d2-8450-4b2f-aea4-3b383ec1c34e
+            datasource_slug: chuck-norries-datasource
+            widget_slug: chuck-norris-joke
+            name: Chuck Norris Joke
+          -
+            id: f81c5daa-ac42-4d19-b863-3d8495ac1e17
+            datasource_slug: local-datasource
+            widget_slug: team-members
+            name: My Cool Team
+            settings:
+              team:
+                source: local
+                type: string
+                value: b58f3773-666f-4aa5-866b-793c94021e05
+              title:
+                source: local
+                type: string
+                value: My Cool Team
+          -
+            id: bcee4d7d-f2b8-4b2a-9325-97f4299bf0e4
+            datasource_slug: local-datasource
+            widget_slug: metrics-gauge
+            name: P95 Api Latency
+            settings:
+              title:
+                source: local
+                type: string
+                value: P95 Api Latency
+              metric:
+                source: local
+                type: string
+                value: p95-api-latency
+          
+teams:
+  - id: b58f3773-666f-4aa5-866b-793c94021e05
+    name: My Cool Team 
+    slug: my-cool-team 
+    avatar_url: https://pythiabot.s3.amazonaws.com/teams/finance.png
+    
+metrics:
+  - id: 91e874bb-ee84-41e4-95a0-ad9867371d74
+    name: P95 API Latency
+    slug: p95-api-latency
+    target: 600
+    unit: ms
+    labels:
+      - rocks
+    values:
+      - id: 00b62cd5-057e-4a3e-a943-b4868ce269fe
+        value: 581
+        value_date: 2022-03-18 00:00:00
+      - id: 86cffd8d-e023-4493-a0d1-c7a881d43fab
+        value: 581
+        value_date: 2022-03-11 00:00:00
+      - id: c7807c7b-384a-4c57-9468-32d96bb98b3b
+        value: 638
+        value_date: 2022-03-04 00:00:00
+      - id: 0971b1ba-7646-418b-ae74-339b77fa4d93
+        value: 668
+        value_date: 2022-02-25 00:00:00
+      - id: 41af9db6-84a7-4875-938d-9dcfa87f55ec
+        value: 689
+        value_date: 2022-02-18 00:00:00
+      - id: a84fafa7-73f4-4f0d-9467-947e984d4d8a
+        value: 830
+        value_date: 2022-02-11 00:00:00
+      - id: e34ce051-a579-42c3-8928-3e8982473581
+        value: 946
+        value_date: 2022-02-04 00:00:00
+      - id: 79e98e3e-4896-4dd4-9309-103f7272cd39
+        value: 936
+        value_date: 2022-01-28 00:00:00
+  

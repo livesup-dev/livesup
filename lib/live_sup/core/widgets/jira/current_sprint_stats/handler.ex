@@ -10,7 +10,7 @@ defmodule LiveSup.Core.Widgets.Jira.CurrentSprintStats.Handler do
     |> parse_stats()
   end
 
-  defp parse_stats({:error, error} = args), do: args
+  defp parse_stats({:error, _error} = args), do: args
 
   defp parse_stats({:ok, issues}) do
     data =
