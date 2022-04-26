@@ -48,6 +48,8 @@ The app has 3 main "sections":
   * Manage teams
   * Manage projects
   * (Seeding)[#seeding]
+* The "front end" (/)
+* The backend (/admin)
 
 ## What is it not?
 
@@ -90,6 +92,7 @@ Since we don't have a proper UI yet to manage all the components. The easiest wa
  
 There are 2 ways you can import that file. 
 * Console
+
 Log in into the console and do: 
 
 ```
