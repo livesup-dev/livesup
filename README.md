@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/images/flow.png" height="128">
+  <img src="docs/images/flow.png" height="500">
   
   <h1 align="center">LiveSup (Summing UP)</h1>
   
