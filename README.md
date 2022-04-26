@@ -4,7 +4,7 @@
   <h1 align="center">LiveSup (Summing UP)</h1>
   
   <p align="center">
-    We live in the Cloud era, today's applications are about connecting APIs. To manage, monitor, control your app, teams, business you probably need to log in into 10 different services (or more!). It's even harder if you are new to the team or organization you work with. LiveSup tries to add transparency to the services you use and it creates a layer that organizes and simplifies the information you need when you need it.
+    We live in the Cloud era, today's applications are about connecting APIs. To manage, monitor, control your app, teams and business you probably need to log in into 10 different services (or more!). It's even harder if you just joined the organization or switched to a new team. LiveSup tries to add transparency to the services you use and it creates a layer that organizes and simplifies the information you need when you need it.
   </p>
 </p>
 
@@ -47,7 +47,7 @@ The app has 3 main "sections":
   * Manage users
   * Manage teams
   * Manage projects
-  * (Seeding)[#seeding]
+  * [Seeding](#seeding)
 * The "front end" (/)
 * The backend (/admin)
 
@@ -57,11 +57,11 @@ Livesup is NOT meant to replace any of the datasources it consumes. It is not me
 
 ## How data is structure
 
-Livesup has a very flexible data structure that lets you organize the data in the way you want. The top level component is a "Project". A Project can be part of more projects (not supported in the UI yet), and it can have several dashboards, each dashboard has widgets. 
+Livesup has a very flexible data structure that lets you organize the data in the way you want. The top level component is a "Project". A Project can be part of more projects (the current UI only supports one level of projects), and it can have several dashboards, each dashboard has widgets. 
 
 ![](/docs/images/projects-data-structure.png)
 
-The relationship between users and projects, is controlled by `Groups`. A Group can have many projects and users. So you can control who can see what. Any new signup will be associated to an default group called `All Users`. And any new project will be associated to that group by default, meaning that when you create a project it will become available to all existing users. 
+The relationship between users and projects, is controlled by `Groups`. A Group can have many projects and users. So you can control who can see what. New signup will be associated to a default group called `All Users`. And any new project will be associated to that group by default, meaning that when you create a project it will become available to all existing users. 
 
 ![](/docs/images/users-projects.png)
 
@@ -86,9 +86,7 @@ Or you could just do `docker-compose up` using the existing [docker-compose.yml]
 
 ## Seeding
 
-Since we don't have a proper 
-
-Since we don't have a proper UI yet to manage all the components. The easiest way to seed the app is to use an YAML definition. You can see the demo [here](/docs/demo-seed.yaml). 
+Since we don't have a proper UI yet to manage all the components. The easiest way to seed the app is to use a YAML definition. You can see the demo [here](/docs/demo-seed.yaml). 
  
 There are 2 ways you can import that file. 
 * Console
