@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/static/images/logo-mid.png" height="128">
+  <img src="docs/images/flow.png" height="128">
   
   <h1 align="center">LiveSup (Summing UP)</h1>
   
@@ -28,6 +28,7 @@ Join our community on [Slack](https://join.slack.com/t/livesup-community/shared_
 Besides the "business goal" mentioned above there are also a few technical goals behind this development. 
 
 * Have fun! (This is really the main goal!)
+* Learn Elixir
 * Build a rich and dynamic application without javascript (or as little as possible)
 * Build a more "complex" and "real" application that helps others understand that you can do much more than just a chat or a ToDo app with a Elixir/phoenix :)
 
