@@ -96,6 +96,24 @@ defmodule LiveSup.Schemas.User do
     |> maybe_set_location()
   end
 
+  def internal_registration_changeset(user, attrs) do
+    user
+    |> cast(attrs, [
+      :id,
+      :email,
+      :first_name,
+      :last_name,
+      :avatar_url,
+      :location,
+      :settings,
+      :provider,
+      :state
+    ])
+    |> validate_required([])
+    |> validate_email()
+    |> maybe_set_location()
+  end
+
   def onboarded_state, do: "onboarded"
   def onboarded?(%__MODULE__{state: state}), do: state == onboarded_state()
 

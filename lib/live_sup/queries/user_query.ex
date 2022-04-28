@@ -31,6 +31,12 @@ defmodule LiveSup.Queries.UserQuery do
     |> Repo.insert()
   end
 
+  def create_with_id(data) do
+    %User{}
+    |> User.internal_registration_changeset(data)
+    |> Repo.insert()
+  end
+
   def update(%User{} = model, attrs) do
     model
     |> User.update_changeset(attrs)

@@ -40,4 +40,9 @@ defmodule LiveSup.Core.Teams do
     TeamMember.changeset(%TeamMember{}, %{team_id: team.id, user_id: user.id})
     |> Repo.insert()
   end
+
+  def upsert_member(%Team{} = team, %User{} = user) do
+    TeamMember.changeset(%TeamMember{}, %{team_id: team.id, user_id: user.id})
+    |> Repo.insert(on_conflict: :nothing)
+  end
 end
