@@ -34,6 +34,8 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
         }
       end)
 
+    current_value |> IO.inspect(label: :current_value)
+
     # TODO: Delta need to be improved. It should be a setting
     %{
       domain: %{x: [0, 1], y: [0, 1]},

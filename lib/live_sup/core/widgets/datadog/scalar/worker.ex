@@ -9,7 +9,7 @@ defmodule LiveSup.Core.Widgets.Datadog.Scalar.Worker do
   def settings_keys, do: ["query", "n_days", "api_key", "application_key", "target", "unit"]
 
   @impl true
-  def public_settings, do: ["n_days", "target"]
+  def public_settings, do: ["n_days", "target", "unit"]
 
   @impl true
   def build_data(settings) do

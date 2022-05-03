@@ -53,6 +53,9 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
       {:ok, %Finch.Response{body: body, status: 400 = status}} ->
         {:error, "#{status}: #{body}"}
 
+      {:ok, %Finch.Response{status: 403 = status}} ->
+        {:error, "#{status}: forbidden"}
+
       {:ok, %Finch.Response{body: body, status: 500} = _response} ->
         {:error, "500: #{body |> error_message()}"}
 

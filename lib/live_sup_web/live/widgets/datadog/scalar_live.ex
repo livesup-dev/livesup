@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Live.Widgets.Blameless.ScalarLive do
+defmodule LiveSupWeb.Live.Widgets.Datadog.ScalarLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
   alias LiveSupWeb.Live.Widgets.Metrics.MetricsHelper
 
@@ -19,7 +19,10 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.ScalarLive do
     """
   end
 
-  def build_spec(%{data: %{value: current_value, target: target, unit: unit}}) do
+  def build_spec(%{
+        data: %{value: current_value},
+        public_settings: %{"target" => target, "unit" => unit}
+      }) do
     %{
       data: %{target: target, current_value: current_value, unit: unit},
       public_settings: %{}

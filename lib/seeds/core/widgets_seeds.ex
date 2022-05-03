@@ -170,7 +170,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       worker_handler: "LiveSup.Core.Widgets.Datadog.Scalar.Worker",
       labels: [],
       settings: %{
-        "runs_every" => %{"source" => "local", "type" => "int", "value" => 600},
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 36000},
         "query" => %{"source" => "local", "type" => "string", "value" => ""},
         "n_days" => %{"source" => "local", "type" => "int", "value" => "7"},
         "target" => %{"source" => "local", "type" => "string", "value" => ""},

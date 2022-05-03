@@ -13,7 +13,7 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
           "n_days" => n_days,
           "api_key" => api_key,
           "application_key" => application_key
-        },
+        } = aaa,
         args \\ []
       ) do
     url =
@@ -41,7 +41,9 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
       }
     } = element
 
-    {:ok, %{value: value}}
+    # TODO: We need to find a way to convert this value
+    # to the real unit
+    {:ok, %{value: value * 1000}}
   end
 
   defp process_error(error), do: {:error, error}
@@ -51,10 +53,12 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
 
     from =
       today
-      |> Timex.shift(minutes: -1 * n_days)
-      |> DateHelper.to_unix()
+      |> Timex.shift(days: -1 * n_days)
+      |> DateTime.to_unix(:milliseconds)
 
-    to = DateHelper.today_to_unix()
+    to =
+      DateTime.utc_now()
+      |> DateTime.to_unix(:milliseconds)
 
     %{
       data: [
@@ -81,6 +85,8 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
       ]
     }
   end
+
+  def headers(nil, nil), do: raise("Datadog API Key and App Keys are missing")
 
   def headers(api_key, application_key) do
     [
