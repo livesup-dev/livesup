@@ -1,7 +1,7 @@
 defmodule LiveSup.Test.Core.Datasources.DatadogDatasourceTest do
   use LiveSup.DataCase, async: true
 
-  alias LiveSup.Core.Datasources.PagerDutyDatasource
+  alias LiveSup.Core.Datasources.DatadogDatasource
 
   describe "Datadog datasource" do
     @describetag :datadog_datasource
@@ -12,77 +12,69 @@ defmodule LiveSup.Test.Core.Datasources.DatadogDatasourceTest do
       {:ok, bypass: bypass}
     end
 
-    @tag :datadog_on_call
+    @tag :datadog_get_scalar
     test "Get scalar", %{bypass: bypass} do
       Bypass.expect_once(
         bypass,
-        "GET",
-        "/oncalls",
+        "POST",
+        "/api/v2/query/scalar",
         fn conn ->
-          Plug.Conn.resp(conn, 200, on_call_response())
+          Plug.Conn.resp(conn, 200, scalar_response())
         end
       )
 
       {:ok, data} =
-        PagerDutyDatasource.get_on_call(
-          %{"schedule_ids" => ["PI50L4I"], "token" => "xxxx"},
+        DatadogDatasource.get_scalar(
+          %{
+            "query" => "query-test",
+            "n_days" => 5,
+            "api_key" => "xxxx",
+            "application_key" => "xxxx"
+          },
           url: endpoint_url(bypass.port)
         )
 
-      assert [
-               %{
-                 end: "2022-04-18T09:00:00Z",
-                 id: nil,
-                 name: %{
-                   "html_url" => "https://livesup.pagerduty.com/schedules/PLBW9ZW",
-                   "id" => "PLBW9ZW",
-                   "self" => "https://api.pagerduty.com/schedules/PLBW9ZW",
-                   "summary" => "Central Team",
-                   "type" => "schedule_reference"
-                 },
-                 start: "2022-04-11T09:00:00Z",
-                 user: %{id: "P6S8MID", name: "James Doe"}
-               }
-             ] = data
+      assert %{value: 0.6280373478063627} = data
     end
 
     defp endpoint_url(port), do: "http://localhost:#{port}"
 
-    defp on_call_response() do
+    defp scalar_response() do
       """
       {
-        "oncalls": [
-          {
-            "escalation_policy": {
-              "id": "PI50L4I",
-              "type": "escalation_policy_reference",
-              "summary": "Central Team",
-              "self": "https://api.pagerduty.com/escalation_policies/PI50L4I",
-              "html_url": "https://livesup.pagerduty.com/escalation_policies/PI50L4I"
-            },
-            "escalation_level": 1,
-            "schedule": {
-              "id": "PLBW9ZW",
-              "type": "schedule_reference",
-              "summary": "Central Team",
-              "self": "https://api.pagerduty.com/schedules/PLBW9ZW",
-              "html_url": "https://livesup.pagerduty.com/schedules/PLBW9ZW"
-            },
-            "user": {
-              "id": "P6S8MID",
-              "type": "user_reference",
-              "summary": "James Doe",
-              "self": "https://api.pagerduty.com/users/P6S8MID",
-              "html_url": "https://livesup.pagerduty.com/users/P6S8MID"
-            },
-            "start": "2022-04-11T09:00:00Z",
-            "end": "2022-04-18T09:00:00Z"
-          }
-        ],
-        "limit": 25,
-        "offset": 0,
-        "more": false,
-        "total": null
+          "meta": {
+              "res_type": "scalar",
+              "responses": []
+          },
+          "data": [
+              {
+                  "type": "scalar_response",
+                  "attributes": {
+                      "columns": [
+                          {
+                              "type": "number",
+                              "meta": {
+                                  "unit": [
+                                      {
+                                          "scale_factor": 1.0,
+                                          "name": "second",
+                                          "family": "time",
+                                          "short_name": "s",
+                                          "plural": "seconds",
+                                          "id": 11
+                                      },
+                                      null
+                                  ]
+                              },
+                              "values": [
+                                  0.6280373478063627
+                              ],
+                              "name": "query1"
+                          }
+                      ]
+                  }
+              }
+          ]
       }
       """
     end

@@ -94,6 +94,10 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       %{
         datasource_slug: "pager-duty-datasource",
         attrs: &pager_duty_on_call_widget_attrs/1
+      },
+      %{
+        datasource_slug: "datadog-datasource",
+        attrs: &datadog_scalar_widget_attrs/1
       }
     ]
     |> Enum.each(fn widget ->
@@ -150,6 +154,27 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 600},
         "schedule_ids" => %{"source" => "local", "string" => "string", "value" => ""}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  defp datadog_scalar_widget_attrs(datasource) do
+    %{
+      name: "Datadog Scalar",
+      slug: "datadog-scalar",
+      enabled: true,
+      global: false,
+      feature_image_url: "/images/widgets/datadog-scalar",
+      ui_handler: "LiveSupWeb.Live.Widgets.Datadog.ScalarLive",
+      worker_handler: "LiveSup.Core.Widgets.Datadog.Scalar.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 600},
+        "query" => %{"source" => "local", "type" => "string", "value" => ""},
+        "n_days" => %{"source" => "local", "type" => "int", "value" => "7"},
+        "target" => %{"source" => "local", "type" => "string", "value" => ""},
+        "unit" => %{"source" => "local", "type" => "string", "value" => ""}
       },
       datasource_id: datasource.id
     }

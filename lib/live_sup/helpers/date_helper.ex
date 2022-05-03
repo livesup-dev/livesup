@@ -32,19 +32,6 @@ defmodule LiveSup.Helpers.DateHelper do
 
   def from_now(), do: Timex.from_now(DateTime.utc_now())
 
-  @spec from_unix(
-          non_neg_integer,
-          :microsecond
-          | :microseconds
-          | :millisecond
-          | :milliseconds
-          | :nanosecond
-          | :nanoseconds
-          | :native
-          | :second
-          | :seconds
-          | pos_integer
-        ) :: DateTime.t()
   def from_unix(value, unit) do
     Timex.from_unix(value, unit)
   end

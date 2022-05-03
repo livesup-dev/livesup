@@ -1,4 +1,4 @@
-defmodule LiveSup.Core.Datasources.DatadotDatasource do
+defmodule LiveSup.Core.Datasources.DatadogDatasource do
   use Timex
   alias LiveSup.Core.Datasources.HttpDatasource
   alias LiveSup.Helpers.DateHelper
@@ -39,22 +39,22 @@ defmodule LiveSup.Core.Datasources.DatadotDatasource do
           }
         ]
       }
-    } =
-      element
+    } = element
 
-    {:ok, value}
+    {:ok, %{value: value}}
   end
 
   defp process_error(error), do: {:error, error}
 
   defp scalar_body(query, n_days) do
+    today = DateTime.utc_now()
+
     from =
-      DateHelper.diff_in_days(n_days)
+      today
+      |> Timex.shift(minutes: -1 * n_days)
       |> DateHelper.to_unix()
 
-    to =
-      DateHelper.today()
-      |> DateHelper.to_unix()
+    to = DateHelper.today_to_unix()
 
     %{
       data: [

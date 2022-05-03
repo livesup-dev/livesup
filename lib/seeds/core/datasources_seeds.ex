@@ -189,6 +189,25 @@ defmodule LiveSup.Seeds.Core.DatasourcesSeeds do
             "required" => true
           }
         }
+      },
+      %{
+        name: "Datadog",
+        slug: "datadog-datasource",
+        enabled: "true",
+        settings: %{
+          "api_key" => %{
+            "source" => "env",
+            "value" => "DATADOG_API_KEY",
+            "type" => "string",
+            "required" => true
+          },
+          "application_key" => %{
+            "source" => "env",
+            "value" => "DATADOG_APPLICATION_KEY",
+            "type" => "string",
+            "required" => true
+          }
+        }
       }
     ]
     |> Enum.map(fn data ->
