@@ -10,8 +10,9 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
         <!-- Widget Content -->
         <div class="min-h-[132px] items-center rounded-md bg-white p-2 dark:bg-darker">
           <%= if Enum.any?(widget_data.data) do %>
-            <div class="shadow-md shadow-red-500 ring-1 ring-red-500 rounded-lg p-4 my-4">
-              <%= for {incident, _counter} <- Enum.with_index(widget_data.data) do %>
+            <%= for {incident, _counter} <- Enum.with_index(widget_data.data) do %>
+              <div class="shadow-md shadow-red-500 ring-1 ring-red-500 rounded-lg p-4 my-4">
+
                 <h3 class="text-lg mb-4">
                   <a href={incident[:url]} class="hover:underline text-black dark:text-primary block" target="_blank"><%= incident[:description] %></a>
                   <span class="font-mono text-xs text-black dark:text-white block"><%= incident[:created_at_ago] %></span>
@@ -93,8 +94,8 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                     </div>
                   </div>
                 </div>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           <% else %>
             <svg class="h-20 w-20 m-auto" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M66.5 34.6667C66.8333 36.3334 67.1667 38.3334 67.1667 40.0001C67.1667 54.6668 55.1667 66.6668 40.5 66.6668C25.8333 66.6668 13.8333 54.6668 13.8333 40.0001C13.8333 25.3334 25.8333 13.3334 40.5 13.3334C45.8333 13.3334 51.1667 15.0001 55.1667 17.6667L59.8333 13.0001C54.5 9.00008 47.8333 6.66675 40.5 6.66675C22.1667 6.66675 7.16666 21.6667 7.16666 40.0001C7.16666 58.3334 22.1667 73.3334 40.5 73.3334C58.8333 73.3334 73.8333 58.3334 73.8333 40.0001C73.8333 36.3334 73.1667 32.6667 72.1667 29.3334L66.5 34.6667Z" fill="#21D3EE"/>
