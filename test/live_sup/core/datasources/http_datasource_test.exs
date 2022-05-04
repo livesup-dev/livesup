@@ -1,7 +1,6 @@
 defmodule LiveSup.Test.Core.Datasources.HttpDatasourceTest do
   use LiveSup.DataCase, async: true
 
-  alias LiveSup.Helpers.FeatureManager
   alias LiveSup.Core.Datasources.HttpDatasource
 
   @response """
@@ -41,7 +40,6 @@ defmodule LiveSup.Test.Core.Datasources.HttpDatasourceTest do
     @describetag :http_datasource
 
     setup do
-      FeatureManager.disable_mock_api()
       bypass = Bypass.open()
       {:ok, bypass: bypass}
     end

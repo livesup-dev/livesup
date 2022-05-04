@@ -1,7 +1,6 @@
 defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
   use LiveSup.DataCase, async: true
 
-  alias LiveSup.Helpers.FeatureManager
   alias LiveSup.Core.Datasources.JiraDatasource
 
   alias LiveSup.Test.Core.Datasources.DataHelper.{
@@ -38,7 +37,6 @@ defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
     @describetag :datasource
 
     setup do
-      FeatureManager.disable_mock_api()
       bypass = Bypass.open()
       {:ok, bypass: bypass}
     end

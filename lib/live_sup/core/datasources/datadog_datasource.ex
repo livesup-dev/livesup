@@ -1,7 +1,6 @@
 defmodule LiveSup.Core.Datasources.DatadogDatasource do
   use Timex
   alias LiveSup.Core.Datasources.HttpDatasource
-  alias LiveSup.Helpers.DateHelper
 
   # https://docs.datadoghq.com/api/latest/rate-limits/
 
@@ -13,7 +12,7 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
           "n_days" => n_days,
           "api_key" => api_key,
           "application_key" => application_key
-        } = aaa,
+        },
         args \\ []
       ) do
     url =
@@ -86,12 +85,10 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
     }
   end
 
-  def headers(nil, nil), do: raise("Datadog API Key and App Keys are missing")
-
   def headers(api_key, application_key) do
     [
-      {"DD-API-KEY", api_key},
-      {"DD-APPLICATION-KEY", application_key}
+      {"DD-API-KEY", api_key || ""},
+      {"DD-APPLICATION-KEY", application_key || ""}
     ]
   end
 

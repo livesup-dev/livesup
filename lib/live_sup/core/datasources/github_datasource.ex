@@ -1,7 +1,6 @@
 defmodule LiveSup.Core.Datasources.GithubDatasource do
   use Timex
 
-  @feature_flag_name "github_data_source"
   @endpoint "https://api.github.com/"
 
   alias LiveSup.Helpers.{StringHelper, DateHelper}

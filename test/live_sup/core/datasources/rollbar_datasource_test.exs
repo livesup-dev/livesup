@@ -1,7 +1,6 @@
 defmodule LiveSup.Test.Core.Datasources.RollbarDatasourceTest do
   use LiveSup.DataCase, async: true
 
-  alias LiveSup.Helpers.FeatureManager
   alias LiveSup.Core.Datasources.RollbarDatasource
 
   describe "managing merge stat datasource" do
@@ -9,7 +8,6 @@ defmodule LiveSup.Test.Core.Datasources.RollbarDatasourceTest do
     @describetag :rollbar_datasource
 
     setup do
-      FeatureManager.disable_mock_api()
       bypass = Bypass.open()
       {:ok, bypass: bypass}
     end

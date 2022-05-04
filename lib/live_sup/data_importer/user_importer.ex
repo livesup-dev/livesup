@@ -17,14 +17,10 @@ defmodule LiveSup.DataImporter.UserImporter do
   def import(data), do: data
 
   defp get_or_create_user(%{"id" => id} = attrs) do
-    IO.inspect(attrs, label: :import)
-
     with {:ok, user} <- Users.get(id) do
-      IO.inspect(user, label: :import)
       {:ok, user}
     else
       nil ->
-        IO.inspect("not found", label: :import)
         Users.create(attrs)
     end
   end

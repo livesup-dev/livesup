@@ -15,7 +15,7 @@ defmodule LiveSupWeb.Test.Live.SetupLiveTest do
     end
 
     test "saves new project", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, Routes.setup_index_path(conn, :index))
+      {:ok, _index_live, _html} = live(conn, Routes.setup_index_path(conn, :index))
 
       # TODO: Fix validation
       # assert index_live

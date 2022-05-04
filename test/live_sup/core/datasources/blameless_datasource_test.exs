@@ -1,14 +1,12 @@
 defmodule LiveSup.Test.Core.Datasources.BlamelessDatasourceTest do
-  use LiveSup.DataCase, async: true
+  use LiveSup.DataCase, async: false
 
   import Mock
 
-  alias LiveSup.Helpers.FeatureManager
   alias LiveSup.Core.Datasources.BlamelessDatasource
   alias LiveSup.Core.Datasources.HttpDatasource
 
   setup do
-    FeatureManager.disable_mock_api()
     bypass = Bypass.open()
     {:ok, bypass: bypass}
   end

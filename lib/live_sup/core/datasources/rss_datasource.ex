@@ -2,10 +2,8 @@ defmodule LiveSup.Core.Datasources.RssDatasource do
   use Timex
   import LiveSup.Core.Datasources.Helper
 
-  @feature_flag_name "rss_datasource"
-
   def fetch(url) do
-    url = build_url(url: url, feature_flag: @feature_flag_name)
+    url = build_url(url: url)
 
     Finch.build(:get, url)
     |> Finch.request(SupFinch)
