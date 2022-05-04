@@ -1,11 +1,9 @@
 defmodule LiveSup.Test.Core.Datasources.GithubDatasourceTest do
   use LiveSup.DataCase, async: true
 
-  alias LiveSup.Helpers.FeatureManager
   alias LiveSup.Core.Datasources.GithubDatasource
 
   setup do
-    FeatureManager.disable_mock_api()
     bypass = Bypass.open()
     {:ok, bypass: bypass}
   end

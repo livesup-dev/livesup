@@ -42,7 +42,4 @@ defmodule LiveSup.Helpers.FeatureManager do
       false -> :real
     end
   end
-
-  def disable_mock_api, do: FunWithFlags.disable(:mock_api)
-  def enable_mock_api, do: FunWithFlags.enable(:mock_api)
 end

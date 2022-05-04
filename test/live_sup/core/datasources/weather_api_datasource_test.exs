@@ -1,7 +1,6 @@
 defmodule LiveSup.Test.Core.Datasources.WeatherApiDatasourceTest do
   use LiveSup.DataCase, async: true
 
-  alias LiveSup.Helpers.FeatureManager
   alias LiveSup.Core.Datasources.WeatherApiDatasource
 
   @response """
@@ -49,7 +48,6 @@ defmodule LiveSup.Test.Core.Datasources.WeatherApiDatasourceTest do
   """
 
   setup do
-    FeatureManager.disable_mock_api()
     bypass = Bypass.open()
     {:ok, bypass: bypass}
   end

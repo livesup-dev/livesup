@@ -1,7 +1,6 @@
 defmodule LiveSup.Test.Core.Datasources.ChuckNorrisApiDatasourceTest do
   use LiveSup.DataCase, async: true
 
-  alias LiveSup.Helpers.FeatureManager
   alias LiveSup.Core.Datasources.ChuckNorrisApiDatasource
 
   @response """
@@ -14,7 +13,6 @@ defmodule LiveSup.Test.Core.Datasources.ChuckNorrisApiDatasourceTest do
   """
 
   setup do
-    FeatureManager.disable_mock_api()
     bypass = Bypass.open()
     {:ok, bypass: bypass}
   end

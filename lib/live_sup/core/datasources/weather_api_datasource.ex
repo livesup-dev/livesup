@@ -3,7 +3,6 @@ defmodule LiveSup.Core.Datasources.WeatherApiDatasource do
 
   # TODO: Find the way to pass this feature flag
   # into the httpdatasource
-  # @feature_flag_name "weather_api_datasource"
 
   @url "https://api.weatherapi.com/v1/current.json"
 

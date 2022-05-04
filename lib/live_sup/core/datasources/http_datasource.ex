@@ -5,7 +5,7 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
   import LiveSup.Core.Datasources.Helper
   alias LiveSup.Helpers.StringHelper
 
-  @feature_flag_name "http_datasource"
+  @error_message "Something happened, but we don't have too many details"
 
   def get(url: url, headers: headers) do
     manage_request(:get, url, headers)
@@ -16,7 +16,7 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
   end
 
   defp manage_request(action, url, body, headers) do
-    url = build_url(url: url, feature_flag: @feature_flag_name)
+    url = build_url(url: url)
 
     debug("HttpDatasource: #{url}")
 
@@ -26,7 +26,7 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
   end
 
   defp manage_request(action, url, headers) do
-    url = build_url(url: url, feature_flag: @feature_flag_name)
+    url = build_url(url: url)
 
     debug("HttpDatasource: #{url}")
 
@@ -67,8 +67,8 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
     end
   end
 
-  defp error_message(""), do: "Something happened, but we don't have too many details"
-  defp error_message(nil), do: "Something happened, but we don't have too many details"
+  defp error_message(""), do: @error_message
+  defp error_message(nil), do: @error_message
   defp error_message(body), do: body
 
   defp parse(body), do: {:ok, body |> Jason.decode!()}

@@ -3,7 +3,6 @@ defmodule LiveSup.Core.Datasources.ChuckNorrisApiDatasource do
 
   # TODO: Find the way to pass this feature flag
   # into the httpdatasource
-  # @feature_flag_name "chuck_api_datasource"
 
   @url "https://api.chucknorris.io/jokes/random"
 
