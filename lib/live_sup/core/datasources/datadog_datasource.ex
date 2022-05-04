@@ -54,11 +54,11 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
     from =
       today
       |> Timex.shift(days: -1 * n_days)
-      |> DateTime.to_unix(:milliseconds)
+      |> DateTime.to_unix(:millisecond)
 
     to =
       DateTime.utc_now()
-      |> DateTime.to_unix(:milliseconds)
+      |> DateTime.to_unix(:millisecond)
 
     %{
       data: [

@@ -77,7 +77,7 @@ defmodule LiveSup.Test.Core.Widgets.Rollbar.ListOfIssues.HandlerTest do
           url: endpoint_url(bypass.port)
         )
 
-      assert {:error, "invalid access token"} = data
+      assert {:error, "403: forbidden"} = data
     end
   end
 

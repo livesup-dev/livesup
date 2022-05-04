@@ -34,7 +34,7 @@ defmodule LiveSup.Test.Core.Datasources.DatadogDatasourceTest do
           url: endpoint_url(bypass.port)
         )
 
-      assert %{value: 0.6280373478063627} = data
+      assert %{value: 628.0373478063626} = data
     end
 
     defp endpoint_url(port), do: "http://localhost:#{port}"
