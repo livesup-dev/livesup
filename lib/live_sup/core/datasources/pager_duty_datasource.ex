@@ -8,8 +8,12 @@ defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
       args
       |> Keyword.get(:url, @url)
 
+    # until = %{until: DateTime.utc_now()} |> Plug.Conn.Query.encode() |> IO.inspect(label: :util)
+    until = Timex.shift(Timex.today(), days: 20)
     schedule_ids_params = Plug.Conn.Query.encode(%{schedule_ids: schedule_ids})
-    path = "oncalls?time_zone=UTC&total=false&#{schedule_ids_params}&include[]=users"
+
+    path =
+      "oncalls?time_zone=UTC&earliest=true&total=false&#{schedule_ids_params}&include[]=users&until=#{until}"
 
     case HttpDatasource.get(url: build_url(url, path), headers: headers(token)) do
       {:ok, response} -> process(response)
@@ -30,10 +34,12 @@ defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
             email: oncall_attrs["user"]["email"],
             avatar_url: oncall_attrs["user"]["avatar_url"]
           },
-          start: oncall_attrs["start"],
+          start: LiveSup.Helpers.DateHelper.parse_date(oncall_attrs["start"]),
           end: oncall_attrs["end"]
         }
       end)
+      |> Enum.sort(&(DateTime.compare(&1.start, &2.start) != :gt))
+      |> Enum.take(2)
 
     {:ok, data}
   end
