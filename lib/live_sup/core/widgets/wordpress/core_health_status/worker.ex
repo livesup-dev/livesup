@@ -14,6 +14,9 @@ defmodule LiveSup.Core.Widgets.Wordpress.CoreHealthStatus.Worker do
   def settings_keys, do: WordpressConfig.keys()
 
   @impl true
+  def build_data(_settings, _user), do: {:error, :not_implemented}
+
+  @impl true
   def build_data(settings) do
     settings
     |> WordpressConfig.build()

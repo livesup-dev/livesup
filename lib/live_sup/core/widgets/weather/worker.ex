@@ -13,6 +13,9 @@ defmodule LiveSup.Core.Widgets.Weather.Worker do
   def settings_keys, do: ["key", "location"]
 
   @impl true
+  def build_data(settings, _user), do: build_data(settings)
+
+  @impl true
   def build_data(settings) do
     settings
     |> Handler.get_data()

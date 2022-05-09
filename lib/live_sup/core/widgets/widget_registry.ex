@@ -8,7 +8,7 @@ defmodule LiveSup.Core.Widgets.WidgetRegistry do
   end
 
   def registered_widgets_names() do
-    pid = Process.whereis(__MODULE__)
-    Registry.keys(__MODULE__, pid)
+    pid = Process.whereis(name())
+    Registry.keys(name(), pid)
   end
 end

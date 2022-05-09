@@ -13,6 +13,9 @@ defmodule LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker do
   def settings_keys, do: ["repo", "limit"]
 
   @impl true
+  def build_data(_settings, _user), do: {:error, :not_implemented}
+
+  @impl true
   def build_data(settings) do
     settings
     |> Handler.get_data()

@@ -21,25 +21,23 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   end
 
   def search_tickets(query, token: token, domain: domain) do
-    query = """
-        {
-          "expand": [
-              "changelog"
-          ],
-          "jql": "#{query}",
-          "maxResults": 15,
-          "fieldsByKeys": false,
-          "fields": [
-              "summary",
-              "status",
-              "assignee",
-              "creator",
-              "created",
-              "components"
-          ],
-          "startAt": 0
-      }
-    """
+    query = %{
+      expand: [
+        "changelog"
+      ],
+      jql: query,
+      maxResults: 15,
+      fieldsByKeys: false,
+      fields: [
+        "summary",
+        "status",
+        "assignee",
+        "creator",
+        "created",
+        "components"
+      ],
+      startAt: 0
+    }
 
     case HttpDatasource.post(
            url: build_url("/search", domain: domain, base_path: @api_path),

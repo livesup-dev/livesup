@@ -123,6 +123,89 @@ defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
              ] = data
     end
 
+    @tag :jira_search_tickets
+    test "Search tickets", %{bypass: bypass} do
+      Bypass.expect_once(
+        bypass,
+        "POST",
+        "/rest/api/3/search",
+        fn conn ->
+          Plug.Conn.resp(
+            conn,
+            200,
+            LiveSup.Test.Core.Datasources.DataHelper.JiraListOfIssues.get()
+          )
+        end
+      )
+
+      {:ok, data} =
+        JiraDatasource.search_tickets(
+          "assignee = 123 AND (status = 'Open' OR status = 'In Progress' OR status = 'In Review') OR (updated > -3d AND assignee = 123)",
+          token: "xxxx",
+          domain: endpoint_url(bypass.port)
+        )
+
+      assert [
+               %{
+                 assignee: %{
+                   avatar:
+                     "https://livesup.prod.public.atl-paas.net/5a390ef9280a8d389404ee22s/53550071-f045-44f3-bc75-96956f8541c3/48",
+                   email: "emiliano@livesup.com",
+                   full_name: "Emiliano Jankowski"
+                 },
+                 author: %{
+                   avatar:
+                     "https://livesup.prod.public.atl-paas.net/5a390ef9280a8d389404ee22s/53550071-f045-44f3-bc75-96956f8541c3/48",
+                   full_name: "Emiliano Jankowski"
+                 },
+                 components: nil,
+                 created_at: _,
+                 created_at_ago: _,
+                 key: "SWE-0922",
+                 status: "Complete",
+                 summary: "Complete site Readme"
+               },
+               %{
+                 assignee: %{
+                   avatar:
+                     "https://livesup.prod.public.atl-paas.net/5a390ef9280a8d389404ee22s/53550071-f045-44f3-bc75-96956f8541c3/48",
+                   email: "emiliano@livesup.com",
+                   full_name: "Emiliano Jankowski"
+                 },
+                 author: %{
+                   avatar:
+                     "https://livesup.prod.public.atl-paas.net/5a390ef9280a8d389404ee22s/53550071-f045-44f3-bc75-96956f8541c3/48",
+                   full_name: "Emiliano Jankowski"
+                 },
+                 components: nil,
+                 created_at: _,
+                 created_at_ago: _,
+                 key: "SWE-0926",
+                 status: "Complete",
+                 summary: "Complete site Readme"
+               },
+               %{
+                 assignee: %{
+                   avatar:
+                     "https://livesup.prod.public.atl-paas.net/5a390ef9280a8d389404ee22s/53550071-f045-44f3-bc75-96956f8541c3/48",
+                   email: "emiliano@livesup.com",
+                   full_name: "Emiliano Jankowski"
+                 },
+                 author: %{
+                   avatar:
+                     "https://livesup.prod.public.atl-paas.net/5a390ef9280a8d389404ee22s/53550071-f045-44f3-bc75-96956f8541c3/48",
+                   full_name: "Emiliano Jankowski"
+                 },
+                 components: nil,
+                 created_at: _,
+                 created_at_ago: _,
+                 key: "SWE-0927",
+                 status: "Complete",
+                 summary: "Complete site Readme"
+               }
+             ] = data
+    end
+
     @tag :jira_current_sprint_issues
     test "Get current sprint issues", %{bypass: bypass} do
       Bypass.expect_once(

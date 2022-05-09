@@ -10,7 +10,7 @@ defmodule LiveSup.Test.Core.Widgets.WidgetManagerTest do
     WidgetManager
   }
 
-  alias LiveSup.Schemas.{WidgetInstance, User}
+  alias LiveSup.Schemas.WidgetInstance
 
   describe "Managing widgets" do
     @describetag :widget_manager
@@ -129,8 +129,8 @@ defmodule LiveSup.Test.Core.Widgets.WidgetManagerTest do
             @handler_second_weather_response
         end
       ) do
-        user = %User{id: "08976b38-b52e-4cfd-aa7d-47ab6b087505"}
-        second_user = %User{id: "2767ebf3-164d-45c7-a7cd-46d7f39d31a6"}
+        user = LiveSup.Test.AccountsFixtures.user_fixture()
+        second_user = LiveSup.Test.AccountsFixtures.user_fixture()
 
         {:ok, pid} = WidgetManager.start_widget(@weather_widget_instance, user)
 
@@ -183,7 +183,7 @@ defmodule LiveSup.Test.Core.Widgets.WidgetManagerTest do
             @handler_second_weather_response
         end
       ) do
-        user = %User{id: "9fd070b1-8dd5-444f-912e-f28b8af6a3c8"}
+        user = LiveSup.Test.AccountsFixtures.user_fixture()
 
         [@weather_widget_instance, @weather_second_widget_instance]
         |> WidgetManager.start_widgets(user)

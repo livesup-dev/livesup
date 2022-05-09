@@ -12,6 +12,9 @@ defmodule LiveSup.Core.Widgets.RssServiceStatus.List.Worker do
   def settings_keys, do: ["services"]
 
   @impl true
+  def build_data(_settings, _user), do: {:error, :not_implemented}
+
+  @impl true
   def build_data(%{"services" => services}) do
     services
     |> Enum.map(&process_service/1)

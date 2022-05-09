@@ -70,7 +70,7 @@ defmodule LiveSup.Test.Core.Widgets.Wordpress.DirectorySizes.WorkerTest do
 
     setup do
       # https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.Sandbox.html#module-shared-mode
-      Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
+      # Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
 
       WidgetManager.stop_widgets()
 
