@@ -11,7 +11,11 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
         <div class="min-h-[132px] items-center rounded-md bg-white p-2 dark:bg-darker">
           <%= if Enum.any?(widget_data.data) do %>
             <%= for {incident, _counter} <- Enum.with_index(widget_data.data) do %>
-              <div class="shadow-md shadow-red-500 ring-1 ring-red-500 rounded-lg p-4 my-4">
+              <div class="relative shadow-md shadow-red-500 ring-1 ring-red-500 rounded-lg p-4 my-4">
+                <span class="absolute -right-1 -top-1 flex h-3 w-3">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
 
                 <h3 class="text-lg mb-4">
                   <a href={incident[:url]} class="hover:underline text-black dark:text-primary block" target="_blank"><%= incident[:description] %></a>
