@@ -22,6 +22,19 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
+  def start_widgets(widget_instances, %User{id: user_id}) do
+    widget_instances
+    |> Enum.each(fn widget_instance ->
+      debug("Widget manager: starting <#{widget_instance.name}> widget")
+      debug("Widget manager: global: #{widget_instance.widget.global}")
+
+      case widget_instance.widget.global do
+        true -> start_widget(widget_instance)
+        false -> start_widget(widget_instance, user_id)
+      end
+    end)
+  end
+
   def start_widget(%WidgetInstance{} = widget_instance) do
     debug("Widget manager: starting <#{widget_instance.id}> widget")
 
@@ -34,12 +47,14 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
     )
   end
 
-  def start_widget(%WidgetInstance{} = widget_instance, %User{} = user) do
-    start_widget(widget_instance, user.id)
+  def start_widget(%WidgetInstance{} = widget_instance, %User{id: user_id}) do
+    start_widget(widget_instance, user_id)
   end
 
   def start_widget(%WidgetInstance{} = widget_instance, user_id) do
     debug("Widget manager: starting <#{widget_instance.name}> user widget")
+    debug("Widget manager: starting <#{user_id}> user widget")
+    # IO.inspect(:start_widget, label: :user_widget)
 
     DynamicSupervisor.start_child(
       __MODULE__,
@@ -49,16 +64,6 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
         [widget_instance, user_id]
       }
     )
-  end
-
-  def start_widgets(widget_instances, %User{} = user) do
-    widget_instances
-    |> Enum.each(fn widget_instance ->
-      case widget_instance.widget.global do
-        true -> start_widget(widget_instance)
-        false -> start_widget(widget_instance, user.id)
-      end
-    end)
   end
 
   def stop_all do

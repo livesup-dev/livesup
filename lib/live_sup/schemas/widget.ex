@@ -20,7 +20,7 @@ defmodule LiveSup.Schemas.Widget do
     field :settings, :map
     field :ui_settings, :map, default: %{}
     field :weight, :float
-    field :global, :boolean
+    field :global, :boolean, default: true
     field :labels, {:array, :string}, default: []
 
     belongs_to :datasource, Datasource

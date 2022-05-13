@@ -49,7 +49,11 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       },
       %{
         datasource_slug: "jira-datasource",
-        attrs: &jira_current_sprint__stats_widget_attrs/1
+        attrs: &jira_current_sprint_stats_widget_attrs/1
+      },
+      %{
+        datasource_slug: "jira-datasource",
+        attrs: &jira_list_of_issues_widget_attrs/1
       },
       %{
         datasource_slug: "github-datasource",
@@ -128,7 +132,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "Team Members",
       slug: "team-members",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/team-members.png",
       ui_handler: "LiveSupWeb.Live.Widgets.TeamMembersLive",
       worker_handler: "LiveSup.Core.Widgets.TeamMembers.Worker",
@@ -146,7 +150,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "On Call",
       slug: "pager-duty-on-call",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/pager-duty-on-call",
       ui_handler: "LiveSupWeb.Live.Widgets.PagerDuty.OnCallLive",
       worker_handler: "LiveSup.Core.Widgets.PagerDuty.OnCall.Worker",
@@ -164,7 +168,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "Datadog Scalar",
       slug: "datadog-scalar",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/datadog-scalar",
       ui_handler: "LiveSupWeb.Live.Widgets.Datadog.ScalarLive",
       worker_handler: "LiveSup.Core.Widgets.Datadog.Scalar.Worker",
@@ -185,7 +189,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "Goal",
       slug: "metrics-goal",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/metric-goal.png",
       ui_handler: "LiveSupWeb.Live.Widgets.Metrics.GoalLive",
       worker_handler: "LiveSup.Core.Widgets.Metrics.Goal.Worker",
@@ -203,7 +207,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "Bullet Gauge",
       slug: "metrics-bullet-gauge",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/metric-gauge.png",
       ui_handler: "LiveSupWeb.Live.Widgets.Metrics.BulletGaugeLive",
       worker_handler: "LiveSup.Core.Widgets.Metrics.Goal.Worker",
@@ -221,7 +225,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "Gauge",
       slug: "metrics-gauge",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/metric-gauge.png",
       ui_handler: "LiveSupWeb.Live.Widgets.Metrics.GaugeLive",
       worker_handler: "LiveSup.Core.Widgets.Metrics.Goal.Worker",
@@ -239,7 +243,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "Blameless current incidents",
       slug: "blameless-current-incidents",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/blameless-current-incidents.png",
       ui_handler: "LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive",
       worker_handler: "LiveSup.Core.Widgets.Blameless.CurrentIncidents.Worker",
@@ -257,7 +261,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "blameless-last-incidents",
       feature_image_url: "/images/widgets/blameless-last-incidents.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Blameless.LastIncidentsLive",
       worker_handler: "LiveSup.Core.Widgets.Blameless.LastIncidents.Worker",
       labels: [],
@@ -275,7 +279,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "blameless-incidents-by-type",
       feature_image_url: "/images/widgets/blameless-incidents-by-type.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Blameless.IncidentsByTypeLive",
       worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByType.Worker",
       labels: [],
@@ -293,7 +297,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "blameless-incidents-by-severity",
       feature_image_url: "/images/widgets/blameless-incidents-by-severity.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Blameless.IncidentsBySeverityLive",
       worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsBySeverity.Worker",
       labels: [],
@@ -311,7 +315,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "blameless-incidents-by-date",
       feature_image_url: "/images/widgets/blameless-incidents-by-date.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Blameless.IncidentsByDateLive",
       worker_handler: "LiveSup.Core.Widgets.Blameless.IncidentsByDate.Worker",
       labels: [],
@@ -328,7 +332,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "Weather",
       slug: "weather",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/weather.png",
       ui_handler: "LiveSupWeb.Live.Widgets.WeatherLive",
       worker_handler: "LiveSup.Core.Widgets.Weather.Worker",
@@ -347,7 +351,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       name: "LordOfTheRingQuote",
       slug: "lord-of-the-ring-quote",
       enabled: true,
-      global: false,
+      global: true,
       feature_image_url: "/images/widgets/lord-of-the-ring-quote.png",
       ui_handler: "LiveSupWeb.Live.Widgets.LordOfTheRingQuoteLive",
       worker_handler: "LiveSup.Core.Widgets.LordOfTheRingQuote.Worker",
@@ -365,7 +369,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "rss-service-status-single",
       feature_image_url: "/images/widgets/rss-service-status-single.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.RssServiceStatus.SingleLive",
       worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.Single.Worker",
       labels: [],
@@ -397,7 +401,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "rss-service-status-list",
       feature_image_url: "/images/widgets/rss-service-status-list.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive",
       worker_handler: "LiveSup.Core.Widgets.RssServiceStatus.List.Worker",
       labels: [],
@@ -413,13 +417,13 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
     }
   end
 
-  defp jira_current_sprint__stats_widget_attrs(jira_datasource) do
+  defp jira_current_sprint_stats_widget_attrs(jira_datasource) do
     %{
       name: "Jira Current Sprint Stats",
       slug: "jira-current-sprint-stats",
       feature_image_url: "/images/widgets/jira-current-sprint-stats.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive",
       worker_handler: "LiveSup.Core.Widgets.Jira.CurrentSprintStats.Worker",
       labels: [],
@@ -431,13 +435,30 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
     }
   end
 
+  defp jira_list_of_issues_widget_attrs(jira_datasource) do
+    %{
+      name: "Jira list of issues",
+      slug: "jira-list-of-issues",
+      feature_image_url: "/images/widgets/jira-list-of-issues.png",
+      enabled: true,
+      global: false,
+      ui_handler: "LiveSupWeb.Live.Widgets.Jira.ListOfIssuesLive",
+      worker_handler: "LiveSup.Core.Widgets.Jira.ListOfIssues.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 120}
+      },
+      datasource_id: jira_datasource.id
+    }
+  end
+
   defp jira_current_sprint_widget_attrs(jira_datasource) do
     %{
       name: "Jira Current Sprint",
       slug: "jira-current-sprint",
       feature_image_url: "/images/widgets/jira-current-sprint.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Jira.CurrentSprintLive",
       worker_handler: "LiveSup.Core.Widgets.Jira.CurrentSprint.Worker",
       labels: [],
@@ -472,7 +493,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "github-pull-requests",
       feature_image_url: "/images/widgets/github-pull-requests.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Github.PullRequestsLive",
       worker_handler: "LiveSup.Core.Widgets.Github.PullRequests.Worker",
       labels: [],
@@ -491,7 +512,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "wordpress-directory-sizes",
       feature_image_url: "/images/widgets/wordpress-directory-sizes.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Wordpress.DirectorySizesLive",
       worker_handler: "LiveSup.Core.Widgets.Wordpress.DirectorySizes.Worker",
       labels: [],
@@ -508,7 +529,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "wordpress-core-health-status",
       feature_image_url: "/images/widgets/wordpress-core-health-status.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Wordpress.CoreHealthStatusLive",
       worker_handler: "LiveSup.Core.Widgets.Wordpress.CoreHealthStatus.Worker",
       labels: [],
@@ -525,7 +546,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "merge-stat-github-authors",
       feature_image_url: "/images/widgets/merge-stat-github-authors.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.MergeStat.CommitsByAuthorsLive",
       worker_handler: "LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker",
       labels: [],
@@ -542,7 +563,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       slug: "rollbar-list-of-isuess",
       feature_image_url: "/images/widgets/rollbar-list-of-isuess.png",
       enabled: true,
-      global: false,
+      global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.Rollbar.ListOfIssuesLive",
       worker_handler: "LiveSup.Core.Widgets.Rollbar.ListOfIssues.Worker",
       labels: [],

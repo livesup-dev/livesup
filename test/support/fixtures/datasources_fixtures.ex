@@ -28,4 +28,26 @@ defmodule LiveSup.Test.DatasourcesFixtures do
       settings: %{"api_key" => nil}
     }
   end
+
+  def add_jira_datasource() do
+    %{
+      name: "Jira",
+      slug: "jira-datasource",
+      enabled: true,
+      labels: [],
+      settings: %{"account_id" => nil}
+    }
+    |> datasource_fixture()
+  end
+
+  def add_pager_duty_datasource() do
+    %{
+      name: "PagerDuty",
+      slug: "pager-duty",
+      enabled: true,
+      labels: [],
+      settings: %{"api_key" => nil}
+    }
+    |> datasource_fixture()
+  end
 end

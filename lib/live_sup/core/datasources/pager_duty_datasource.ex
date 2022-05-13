@@ -8,7 +8,6 @@ defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
       args
       |> Keyword.get(:url, @url)
 
-    # until = %{until: DateTime.utc_now()} |> Plug.Conn.Query.encode() |> IO.inspect(label: :util)
     until = Timex.shift(Timex.today(), days: 20)
     schedule_ids_params = Plug.Conn.Query.encode(%{schedule_ids: schedule_ids})
 

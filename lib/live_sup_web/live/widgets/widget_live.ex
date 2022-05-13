@@ -33,23 +33,35 @@ defmodule LiveSupWeb.Live.Widgets.WidgetLive do
       import LiveSupWeb.Helpers
 
       alias LiveSup.Core.Utils
+      import LiveSupWeb.Live.AuthHelper
       alias LiveSup.Schemas.{WidgetInstance, User}
       alias LiveSup.Core.Widgets.WidgetData
 
       @impl true
       def mount(_params, session, socket) do
+        current_user = get_current_user(session, socket)
         debug("mount: #{__MODULE__}")
-        %{id: widget_instance_id} = session["widget_instance"]
+        session["user"] |> IO.inspect()
+        session["widget_instance"] |> IO.inspect()
+        # TODO: We need to get rid of having the widget_instance in the session.
+        %{id: widget_instance_id, widget: %{global: global}} = session["widget_instance"]
 
+        # TODO: We have to connect to the user specific channel
         if connected?(socket),
-          do: LiveSupWeb.Endpoint.subscribe("widgets:#{widget_instance_id}")
+          do: global |> connect_to_channel(widget_instance_id, current_user.id)
 
         {:ok,
          assign(socket,
-           current_user: session["current_user"],
+           current_user: current_user,
            widget_instance: session["widget_instance"]
          )}
       end
+
+      defp connect_to_channel(true = global, widget_instance_id, _user_id),
+        do: LiveSupWeb.Endpoint.subscribe("widgets:#{widget_instance_id}")
+
+      defp connect_to_channel(false = global, widget_instance_id, user_id),
+        do: LiveSupWeb.Endpoint.subscribe("widgets:#{widget_instance_id}:#{user_id}")
 
       @impl true
       def render(assigns) do

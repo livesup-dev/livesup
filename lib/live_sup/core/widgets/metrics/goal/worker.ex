@@ -13,6 +13,9 @@ defmodule LiveSup.Core.Widgets.Metrics.Goal.Worker do
   def settings_keys, do: ["metric"]
 
   @impl true
+  def build_data(_settings, _user), do: {:error, :not_implemented}
+
+  @impl true
   def build_data(settings) do
     settings
     |> Handler.get_data()

@@ -2,7 +2,7 @@ defmodule LiveSup.Schemas.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias LiveSup.Schemas.TeamMember
+  alias LiveSup.Schemas.{TeamMember, Link}
 
   @default_location %{
     "timezone" => "Europe/Madrid",
@@ -36,6 +36,7 @@ defmodule LiveSup.Schemas.User do
     timestamps()
 
     has_many :team_members, TeamMember
+    has_many :links, Link
     has_many :teams, through: [:team_members, :teams]
   end
 

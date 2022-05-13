@@ -2,18 +2,23 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
   alias LiveSup.Core.Widgets.WidgetData
   alias LiveSup.Telemetry
   alias LiveSup.Helpers.StringHelper
+  alias LiveSup.Schemas.User
+  alias LiveSup.Core.Users
+
   use Timex
   import Logger
 
   @callback build_data(Map.t()) :: {:ok, term} | {:error, String.t()}
+  @callback build_data(Map.t(), User.t()) :: {:ok, term} | {:error, String.t()}
   @callback default_title() :: String.t()
 
   @callback public_settings() :: List.t()
   @callback settings_keys() :: List.t()
 
   @optional_callbacks public_settings: 0
-
-  # @callback get_data() :: {:ok, LiveSup.Core.Widgets.WidgetData.t()} | {:error, String.t()}
+  # TODO: How can I be sure that one of the 2 are implemented?
+  # https://elixirforum.com/t/why-elixir-is-warning-me-about-not-implemented-behavior-functions/15131/7
+  @optional_callbacks build_data: 1, build_data: 2
 
   defmacro __using__(_) do
     quote do
@@ -34,12 +39,51 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
       def start_link([%WidgetInstance{} = widget_instance, user_id]) do
         GenServer.start_link(
           __MODULE__,
-          widget_instance,
+          [widget_instance, user_id],
           name: via_tuple(widget_instance, user_id)
         )
       end
 
+      def init([widget_instance, user_id]) do
+        # TODO: Refactor these lines. Move all into a module
+        Telemetry.execute(
+          Telemetry.Events.widget_init_for_user(),
+          %{system_time: System.monotonic_time()},
+          %{
+            widget_instance: %{
+              name: widget_instance.name
+            },
+            datasource_instance: %{
+              name: widget_instance.datasource_instance.name
+            }
+          }
+        )
+
+        user = user_id |> find_user()
+
+        # We should schedule the work from the
+        # widget configuration
+        # schedule_work()
+        widget_data = build_model(widget_instance)
+
+        # Let's fetch the data async. We don't really care when that
+        # is going to happen, since we are sending push notifications
+        # the server will allways return "in-progress" until fetch is
+        # complete
+        self() |> send(:fetch_data)
+
+        # Since the task to fetch the data is async
+        # The UI could not be ready when we broadcast
+        # the data. So let's brodcast again in a few seconds
+        # just to make sure the UI has the last state
+        Process.send_after(self(), :broadcast, 3000)
+        debug("widget_server:init")
+
+        {:ok, [widget_instance: widget_instance, widget_data: widget_data, user: user]}
+      end
+
       def init(widget_instance) do
+        # TODO: Refactor these lines. Move all into a module
         Telemetry.execute(
           Telemetry.Events.widget_init(),
           %{system_time: System.monotonic_time()},
@@ -76,6 +120,22 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
 
       def handle_info(:fetch_data,
             widget_instance: %{name: name} = widget_instance,
+            widget_data: widget_data,
+            user: user
+          ) do
+        debug("widget_server.handle_info:fetch_data: #{name}")
+
+        # Im not really sure if this is ok to use a Task inside
+        # a genserver, but I didn't want to have calls hanging because
+        # the fetching data is taking too long.
+        # Task.async(fn -> {:from_task, widget_instance |> fetch_data()} end)
+        WorkerTaskSupervisor.fetch_data(__MODULE__, widget_instance, user)
+
+        {:noreply, [widget_instance: widget_instance, widget_data: widget_data, user: user]}
+      end
+
+      def handle_info(:fetch_data,
+            widget_instance: %{name: name} = widget_instance,
             widget_data: widget_data
           ) do
         debug("widget_server.handle_info:fetch_data: #{name}")
@@ -89,8 +149,8 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
         {:noreply, [widget_instance: widget_instance, widget_data: widget_data]}
       end
 
-      # When the task is completed, this is the handler
-      # that will receive the message
+      # # When the task is completed, this is the handler
+      # # that will receive the message
       def fetch_data(widget_instance) do
         debug("fetch_data: #{widget_instance.name}")
 
@@ -100,10 +160,8 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
             %{widget_instance: widget_instance},
             fn ->
               data =
-                __MODULE__.build_data(
-                  widget_instance
-                  |> WidgetInstance.get_settings(__MODULE__.settings_keys())
-                )
+                widget_instance
+                |> worker_build_data()
 
               {data, %{widget_instance: widget_instance}}
             end
@@ -114,6 +172,70 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
           |> build_model(widget_instance)
 
         {:from_task, widget_data}
+      end
+
+      # When the task is completed, this is the handler
+      # that will receive the message
+      def fetch_data(widget_instance, user) do
+        debug("fetch_data: #{widget_instance.name}")
+
+        data =
+          :telemetry.span(
+            Telemetry.Events.widget_build_data(),
+            %{widget_instance: widget_instance},
+            fn ->
+              data =
+                widget_instance
+                |> worker_build_data(user)
+
+              {data, %{widget_instance: widget_instance}}
+            end
+          )
+
+        widget_data =
+          data
+          |> build_model(widget_instance)
+
+        {:from_task, widget_data}
+      end
+
+      def worker_build_data(widget_instance) do
+        __MODULE__.build_data(
+          widget_instance
+          |> WidgetInstance.get_settings(__MODULE__.settings_keys())
+        )
+      end
+
+      def worker_build_data(widget_instance, user) do
+        __MODULE__.build_data(
+          widget_instance
+          |> WidgetInstance.get_settings(__MODULE__.settings_keys()),
+          user
+        )
+      end
+
+      def handle_info(
+            {_task, {:from_task, widget_data}},
+            widget_instance: widget_instance,
+            widget_data: _widget_data,
+            user: user
+          ) do
+        widget_instance
+        |> calculate_next_cycle_delay()
+        |> run_next()
+
+        debug("widget_server.broadcasting.from_task: widgets:#{widget_instance.id}")
+
+        LiveSupWeb.Endpoint.broadcast_from(
+          self(),
+          "widgets:#{widget_data.id}:#{user.id}",
+          "update",
+          %{
+            body: widget_data
+          }
+        )
+
+        {:noreply, [widget_instance: widget_instance, widget_data: widget_data, user: user]}
       end
 
       def handle_info(
@@ -132,6 +254,20 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
         })
 
         {:noreply, [widget_instance: widget_instance, widget_data: widget_data]}
+      end
+
+      def handle_info(:broadcast,
+            widget_instance: widget_instance,
+            widget_data: widget_data,
+            user: user
+          ) do
+        debug("widget_server.broadcasting: widgets:#{widget_data.id}")
+
+        LiveSupWeb.Endpoint.broadcast_from(self(), "widgets:#{widget_data.id}", "update", %{
+          body: widget_data
+        })
+
+        {:noreply, [widget_instance: widget_instance, widget_data: widget_data, user: user]}
       end
 
       def handle_info(:broadcast,
@@ -156,19 +292,33 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
         {:reply, widget_data, data}
       end
 
+      def handle_call(
+            :data,
+            from,
+            [widget_instance: widget_instance, widget_data: widget_data, user: user] = data
+          ) do
+        debug("handle_call: #{widget_instance.name}")
+        {:reply, widget_data, data}
+      end
+
       def handle_info(:data, state) do
         {:noreply, state, {:continue, :fetch_data}}
       end
 
       def handle_info(_, state), do: {:noreply, state}
 
-      def get_data(%WidgetInstance{} = widget_instance, %User{} = user) do
-        widget_instance.id
-        |> get_data(user.id)
+      def get_data(%WidgetInstance{id: widget_instance_id}, %User{id: user_id}) do
+        widget_instance_id
+        |> get_data(user_id)
       end
 
-      def get_data(%WidgetInstance{} = widget_instance) do
-        widget_instance.id
+      def get_data(%WidgetInstance{id: widget_instance_id}, user_id) when is_binary(user_id) do
+        widget_instance_id
+        |> get_data(user_id)
+      end
+
+      def get_data(%WidgetInstance{id: widget_instance_id}) do
+        widget_instance_id
         |> get_data()
       end
 
@@ -248,12 +398,12 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
         via_tuple(widget_instance.id)
       end
 
-      defp via_tuple(%WidgetInstance{} = widget_instance, %User{} = user) do
-        via_tuple(widget_instance.id, user.id)
+      defp via_tuple(%WidgetInstance{id: widget_instance_id}, %User{id: user_id}) do
+        via_tuple(widget_instance_id, user_id)
       end
 
-      defp via_tuple(%WidgetInstance{} = widget_instance, user_id) do
-        via_tuple(widget_instance.id, user_id)
+      defp via_tuple(%WidgetInstance{id: widget_instance_id}, user_id) do
+        via_tuple(widget_instance_id, user_id)
       end
 
       defp via_tuple(widget_instance_id) do
@@ -264,7 +414,7 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
         {:via, Registry, {WidgetRegistry.name(), "#{widget_instance_id}:#{user_id}"}}
       end
 
-      # Converting it to miliseconds
+      # Converting seconds to miliseconds
       defp calculate_next_cycle_delay(widget_instance) do
         run_every =
           widget_instance
@@ -275,6 +425,9 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
 
       def run_next(0), do: nil
       def run_next(value), do: Process.send_after(self(), :fetch_data, value)
+
+      defp find_user(user_id) when is_binary(user_id), do: Users.get!(user_id)
+      defp find_user(nil), do: nil
     end
   end
 end

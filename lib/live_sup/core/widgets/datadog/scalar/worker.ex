@@ -12,6 +12,9 @@ defmodule LiveSup.Core.Widgets.Datadog.Scalar.Worker do
   def public_settings, do: ["n_days", "target", "unit"]
 
   @impl true
+  def build_data(_settings, _user), do: {:error, :not_implemented}
+
+  @impl true
   def build_data(settings) do
     settings
     |> Handler.get_data()
