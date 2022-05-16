@@ -14,10 +14,7 @@ defmodule LiveSup.Core.Widgets.LordOfTheRingQuote.Worker do
   def settings_keys, do: []
 
   @impl true
-  def build_data(_settings, _user), do: {:error, :not_implemented}
-
-  @impl true
-  def build_data(_settings) do
+  def build_data(_settings, _context) do
     Handler.get_data()
   end
 

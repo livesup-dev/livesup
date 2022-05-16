@@ -14,6 +14,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.WorkerTest do
 
     @widget_instance %WidgetInstance{
       id: "e36d593e-f5a0-47bd-b6e8-c2fec3af3fbc",
+      name: "List of issues",
       settings: %{
         "statuses" => %{
           "source" => "local",
@@ -29,6 +30,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.WorkerTest do
         global: false
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
+        id: "76e8e7f8-9a58-40c5-b549-a93aced248e8",
         settings: %{},
         datasource: %LiveSup.Schemas.Datasource{
           settings: %{}
@@ -43,14 +45,14 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.WorkerTest do
       %{user: user}
     end
 
-    test "checking current sprint worker", %{user: %{id: user_id}} do
+    test "get list of issues", %{user: user} do
       with_mock JiraDatasource,
         search_tickets: fn _query, _args -> {:ok, jira_issues()} end do
-        {:ok, _pid} = WidgetManager.start_widget(@widget_instance, user_id)
+        {:ok, _pid} = WidgetManager.start_widget(@widget_instance, user)
 
         WorkerTaskSupervisor.wait_for_completion()
 
-        data = Worker.get_data(@widget_instance, user_id)
+        data = Worker.get_data(@widget_instance, user)
 
         assert %WidgetData{
                  data: %{error_description: :jira_link_not_found},

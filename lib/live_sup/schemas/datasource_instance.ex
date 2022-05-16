@@ -1,6 +1,7 @@
 defmodule LiveSup.Schemas.DatasourceInstance do
   use Ecto.Schema
   import Ecto.Changeset
+  import LiveSup.Schemas.Helpers.SettingsHandler
 
   alias LiveSup.Schemas.{WidgetInstance, Datasource, DatasourceInstance, Project}
 
@@ -37,5 +38,24 @@ defmodule LiveSup.Schemas.DatasourceInstance do
     model
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+  end
+
+  def get_setting(%__MODULE__{} = instance, key) do
+    instance
+    |> build_settings()
+    |> Map.get(key)
+    |> find_value()
+  end
+
+  def get_settings(%__MODULE__{} = instance, keys) do
+    instance
+    |> build_settings()
+    |> get_values_from_settings(keys)
+    |> find_values()
+  end
+
+  defp build_settings(instance) do
+    instance.datasource.settings
+    |> Map.merge(instance.settings)
   end
 end

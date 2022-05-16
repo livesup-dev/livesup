@@ -1,6 +1,7 @@
 defmodule LiveSup.Schemas.WidgetInstance do
   use Ecto.Schema
   import Ecto.Changeset
+  import LiveSup.Schemas.Helpers.SettingsHandler
 
   alias LiveSup.Schemas.{
     DashboardWidget,
@@ -77,39 +78,6 @@ defmodule LiveSup.Schemas.WidgetInstance do
     |> Map.merge(instance.datasource_instance.settings)
     |> Map.merge(instance.widget.settings)
     |> Map.merge(instance.settings)
-  end
-
-  defp find_values(keys) do
-    keys
-    |> Enum.reduce(%{}, fn {key, value}, acc ->
-      Map.merge(acc, %{key => find_value(value)})
-    end)
-  end
-
-  defp find_value(%{"type" => "string", "value" => value, "source" => "local"}), do: value
-
-  defp find_value(%{"type" => "int", "value" => value, "source" => "local"})
-       when is_binary(value) do
-    case Integer.parse(value) do
-      {int_val, ""} -> int_val
-      :error -> raise "#{value} is not a valid int"
-    end
-  end
-
-  defp find_value(%{"type" => "array", "value" => value, "source" => "local"})
-       when is_binary(value) do
-    value
-    |> String.split(",")
-  end
-
-  defp find_value(%{"type" => "int", "value" => value}), do: value
-  defp find_value(%{"source" => "env", "value" => env_var}), do: System.get_env(env_var)
-  defp find_value(%{"source" => "local", "value" => value}), do: value
-  defp find_value(value), do: value
-
-  defp get_values_from_settings(settings, keys) do
-    settings
-    |> Map.take(keys)
   end
 
   def custom_title(%__MODULE__{} = instance) do

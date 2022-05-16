@@ -14,10 +14,7 @@ defmodule LiveSup.Core.Widgets.Wordpress.DirectorySizes.Worker do
   def settings_keys, do: WordpressConfig.keys()
 
   @impl true
-  def build_data(_settings, _user), do: {:error, :not_implemented}
-
-  @impl true
-  def build_data(settings) do
+  def build_data(settings, _context) do
     settings
     |> WordpressConfig.build()
     |> Handler.get_data()

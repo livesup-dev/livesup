@@ -151,4 +151,11 @@ defmodule LiveSup.Core.Datasources do
     }
     |> DatasourceInstanceQuery.create()
   end
+
+  def find_or_create_instance(%Datasource{} = datasource) do
+    case DatasourceInstanceQuery.by_datasource(datasource) do
+      nil -> create_instance(datasource)
+      instance -> {:ok, instance}
+    end
+  end
 end

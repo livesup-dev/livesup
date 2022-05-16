@@ -69,7 +69,7 @@ defmodule LiveSup.DataImporter.ProjectImporter do
       ) do
     settings = attrs["settings"] || %{}
     datasource = Datasources.get_by_slug!(datasource_slug)
-    {:ok, datasource_instance} = Datasources.create_instance(datasource)
+    {:ok, datasource_instance} = Datasources.find_or_create_instance(datasource)
     widget = Widgets.get_by_slug!(widget_slug)
 
     widget_instance_attrs = Widgets.build_instance_attrs(widget, datasource_instance)

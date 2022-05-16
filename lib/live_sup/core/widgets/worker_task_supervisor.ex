@@ -1,21 +1,9 @@
 defmodule LiveSup.Core.Widgets.WorkerTaskSupervisor do
-  import Logger
+  use LiveSup.Core.Widgets.WidgetLogger
 
-  def fetch_data(module, widget_instance) do
-    # Task.Supervisor.start_child(__MODULE__, module, :fetch_and_push_data, [widget_instance], [restart: :transient])
-    # :temporary means the task is never restarted
-    debug("WorkerTaskSupervisor.fetch_data: #{module}")
-    Task.Supervisor.async(__MODULE__, module, :fetch_data, [widget_instance], restart: :temporary)
-  end
-
-  def fetch_data(module, widget_instance, user) do
-    # Task.Supervisor.start_child(__MODULE__, module, :fetch_and_push_data, [widget_instance], [restart: :transient])
-    # :temporary means the task is never restarted
-    debug("WorkerTaskSupervisor.fetch_data: #{module}")
-
-    Task.Supervisor.async(__MODULE__, module, :fetch_data, [widget_instance, user],
-      restart: :temporary
-    )
+  def fetch_data(module, widget_context) do
+    debug("fetch_data")
+    Task.Supervisor.async(__MODULE__, module, :fetch_data, [widget_context], restart: :temporary)
   end
 
   # For tests: find all children spawned by this supervisor and wait until they finish.

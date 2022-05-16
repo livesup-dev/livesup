@@ -37,10 +37,12 @@ defmodule LiveSup.Test.Core.Widgets.WidgetManagerTest do
 
     @widget_instance %WidgetInstance{
       id: "487b8ee0-4027-4b48-bdd1-d2924b853d46",
+      name: "testing",
       settings: %{},
       widget: %LiveSup.Schemas.Widget{
         worker_handler: "LiveSup.Core.Widgets.ChuckNorrisJoke.Worker",
-        settings: %{}
+        settings: %{},
+        global: true
       },
       datasource_instance: %LiveSup.Schemas.DatasourceInstance{
         settings: %{},

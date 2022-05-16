@@ -3,13 +3,13 @@ defmodule LiveSup.Tests.Queries.LinkQueryTest do
   use LiveSup.DataCase
 
   alias LiveSup.Queries.LinkQuery
-  alias LiveSup.Test.{LinkFixtures, AccountsFixtures}
+  alias LiveSup.Test.{LinksFixtures, AccountsFixtures}
 
   def setup_links(_) do
     user = AccountsFixtures.user_fixture()
 
-    jira_link = LinkFixtures.add_jira_link(user)
-    pager_duty_link = LinkFixtures.add_pager_duty_link(user)
+    jira_link = LinksFixtures.add_jira_link(user)
+    pager_duty_link = LinksFixtures.add_pager_duty_link(user)
 
     %{jira_link: jira_link, pager_duty_link: pager_duty_link, user: user}
   end
@@ -26,10 +26,10 @@ defmodule LiveSup.Tests.Queries.LinkQueryTest do
 
     test "getting link details by datasource and user", %{
       user: user,
-      jira_link: %{id: jira_link_id}
+      jira_link: jira_link
     } do
-      jira_link = user |> LinkQuery.get_by_datasource!("jira-datasource")
-      assert jira_link.id == jira_link_id
+      found_jira_link = user |> LinkQuery.get_by_datasource("jira-datasource")
+      assert [jira_link] == found_jira_link
     end
 
     test "deleting link", %{jira_link: jira_link} do

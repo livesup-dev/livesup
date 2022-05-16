@@ -10,9 +10,10 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   #
   @api_path "/rest/api/3"
   @agile_api_path "/rest/agile/1.0"
-  def search_user(email, token: token, domain: domain) do
+  def search_user(email_or_name, token: token, domain: domain) do
     case HttpDatasource.get(
-           url: build_url("/user/search?query=#{email}", domain: domain, base_path: @api_path),
+           url:
+             build_url("/user/search?query=#{email_or_name}", domain: domain, base_path: @api_path),
            headers: headers(token)
          ) do
       {:ok, response} -> get_first_user(response)
@@ -224,11 +225,25 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
 
   def parse_components(%{"fields" => _}), do: nil
 
-  defp get_first_user([]), do: nil
+  defp get_first_user([]), do: {:error, :not_found}
 
   defp get_first_user(users) do
-    users
-    |> Enum.at(0)
+    user =
+      users
+      |> Enum.at(0)
+      |> parse_user()
+
+    {:ok, user}
+  end
+
+  defp parse_user(jira_user) do
+    %{
+      account_id: jira_user["accountId"],
+      active: jira_user["active"],
+      avatar_url: jira_user["avatarUrls"]["48x48"],
+      time_zone: jira_user["timeZone"],
+      local: jira_user["locale"]
+    }
   end
 
   def headers(token) do

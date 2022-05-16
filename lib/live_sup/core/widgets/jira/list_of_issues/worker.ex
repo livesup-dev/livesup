@@ -12,13 +12,10 @@ defmodule LiveSup.Core.Widgets.Jira.ListOfIssues.Worker do
   def settings_keys, do: ["token", "domain", "statuses"]
 
   @impl true
-  def build_data(settings, user) do
+  def build_data(settings, context) do
     settings
-    |> Handler.get_data(user)
+    |> Handler.get_data(context)
   end
-
-  @impl true
-  def build_data(_settings), do: {:error, :not_implemented}
 
   @impl true
   def default_title() do

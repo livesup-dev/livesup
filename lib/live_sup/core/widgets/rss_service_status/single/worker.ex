@@ -12,10 +12,7 @@ defmodule LiveSup.Core.Widgets.RssServiceStatus.Single.Worker do
   def settings_keys, do: ["url", "icon"]
 
   @impl true
-  def build_data(_settings, _user), do: {:error, :not_implemented}
-
-  @impl true
-  def build_data(%{"url" => url, "icon" => icon}) do
+  def build_data(%{"url" => url, "icon" => icon}, _context) do
     url
     |> Handler.get_data()
     |> add_service_icon(icon)

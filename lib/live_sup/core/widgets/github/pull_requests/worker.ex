@@ -12,10 +12,7 @@ defmodule LiveSup.Core.Widgets.Github.PullRequests.Worker do
   def public_settings, do: ["owner", "repository", "state"]
 
   @impl true
-  def build_data(_settings, _user), do: {:error, :not_implemented}
-
-  @impl true
-  def build_data(settings) do
+  def build_data(settings, _context) do
     settings
     |> Handler.get_data()
   end

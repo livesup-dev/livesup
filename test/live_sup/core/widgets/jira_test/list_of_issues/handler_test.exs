@@ -3,9 +3,10 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.HandlerTest do
   import Mock
 
   alias LiveSup.Core.Widgets.Jira.ListOfIssues.Handler
+  alias LiveSup.Core.Widgets.WidgetContext
   alias LiveSup.Core.Datasources.JiraDatasource
   alias LiveSup.Test.AccountsFixtures
-  alias LiveSup.Schemas.LinkSchemas
+  alias LiveSup.Schemas.{LinkSchemas, WidgetInstance}
 
   describe "Managing Jira list of issues" do
     @describetag :widget
@@ -15,14 +16,27 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.HandlerTest do
     setup do
       user_with_jira_jira = AccountsFixtures.user_fixture()
 
-      LiveSup.Test.LinkFixtures.add_jira_link(user_with_jira_jira, %LinkSchemas.Jira{
-        account_id: "123"
-      })
+      %{datasource_instance: datasource_instance} =
+        LiveSup.Test.LinksFixtures.add_jira_link(user_with_jira_jira, %LinkSchemas.Jira{
+          account_id: "123"
+        })
 
-      %{user: user_with_jira_jira}
+      widget_context =
+        WidgetContext.build(
+          %WidgetInstance{datasource_instance: datasource_instance},
+          user_with_jira_jira
+        )
+
+      %{
+        user: user_with_jira_jira,
+        datasource_instance: datasource_instance,
+        widget_context: widget_context
+      }
     end
 
-    test "getting the list of issues", %{user: user} do
+    test "getting the list of issues", %{
+      widget_context: widget_context
+    } do
       with_mock JiraDatasource,
         search_tickets: fn _query, _args -> {:ok, jira_issues()} end do
         data =
@@ -31,7 +45,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.HandlerTest do
             "domain" => "https://livesup.awesome",
             "statuses" => ["Open", "In Progress", "In Review"]
           }
-          |> Handler.get_data(user)
+          |> Handler.get_data(widget_context)
 
         ok_result = ok_result()
 
@@ -39,8 +53,14 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.HandlerTest do
       end
     end
 
-    test "getting error if the link doesn't exists" do
-      user = AccountsFixtures.user_fixture()
+    test "getting error if the link doesn't exists", %{datasource_instance: datasource_instance} do
+      another_user = AccountsFixtures.user_fixture()
+
+      widget_context =
+        WidgetContext.build(
+          %WidgetInstance{datasource_instance: datasource_instance},
+          another_user
+        )
 
       with_mock JiraDatasource,
         search_tickets: fn _query, _args -> {:ok, jira_issues()} end do
@@ -50,7 +70,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.HandlerTest do
             "domain" => "https://livesup.awesome",
             "statuses" => ["Open", "In Progress", "In Review"]
           }
-          |> Handler.get_data(user)
+          |> Handler.get_data(widget_context)
 
         assert {
                  :error,

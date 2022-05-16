@@ -12,10 +12,7 @@ defmodule LiveSup.Core.Widgets.RssServiceStatus.List.Worker do
   def settings_keys, do: ["services"]
 
   @impl true
-  def build_data(_settings, _user), do: {:error, :not_implemented}
-
-  @impl true
-  def build_data(%{"services" => services}) do
+  def build_data(%{"services" => services}, _context) do
     services
     |> Enum.map(&process_service/1)
     |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :lt))

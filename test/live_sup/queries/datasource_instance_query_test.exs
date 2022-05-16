@@ -16,6 +16,18 @@ defmodule LiveSup.Tests.Queries.DatasourceInstanceQueryTest do
       assert length(datasource_instances) == 2
     end
 
+    @tag :instance_by_datasource
+    test "get instance by datasource id", %{datasource: datasource} do
+      datasource_instance = datasource |> DatasourceInstanceQuery.by_datasource()
+      assert datasource_instance != nil
+    end
+
+    @tag :instance_by_datasource
+    test "get instance by datasource slug", %{datasource: datasource} do
+      datasource_instance = datasource.slug |> DatasourceInstanceQuery.by_datasource()
+      assert datasource_instance != nil
+    end
+
     test "return all available datasources for a project", %{project: project} do
       datasource_instances = DatasourceInstanceQuery.all_by_project(project)
       assert length(datasource_instances) == 3
@@ -26,7 +38,9 @@ defmodule LiveSup.Tests.Queries.DatasourceInstanceQueryTest do
     datasource = DatasourcesFixtures.datasource_fixture()
     Datasources.create_instance(datasource)
     Datasources.create_instance(datasource)
+
     context
+    |> Map.put(:datasource, datasource)
   end
 
   def setup_project_datasources(context) do
