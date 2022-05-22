@@ -44,7 +44,7 @@ defmodule LiveSup.DataImporter.ProjectImporter do
     |> Enum.each(fn widget_attrs ->
       %{"id" => widget_instance_id} = widget_attrs
 
-      Widgets.get_instance(widget_instance_id)
+      LiveSup.Core.Widgets.get_instance(widget_instance_id)
       |> add_widget(widget_attrs)
       |> add_widget_instance_to_dashboard(dashboard)
     end)
