@@ -151,4 +151,13 @@ defmodule LiveSup.Core.Datasources do
     }
     |> DatasourceInstanceQuery.create()
   end
+
+  def find_or_create_instance(%Datasource{} = datasource) do
+    # TODO: This is wrong. We should be checking if an datasource_instance
+    # exists with the same settings
+    case DatasourceInstanceQuery.by_datasource(datasource) do
+      [] -> create_instance(datasource)
+      [instance] -> {:ok, instance}
+    end
+  end
 end

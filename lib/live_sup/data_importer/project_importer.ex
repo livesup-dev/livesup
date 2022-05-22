@@ -44,7 +44,7 @@ defmodule LiveSup.DataImporter.ProjectImporter do
     |> Enum.each(fn widget_attrs ->
       %{"id" => widget_instance_id} = widget_attrs
 
-      Widgets.get_instance(widget_instance_id)
+      LiveSup.Core.Widgets.get_instance(widget_instance_id)
       |> add_widget(widget_attrs)
       |> add_widget_instance_to_dashboard(dashboard)
     end)
@@ -69,7 +69,7 @@ defmodule LiveSup.DataImporter.ProjectImporter do
       ) do
     settings = attrs["settings"] || %{}
     datasource = Datasources.get_by_slug!(datasource_slug)
-    {:ok, datasource_instance} = Datasources.create_instance(datasource)
+    {:ok, datasource_instance} = Datasources.find_or_create_instance(datasource)
     widget = Widgets.get_by_slug!(widget_slug)
 
     widget_instance_attrs = Widgets.build_instance_attrs(widget, datasource_instance)

@@ -12,10 +12,7 @@ defmodule LiveSup.Core.Widgets.Jira.CurrentSprint.Worker do
   def settings_keys, do: ["board_id", "token", "domain"]
 
   @impl true
-  def build_data(_settings, _user), do: {:error, :not_implemented}
-
-  @impl true
-  def build_data(settings) do
+  def build_data(settings, _context) do
     settings
     |> Handler.get_data()
   end

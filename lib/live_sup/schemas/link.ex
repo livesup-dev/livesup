@@ -2,7 +2,7 @@ defmodule LiveSup.Schemas.Link do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias LiveSup.Schemas.{User, Datasource}
+  alias LiveSup.Schemas.{User, DatasourceInstance}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -11,7 +11,7 @@ defmodule LiveSup.Schemas.Link do
     field :settings, :map, default: %{}
 
     belongs_to :user, User
-    belongs_to :datasource, Datasource
+    belongs_to :datasource_instance, DatasourceInstance
 
     timestamps()
   end
@@ -20,7 +20,7 @@ defmodule LiveSup.Schemas.Link do
 
   @optional_fields [
     :user_id,
-    :datasource_id,
+    :datasource_instance_id,
     :settings
   ]
 
@@ -29,6 +29,4 @@ defmodule LiveSup.Schemas.Link do
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end
-
-  def jira_slug(), do: "jira-datasource"
 end

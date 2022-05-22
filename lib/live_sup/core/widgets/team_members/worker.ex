@@ -13,10 +13,7 @@ defmodule LiveSup.Core.Widgets.TeamMembers.Worker do
   def settings_keys, do: ["team"]
 
   @impl true
-  def build_data(_settings, _user), do: {:error, :not_implemented}
-
-  @impl true
-  def build_data(settings) do
+  def build_data(settings, _context) do
     settings
     |> Handler.get_data()
   end

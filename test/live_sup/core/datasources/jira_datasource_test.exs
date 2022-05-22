@@ -206,6 +206,38 @@ defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
              ] = data
     end
 
+    @tag :jira_search_users
+    test "Search users", %{bypass: bypass} do
+      Bypass.expect_once(
+        bypass,
+        "GET",
+        "/rest/api/3/user/search",
+        fn conn ->
+          Plug.Conn.resp(
+            conn,
+            200,
+            LiveSup.Test.Core.Datasources.DataHelper.JiraListOfUsers.get()
+          )
+        end
+      )
+
+      {:ok, data} =
+        JiraDatasource.search_user(
+          "emiliano@livesup.com",
+          token: "xxxx",
+          domain: endpoint_url(bypass.port)
+        )
+
+      assert %{
+               account_id: "5a390ef9280a8d389404e33a",
+               active: true,
+               avatar_url:
+                 "https://avatar.public.atl-paas.net/5a390ef9280a8d389404e33a/53550071-f045-44f3-bc75-96956f8541c3/48",
+               local: "en_US",
+               time_zone: "America/New_York"
+             } = data
+    end
+
     @tag :jira_current_sprint_issues
     test "Get current sprint issues", %{bypass: bypass} do
       Bypass.expect_once(

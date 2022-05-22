@@ -6,9 +6,10 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
   alias LiveSup.Core.Widgets.WidgetRegistry
   alias LiveSup.Schemas.{User, WidgetInstance}
   alias LiveSup.Core.Utils
+  alias LiveSup.Core.Widgets.WidgetContext
 
   def start_link(_arg) do
-    debug("Widget manager: started")
+    debug("WidgetManager: started")
 
     DynamicSupervisor.start_link(
       __MODULE__,
@@ -18,53 +19,77 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
   end
 
   def init(_arg) do
-    debug("Widget manager: init")
+    debug("WidgetManager: init")
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
-  def start_widgets(widget_instances, %User{id: user_id}) do
+  def start_widgets(widget_instances, %User{} = user) do
+    debug("WidgetManager: start_widgets")
+
     widget_instances
     |> Enum.each(fn widget_instance ->
-      debug("Widget manager: starting <#{widget_instance.name}> widget")
-      debug("Widget manager: global: #{widget_instance.widget.global}")
+      debug("WidgetManager: starting <#{widget_instance.name}> widget")
+      debug("WidgetManager: global: #{widget_instance.widget.global}")
 
-      case widget_instance.widget.global do
-        true -> start_widget(widget_instance)
-        false -> start_widget(widget_instance, user_id)
-      end
+      widget_instance
+      |> WidgetContext.build(user)
+      |> start_widget()
+
+      # case widget_instance.widget.global do
+      #   true -> start_widget(widget_instance)
+      #   false -> start_widget(widget_instance, user)
+      # end
     end)
   end
 
+  def start_widget(%WidgetContext{widget_instance: widget_instance} = widget_context) do
+    debug("WidgetManager: starting <#{widget_instance.name}> widget")
+
+    DynamicSupervisor.start_child(
+      __MODULE__,
+      {
+        Utils.convert_to_module(widget_instance.widget.worker_handler),
+        widget_context
+      }
+    )
+  end
+
   def start_widget(%WidgetInstance{} = widget_instance) do
-    debug("Widget manager: starting <#{widget_instance.id}> widget")
+    debug("WidgetManager: starting <#{widget_instance.name}> widget")
+
+    context =
+      widget_instance
+      |> WidgetContext.build()
 
     DynamicSupervisor.start_child(
       __MODULE__,
       {
         Utils.convert_to_module(widget_instance.widget.worker_handler),
-        widget_instance
+        context
       }
     )
   end
 
-  def start_widget(%WidgetInstance{} = widget_instance, %User{id: user_id}) do
-    start_widget(widget_instance, user_id)
+  def start_widget(%WidgetInstance{} = widget_instance, %User{} = user) do
+    widget_instance
+    |> WidgetContext.build(user)
+    |> start_widget()
   end
 
-  def start_widget(%WidgetInstance{} = widget_instance, user_id) do
-    debug("Widget manager: starting <#{widget_instance.name}> user widget")
-    debug("Widget manager: starting <#{user_id}> user widget")
-    # IO.inspect(:start_widget, label: :user_widget)
+  # def start_widget(%WidgetInstance{} = widget_instance, user_id) do
+  #   debug("WidgetManager: starting <#{widget_instance.name}> user widget")
+  #   debug("WidgetManager: starting <#{user_id}> user widget")
+  #   # IO.inspect(:start_widget, label: :user_widget)
 
-    DynamicSupervisor.start_child(
-      __MODULE__,
-      {
-        Utils.convert_to_module(widget_instance.widget.worker_handler),
-        # TODO Im not sure if this is the right way to pass 2 params
-        [widget_instance, user_id]
-      }
-    )
-  end
+  #   DynamicSupervisor.start_child(
+  #     __MODULE__,
+  #     {
+  #       Utils.convert_to_module(widget_instance.widget.worker_handler),
+  #       # TODO Im not sure if this is the right way to pass 2 params
+  #       [widget_instance, user_id]
+  #     }
+  #   )
+  # end
 
   def stop_all do
     DynamicSupervisor.stop(__MODULE__, :ok)

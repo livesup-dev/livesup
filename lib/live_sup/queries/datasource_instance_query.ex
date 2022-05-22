@@ -20,6 +20,24 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
     |> Repo.all()
   end
 
+  def by_datasource(%Datasource{id: datasource_id}) do
+    # TODO: We should also fitler by settings
+    base()
+    |> join_datasource()
+    |> where([di], di.datasource_id == ^datasource_id)
+    |> preload([:datasource])
+    |> Repo.all()
+  end
+
+  def by_datasource(slug) when is_binary(slug) do
+    # TODO: We should also fitler by settings
+    base()
+    |> join_datasource()
+    |> where([datasource: datasource], datasource.slug == ^slug)
+    |> preload([:datasource])
+    |> Repo.all()
+  end
+
   def all_by(%Project{id: project_id}, %Datasource{id: datasource_id} = datasource) do
     query =
       project_id
@@ -88,7 +106,7 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
 
   defp join_datasource(query) do
     query
-    |> join(:inner, [di], d in assoc(di, :datasource))
+    |> join(:inner, [di], d in assoc(di, :datasource), as: :datasource)
   end
 
   def base, do: from(DatasourceInstance, as: :datasource_instance)

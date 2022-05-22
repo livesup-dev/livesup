@@ -35,9 +35,17 @@ defmodule LiveSup.Test.DatasourcesFixtures do
       slug: "jira-datasource",
       enabled: true,
       labels: [],
-      settings: %{"account_id" => nil}
+      settings: %{"token" => "1234", "domain" => "livesup.jira.com"}
     }
     |> datasource_fixture()
+  end
+
+  def add_jira_datasource_instance() do
+    {:ok, instance} =
+      add_jira_datasource()
+      |> LiveSup.Core.Datasources.create_instance()
+
+    instance
   end
 
   def add_pager_duty_datasource() do
@@ -49,5 +57,13 @@ defmodule LiveSup.Test.DatasourcesFixtures do
       settings: %{"api_key" => nil}
     }
     |> datasource_fixture()
+  end
+
+  def add_pager_duty_datasource_instance() do
+    {:ok, instance} =
+      add_pager_duty_datasource()
+      |> LiveSup.Core.Datasources.create_instance()
+
+    instance
   end
 end
