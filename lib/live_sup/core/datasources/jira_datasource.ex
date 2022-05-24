@@ -11,9 +11,14 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   @api_path "/rest/api/3"
   @agile_api_path "/rest/agile/1.0"
   def search_user(email_or_name, token: token, domain: domain) do
+    query =
+      %{
+        query: email_or_name
+      }
+      |> URI.encode_query()
+
     case HttpDatasource.get(
-           url:
-             build_url("/user/search?query=#{email_or_name}", domain: domain, base_path: @api_path),
+           url: build_url("/user/search?#{query}", domain: domain, base_path: @api_path),
            headers: headers(token)
          ) do
       {:ok, response} -> get_first_user(response)
