@@ -52,8 +52,9 @@ defmodule LiveSup.Test.Core.LinksScanners.JiraScannerTest do
         user
         |> LinksFixtures.add_jira_link(datasource_instance)
 
-        user
-        |> JiraScanner.scan()
+        {:ok, _links} =
+          user
+          |> JiraScanner.scan()
 
         count =
           LinkQuery.get_by_datasource(user, Datasource.jira_slug())

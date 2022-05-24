@@ -5,17 +5,25 @@ defmodule LiveSup.Core.LinksScanners.JiraScanner do
   alias LiveSup.Queries.DatasourceInstanceQuery
 
   def scan(%User{} = user) do
-    DatasourceInstanceQuery.by_datasource(Datasource.jira_slug())
-    |> Enum.each(fn datasource_instance ->
-      found_link =
-        user
-        |> Links.get_by_datasource_instance(datasource_instance)
+    links =
+      DatasourceInstanceQuery.by_datasource(Datasource.jira_slug())
+      |> Enum.map(fn datasource_instance ->
+        found_link =
+          user
+          |> Links.get_by_datasource_instance(datasource_instance)
 
-      case found_link do
-        nil -> create_link(datasource_instance, user)
-        link -> {:ok, link}
-      end
-    end)
+        case found_link do
+          nil -> create_link(datasource_instance, user)
+          link -> {:ok, link}
+        end
+      end)
+
+    {:ok, links}
+  end
+
+  def scan(user_id) do
+    %User{id: user_id}
+    |> scan()
   end
 
   defp create_link(%{id: datasource_instance_id} = datasource_instance, %{id: user_id} = user) do

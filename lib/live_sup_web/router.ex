@@ -76,7 +76,10 @@ defmodule LiveSupWeb.Router do
 
     resources "/dashboards", DashboardController, except: [:index, :new, :create]
 
-    resources "/users", UserController
+    resources "/users", UserController do
+      post "/links/scan", LinkScanController, :create
+    end
+
     resources "/groups", GroupController
     resources "/widgets", WidgetController
     resources "/metrics", MetricController
