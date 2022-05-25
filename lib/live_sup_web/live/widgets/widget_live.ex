@@ -41,8 +41,6 @@ defmodule LiveSupWeb.Live.Widgets.WidgetLive do
       def mount(_params, session, socket) do
         current_user = get_current_user(session, socket)
         debug("mount: #{__MODULE__}")
-        session["user"] |> IO.inspect()
-        session["widget_instance"] |> IO.inspect()
         # TODO: We need to get rid of having the widget_instance in the session.
         %{id: widget_instance_id, widget: %{global: global}} = session["widget_instance"]
 
