@@ -16,11 +16,12 @@ defmodule LiveSup.Schemas.Link do
     timestamps()
   end
 
-  @required_fields []
+  @required_fields [
+    :user_id,
+    :datasource_instance_id
+  ]
 
   @optional_fields [
-    :user_id,
-    :datasource_instance_id,
     :settings
   ]
 

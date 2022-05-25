@@ -78,7 +78,10 @@ defmodule LiveSupWeb.Router do
 
     resources "/users", UserController do
       post "/links/scan", LinkScanController, :create
+      resources "/links", LinkController, only: [:index, :create]
     end
+
+    resources "/links", LinkController, except: [:index, :new, :create]
 
     resources "/groups", GroupController
     resources "/widgets", WidgetController

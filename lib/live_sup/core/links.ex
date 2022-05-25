@@ -11,6 +11,7 @@ defmodule LiveSup.Core.Links do
   defdelegate get(id), to: LinkQuery
   defdelegate get!(id), to: LinkQuery
   defdelegate get_by_datasource(user, slug), to: LinkQuery
+  defdelegate get_by_user(user), to: LinkQuery
   defdelegate get_by_datasource_instance(user, datasource_instance_id), to: LinkQuery
   defdelegate create(attrs), to: LinkQuery
   defdelegate create!(attrs), to: LinkQuery

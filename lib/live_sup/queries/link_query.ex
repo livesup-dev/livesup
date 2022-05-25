@@ -32,6 +32,14 @@ defmodule LiveSup.Queries.LinkQuery do
     |> Repo.get(id)
   end
 
+  def get_by_user(%User{id: user_id}), do: user_id |> get_by_user()
+
+  def get_by_user(user_id) do
+    base()
+    |> where([link: link], link.user_id == ^user_id)
+    |> Repo.all()
+  end
+
   def get_by_datasource(%User{id: user_id}, slug) do
     user_id
     |> get_by_datasource_query(slug)
