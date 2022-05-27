@@ -3,7 +3,8 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
         data: %{target: target, current_value: current_value, unit: unit},
         public_settings: public_settings
       }) do
-    limit = target |> parse_target() |> trunc()
+    target = target |> parse_target()
+    limit = target |> trunc()
 
     step =
       (target / 3)
@@ -49,7 +50,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
   end
 
   defp parse_target(target) when is_binary(target) do
-    target |> String.to_float()
+    Decimal.new(target) |> Decimal.to_float()
   end
 
   defp parse_target(target) when is_number(target), do: target
