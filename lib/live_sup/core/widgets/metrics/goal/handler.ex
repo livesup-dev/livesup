@@ -13,14 +13,19 @@ defmodule LiveSup.Core.Widgets.Metrics.Goal.Handler do
   defp build_metric(metric, _metric_slug) do
     # TODO: This needs to be dynamic, somehing you can
     # configure in the settings
-    current_value = metric |> MetricValueQuery.last()
-
     {:ok,
      %{
        name: metric.name,
        target: metric.target,
        unit: metric.unit,
-       current_value: current_value.value
+       current_value: metric |> current_value()
      }}
+  end
+
+  defp current_value(metric) do
+    case metric |> MetricValueQuery.last() do
+      nil -> 0
+      found_value -> found_value.value
+    end
   end
 end

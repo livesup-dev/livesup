@@ -76,21 +76,6 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
     |> start_widget()
   end
 
-  # def start_widget(%WidgetInstance{} = widget_instance, user_id) do
-  #   debug("WidgetManager: starting <#{widget_instance.name}> user widget")
-  #   debug("WidgetManager: starting <#{user_id}> user widget")
-  #   # IO.inspect(:start_widget, label: :user_widget)
-
-  #   DynamicSupervisor.start_child(
-  #     __MODULE__,
-  #     {
-  #       Utils.convert_to_module(widget_instance.widget.worker_handler),
-  #       # TODO Im not sure if this is the right way to pass 2 params
-  #       [widget_instance, user_id]
-  #     }
-  #   )
-  # end
-
   def stop_all do
     DynamicSupervisor.stop(__MODULE__, :ok)
   end

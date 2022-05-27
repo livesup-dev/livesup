@@ -325,6 +325,7 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
              user: %{id: user_id}
            }) do
         debug("via_tuple.global:false")
+        debug("via_tuple.widget_instance_id:#{widget_instance_id}")
         {:via, Registry, {WidgetRegistry.name(), "#{widget_instance_id}:#{user_id}"}}
       end
 
@@ -332,6 +333,7 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
              widget_instance: %{id: widget_instance_id, widget: %{global: true}}
            }) do
         debug("via_tuple.global:true")
+        debug("via_tuple.widget_instance_id:#{widget_instance_id}")
         {:via, Registry, {WidgetRegistry.name(), "#{widget_instance_id}"}}
       end
 

@@ -4,15 +4,30 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
 
   alias LiveSup.Schemas.{WidgetInstance, Widget}
 
-  @default_keys %{
-    "key" => "hello",
-    "another_key" => "another key",
-    "and_another" => "and another"
-  }
-
   setup do
     widget_instance = %WidgetInstance{
-      settings: @default_keys,
+      settings: %{
+        "widget_value" => %{
+          "type" => "string",
+          "source" => "local",
+          "value" => 99999
+        },
+        "key" => %{
+          "type" => "string",
+          "source" => "local",
+          "value" => "hello"
+        },
+        "another_key" => %{
+          "type" => "string",
+          "source" => "local",
+          "value" => "another key"
+        },
+        "and_another" => %{
+          "type" => "string",
+          "source" => "local",
+          "value" => "another one"
+        }
+      },
       widget: %Widget{
         settings: %{
           "widget_value" => %{
@@ -84,7 +99,7 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
 
     assert WidgetInstance.get_setting(widget_instance, "audience") == "super_secret"
 
-    assert WidgetInstance.get_setting(widget_instance, "widget_value") == "1234"
+    assert WidgetInstance.get_setting(widget_instance, "widget_value") == "99999"
 
     assert WidgetInstance.custom_title(widget_instance) == "Some custom title"
 

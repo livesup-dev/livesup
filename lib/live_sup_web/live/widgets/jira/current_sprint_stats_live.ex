@@ -2,7 +2,6 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
 
   @impl true
-  @spec render_widget(any) :: Phoenix.LiveView.Rendered.t()
   def render_widget(assigns) do
     ~H"""
     <.live_component module={SmartRenderComponent} id={@widget_data.id}  let={widget_data} widget_data={@widget_data}>
@@ -10,7 +9,7 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive do
       <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 grid justify-items-center  min-h-[132px]">
-        <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent, id: "blameless-incidents-by-type-chart", spec: build_spec(widget_data)) %>
+        <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent, id: "jira-current-sprint-#{@widget_data.id}", spec: build_spec(widget_data)) %>
       </div>
       <!-- /Widget Content -->
       <!-- /Incidents by Type -->
@@ -20,12 +19,6 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive do
   end
 
   def build_spec(widget_data) do
-    # data =
-    #   widget_data.data
-    #   |> Enum.map(fn {key, value} ->
-    #     %{"status" => key, "count" => value}
-    #   end)
-
     # Initialize the specification, optionally with some top-level properties
     %{
       "$schema" => "https://vega.github.io/schema/vega-lite/v5.json",

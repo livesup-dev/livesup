@@ -6,6 +6,11 @@ defmodule LiveSup.Schemas.Helpers.SettingsHandler do
     end)
   end
 
+  def find_value(%{"type" => "string", "value" => value, "source" => "local"})
+      when is_integer(value) do
+    value |> Integer.to_string()
+  end
+
   def find_value(%{"type" => "string", "value" => value, "source" => "local"}), do: value
 
   def find_value(%{"type" => "int", "value" => value, "source" => "local"})
