@@ -20,7 +20,7 @@ defmodule LiveSup.Core.Metrics do
     MetricValueQuery.insert!(Map.merge(metric_value, %{metric_id: metric_id}))
   end
 
-  def upsert_value(%Metric{id: metric_id}, metric_value) do
-    MetricValueQuery.upsert(Map.merge(metric_value, %{"metric_id" => metric_id}))
+  def upsert_value!(%Metric{id: metric_id}, metric_value) do
+    MetricValueQuery.upsert!(Map.merge(metric_value, %{"metric_id" => metric_id}))
   end
 end

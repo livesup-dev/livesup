@@ -1,7 +1,10 @@
 defmodule LiveSup.DataImporter.MetricImporter do
   alias LiveSup.Core.Metrics
+  import Logger
 
   def import(%{"metrics" => metrics}) do
+    debug("MetricImporter:import")
+
     metrics
     |> Enum.each(fn metric_attrs ->
       metric_attrs
@@ -19,7 +22,9 @@ defmodule LiveSup.DataImporter.MetricImporter do
     metric
   end
 
-  defp create_values(metric, %{"values" => values}) do
+  defp create_values(%{name: metric_name} = metric, %{"values" => values}) do
+    debug("MetricImporter:#{metric_name}:create_values")
+
     values
     |> Enum.each(fn value_attrs ->
       metric
@@ -27,7 +32,8 @@ defmodule LiveSup.DataImporter.MetricImporter do
     end)
   end
 
-  defp create_value(metric, value) do
-    Metrics.upsert_value(metric, value)
+  defp create_value(%{name: metric_name} = metric, value) do
+    debug("MetricImporter:#{metric_name}:create_value")
+    Metrics.upsert_value!(metric, value)
   end
 end

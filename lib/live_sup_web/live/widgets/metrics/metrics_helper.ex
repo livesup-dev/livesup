@@ -1,11 +1,9 @@
 defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
-  def build_gauge(
-        %{
-          data: %{target: target, current_value: current_value, unit: unit},
-          public_settings: public_settings
-        } = widget_data
-      ) do
-    limit = target |> trunc()
+  def build_gauge(%{
+        data: %{target: target, current_value: current_value, unit: unit},
+        public_settings: public_settings
+      }) do
+    limit = target |> parse_target() |> trunc()
 
     step =
       (target / 3)
@@ -49,6 +47,12 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.MetricsHelper do
       }
     }
   end
+
+  defp parse_target(target) when is_binary(target) do
+    target |> String.to_float()
+  end
+
+  defp parse_target(target) when is_number(target), do: target
 
   defp delete_if_invalid_range(ranges) when length(ranges) > 3 do
     ranges |> List.delete_at(length(ranges) - 1)
