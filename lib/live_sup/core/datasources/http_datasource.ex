@@ -40,6 +40,9 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
   defp execute({:error, %Mint.TransportError{reason: :nxdomain}}),
     do: {:error, "nxdomain: wasn't able to resolve the domain through DNS."}
 
+  defp execute({:error, %Mint.TransportError{reason: reason}}),
+    do: {:error, reason}
+
   defp execute({_, %Finch.Response{headers: headers}} = request) do
     content_type = headers |> find_content_type()
 

@@ -16,6 +16,11 @@ defmodule LiveSup.Tests.Queries.DatasourceInstanceQueryTest do
       assert length(datasource_instances) == 2
     end
 
+    @tag :count_datsource_instance
+    test "count datasource instances" do
+      assert DatasourceInstanceQuery.count() == 3
+    end
+
     @tag :instance_by_datasource
     test "get instance by datasource id", %{datasource: datasource} do
       datasource_instance = datasource |> DatasourceInstanceQuery.by_datasource()

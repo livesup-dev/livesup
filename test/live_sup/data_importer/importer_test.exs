@@ -5,7 +5,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
   import LiveSup.Test.Setups
 
   alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources, Teams, Metrics}
-  alias LiveSup.Queries.MetricValueQuery
+  alias LiveSup.Queries.{MetricValueQuery, DatasourceInstanceQuery}
   alias LiveSup.Schemas.{Dashboard, WidgetInstance}
   alias LiveSup.Test.ProjectsFixtures
 
@@ -15,6 +15,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
     setup [:setup_groups, :weather_widget_fixture]
 
     test "data is imported" do
+      assert DatasourceInstanceQuery.count() == 0
       LiveSup.DataImporter.Importer.import(yaml_data())
 
       assert length(Projects.all()) == 1
@@ -64,8 +65,12 @@ defmodule LiveSup.Test.DataImporter.Importer do
                widget_instance_id: "8622c22c-5535-4502-a526-cef8f64ae57a"
              } = dashboard_widget
 
+      assert DatasourceInstanceQuery.count() == 1
+
       # Make sure it does not fail when running twice
       LiveSup.DataImporter.Importer.import(yaml_data())
+
+      assert DatasourceInstanceQuery.count() == 1
     end
   end
 

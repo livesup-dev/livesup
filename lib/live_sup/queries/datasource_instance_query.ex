@@ -3,6 +3,11 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
   alias LiveSup.Schemas.{DatasourceInstance, Project, Datasource}
   alias LiveSup.Repo
 
+  def count do
+    base()
+    |> Repo.aggregate(:count)
+  end
+
   def all do
     base()
     |> Repo.all()
