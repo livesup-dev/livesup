@@ -247,7 +247,9 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
       active: jira_user["active"],
       avatar_url: jira_user["avatarUrls"]["48x48"],
       time_zone: jira_user["timeZone"],
-      local: jira_user["locale"]
+      local: jira_user["locale"],
+      name: jira_user["displayName"],
+      email: jira_user["emailAddress"]
     }
   end
 

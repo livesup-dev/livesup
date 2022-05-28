@@ -14,7 +14,7 @@ defmodule LiveSup.Core.LinksScanners.JiraScanner do
 
         case found_link do
           nil -> create_link(datasource_instance, user)
-          link -> {:ok, link}
+          link -> link
         end
       end)
 

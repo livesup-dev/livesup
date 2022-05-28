@@ -6,8 +6,15 @@ defmodule LiveSupWeb.Api.LinkScanView do
     %{data: render_many(links, LinkScanView, "link.json")}
   end
 
+  def render("link.json", %{link_scan: {:error, :not_found}}) do
+    %{
+      state: :user_not_found
+    }
+  end
+
   def render("link.json", %{link_scan: link}) do
     %{
+      state: :created,
       id: link.id,
       settings: link.settings,
       user_id: link.user_id,
