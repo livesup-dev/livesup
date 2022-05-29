@@ -1,8 +1,12 @@
 defmodule LiveSup.Schemas.Datasource do
   use Ecto.Schema
   import Ecto.Changeset
+  import Logger
 
   alias LiveSup.Schemas.{Widget, Datasource}
+  alias LiveSup.Core.LinksScanners.JiraScanner
+
+  @jira_datasource "jira-datasource"
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -42,5 +46,14 @@ defmodule LiveSup.Schemas.Datasource do
     |> validate_required(@required_fields)
   end
 
-  def jira_slug(), do: "jira-datasource"
+  def jira_slug(), do: @jira_datasource
+
+  def scanner(slug) do
+    debug("LiveSup.Schemas.Datasource:#{slug}")
+
+    case slug do
+      @jira_datasource -> {:ok, JiraScanner}
+      _ -> {:error, "no scanner for #{slug}"}
+    end
+  end
 end

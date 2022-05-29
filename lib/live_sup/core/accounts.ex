@@ -7,6 +7,7 @@ defmodule LiveSup.Core.Accounts do
   alias LiveSup.Repo
   alias LiveSup.Schemas.{User, UserToken}
   alias LiveSup.Core.{Accounts.UserNotifier, Groups}
+  alias LiveSup.Core.LinksScanners.Scanner
 
   def fetch_or_create_user(attrs) do
     case get_user_by_email(attrs.email) do
@@ -18,7 +19,17 @@ defmodule LiveSup.Core.Accounts do
         |> User.registration_changeset(attrs)
         |> Repo.insert()
         |> add_user_to_group()
+        |> scan()
     end
+  end
+
+  defp scan({:ok, user}) do
+    Task.async(fn ->
+      # TODO: What would happen in case on an error?
+      user |> Scanner.scan_all()
+    end)
+
+    {:ok, user}
   end
 
   defp add_user_to_group({:ok, user}) do
@@ -99,6 +110,11 @@ defmodule LiveSup.Core.Accounts do
   """
   def register_user(attrs) do
     with {:ok, user} <- insert_user(attrs) do
+      Task.async(fn ->
+        # TODO: What would happen in case on an error?
+        user |> Scanner.scan_all()
+      end)
+
       {:ok, user} |> add_user_to_group()
     end
   end

@@ -8,7 +8,7 @@ defmodule LiveSupWeb.Api.LinkScanControllerTest do
   setup [:create_user_and_assign_valid_jwt, :setup_data]
 
   @create_attrs %{
-    datasource: "jira"
+    datasource: "jira-datasource"
   }
 
   describe "scan links" do

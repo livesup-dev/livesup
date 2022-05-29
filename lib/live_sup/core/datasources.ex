@@ -20,6 +20,10 @@ defmodule LiveSup.Core.Datasources do
     |> found()
   end
 
+  def all! do
+    DatasourceQuery.all()
+  end
+
   defp found(nil), do: {:error, :not_found}
   defp found(resource), do: {:ok, resource}
 
