@@ -22,7 +22,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.LastIncidentsLive do
                       <p>
                         <span class="font-mono text-sm text-black dark:text-white ">
                         <a href={incident.slack[:url]} target="_blank" class="hover:underline text-black dark:text-primary inline-block">
-                          <svg class="w-6 h-6 rounded-full inline-block mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                          <svg class="w-6 h-6 rounded-full inline-block mr-2" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="60 60 140 140" style="enable-background:new 60 60 140 140; display:inline-block;" xml:space="preserve">
                             <style type="text/css">
                               .st0{fill:#E01E5A;}

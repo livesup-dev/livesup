@@ -11,6 +11,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
 
     {:ok,
      socket
+     |> assign(:draggable_class, "")
      |> assign(:current_user, current_user)
      |> assign(:dashboard, nil)}
   end
@@ -20,22 +21,16 @@ defmodule LiveSupWeb.Project.DashboardLive do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :show, %{"id" => dashboard_id}) do
-    {:ok, dashboard} = dashboard_id |> Dashboards.get_with_project()
-
-    widget_instances =
-      get_and_start_widgets(
-        dashboard.id,
-        socket.assigns[:current_user]
-      )
-
+  defp apply_action(socket, :edit, %{"id" => dashboard_id}) do
     socket
-    |> assign(:widget_instances, widget_instances)
-    |> assign(:current_dashboard, dashboard)
-    |> assign(:dashboard, dashboard)
-    |> assign_dashboards(dashboard.project)
-    |> assign(:project, dashboard.project)
-    |> assign(:section, :dashboard)
+    |> assign(:draggable_class, "draggable")
+    |> manage_widgets(dashboard_id)
+  end
+
+  defp apply_action(socket, :show, %{"id" => dashboard_id}) do
+    socket
+    |> assign(:draggable_class, "")
+    |> manage_widgets(dashboard_id)
   end
 
   defp apply_action(socket, :index, %{"id" => project_id}) do
@@ -58,6 +53,24 @@ defmodule LiveSupWeb.Project.DashboardLive do
     |> assign(:dashboard, %Dashboard{})
   end
 
+  defp manage_widgets(socket, dashboard_id) do
+    {:ok, dashboard} = dashboard_id |> Dashboards.get_with_project()
+
+    widget_instances =
+      get_and_start_widgets(
+        dashboard.id,
+        socket.assigns[:current_user]
+      )
+
+    socket
+    |> assign(:widget_instances, widget_instances)
+    |> assign(:current_dashboard, dashboard)
+    |> assign(:dashboard, dashboard)
+    |> assign_dashboards(dashboard.project)
+    |> assign(:project, dashboard.project)
+    |> assign(:section, :dashboard)
+  end
+
   def redirect_if_one_dashboard(socket) when length(socket.assigns.dashboards) == 1 do
     %{id: dashboard_id} =
       socket.assigns.dashboards
@@ -71,7 +84,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
   @impl true
   def handle_event(
         "dropped",
-        %{"widget_id" => widget_id, "old_index" => old_index, "new_index" => new_index} = params,
+        %{"widget_id" => widget_id, "old_index" => _old_index, "new_index" => new_index} = params,
         %{assigns: %{current_dashboard: %{id: dashboard_id}}} = socket
       ) do
     {:ok, _updated} = Dashboards.update_widget_instance_order(dashboard_id, widget_id, new_index)

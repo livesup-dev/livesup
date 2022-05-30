@@ -31,10 +31,10 @@
     </.modal>
 <% end %>
 
-<%= if @live_action in [:show] do %>
+<%= if @live_action in [:show, :edit] do %>
     <div class="m-2 mb-[80px]" >
 		<%= if Enum.any?(@widget_instances) do %>
-			<div id="widget-list" class="xs:columns-1 sm:columns-2 lg:columns-4 gap-x-2">
+			<div id={"widget-list-#{@draggable_class}"} phx-hook="Drag" class="xs:columns-1 sm:columns-2 lg:columns-4 gap-x-2">
 			<%= for(widget_instance <- @widget_instances) do %>
 				<%= live_render(
 					@socket,

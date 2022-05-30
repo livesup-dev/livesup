@@ -56,13 +56,16 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
       {:ok, %Finch.Response{body: body, status: 400 = status}} ->
         {:error, "#{status}: #{body}"}
 
+      {:ok, %Finch.Response{body: body, status: 404 = status}} ->
+        {:error, "#{status}: not_found"}
+
       {:ok, %Finch.Response{status: 403 = status}} ->
         {:error, "#{status}: forbidden"}
 
       {:ok, %Finch.Response{body: body, status: 500} = _response} ->
         {:error, "500: #{body |> error_message()}"}
 
-      {:ok, %Finch.Response{body: body}} ->
+      {:ok, %Finch.Response{body: body, status: status}} ->
         parse_error(body, content_type)
 
       {:error, error} ->

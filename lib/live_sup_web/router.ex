@@ -143,6 +143,7 @@ defmodule LiveSupWeb.Router do
     live "/projects/new", Project.ProjectLive, :new
     live "/projects/:id/dashboards", Project.DashboardLive, :index
     live "/projects/:id/dashboards/new", Project.DashboardLive, :new
+    live "/dashboards/:id/edit", Project.DashboardLive, :edit
     live "/dashboards/:id", Project.DashboardLive, :show
     live "/dashboards/:id/widgets", Dashboard.WidgetLive, :show
     live "/dashboards/:dashboard_id/widgets/:id", Dashboard.WidgetLive, :add

@@ -49,7 +49,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                     <div>
                       <p class="uppercase font-medium text-sm text-gray-500">Status</p>
                       <p class="text-base">
-                        <svg id="emYLh5A2QIZ1" class="w-3 h-3 inline " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3 3" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><ellipse rx="1.5" ry="1.5" transform="translate(1.5 1.5)" class={"fill-yellow-300 fill-incident-#{String.downcase(incident[:status])}"} stroke-width="0"/></svg>
+                        <svg class="w-3 h-3 inline " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3 3" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><ellipse rx="1.5" ry="1.5" transform="translate(1.5 1.5)" class={"fill-yellow-300 fill-incident-#{String.downcase(incident[:status])}"} stroke-width="0"/></svg>
                         <span class="text-base align-middle"><%= incident[:status] %></span>
                       </p>
                     </div>
@@ -59,7 +59,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                         <%= if incident.slack && incident.slack[:url] do %>
                           <span class="font-mono text-sm text-black dark:text-white block">
                             <a href={incident.slack[:url]} target="_blank" class="hover:underline text-black dark:text-primary inline-block">
-                              <svg class="w-4 h-4 rounded-full inline-block mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                              <svg class="w-4 h-4 rounded-full inline-block mr-2" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="60 60 140 140" style="enable-background:new 60 60 140 140; display:inline-block;" xml:space="preserve">
                                 <style type="text/css">
                                   .st0{fill:#E01E5A;}

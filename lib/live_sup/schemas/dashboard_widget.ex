@@ -10,7 +10,7 @@ defmodule LiveSup.Schemas.DashboardWidget do
   @foreign_key_type :binary_id
   @derive {Phoenix.Param, key: :id}
   schema "dashboards_widgets" do
-    field :order, :integer
+    field :order, :integer, default: 999
 
     belongs_to :dashboard, Dashboard
     belongs_to :widget_instance, WidgetInstance
