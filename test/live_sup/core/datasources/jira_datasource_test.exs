@@ -8,6 +8,15 @@ defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
     JiraProjectStatuses
   }
 
+  @no_sprint_response """
+    {
+      "maxResults": 50,
+      "startAt": 0,
+      "isLast": true,
+      "values": []
+    }
+  """
+
   @response """
     {
       "maxResults": 50,
@@ -68,6 +77,25 @@ defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
                startDate: "2021-05-18T14:45:51.832Z",
                state: "active"
              } = data
+    end
+
+    @tag :jira_current_sprint_with_no_active_sprint
+    test "Get current sprint when no active one", %{bypass: bypass} do
+      Bypass.expect_once(
+        bypass,
+        "GET",
+        "/rest/agile/1.0/board/145/sprint",
+        fn conn ->
+          Plug.Conn.resp(conn, 200, @no_sprint_response)
+        end
+      )
+
+      assert {:error, :no_active_sprint} =
+        JiraDatasource.get_current_sprint(
+          "145",
+          token: "xxxx",
+          domain: endpoint_url(bypass.port)
+        )
     end
 
     @tag datasource: true, jira_datasource: true

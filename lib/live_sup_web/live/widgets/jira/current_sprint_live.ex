@@ -13,7 +13,11 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintLive do
           <%= if widget_data.data.goal do %>
             <p class="text-sm text-stone-400"><%= widget_data.data.goal %></p>
           <% end %>
-          <p class="text-center text-3xl font-semibold mt-3 mb-3 text-gray-500 dark:text-primary-light"><%= widget_data.data.days_left %> days remaining</p>
+          <%= if widget_data.data.days_left == 0 do %>
+            <p class="text-center text-3xl font-semibold mt-3 mb-3 text-gray-500 dark:text-primary-light">Last day of the sprint</p>
+          <% else %>
+            <p class="text-center text-3xl font-semibold mt-3 mb-3 text-gray-500 dark:text-primary-light"><%= widget_data.data.days_left %> days remaining</p>
+          <% end %>
         </div>
         <!-- /Widget Content -->
       <!-- /Jira Current Sprint -->

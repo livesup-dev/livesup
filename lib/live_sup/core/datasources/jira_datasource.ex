@@ -143,8 +143,12 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
     end)
   end
 
-  defp parse_sprint(jira_sprints) do
-    jira_sprint = jira_sprints["values"] |> Enum.at(0)
+  defp parse_sprint(%{"values" => []}) do
+    {:error, :no_active_sprint}
+  end
+
+  defp parse_sprint(%{"values" => values}) do
+    jira_sprint = values |> Enum.at(0)
     end_date = DateHelper.parse_date(jira_sprint["endDate"])
 
     {:ok,
