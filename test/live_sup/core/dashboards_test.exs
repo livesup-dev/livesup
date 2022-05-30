@@ -81,7 +81,7 @@ defmodule LiveSup.Test.Core.DashboardsTest do
           widget_instance_id
         )
 
-      assert existing_order == 0
+      assert existing_order == 999
 
       {:ok, _updated_widget} =
         Dashboards.update_widget_instance_order(dashboard_id, widget_instance_id, 3)
