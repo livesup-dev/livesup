@@ -54,6 +54,8 @@ defmodule LiveSup.Helpers.DateHelper do
   end
 
   def diff_in_days(start_date, end_date \\ NaiveDateTime.local_now())
+
+  def diff_in_days(start_date, end_date)
       when is_binary(start_date) and is_binary(end_date) do
     parsed_start_date = parse_date(start_date)
     parsed_end_date = parse_date(end_date)
