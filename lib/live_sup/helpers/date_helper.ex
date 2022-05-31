@@ -44,12 +44,24 @@ defmodule LiveSup.Helpers.DateHelper do
     date |> DateTime.to_unix()
   end
 
-  def parse_date(date) do
+  def parse_date(date) when is_binary(date) do
     {:ok, parsed_date} = Timex.parse(date, "{ISO:Extended:Z}")
     parsed_date
   end
 
-  def diff_in_days(start_date, end_date \\ NaiveDateTime.local_now()) do
+  def parse_date(date) do
+    date
+  end
+
+  def diff_in_days(start_date, end_date \\ NaiveDateTime.local_now())
+      when is_binary(start_date) and is_binary(end_date) do
+    parsed_start_date = parse_date(start_date)
+    parsed_end_date = parse_date(end_date)
+
+    Timex.diff(parsed_end_date, parsed_start_date, :days)
+  end
+
+  def diff_in_days(start_date, end_date) do
     Timex.diff(end_date, start_date, :days)
   end
 
