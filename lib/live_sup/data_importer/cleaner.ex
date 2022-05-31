@@ -64,5 +64,6 @@ defmodule LiveSup.DataImporter.Cleaner do
 
     data
   end
+
   def clean_notes(data), do: data
 end

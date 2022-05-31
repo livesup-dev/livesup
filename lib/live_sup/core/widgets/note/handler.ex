@@ -2,9 +2,9 @@ defmodule LiveSup.Core.Widgets.Note.Handler do
   alias LiveSup.Queries.NoteQuery
 
   def get_data(%{"note" => note_slug}) do
-      note_slug
-      |> NoteQuery.get_by_slug()
-      |> parse_markdown()
+    note_slug
+    |> NoteQuery.get_by_slug()
+    |> parse_markdown()
   end
 
   defp parse_markdown(nil) do
@@ -12,7 +12,7 @@ defmodule LiveSup.Core.Widgets.Note.Handler do
   end
 
   defp parse_markdown(%{content: content, title: title}) do
-    {:ok, html_content, []} = Earmark.as_html(content, [compact_output: true])
+    {:ok, html_content, []} = Earmark.as_html(content, compact_output: true)
 
     note = %{
       content: content,
