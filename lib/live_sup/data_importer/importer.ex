@@ -4,7 +4,8 @@ defmodule LiveSup.DataImporter.Importer do
     TeamImporter,
     MetricImporter,
     Cleaner,
-    UserImporter
+    UserImporter,
+    NoteImporter
   }
 
   def import(data) do
@@ -15,6 +16,7 @@ defmodule LiveSup.DataImporter.Importer do
     |> TeamImporter.import()
     |> UserImporter.import()
     |> MetricImporter.import()
+    |> NoteImporter.import()
 
     :ok
   end

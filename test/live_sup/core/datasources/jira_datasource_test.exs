@@ -91,11 +91,11 @@ defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
       )
 
       assert {:error, :no_active_sprint} =
-        JiraDatasource.get_current_sprint(
-          "145",
-          token: "xxxx",
-          domain: endpoint_url(bypass.port)
-        )
+               JiraDatasource.get_current_sprint(
+                 "145",
+                 token: "xxxx",
+                 domain: endpoint_url(bypass.port)
+               )
     end
 
     @tag datasource: true, jira_datasource: true

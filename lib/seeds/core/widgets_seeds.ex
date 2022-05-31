@@ -102,6 +102,10 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       %{
         datasource_slug: "datadog-datasource",
         attrs: &datadog_scalar_widget_attrs/1
+      },
+      %{
+        datasource_slug: "local-datasource",
+        attrs: &note_widget_attrs/1
       }
     ]
     |> Enum.each(fn widget ->
@@ -179,6 +183,24 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
         "n_days" => %{"source" => "local", "type" => "int", "value" => "7"},
         "target" => %{"source" => "local", "type" => "string", "value" => ""},
         "unit" => %{"source" => "local", "type" => "string", "value" => ""}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  defp note_widget_attrs(datasource) do
+    %{
+      name: "Note",
+      slug: "note",
+      enabled: true,
+      global: true,
+      feature_image_url: "/images/widgets/note",
+      ui_handler: "LiveSupWeb.Live.Widgets.NoteLive",
+      worker_handler: "LiveSup.Core.Widgets.Note.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 36000},
+        "note" => %{"source" => "local", "type" => "string", "value" => ""}
       },
       datasource_id: datasource.id
     }
