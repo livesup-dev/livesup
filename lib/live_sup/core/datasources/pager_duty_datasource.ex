@@ -1,5 +1,6 @@
 defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
   alias LiveSup.Core.Datasources.HttpDatasource
+  use Timex
 
   @url "https://api.pagerduty.com/"
 
@@ -34,7 +35,12 @@ defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
             avatar_url: oncall_attrs["user"]["avatar_url"]
           },
           start: LiveSup.Helpers.DateHelper.parse_date(oncall_attrs["start"]),
-          end: oncall_attrs["end"]
+          end: oncall_attrs["end"],
+          days_left:
+            LiveSup.Helpers.DateHelper.diff_in_days(
+              LiveSup.Helpers.DateHelper.today_as_string(),
+              oncall_attrs["start"]
+            )
         }
       end)
       |> Enum.sort(&(DateTime.compare(&1.start, &2.start) != :gt))

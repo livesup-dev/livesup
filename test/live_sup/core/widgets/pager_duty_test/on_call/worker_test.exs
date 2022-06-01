@@ -22,7 +22,8 @@ defmodule LiveSup.Test.Core.Widgets.PagerDuty.OnCall.WorkerTest do
             name: "James Doe"
           },
           start: "2022-04-11T09:00:00Z",
-          end: "2022-04-18T09:00:00Z"
+          end: "2022-04-18T09:00:00Z",
+          days_left: 7
         }
       ]
     }
@@ -69,7 +70,8 @@ defmodule LiveSup.Test.Core.Widgets.PagerDuty.OnCall.WorkerTest do
                        name: "James Doe"
                      },
                      start: "2022-04-11T09:00:00Z",
-                     end: "2022-04-18T09:00:00Z"
+                     end: "2022-04-18T09:00:00Z",
+                     days_left: 7
                    }
                  ],
                  state: :ready,

@@ -9,7 +9,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
       <!-- Metrics Goal -->
       <.live_component module={WidgetHeaderComponent} id={"#{widget_data.id}-header"} widget_data={widget_data} />
       <!-- Widget Content -->
-      <div class="p-2 grid justify-items-center  min-h-[132px]">
+      <div class="p-2 grid justify-items-center  min-h-[200px]">
         <%= live_component(LiveSupWeb.Output.PlotlyStaticComponent, id: "#{widget_data.id}-gauge", spec: build_spec(widget_data)) %>
       </div>
       <!-- /Widget Content -->

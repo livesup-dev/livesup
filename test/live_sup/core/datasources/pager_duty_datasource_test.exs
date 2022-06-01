@@ -32,6 +32,7 @@ defmodule LiveSup.Test.Core.Datasources.PagerDutyDatasourceTest do
       assert [
                %{
                  end: "2022-04-18T09:00:00Z",
+                 days_left: _,
                  id: nil,
                  name: %{
                    "html_url" => "https://livesup.pagerduty.com/schedules/PLBW9ZW",
@@ -45,6 +46,7 @@ defmodule LiveSup.Test.Core.Datasources.PagerDutyDatasourceTest do
                },
                %{
                  end: "2022-04-25T09:00:00Z",
+                 days_left: _,
                  id: nil,
                  name: %{
                    "html_url" => "https://livesup.pagerduty.com/schedules/PLBW9ZW",
@@ -89,7 +91,8 @@ defmodule LiveSup.Test.Core.Datasources.PagerDutyDatasourceTest do
               "html_url": "https://livesup.pagerduty.com/users/P6S8MID"
             },
             "start": "2022-04-18T09:00:00Z",
-            "end": "2022-04-25T09:00:00Z"
+            "end": "2022-04-25T09:00:00Z",
+            "days_left": 7
           },
           {
             "escalation_policy": {
@@ -115,7 +118,8 @@ defmodule LiveSup.Test.Core.Datasources.PagerDutyDatasourceTest do
               "html_url": "https://livesup.pagerduty.com/users/P6S8MID"
             },
             "start": "2022-04-11T09:00:00Z",
-            "end": "2022-04-18T09:00:00Z"
+            "end": "2022-04-18T09:00:00Z",
+            "days_left": 7
           },
           {
             "escalation_policy": {
@@ -141,7 +145,8 @@ defmodule LiveSup.Test.Core.Datasources.PagerDutyDatasourceTest do
               "html_url": "https://livesup.pagerduty.com/users/P6S8MID"
             },
             "start": "2022-04-25T09:00:00Z",
-            "end": "2022-05-02T09:00:00Z"
+            "end": "2022-05-02T09:00:00Z",
+            "days_left": 7
           }
         ],
         "limit": 25,
