@@ -42,7 +42,7 @@ jobs:
       run: mix test
     - name: Check Formatting
       run: mix format --check-formatted
-     - name: Run tests
+    - name: Run tests
       run: mix coveralls.json
       env:
         MIX_ENV: test
