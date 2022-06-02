@@ -42,3 +42,12 @@ jobs:
       run: mix test
     - name: Check Formatting
       run: mix format --check-formatted
+    - name: Run tests
+      run: mix coveralls.json
+      env:
+        MIX_ENV: test
+    - name: Upload to Codecov
+      run: |
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+        ./codecov
