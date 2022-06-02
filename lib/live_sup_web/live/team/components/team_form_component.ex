@@ -1,7 +1,6 @@
 defmodule LiveSupWeb.Team.Components.TeamFormComponent do
   use LiveSupWeb, :live_component
   alias LiveSup.Core.Teams
-  alias LiveSup.Schemas.Team
 
   @impl true
   def update(%{team: team} = assigns, socket) do

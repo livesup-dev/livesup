@@ -119,6 +119,15 @@ defmodule LiveSup.Core.Dashboards do
     dashboard_id |> WidgetInstanceQuery.by_dashboard()
   end
 
+  def add_widget(%Dashboard{} = dashboard, %WidgetInstance{} = widget_instance, order) do
+    %{
+      dashboard_id: dashboard.id,
+      widget_instance_id: widget_instance.id,
+      order: order
+    }
+    |> DashboardWidgetQuery.create()
+  end
+
   def add_widget(%Dashboard{} = dashboard, %WidgetInstance{} = widget_instance) do
     %{
       dashboard_id: dashboard.id,
