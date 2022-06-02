@@ -12,6 +12,9 @@
   <a href="#">
     <img alt="Build Status" src="https://github.com/livesup-dev/livesup/actions/workflows/test.yml/badge.svg">
   </a>
+  <a href="https://codecov.io/gh/livesup-dev/livesup">
+    <img src="https://codecov.io/gh/livesup-dev/livesup/branch/main/graph/badge.svg?token=7XTN1OEUHY"/>
+  </a>
 </p>
 
 ---
