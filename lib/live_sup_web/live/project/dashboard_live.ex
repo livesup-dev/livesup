@@ -84,7 +84,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
   @impl true
   def handle_event(
         "dropped",
-        %{"widget_id" => widget_id, "old_index" => _old_index, "new_index" => new_index} = params,
+        %{"widget_id" => widget_id, "old_index" => _old_index, "new_index" => new_index},
         %{assigns: %{current_dashboard: %{id: dashboard_id}}} = socket
       ) do
     {:ok, _updated} = Dashboards.update_widget_instance_order(dashboard_id, widget_id, new_index)

@@ -1,5 +1,5 @@
 defmodule LiveSup.Queries.UserQuery do
-  alias LiveSup.Schemas.{TeamMember, User, Link, DatasourceInstance}
+  alias LiveSup.Schemas.{TeamMember, User}
   alias LiveSup.Repo
   import Ecto.Query
 

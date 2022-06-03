@@ -41,12 +41,14 @@ defmodule LiveSup.DataImporter.ProjectImporter do
 
   def import_widget({:ok, dashboard}, %{"widgets" => widgets}) do
     widgets
-    |> Enum.each(fn widget_attrs ->
+    |> Enum.with_index(fn widget_attrs, index ->
       %{"id" => widget_instance_id} = widget_attrs
+
+      order = Map.get(widget_attrs, "order", index)
 
       LiveSup.Core.Widgets.get_instance(widget_instance_id)
       |> add_widget(widget_attrs)
-      |> add_widget_instance_to_dashboard(dashboard)
+      |> add_widget_instance_to_dashboard(dashboard, order)
     end)
   end
 
@@ -85,11 +87,11 @@ defmodule LiveSup.DataImporter.ProjectImporter do
     widget_instance
   end
 
-  def add_widget_instance_to_dashboard(widget_instance, dashboard) do
+  def add_widget_instance_to_dashboard(widget_instance, dashboard, order) do
     case Dashboards.get_instance(dashboard, widget_instance) do
       nil ->
         dashboard
-        |> Dashboards.add_widget(widget_instance)
+        |> Dashboards.add_widget(widget_instance, order)
 
       %DashboardWidget{} ->
         nil
