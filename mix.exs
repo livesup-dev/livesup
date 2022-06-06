@@ -2,7 +2,7 @@ defmodule LiveSup.MixProject do
   use Mix.Project
 
   @elixir_requirement "~> 1.13"
-  @version "0.0.1"
+  @version "0.0.2"
   @description "Add transparency to the services you use and it creates a layer that organizes and simplifies the information you need when you need it"
 
   def project do

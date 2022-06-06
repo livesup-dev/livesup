@@ -9,7 +9,7 @@ defmodule LiveSup.Core.Widgets.Jira.ListOfIssues.Handler do
     with {:ok, jira_schema} <- user |> Links.get_jira_link(datasource_instance) do
       statuses_line = statuses |> build_statuses()
 
-      "assignee = #{jira_schema.account_id} AND (#{statuses_line}) OR (updated > -3d AND assignee = #{jira_schema.account_id})"
+      "assignee = #{jira_schema.account_id} AND (#{statuses_line}) OR (updated > -3d AND assignee = #{jira_schema.account_id}) order by status"
       |> JiraDatasource.search_tickets(token: token, domain: domain)
     else
       {:error, message} ->
