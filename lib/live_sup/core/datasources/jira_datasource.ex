@@ -8,6 +8,9 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   # JIRA Agile REST API Reference
   # https://docs.atlassian.com/jira-software/REST/7.0.4/
   #
+  # Basic authentication
+  # https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/#supply-basic-auth-headers
+  #
   @api_path "/rest/api/3"
   @agile_api_path "/rest/agile/1.0"
   def search_user(email_or_name, token: token, domain: domain) do
