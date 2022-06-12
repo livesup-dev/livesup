@@ -79,7 +79,14 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
 
   defp parse(body), do: {:ok, body |> Jason.decode!()}
   defp parse_error(body, "application/json"), do: {:error, body |> Jason.decode!()}
-  defp parse_error(body, _), do: {:error, body}
+
+  defp parse_error(body, _) do
+    with {:ok, error_message} <- body |> Jason.decode() do
+      {:error, error_message}
+    else
+      _ -> {:error, body}
+    end
+  end
 
   defp find_content_type(headers) do
     headers
