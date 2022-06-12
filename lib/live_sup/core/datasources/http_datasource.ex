@@ -80,6 +80,7 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
   defp parse(body), do: {:ok, body |> Jason.decode!()}
   defp parse_error(body, "application/xml;charset=UTF-8"), do: {:error, body}
   defp parse_error(body, "text/html; charset=utf-8"), do: {:error, body}
+  defp parse_error(body, "text/html"), do: {:error, body}
   defp parse_error(body, _), do: {:error, body |> Jason.decode!()}
 
   defp find_content_type(headers) do
