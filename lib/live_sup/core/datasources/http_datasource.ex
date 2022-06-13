@@ -23,6 +23,10 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
     Finch.build(action, url, headers, body |> Jason.encode!())
     |> Finch.request(SupFinch)
     |> execute
+  rescue
+    e in ArgumentError ->
+      e
+      {:error, e.message}
   end
 
   defp manage_request(action, url, headers) do
