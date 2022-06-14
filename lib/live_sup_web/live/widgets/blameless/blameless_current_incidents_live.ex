@@ -36,7 +36,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                         <img src={incident.commander[:avatar_url]} class="w-6 h-6 rounded-full transition-opacity duration-200 flex-none mr-2"/>
                         <p class="text-base flex-grow">
                           <span class="block"><%= incident.commander[:full_name] %></span>
-                          <span class="text-xs block">(<%= incident.commander[:title] %>)</span>
+                          <span class="text-xs block"><%= commander_title(incident.commander) %></span>
                         </p>
                       </div>
                       <% else %>
@@ -115,4 +115,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
     </.live_component>
     """
   end
+
+  def commander_title(%{title: ""}), do: ""
+  def commander_title(%{title: title}), do: "(#{title})"
 end
