@@ -34,15 +34,23 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
       "attributes" => %{
         "columns" => [
           %{
-            "values" => [value]
+            "values" => value
           }
         ]
       }
     } = element
 
+    parsed_value =
+      if length(value) == 0 do
+        0
+      else
+        value
+        |> List.first()
+      end
+
     # TODO: We need to find a way to convert this value
     # to the real unit
-    {:ok, %{value: value * 1000}}
+    {:ok, %{value: parsed_value * 1000}}
   end
 
   defp process_error(error), do: {:error, error}

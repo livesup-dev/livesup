@@ -45,7 +45,7 @@ Besides the "business goal" mentioned above there are also a few technical goals
 
 ![](/docs/images/dashboard-full.png)
 
-Livesup is an application that lets you concentrate information from different services or datastores in a dashboard. The information is displayed with predefined widgets. Each widget is responsible for reading and displaying the data correctly. For instance the `Github Pull Requests` widget will fetch the last n open/close pull requests from a repository and will display accordingly.
+Livesup is an application that lets you concentrate information from different services or datastores in a dashboard, it's a jumping off point. The information is displayed with predefined widgets. Each widget is responsible for reading and displaying the data correctly. For instance the `Github Pull Requests` widget will fetch the last n open/close pull requests from a repository and will display accordingly.
 
 The app has 3 main "sections": 
 * An API(/api) that let you perform some actions like:
