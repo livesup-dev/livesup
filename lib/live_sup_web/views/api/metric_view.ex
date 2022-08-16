@@ -17,7 +17,9 @@ defmodule LiveSupWeb.Api.MetricView do
       slug: metric.slug,
       target: metric.target,
       unit: metric.unit,
-      settings: metric.settings
+      settings: metric.settings,
+      inserted_at: metric.inserted_at,
+      updated_at: metric.updated_at
     }
   end
 end

@@ -17,7 +17,9 @@ defmodule LiveSupWeb.Api.WidgetView do
       description: widget.description,
       ui_handler: widget.ui_handler,
       worker_handler: widget.worker_handler,
-      slug: widget.slug
+      slug: widget.slug,
+      inserted_at: widget.inserted_at,
+      updated_at: widget.updated_at
     }
   end
 end

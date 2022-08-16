@@ -19,7 +19,9 @@ defmodule LiveSupWeb.Api.DashboardView do
       default: dashboard.default,
       project: %{
         id: dashboard.project_id
-      }
+      },
+      inserted_at: dashboard.inserted_at,
+      updated_at: dashboard.updated_at
     }
   end
 
@@ -30,7 +32,9 @@ defmodule LiveSupWeb.Api.DashboardView do
       labels: dashboard.labels,
       settings: dashboard.settings,
       default: dashboard.default,
-      project: render_one(dashboard.project, ProjectView, "project.json")
+      project: render_one(dashboard.project, ProjectView, "project.json"),
+      inserted_at: dashboard.inserted_at,
+      updated_at: dashboard.updated_at
     }
   end
 end

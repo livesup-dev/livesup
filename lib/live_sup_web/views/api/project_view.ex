@@ -15,7 +15,9 @@ defmodule LiveSupWeb.Api.ProjectView do
       id: project.id,
       name: project.name,
       avatar_url: project.avatar_url,
-      internal: project.internal
+      internal: project.internal,
+      inserted_at: project.inserted_at,
+      updated_at: project.updated_at
     }
   end
 end

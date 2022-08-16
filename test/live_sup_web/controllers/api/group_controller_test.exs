@@ -33,7 +33,9 @@ defmodule LiveSupWeb.Api.GroupControllerTest do
                  "name" => group.name,
                  "slug" => group.slug,
                  "id" => group.id,
-                 "internal" => false
+                 "internal" => false,
+                 "inserted_at" => NaiveDateTime.to_iso8601(group.inserted_at),
+                 "updated_at" => NaiveDateTime.to_iso8601(group.updated_at)
                }
              ]
     end

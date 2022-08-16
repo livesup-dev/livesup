@@ -44,7 +44,9 @@ defmodule LiveSupWeb.Api.UserControllerTest do
                  "avatar_url" => nil,
                  "confirmed_at" => nil,
                  "id" => user.id,
-                 "location" => %{}
+                 "location" => %{},
+                 "inserted_at" => NaiveDateTime.to_iso8601(user.inserted_at),
+                 "updated_at" => NaiveDateTime.to_iso8601(user.updated_at)
                }
              ]
     end

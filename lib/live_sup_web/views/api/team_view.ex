@@ -14,7 +14,11 @@ defmodule LiveSupWeb.Api.TeamView do
     %{
       id: team.id,
       name: team.name,
-      avatar_url: team.avatar_url
+      slug: team.slug,
+      description: team.description,
+      avatar_url: team.avatar_url,
+      inserted_at: team.inserted_at,
+      updated_at: team.updated_at
     }
   end
 end

@@ -15,7 +15,9 @@ defmodule LiveSupWeb.Api.LinkView do
       id: link.id,
       settings: link.settings,
       user_id: link.user_id,
-      datasource_instance_id: link.datasource_instance_id
+      datasource_instance_id: link.datasource_instance_id,
+      inserted_at: link.inserted_at,
+      updated_at: link.updated_at
     }
   end
 end

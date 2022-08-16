@@ -18,7 +18,9 @@ defmodule LiveSupWeb.Api.UserView do
       avatar_url: user.avatar_url,
       email: user.email,
       confirmed_at: user.confirmed_at,
-      location: user.location
+      location: user.location,
+      inserted_at: user.inserted_at,
+      updated_at: user.updated_at
     }
   end
 end

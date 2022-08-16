@@ -15,7 +15,9 @@ defmodule LiveSupWeb.Api.GroupView do
       id: group.id,
       internal: group.internal,
       name: group.name,
-      slug: group.slug
+      slug: group.slug,
+      inserted_at: group.inserted_at,
+      updated_at: group.updated_at
     }
   end
 end
