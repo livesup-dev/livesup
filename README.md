@@ -56,6 +56,8 @@ The app has 3 main "sections":
 * The "front end" (/)
 * The backend (/admin)
 
+Take a loook to our [public roadmap](https://github.com/livesup-dev/roadmap)
+
 ## What is it not?
 
 Livesup is NOT meant to replace any of the datasources it consumes. It is not meant to be used as a debugging tool or an advanced troubleshooting service.
