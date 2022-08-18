@@ -53,5 +53,10 @@ defmodule LiveSup.Queries.GroupQuery do
     |> Repo.one!()
   end
 
+  def delete_all do
+    base()
+    |> Repo.delete_all()
+  end
+
   def base, do: from(Group, as: :group)
 end

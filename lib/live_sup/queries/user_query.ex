@@ -64,6 +64,11 @@ defmodule LiveSup.Queries.UserQuery do
     |> Repo.delete()
   end
 
+  def delete_all() do
+    base()
+    |> Repo.delete_all()
+  end
+
   def search(%{value: value, not_in_team: team_id}) do
     search_for = "%#{value}%"
 

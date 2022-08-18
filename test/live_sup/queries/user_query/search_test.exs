@@ -3,7 +3,7 @@ defmodule LiveSup.Tests.Queries.UserQuery.SearchTest do
   use LiveSup.DataCase
 
   alias LiveSup.Queries.UserQuery
-  alias LiveSup.Core.Teams
+  alias LiveSup.Core.{Teams, Users}
   alias LiveSup.Test.AccountsFixtures
 
   setup [:setup_users]
@@ -97,6 +97,8 @@ defmodule LiveSup.Tests.Queries.UserQuery.SearchTest do
   end
 
   def setup_users(context) do
+    Users.delete_all()
+
     [
       %{
         email: "john@livesup.com",

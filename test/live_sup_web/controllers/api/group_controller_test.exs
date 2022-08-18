@@ -4,6 +4,7 @@ defmodule LiveSupWeb.Api.GroupControllerTest do
   import LiveSup.Test.GroupsFixtures
 
   alias LiveSup.Schemas.Group
+  alias LiveSup.Core.Groups
 
   @create_attrs %{
     internal: true,
@@ -22,6 +23,8 @@ defmodule LiveSupWeb.Api.GroupControllerTest do
   describe "index" do
     @describetag :group_request
     setup do
+      Groups.delete_all()
+
       %{group: group_fixture()}
     end
 

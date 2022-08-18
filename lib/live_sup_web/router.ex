@@ -76,7 +76,12 @@ defmodule LiveSupWeb.Router do
     end
 
     resources "/dashboards", DashboardController, except: [:index, :new, :create]
-    resources "/todos", TodoController, except: [:index, :new, :create]
+
+    resources "/todos", TodoController, except: [:index, :new, :create] do
+      resources "/tasks", TaskController, only: [:index, :create]
+    end
+
+    resources "/tasks", TaskController, except: [:index, :new, :create]
 
     resources "/users", UserController do
       post "/links/scan", LinkScanController, :create

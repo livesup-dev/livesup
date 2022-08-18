@@ -2,7 +2,7 @@ defmodule LiveSup.Schemas.Todo do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias LiveSup.Schemas.{Project, User, Todo}
+  alias LiveSup.Schemas.{Project, User, Todo, TodoTask}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -11,9 +11,12 @@ defmodule LiveSup.Schemas.Todo do
     field :title, :string
     field :description, :string
     field :color_code, :string
+    field :position, :integer
 
     belongs_to :project, Project
-    belongs_to :author, User
+    belongs_to :created_by, User
+
+    has_many :tasks, TodoTask
 
     timestamps()
   end
@@ -26,8 +29,9 @@ defmodule LiveSup.Schemas.Todo do
     :project_id,
     :description,
     # This field should be required
-    :author_id,
-    :color_code
+    :created_by_id,
+    :color_code,
+    :position
   ]
 
   def changeset(%Todo{} = model, attrs) do

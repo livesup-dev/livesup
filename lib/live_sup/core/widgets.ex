@@ -63,6 +63,20 @@ defmodule LiveSup.Core.Widgets do
     |> WidgetQuery.create!()
   end
 
+  def find_or_create(%{slug: slug} = attrs) do
+    widget = WidgetQuery.get_by_slug(slug)
+
+    case widget do
+      nil ->
+        attrs
+        |> WidgetQuery.create()
+        |> elem(1)
+
+      widget ->
+        {:ok, widget}
+    end
+  end
+
   @doc """
   Updates a widget.
 
