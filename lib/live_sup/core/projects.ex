@@ -36,10 +36,16 @@ defmodule LiveSup.Core.Projects do
   """
   defdelegate get!(id), to: ProjectQuery
   defdelegate get(id), to: ProjectQuery
+  defdelegate get_with_todos!(id), to: ProjectQuery
   defdelegate get_with_dashboards!(id), to: ProjectQuery
 
   def get_with_dashboards(id) do
     ProjectQuery.get_with_dashboards(id)
+    |> found()
+  end
+
+  def get_with_todos(id) do
+    ProjectQuery.get_with_todos(id)
     |> found()
   end
 

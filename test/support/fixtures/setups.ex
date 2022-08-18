@@ -1,5 +1,12 @@
 defmodule LiveSup.Test.Setups do
-  alias LiveSup.Test.{DatasourcesFixtures, ProjectsFixtures, DashboardsFixtures, GroupsFixtures}
+  alias LiveSup.Test.{
+    TodosFixtures,
+    DatasourcesFixtures,
+    ProjectsFixtures,
+    DashboardsFixtures,
+    GroupsFixtures
+  }
+
   alias LiveSup.Core.{Groups, Dashboards}
 
   def setup_dashboard(context) do
@@ -27,6 +34,14 @@ defmodule LiveSup.Test.Setups do
 
     context
     |> add_to_context(%{project: project})
+  end
+
+  def setup_todos(context) do
+    todo1 = TodosFixtures.todo_fixture(context[:project], %{author_id: context[:user].id})
+    todo2 = TodosFixtures.todo_fixture(context[:project], %{author_id: context[:user].id})
+
+    context
+    |> add_to_context(%{todos: [todo1, todo2]})
   end
 
   def setup_groups(context) do

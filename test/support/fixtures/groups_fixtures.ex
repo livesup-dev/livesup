@@ -13,6 +13,15 @@ defmodule LiveSup.Test.GroupsFixtures do
   end
 
   def administrator_group_fixture(attrs \\ %{}) do
+    group = Groups.get_by_slug("administrators")
+
+    case group do
+      nil -> create_administrator_group(attrs)
+      _ -> group
+    end
+  end
+
+  defp create_administrator_group(attrs) do
     attrs
     |> Enum.into(admin_default_attrs())
     |> Groups.create()
@@ -20,6 +29,15 @@ defmodule LiveSup.Test.GroupsFixtures do
   end
 
   def all_users_group_fixture(attrs \\ %{}) do
+    group = Groups.get_by_slug("all-users")
+
+    case group do
+      nil -> create_all_users_group(attrs)
+      _ -> group
+    end
+  end
+
+  defp create_all_users_group(attrs) do
     attrs
     |> Enum.into(all_users_default_attrs())
     |> Groups.create()
