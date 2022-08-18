@@ -2,7 +2,7 @@ defmodule LiveSup.Schemas.Project do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias LiveSup.Schemas.{ProjectGroup, Dashboard, DatasourceInstance}
+  alias LiveSup.Schemas.{ProjectGroup, Dashboard, DatasourceInstance, Todo}
   alias LiveSup.Schemas.Slugs.ProjectSlug
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -20,6 +20,7 @@ defmodule LiveSup.Schemas.Project do
     has_many :projects_groups, ProjectGroup
     has_many :groups, through: [:projects_groups, :groups]
     has_many :dashboards, Dashboard
+    has_many :todos, Todo
     has_many :datasource_instances, DatasourceInstance
 
     timestamps()

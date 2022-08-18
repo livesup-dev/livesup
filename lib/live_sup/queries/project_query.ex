@@ -32,9 +32,24 @@ defmodule LiveSup.Queries.ProjectQuery do
     |> Repo.get(id)
   end
 
+  def get_with_todos!(id) do
+    get_with_todos_query()
+    |> Repo.get!(id)
+  end
+
+  def get_with_todos(id) do
+    get_with_todos_query()
+    |> Repo.get(id)
+  end
+
   defp get_with_dashboard_query() do
     base()
     |> with_dashboards()
+  end
+
+  defp get_with_todos_query() do
+    base()
+    |> with_todos()
   end
 
   def create(attrs) do
@@ -127,6 +142,11 @@ defmodule LiveSup.Queries.ProjectQuery do
   def with_dashboards(query \\ base()) do
     query
     |> preload(:dashboards)
+  end
+
+  def with_todos(query \\ base()) do
+    query
+    |> preload(:todos)
   end
 
   def base, do: from(Project, as: :project)

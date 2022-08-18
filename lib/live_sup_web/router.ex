@@ -72,9 +72,11 @@ defmodule LiveSupWeb.Router do
 
     resources "/projects", ProjectController do
       resources "/dashboards", DashboardController, only: [:index, :create]
+      resources "/todos", TodoController, only: [:index, :create]
     end
 
     resources "/dashboards", DashboardController, except: [:index, :new, :create]
+    resources "/todos", TodoController, except: [:index, :new, :create]
 
     resources "/users", UserController do
       post "/links/scan", LinkScanController, :create
