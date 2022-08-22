@@ -203,7 +203,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
       labels: [],
       settings: %{"api_key" => nil}
     }
-    |> Datasources.create()
+    |> Datasources.find_or_create()
     |> weather_widget()
   end
 
@@ -224,7 +224,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
       },
       datasource_id: datasource.id
     }
-    |> Widgets.create!()
+    |> Widgets.find_or_create()
 
     :ok
   end

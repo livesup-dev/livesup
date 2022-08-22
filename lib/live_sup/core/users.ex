@@ -2,6 +2,7 @@ defmodule LiveSup.Core.Users do
   alias LiveSup.Queries.UserQuery
 
   defdelegate all(), to: UserQuery
+  defdelegate delete_all(), to: UserQuery
   defdelegate search(query), to: UserQuery
   defdelegate get!(id), to: UserQuery
   defdelegate get(id), to: UserQuery

@@ -4,7 +4,7 @@ defmodule LiveSup.Core.Todos do
   """
 
   alias LiveSup.Schemas.{Todo, Project}
-  alias LiveSup.Queries.{TodoQuery}
+  alias LiveSup.Queries.{TodoQuery, TaskQuery}
   alias LiveSup.Helpers.StringHelper
 
   @doc """
@@ -28,6 +28,11 @@ defmodule LiveSup.Core.Todos do
     id
     |> TodoQuery.get_with_project()
     |> found()
+  end
+
+  def get_tasks(todo_id) do
+    todo_id
+    |> TaskQuery.by_todo()
   end
 
   defp found(nil), do: {:error, :not_found}
@@ -74,6 +79,11 @@ defmodule LiveSup.Core.Todos do
   def update(%Todo{} = dashboard, attrs) do
     dashboard
     |> TodoQuery.update(attrs)
+  end
+
+  def add_task(attrs) do
+    attrs
+    |> TaskQuery.create()
   end
 
   @doc """

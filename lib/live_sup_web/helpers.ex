@@ -140,7 +140,4 @@ defmodule LiveSupWeb.Helpers do
     </div>
     """
   end
-
-  defdelegate ansi_string_to_html(string), to: LiveSupWeb.Helpers.ANSI
-  defdelegate ansi_string_to_html_lines(string), to: LiveSupWeb.Helpers.ANSI
 end

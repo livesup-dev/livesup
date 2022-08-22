@@ -14,6 +14,11 @@ defmodule LiveSup.Test.Core.GroupsTest do
     @invalid_attrs %{name: nil}
     @update_attrs %{name: "some updated name", internal: false}
 
+    setup do
+      Groups.delete_all()
+      :ok
+    end
+
     def group_fixture(attrs \\ %{}) do
       {:ok, group} =
         attrs

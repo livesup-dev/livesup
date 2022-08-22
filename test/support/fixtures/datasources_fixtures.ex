@@ -9,8 +9,21 @@ defmodule LiveSup.Test.DatasourcesFixtures do
   def datasource_fixture(attrs \\ %{}) do
     attrs
     |> Enum.into(default_attrs())
-    |> Datasources.create()
-    |> elem(1)
+    |> find_or_create()
+  end
+
+  defp find_or_create(%{slug: slug} = attrs) do
+    datasource = Datasources.get_by_slug(slug)
+
+    case datasource do
+      nil ->
+        attrs
+        |> Datasources.create()
+        |> elem(1)
+
+      datasource ->
+        datasource
+    end
   end
 
   def datasource_instance_fixture(datasource \\ datasource_fixture()) do

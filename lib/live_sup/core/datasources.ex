@@ -61,6 +61,7 @@ defmodule LiveSup.Core.Datasources do
   def get_instance!(instance_id), do: DatasourceInstanceQuery.get!(instance_id)
 
   def get_by_slug!(slug), do: DatasourceQuery.get_by_slug!(slug)
+  def get_by_slug(slug), do: DatasourceQuery.get_by_slug(slug)
 
   @doc """
   Creates a project.
@@ -77,6 +78,19 @@ defmodule LiveSup.Core.Datasources do
   def create(attrs \\ %{}) do
     attrs
     |> DatasourceQuery.create()
+  end
+
+  def find_or_create(%{slug: slug} = attrs) do
+    datasource = DatasourceQuery.get_by_slug(slug)
+
+    case datasource do
+      nil ->
+        attrs
+        |> DatasourceQuery.create()
+
+      datasource ->
+        {:ok, datasource}
+    end
   end
 
   @doc """

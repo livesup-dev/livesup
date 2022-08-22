@@ -25,6 +25,17 @@ defmodule LiveSup.Queries.DatasourceQuery do
     |> Repo.one!()
   end
 
+  def get_by_slug(slug) do
+    query =
+      from(
+        ds in Datasource,
+        where: ds.slug == ^slug
+      )
+
+    query
+    |> Repo.one()
+  end
+
   def create(attrs) do
     %Datasource{}
     |> Datasource.changeset(attrs)

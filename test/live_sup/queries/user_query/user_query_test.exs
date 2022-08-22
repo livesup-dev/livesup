@@ -12,7 +12,6 @@ defmodule LiveSup.Tests.Queries.UserQueryTest do
 
     test "return all" do
       all_users = UserQuery.all()
-
       assert length(all_users) == 3
     end
 

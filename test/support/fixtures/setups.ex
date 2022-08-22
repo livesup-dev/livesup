@@ -4,7 +4,8 @@ defmodule LiveSup.Test.Setups do
     DatasourcesFixtures,
     ProjectsFixtures,
     DashboardsFixtures,
-    GroupsFixtures
+    GroupsFixtures,
+    TasksFixtures
   }
 
   alias LiveSup.Core.{Groups, Dashboards}
@@ -34,6 +35,34 @@ defmodule LiveSup.Test.Setups do
 
     context
     |> add_to_context(%{project: project})
+  end
+
+  def setup_todo(context) do
+    todo = TodosFixtures.todo_fixture(context[:project], %{author_id: context[:user].id})
+
+    context
+    |> add_to_context(%{todo: todo})
+  end
+
+  def setup_task(context) do
+    context = context |> manage_todo()
+
+    task =
+      context
+      |> Map.get(:todo)
+      |> TasksFixtures.task_fixture()
+
+    context
+    |> add_to_context(%{task: task})
+  end
+
+  defp manage_todo(%{todo: _todo} = context), do: context
+
+  defp manage_todo(context) do
+    todo = context |> setup_todo() |> Map.get(:todo)
+
+    context
+    |> add_to_context(%{todo: todo})
   end
 
   def setup_todos(context) do
