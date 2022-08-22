@@ -6,7 +6,9 @@ defmodule LiveSupWeb.Live.Auth.ProjectAuth do
   alias LiveSup.Policies.{ProjectPolicy, DashboardPolicy}
   alias LiveSupWeb.Router.Helpers, as: Routes
 
-  def ensure_access_to_project(%{params: %{"project_id" => project_id}} = conn, _options \\ []) do
+  def ensure_access_to_project(conn, options \\ [])
+
+  def ensure_access_to_project(%{params: %{"project_id" => project_id}} = conn, _options) do
     current_user = conn |> get_current_user()
 
     project = Projects.get!(project_id)

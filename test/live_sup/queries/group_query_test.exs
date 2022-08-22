@@ -4,9 +4,7 @@ defmodule LiveSup.Tests.Queries.GroupQueryTest do
 
   import LiveSup.Test.Setups
 
-  alias LiveSup.Schemas.Group
   alias LiveSup.Queries.GroupQuery
-  alias LiveSup.Repo
 
   setup [:setup_groups]
 

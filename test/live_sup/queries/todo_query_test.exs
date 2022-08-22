@@ -4,6 +4,7 @@ defmodule LiveSup.Tests.Queries.TodoQueryTest do
 
   alias LiveSup.Queries.TodoQuery
   alias LiveSup.Core.{Projects}
+  alias LiveSup.Test.TodosFixtures
 
   import LiveSup.Test.Setups
 
@@ -26,6 +27,20 @@ defmodule LiveSup.Tests.Queries.TodoQueryTest do
 
       {:ok, found_project} = Projects.get_with_todos(project.id)
       assert length(found_project.todos) == 0
+    end
+
+    test "by_project/2", %{project: project} do
+      todos = TodoQuery.by_project(project)
+
+      assert length(todos) == 2
+    end
+
+    test "by_project/2 and archived", %{project: project} do
+      TodosFixtures.todo_archived_fixture(project)
+
+      todos = TodoQuery.by_project(project, %{archived: true})
+
+      assert length(todos) == 1
     end
 
     test "return all" do
@@ -58,6 +73,20 @@ defmodule LiveSup.Tests.Queries.TodoQueryTest do
 
       todo = TodoQuery.get!(first_todo.id)
       assert todo.title == "new title"
+    end
+
+    test "archive/1", %{todos: todos} do
+      first_todo =
+        todos
+        |> List.first()
+
+      {:ok, todo} = TodoQuery.archive(first_todo)
+
+      archived_todo = TodoQuery.get!(todo)
+
+      assert archived_todo.archived == true
+
+      assert NaiveDateTime.diff(NaiveDateTime.utc_now(), archived_todo.archived_at, :second) <= 1
     end
   end
 end

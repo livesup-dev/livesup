@@ -9,17 +9,19 @@ defmodule LiveSup.Queries.TodoQuery do
     |> Repo.all()
   end
 
-  def by_project(%Project{id: project_id}) do
+  def by_project(project, filter \\ %{})
+
+  def by_project(%Project{id: project_id}, filter) do
+    archived = Map.get(filter, :archived, false)
+
     base()
-    |> where([p], p.project_id == ^project_id)
-    |> order_by([todo], todo.name)
+    |> where([t], t.project_id == ^project_id and t.archived == ^archived)
+    |> order_by([todo], todo.inserted_at)
     |> Repo.all()
   end
 
-  def by_project(project_id) do
-    base()
-    |> where([p], p.project_id == ^project_id)
-    |> Repo.all()
+  def by_project(project_id, filter) when is_binary(project_id) do
+    by_project(%Project{id: project_id}, filter)
   end
 
   def get!(%Todo{id: todo_id}) do
@@ -74,6 +76,16 @@ defmodule LiveSup.Queries.TodoQuery do
 
     query
     |> Repo.delete_all()
+  end
+
+  def archive(%Todo{} = todo) do
+    attrs = %{
+      archived: true,
+      archived_at: NaiveDateTime.utc_now()
+    }
+
+    Todo.changeset(todo, attrs)
+    |> Repo.update()
   end
 
   def base, do: from(Todo, as: :todo, preload: [:project])
