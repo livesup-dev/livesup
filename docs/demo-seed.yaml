@@ -15,13 +15,11 @@ projects:
         avatar_url: https://picsum.photos/200/300
         default: false
         widgets:
-          -
-            id: 0be259d2-8450-4b2f-aea4-3b383ec1c34e
+          - id: 0be259d2-8450-4b2f-aea4-3b383ec1c34e
             datasource_slug: chuck-norries-datasource
             widget_slug: chuck-norris-joke
             name: Chuck Norris Joke
-          -
-            id: f81c5daa-ac42-4d19-b863-3d8495ac1e17
+          - id: f81c5daa-ac42-4d19-b863-3d8495ac1e17
             datasource_slug: local-datasource
             widget_slug: team-members
             name: My Cool Team
@@ -34,8 +32,7 @@ projects:
                 source: local
                 type: string
                 value: My Cool Team
-          -
-            id: bcee4d7d-f2b8-4b2a-9325-97f4299bf0e4
+          - id: bcee4d7d-f2b8-4b2a-9325-97f4299bf0e4
             datasource_slug: local-datasource
             widget_slug: metrics-gauge
             name: P95 Api Latency
@@ -48,6 +45,15 @@ projects:
                 source: local
                 type: string
                 value: p95-api-latency
+          - id: a17bad1c-a70d-4dc6-85b8-fb6543e23504
+            datasource_slug: local-datasource
+            widget_slug: note
+            name: Note
+            settings:
+              note:
+                source: local
+                type: string
+                value: test
           
 teams:
   - id: b58f3773-666f-4aa5-866b-793c94021e05
@@ -88,4 +94,14 @@ metrics:
       - id: 79e98e3e-4896-4dd4-9309-103f7272cd39
         value: 936
         value_date: 2022-01-28 00:00:00
+        
+notes:
+  - id: f1f14230-f546-443d-9b9f-a3cac60e1f96
+    title: Test note
+    slug: test
+    content: |
+      *This is a test
+      [Dinosuars](https://en.wikipedia.org/wiki/Dinosaurs)
+      **Some** of these **words** are bold.
+      ## Heading level 2
   
