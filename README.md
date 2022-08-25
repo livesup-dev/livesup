@@ -23,7 +23,9 @@ Disclaimer: it’s our first experience with Elixir/Phoenix so we are open to sc
 
 ---
 
-Join our community on [Slack](https://join.slack.com/t/livesup-community/shared_invite/zt-1f6hn8log-QrrgQfaTpunxxMXf9U8MuA) if you have questions, or just to say hi 🎉.
+:warning: Join our community on [Slack](https://join.slack.com/t/livesup-community/shared_invite/zt-1f6hn8log-QrrgQfaTpunxxMXf9U8MuA) if you have questions, or just to say hi 🎉.
+
+---
 
 **Table of Contents**
 
