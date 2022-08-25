@@ -34,7 +34,7 @@ Disclaimer: it’s our first experience with Elixir/Phoenix so we are open to sc
 1. [Technical Goals](#technical-goals)
 1. [Public Roadmap](#public-roadmap)
 1. [Running Livesup localy](#running-livesup-localy)
-1. [Developer Guide](/docs/developer-guide.md)
+1. [Developer Guide](/docs/develop/guide.md)
 
 ## What is Livesup?
 
