@@ -18,6 +18,18 @@ defmodule LiveSup.Test.TodosFixtures do
     |> Todos.get!()
   end
 
+  def todo_archived_fixture(%Project{} = project, attrs \\ %{}) do
+    attrs =
+      attrs
+      |> Enum.into(default_attrs())
+      |> Enum.into(%{archived: true})
+
+    project
+    |> Todos.create(attrs)
+    |> elem(1)
+    |> Todos.get!()
+  end
+
   defp default_attrs do
     %{
       title: "Upgrade libs - #{System.unique_integer()}",

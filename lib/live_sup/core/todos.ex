@@ -16,7 +16,8 @@ defmodule LiveSup.Core.Todos do
       [%Todo{}, ...]
 
   """
-  defdelegate by_project(project_id), to: TodoQuery
+  defdelegate by_project(project, filter \\ %{}), to: TodoQuery
+  defdelegate archive(todo), to: TodoQuery
 
   def get(id) do
     id

@@ -12,6 +12,8 @@ defmodule LiveSup.Schemas.Todo do
     field :description, :string
     field :color_code, :string
     field :position, :integer
+    field :archived, :boolean
+    field :archived_at, :naive_datetime
 
     belongs_to :project, Project
     belongs_to :created_by, User
@@ -31,7 +33,9 @@ defmodule LiveSup.Schemas.Todo do
     # This field should be required
     :created_by_id,
     :color_code,
-    :position
+    :position,
+    :archived,
+    :archived_at
   ]
 
   def changeset(%Todo{} = model, attrs) do

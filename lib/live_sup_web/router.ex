@@ -147,6 +147,7 @@ defmodule LiveSupWeb.Router do
     live "/welcome/thank-you", WelcomeLive, :thank_you
 
     live "/projects", Project.ProjectLive, :index
+    live "/projects/:id/board", Project.ProjectBoardLive, :index
     live "/projects/new", Project.ProjectLive, :new
     live "/projects/:id/dashboards", Project.DashboardLive, :index
     live "/projects/:id/dashboards/new", Project.DashboardLive, :new
@@ -156,6 +157,7 @@ defmodule LiveSupWeb.Router do
     live "/dashboards/:dashboard_id/widgets/:id", Dashboard.WidgetLive, :add
     live "/projects/:project_id/datasources", Project.DatasourceLive, :index
     live "/projects/:project_id/datasources/:id/edit", Project.DatasourceLive, :edit
+    live "/projects/:id/todos", Project.ManageTodosLive, :index
 
     live "/teams/new", Teams.TeamListLive, :new
     live "/teams", Teams.TeamListLive, :index
