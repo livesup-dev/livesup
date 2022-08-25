@@ -24,6 +24,26 @@ Disclaimer: it’s our first experience with Elixir/Phoenix so we are open to sc
 ---
 
 Join our community on [Slack](https://join.slack.com/t/livesup-community/shared_invite/zt-1f6hn8log-QrrgQfaTpunxxMXf9U8MuA) if you have questions, or just to say hi 🎉.
+
+**Table of Contents**
+
+1. [What is Livesup?](##what-is-livesu)
+1. [Business Goals](#business-goals)
+1. [Technical Goals](#technical-goals)
+1. [Public Roadmap](#public-roadmap)
+1. [Running Livesup localy](#running-livesup-localy)
+1. [Developer Guide](/docs/developer-guide.md)
+
+## What is Livesup?
+
+![](/docs/images/dashboard-full.png)
+
+Livesup is an application that lets you concentrate information from different services or datastores in a dashboard, it's a jumping off point. The information is displayed with predefined widgets. Each widget is responsible for reading and displaying the data correctly. For instance the `Github Pull Requests` widget will fetch the last n open/close pull requests from a repository and will display accordingly.
+
+## What is it not?
+
+Livesup is NOT meant to replace any of the datasources it consumes. It is not meant to be used as a debugging tool or an advanced troubleshooting service.
+
 ## Business Goals
 
 * Have fun!
@@ -41,38 +61,11 @@ Besides the "business goal" mentioned above there are also a few technical goals
 * Build a rich and dynamic application without javascript (or as little as possible)
 * Build a more "complex" and "real" application that helps others understand that you can do much more than just a chat or a ToDo app with a Elixir/phoenix :)
 
-## What is Livesup?
+## Public roadmap
 
-![](/docs/images/dashboard-full.png)
+Our [product roadmap](https://github.com/orgs/livesup-dev/projects/2) is where you can learn about what features we're working on, what stage they're in, and when we expect to bring them to you. Have any questions or comments about items on the roadmap? Share your feedback via Livesup public discussions.
 
-Livesup is an application that lets you concentrate information from different services or datastores in a dashboard, it's a jumping off point. The information is displayed with predefined widgets. Each widget is responsible for reading and displaying the data correctly. For instance the `Github Pull Requests` widget will fetch the last n open/close pull requests from a repository and will display accordingly.
-
-The app has 3 main "sections": 
-* An API(/api) that let you perform some actions like:
-  * Manage users
-  * Manage teams
-  * Manage projects
-  * [Seeding](#seeding)
-* The "front end" (/)
-* The backend (/admin)
-
-Take a loook to our [public roadmap](https://github.com/livesup-dev/roadmap)
-
-## What is it not?
-
-Livesup is NOT meant to replace any of the datasources it consumes. It is not meant to be used as a debugging tool or an advanced troubleshooting service.
-
-## How data is structure
-
-Livesup has a very flexible data structure that lets you organize the data in the way you want. The top level component is a "Project". A Project can be part of more projects (the current UI only supports one level of projects), and it can have several dashboards, each dashboard has widgets. 
-
-![](/docs/images/projects-data-structure.png)
-
-The relationship between users and projects, is controlled by `Groups`. A Group can have many projects and users. So you can control who can see what. New signup will be associated to a default group called `All Users`. And any new project will be associated to that group by default, meaning that when you create a project it will become available to all existing users. 
-
-![](/docs/images/users-projects.png)
-
-## Building and running Livesup localy
+## Running Livesup localy
 
 If you already have a Postgres server running you can just use the following, replacing the envs with your values
 
@@ -90,46 +83,6 @@ docker run --rm \
 ```
 
 Or you could just do `docker-compose up` using the existing [docker-compose.yml](docker-compose.yml) file.
-
-## Seeding
-
-Since we don't have a proper UI yet to manage all the components. The easiest way to seed the app is to use a YAML definition. You can see the demo [here](/docs/demo-seed.yaml). 
- 
-There are 2 ways you can import that file. 
-* Console
-
-Log in into the console and do: 
-
-```
-YamlElixir.read_from_file('docs/demo-seed.yaml')
-|> LiveSup.LiveSup.DataImporter.Importer.import()
-```
-
-* API
-
-To use the API you first need to have a valid token, to do that, you can use the following curl command (change the host accordingly):
-
-```
-curl --location --request POST 'http://localhost:4000/api/sessions' \
---header 'accept: application/json' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "email": "emiliano@summing-up.com",
-    "password": "Very@Safe@Password"
-}'
-```
-
-Grab the token and convert the yaml file into json. You can use `jq --raw-input --slurp < demo-seed.yaml`
-
-```
-curl --location --request POST 'http://localhost:4000/api/seed' \
---header 'Authorization: Bearer YOUR-TOKEN-HERE' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "data":"....."
-  }'
-```
-
 
 
 ## Copyright and License
