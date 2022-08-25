@@ -99,7 +99,7 @@ defmodule LiveSup.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "npm install --prefix assets"],
+      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
       # , "run priv/repo/seeds.exs"
       "ecto.setup": ["ecto.create", "ecto.migrate", "live_sup.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup", "live_sup.seed"],
