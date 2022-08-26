@@ -66,19 +66,19 @@ defmodule LiveSup.Core.Todos do
   end
 
   @doc """
-  Updates a dashboard.
+  Updates a todo.
 
   ## Examples
 
-      iex> update(dashboard, %{field: new_value})
+      iex> update(todo, %{field: new_value})
       {:ok, %Todo{}}
 
-      iex> update(dashboard, %{field: bad_value})
+      iex> update(todo, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update(%Todo{} = dashboard, attrs) do
-    dashboard
+  def update(%Todo{} = todo, attrs) do
+    todo
     |> TodoQuery.update(attrs)
   end
 
@@ -88,19 +88,19 @@ defmodule LiveSup.Core.Todos do
   end
 
   @doc """
-  Deletes a dashboard.
+  Deletes a todo.
 
   ## Examples
 
-      iex> delete(dashboard)
+      iex> delete(todo)
       {:ok, %Todo{}}
 
-      iex> delete(dashboard)
+      iex> delete(todo)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete(%Todo{} = dashboard) do
-    dashboard
+  def delete(%Todo{} = todo) do
+    todo
     |> TodoQuery.delete()
   end
 
@@ -110,15 +110,15 @@ defmodule LiveSup.Core.Todos do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking dashboard changes.
+  Returns an `%Ecto.Changeset{}` for tracking todo changes.
 
   ## Examples
 
-      iex> change(dashboard)
+      iex> change(todo)
       %Ecto.Changeset{data: %Todo{}}
 
   """
-  def change(%Todo{} = dashboard, attrs \\ %{}) do
-    Todo.changeset(dashboard, attrs)
+  def change(%Todo{} = todo, attrs \\ %{}) do
+    Todo.changeset(todo, attrs)
   end
 end

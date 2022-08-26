@@ -21,7 +21,6 @@
                         <a class="text-black dark:text-primary hover:underline break-all basis-9/10" href={Routes.dashboard_path(LiveSupWeb.Endpoint, :show, dashboard.id)}><%= dashboard.name %></a>
                      </div>
                     <% end %>
-                     
                   </div>
             </div>
             <!-- /Widget Content -->
@@ -33,7 +32,9 @@
          <div class="bg-white rounded-md dark:bg-darker min-h-[202px]">
             <!--Title -->
             <div class="flex items-center justify-between p-2 border-b dark:border-primary" data-phx-component="2" id="f81c5daa-ac42-4d19-b863-3d8495ac1e17-2-0">
-               <h4 class="text-base font-semibold text-gray-500 dark:text-light">ToDos</h4>
+               <h4 class="text-base font-semibold text-gray-500 dark:text-light">
+               <a href={Routes.manage_todos_path(LiveSupWeb.Endpoint, :index, @project.id)}>ToDos</a>
+               </h4>
                <div class="flex items-right space-x-2">
                </div>
             </div>
@@ -41,7 +42,7 @@
                   <div class="divide-y divide-gray-100 dark:divide-gray-500 ">
                     <%= for(todo <- @todos) do %>
                      <div class="gap-4 py-2 flex">
-                        <a class="text-black dark:text-primary hover:underline break-all basis-9/10" href={Routes.manage_todos_path(LiveSupWeb.Endpoint, :index, @project.id)}><%= todo.title %></a>
+                        <a class="text-black dark:text-primary hover:underline break-all basis-9/10" href={Routes.manage_todo_path(LiveSupWeb.Endpoint, :show, todo.id)}><%= todo.title %></a>
                      </div>
                     <% end %>
                   </div>

@@ -2,8 +2,11 @@
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
 import '../css/app.scss'
+import 'flatpickr/dist/flatpickr.min.css';
+
 import 'remixicon/fonts/remixicon.css'
 import VegaLite from "./vega_lite";
+import Pickr from "./pickr"
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -29,7 +32,8 @@ let Hooks = {
   VegaLite,
   Drag,
   PlotlyHook,
-  GoogleMapHook
+  GoogleMapHook,
+  Pickr
 }
 // Hooks.Example = { mounted() { } }
 
