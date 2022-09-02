@@ -71,6 +71,8 @@ Our [product roadmap](https://github.com/orgs/livesup-dev/projects/2) is where y
 
 If you already have a Postgres server running you can just use the following, replacing the envs with your values
 
+For the `GUARDIAN_SECRET` env var if you have elixir/phoenix running locally you can generate a new key using `mix phx.gen.secret`
+
 ```
 docker run --rm \
     -e DATABASE_URL=postgres://postgres:postgres@docker.for.mac.localhost:5432/livesup \
@@ -79,6 +81,7 @@ docker run --rm \
     -e PGUSER=postgres \
     -e PGPASSWORD=postgres \
     -e PGDATABASE=livesup \
+    -e GUARDIAN_SECRET=your-secret \
     -p 8080:8080 \
     --pull always \
     livesup:edge
