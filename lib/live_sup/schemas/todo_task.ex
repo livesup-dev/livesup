@@ -13,7 +13,7 @@ defmodule LiveSup.Schemas.TodoTask do
     field :description, :string
     field :notes, :string
     field :completed, :boolean, default: false
-    field :due_on, :utc_datetime
+    field :due_on, LiveSup.Schemas.CustomTypes.Datetime
 
     belongs_to :parent, TodoTask
     belongs_to :todo, Todo

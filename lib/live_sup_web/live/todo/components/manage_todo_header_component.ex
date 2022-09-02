@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Todo.Components.BoardHeaderComponent do
+defmodule LiveSupWeb.Todo.Components.ManageTodoHeaderComponent do
   use LiveSupWeb, :component
 
   def render(assigns) do
@@ -8,7 +8,8 @@ defmodule LiveSupWeb.Todo.Components.BoardHeaderComponent do
         <%= link "Home", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white hidden md:block", to: Routes.home_path(LiveSupWeb.Endpoint, :index) %>
         <%= link "Projects", class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white", to: Routes.project_path(LiveSupWeb.Endpoint, :index) %>
         <%= link @project.name, class: "text-blue-500 after:mx-4 after:content-['>'] dark:after:text-white", to: Routes.dashboard_path(LiveSupWeb.Endpoint, :index, @project.id) %>
-        <span>Todos</span>
+        <span class="text-blue-500 after:mx-4 after:content-['>'] dark:after:text-white">Todos</span>
+        <span><%= @todo.title %></span>
       </div>
     </div>
     """

@@ -158,6 +158,10 @@ defmodule LiveSupWeb.Router do
     live "/projects/:project_id/datasources", Project.DatasourceLive, :index
     live "/projects/:project_id/datasources/:id/edit", Project.DatasourceLive, :edit
     live "/projects/:id/todos", Project.ManageTodosLive, :index
+    live "/projects/:id/todos/new", Project.ManageTodosLive, :new
+
+    live "/todos/:id/manage", Todo.ManageTodoLive, :show
+    live "/todos/:id/tasks/:task_id/edit", Todo.ManageTodoLive, :edit_task
 
     live "/teams/new", Teams.TeamListLive, :new
     live "/teams", Teams.TeamListLive, :index

@@ -11,15 +11,14 @@ defmodule LiveSup.Queries.TaskQuery do
   end
 
   def by_todo(%Todo{id: todo_id}) do
-    base()
-    |> where([p], p.todo_id == ^todo_id)
-    |> order_by([todo], todo.description)
-    |> Repo.all()
+    todo_id
+    |> by_todo()
   end
 
-  def by_todo(todo_id) do
+  def by_todo(todo_id) when is_binary(todo_id) do
     base()
     |> where([p], p.todo_id == ^todo_id)
+    |> order_by([task], asc: task.completed, desc: task.inserted_at)
     |> Repo.all()
   end
 
@@ -67,6 +66,12 @@ defmodule LiveSup.Queries.TaskQuery do
     |> Repo.update()
   end
 
+  def update!(%TodoTask{} = model, attrs) do
+    model
+    |> TodoTask.update_changeset(attrs)
+    |> Repo.update!()
+  end
+
   def delete(%TodoTask{} = model) do
     model
     |> Repo.delete()
@@ -86,6 +91,16 @@ defmodule LiveSup.Queries.TaskQuery do
   def delete_all(todo_id) when is_binary(todo_id) do
     %Todo{id: todo_id}
     |> delete_all
+  end
+
+  def complete!(task_id) when is_binary(task_id) do
+    get!(task_id)
+    |> update!(%{completed: true})
+  end
+
+  def incomplete!(task_id) when is_binary(task_id) do
+    get!(task_id)
+    |> update!(%{completed: false})
   end
 
   def base, do: from(TodoTask, as: :todo, preload: [:todo, :assigned_to, :created_by])

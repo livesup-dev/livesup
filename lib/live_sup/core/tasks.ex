@@ -17,6 +17,9 @@ defmodule LiveSup.Core.Tasks do
 
   """
   defdelegate by_todo(todo_id), to: TaskQuery
+  defdelegate get!(id), to: TaskQuery
+  defdelegate complete!(id), to: TaskQuery
+  defdelegate incomplete!(id), to: TaskQuery
 
   def get(id) do
     id
@@ -32,8 +35,6 @@ defmodule LiveSup.Core.Tasks do
 
   defp found(nil), do: {:error, :not_found}
   defp found(resource), do: {:ok, resource}
-
-  defdelegate get!(id), to: TaskQuery
 
   @doc """
   Creates a todo.
