@@ -82,6 +82,7 @@ defmodule LiveSup.MixProject do
       {:ecto_psql_extras, "~> 0.2"},
       {:bodyguard, "~> 2.4"},
       {:ecto_autoslug_field, "~> 3.0"},
+      {:mix_audit, "~> 2.0", only: [:dev, :test], runtime: false},
 
       # Auth
       {:guardian, "~> 2.0"},
