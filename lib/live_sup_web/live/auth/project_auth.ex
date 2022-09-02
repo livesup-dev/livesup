@@ -4,7 +4,6 @@ defmodule LiveSupWeb.Live.Auth.ProjectAuth do
   import Phoenix.Controller
   alias LiveSup.Core.{Projects, Dashboards}
   alias LiveSup.Policies.{ProjectPolicy, DashboardPolicy}
-  alias LiveSupWeb.Router.Helpers, as: Routes
 
   def ensure_access_to_project(conn, options \\ [])
 

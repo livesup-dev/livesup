@@ -219,7 +219,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
       labels: [],
       settings: %{
         # 12 hours
-        "runs_every" => %{"source" => "local", "type" => "int", "value" => 43200},
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 43_200},
         "location" => %{"source" => "local", "type" => "string", "value" => ""}
       },
       datasource_id: datasource.id

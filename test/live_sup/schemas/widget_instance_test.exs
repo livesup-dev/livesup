@@ -10,7 +10,7 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
         "widget_value" => %{
           "type" => "string",
           "source" => "local",
-          "value" => 99999
+          "value" => 99_999
         },
         "key" => %{
           "type" => "string",
@@ -91,7 +91,7 @@ defmodule LiveSup.Tests.Schemas.WidgetInstanceTest do
 
     assert WidgetInstance.get_setting(widget_instance, "token") == "1234"
 
-    assert WidgetInstance.get_setting(widget_instance, "runs_every") == 43200
+    assert WidgetInstance.get_setting(widget_instance, "runs_every") == 43_200
 
     assert WidgetInstance.get_setting(widget_instance, "ids") == ["hola", "chau"]
 

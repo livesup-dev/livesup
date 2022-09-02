@@ -25,7 +25,6 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
     |> execute
   rescue
     e in ArgumentError ->
-      e
       {:error, e.message}
   end
 

@@ -26,7 +26,7 @@ defmodule LiveSup.Tests.Queries.TodoQueryTest do
         |> TodoQuery.delete_all()
 
       {:ok, found_project} = Projects.get_with_todos(project.id)
-      assert length(found_project.todos) == 0
+      assert Enum.empty?(found_project.todos) == true
     end
 
     test "by_project/2", %{project: project} do
