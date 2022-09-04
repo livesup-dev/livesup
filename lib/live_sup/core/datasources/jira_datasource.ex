@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.JiraDatasource do
+  @moduledoc """
+    It provides an interface to the Jira API. Under the hood
+    it uses the HttpDataSource to perform the requests.
+  """
   alias LiveSup.Core.Datasources.HttpDatasource
   alias LiveSup.Helpers.DateHelper
 
@@ -75,22 +79,24 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   end
 
   def get_current_sprint_issues(board_id, token: token, domain: domain) do
-    with {:ok, %{id: current_sprint_id}} <-
-           board_id |> get_current_sprint(token: token, domain: domain) do
-      case HttpDatasource.get(
-             url:
-               build_url(
-                 "/sprint/#{current_sprint_id}/issue?fields=resolution,status,assignee,creator,description,summary,created",
-                 domain: domain,
-                 base_path: @agile_api_path
-               ),
-             headers: headers(token)
-           ) do
-        {:ok, response} -> parse_issues(response)
-        {:error, error} -> {:error, error}
-      end
-    else
-      {:error, error} -> {:error, error}
+    # TODO: This need to be refactored
+    case get_current_sprint(board_id, token: token, domain: domain) do
+      {:ok, %{id: current_sprint_id}} ->
+        case HttpDatasource.get(
+               url:
+                 build_url(
+                   "/sprint/#{current_sprint_id}/issue?fields=resolution,status,assignee,creator,description,summary,created",
+                   domain: domain,
+                   base_path: @agile_api_path
+                 ),
+               headers: headers(token)
+             ) do
+          {:ok, response} -> parse_issues(response)
+          {:error, error} -> {:error, error}
+        end
+
+      {:error, error} ->
+        {:error, error}
     end
   end
 

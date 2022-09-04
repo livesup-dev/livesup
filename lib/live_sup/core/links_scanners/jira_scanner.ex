@@ -30,25 +30,25 @@ defmodule LiveSup.Core.LinksScanners.JiraScanner do
   end
 
   defp create_link(%{id: datasource_instance_id} = datasource_instance, %{id: user_id} = user) do
-    with {:ok, account_id} <- user |> find_link(datasource_instance) do
-      debug("JiraScanner:link_found:#{account_id}")
+    case user |> find_link(datasource_instance) do
+      {:ok, account_id} ->
+        debug("JiraScanner:link_found:#{account_id}")
 
-      %{
-        datasource_instance_id: datasource_instance_id,
-        user_id: user_id,
-        settings: %LinkSchemas.Jira{account_id: account_id}
-      }
-      |> Links.create!()
-    else
+        %{
+          datasource_instance_id: datasource_instance_id,
+          user_id: user_id,
+          settings: %LinkSchemas.Jira{account_id: account_id}
+        }
+        |> Links.create!()
+
       {:error, error} ->
         {:error, error}
     end
   end
 
   defp find_link(%{email: email} = user, datasource_instance) do
-    with {:ok, account_id} <- find_jira_account(email, datasource_instance) do
-      {:ok, account_id}
-    else
+    case find_jira_account(email, datasource_instance) do
+      {:ok, account_id} -> {:ok, account_id}
       # If we can't find the user by email, let's
       # try with the full name
       {:error, _error} -> find_jira_account(User.full_name(user), datasource_instance)
@@ -59,9 +59,8 @@ defmodule LiveSup.Core.LinksScanners.JiraScanner do
     %{"token" => token, "domain" => domain} =
       DatasourceInstance.get_settings(datasource_instance, ["token", "domain"])
 
-    with {:ok, jira_user} <- JiraDatasource.search_user(thing, token: token, domain: domain) do
-      {:ok, jira_user[:account_id]}
-    else
+    case JiraDatasource.search_user(thing, token: token, domain: domain) do
+      {:ok, jira_user} -> {:ok, jira_user[:account_id]}
       {:error, error} -> {:error, error}
     end
   end

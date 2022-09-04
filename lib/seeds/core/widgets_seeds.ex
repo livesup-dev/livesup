@@ -178,7 +178,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       worker_handler: "LiveSup.Core.Widgets.Datadog.Scalar.Worker",
       labels: [],
       settings: %{
-        "runs_every" => %{"source" => "local", "type" => "int", "value" => 36000},
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 36_000},
         "query" => %{"source" => "local", "type" => "string", "value" => ""},
         "n_days" => %{"source" => "local", "type" => "int", "value" => "7"},
         "target" => %{"source" => "local", "type" => "string", "value" => ""},
@@ -199,7 +199,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       worker_handler: "LiveSup.Core.Widgets.Note.Worker",
       labels: [],
       settings: %{
-        "runs_every" => %{"source" => "local", "type" => "int", "value" => 36000},
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 36_000},
         "note" => %{"source" => "local", "type" => "string", "value" => ""}
       },
       datasource_id: datasource.id
@@ -361,7 +361,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       labels: [],
       settings: %{
         # 12 hours
-        "runs_every" => %{"source" => "local", "type" => "int", "value" => 43200},
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 43_200},
         "location" => %{"source" => "local", "type" => "string", "value" => ""}
       },
       datasource_id: http_datasource.id
@@ -539,7 +539,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       worker_handler: "LiveSup.Core.Widgets.Wordpress.DirectorySizes.Worker",
       labels: [],
       settings: %{
-        "runs_every" => %{"source" => "local", "type" => "int", "value" => 43200}
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 43_200}
       },
       datasource_id: datasource.id
     }
@@ -556,7 +556,7 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       worker_handler: "LiveSup.Core.Widgets.Wordpress.CoreHealthStatus.Worker",
       labels: [],
       settings: %{
-        "runs_every" => %{"source" => "local", "type" => "int", "value" => 43200}
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 43_200}
       },
       datasource_id: datasource.id
     }

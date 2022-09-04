@@ -60,9 +60,8 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     {:noreply, assign(socket, tasks: items)}
   end
 
-  def completed?(item) do
-    if not item.completed, do: "completed", else: ""
-  end
+  def completed?(%{completed: true}), do: "completed"
+  def completed?(%{completed: false}), do: ""
 
   def checked?(item) do
     item.completed

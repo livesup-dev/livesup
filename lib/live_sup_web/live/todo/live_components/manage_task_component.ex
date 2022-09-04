@@ -29,8 +29,6 @@ defmodule LiveSupWeb.ManageTodoLive.LiveComponents.ManageTaskComponent do
   end
 
   defp save(socket, :edit_task, task_params) do
-    IO.inspect(task_params)
-
     case Tasks.update(socket.assigns.todo_task, task_params) do
       {:ok, task} ->
         {:noreply,

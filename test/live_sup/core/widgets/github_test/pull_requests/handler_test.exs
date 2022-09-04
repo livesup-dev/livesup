@@ -71,7 +71,7 @@ defmodule LiveSup.Test.Core.Widgets.Github.PullRequests.HandlerTest do
                      user: %{
                        avatar_url: "https://avatars.githubusercontent.com/u/33770?v=4",
                        html_url: "https://github.com/marcandre",
-                       id: 33770,
+                       id: 33_770,
                        login: "marcandre"
                      },
                      merged_at: ~U[2021-10-29 22:03:49Z],
@@ -111,7 +111,7 @@ defmodule LiveSup.Test.Core.Widgets.Github.PullRequests.HandlerTest do
           user: %{
             avatar_url: "https://avatars.githubusercontent.com/u/33770?v=4",
             html_url: "https://github.com/marcandre",
-            id: 33770,
+            id: 33_770,
             login: "marcandre"
           },
           merged_at: ~U[2021-10-29 22:03:49Z],

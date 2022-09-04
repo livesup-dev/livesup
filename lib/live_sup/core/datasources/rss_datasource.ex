@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.RssDatasource do
+  @moduledoc """
+    It provides an interface to read and parse requests to an RSS feed.
+    Under the hood it uses the HttpDataSource to perform the requests.
+  """
   use Timex
   import LiveSup.Core.Datasources.Helper
 

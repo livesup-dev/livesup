@@ -33,9 +33,7 @@ defmodule LiveSup.Core.Widgets.Wordpress.CoreHealthStatus.Handler do
      }}
   end
 
-  defp add_server_details(
-         {%{"wp-server" => %{"php_version" => %{"value" => value}}} = data, details}
-       ) do
+  defp add_server_details({%{"wp-server" => %{"php_version" => %{"value" => value}}}, details}) do
     {:ok,
      details
      |> Map.merge(%{

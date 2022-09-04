@@ -49,8 +49,8 @@ defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.List.WorkerTest do
     end
 
     test "checking rss services status widget server" do
-      bypass_github = Bypass.open(port: 12344)
-      bypass_quay = Bypass.open(port: 12355)
+      bypass_github = Bypass.open(port: 12_344)
+      bypass_quay = Bypass.open(port: 12_355)
 
       Bypass.expect(bypass_github, "GET", "/github/history.rss", fn conn ->
         Plug.Conn.resp(conn, 200, github_response())

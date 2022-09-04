@@ -1,4 +1,7 @@
 defmodule LiveSup.Core.Datasources.MergeStatDatasource do
+  @moduledoc """
+    It provides an interface to the MergeStat API
+  """
   alias LiveSup.Core.Datasources.HttpDatasource
 
   @url "https://try.askgit.com/api/query"

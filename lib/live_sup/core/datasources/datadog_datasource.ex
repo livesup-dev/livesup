@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.DatadogDatasource do
+  @moduledoc """
+    It provides an interface to the Datadog API
+  """
+
   use Timex
   alias LiveSup.Core.Datasources.HttpDatasource
 
@@ -41,7 +45,7 @@ defmodule LiveSup.Core.Datasources.DatadogDatasource do
     } = element
 
     parsed_value =
-      if length(value) == 0 do
+      if Enum.empty?(value) do
         0
       else
         value

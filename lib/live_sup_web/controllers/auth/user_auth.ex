@@ -4,7 +4,6 @@ defmodule LiveSupWeb.Auth.UserAuth do
 
   alias LiveSup.Core.Accounts
   alias LiveSupWeb.Router.Helpers, as: Routes
-  alias LiveSup.Schemas.User
 
   # Make the remember me cookie valid for 60 days.
   # If you want bump or reduce this value, also change
@@ -32,7 +31,9 @@ defmodule LiveSupWeb.Auth.UserAuth do
     redirect_after_sign_in(conn, user, location, params)
   end
 
-  def welcome_user(conn, %{state: "onboarded"} = user, params \\ %{}) do
+  def welcome_user(conn, user, params \\ %{})
+
+  def welcome_user(conn, %{state: "onboarded"} = user, params) do
     redirect_after_sign_in(conn, user, "/", params)
   end
 
