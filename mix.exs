@@ -23,6 +23,16 @@ defmodule LiveSup.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test
+      ],
+
+      # Docs
+      source_url: "https://github.com/livesup-dev/livesup",
+      homepage_url: "https://livesup.dev/",
+      docs: [
+        # The main page in the docs
+        main: "LiveSup",
+        logo: "assets/static/images/logo.png",
+        extras: ["README.md"]
       ]
     ]
   end
@@ -87,7 +97,8 @@ defmodule LiveSup.MixProject do
       {:guardian, "~> 2.0"},
       {:ueberauth, "~> 0.6"},
       {:ueberauth_google, "~> 0.10"},
-      {:ueberauth_github, "~> 0.8"}
+      {:ueberauth_github, "~> 0.8"},
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false}
     ]
   end
 

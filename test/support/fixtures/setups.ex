@@ -1,4 +1,11 @@
 defmodule LiveSup.Test.Setups do
+  @moduledoc """
+    Module used for tests purposed. It comntains many different type of initializations
+
+    ## Examples
+
+        setup [:setup_user, :setup_project]
+  """
   alias LiveSup.Test.{
     TodosFixtures,
     DatasourcesFixtures,

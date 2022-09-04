@@ -2,10 +2,12 @@ defmodule LiveSup.Core.Widgets.Github.PullRequests.Handler do
   alias LiveSup.Core.Datasources.GithubDatasource
 
   def get_data(%{"owner" => _, "repository" => _, "state" => _state, "token" => _} = args) do
-    with {:ok, pulls} <- args |> get_pulls() do
-      pulls |> process_pulls()
-    else
-      {:error, error} -> {:error, error}
+    case args |> get_pulls() do
+      {:ok, pulls} ->
+        pulls |> process_pulls()
+
+      {:error, error} ->
+        {:error, error}
     end
   end
 

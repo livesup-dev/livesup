@@ -31,7 +31,9 @@ defmodule LiveSupWeb.Auth.UserAuth do
     redirect_after_sign_in(conn, user, location, params)
   end
 
-  def welcome_user(conn, %{state: "onboarded"} = user, params \\ %{}) do
+  def welcome_user(conn, user, params \\ %{})
+
+  def welcome_user(conn, %{state: "onboarded"} = user, params) do
     redirect_after_sign_in(conn, user, "/", params)
   end
 

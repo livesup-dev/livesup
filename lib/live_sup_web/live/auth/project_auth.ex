@@ -12,10 +12,11 @@ defmodule LiveSupWeb.Live.Auth.ProjectAuth do
 
     project = Projects.get!(project_id)
 
-    with :ok <- Bodyguard.permit(ProjectPolicy, :read, current_user, project) do
-      conn
-      |> assign(:project, project)
-    else
+    case Bodyguard.permit(ProjectPolicy, :read, current_user, project) do
+      :ok ->
+        conn
+        |> assign(:project, project)
+
       _ ->
         conn
         |> put_flash(:error, "Dashboard not found")

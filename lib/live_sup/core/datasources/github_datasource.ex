@@ -10,16 +10,20 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
     endpoint = Keyword.get(opts, :endpoint, @endpoint)
     filter = Keyword.get(opts, :filter, %{})
 
-    with {200, pulls, _response} <-
-           Tentacat.Pulls.filter(
-             client(endpoint, token),
-             owner,
-             repository,
-             Map.merge(default_filter(), filter)
-           ) do
-      {:ok, pulls |> process_pulls()}
-    else
-      {status, %{"message" => error_message}, _} -> {:error, "#{status}: #{error_message}"}
+    call_result =
+      Tentacat.Pulls.filter(
+        client(endpoint, token),
+        owner,
+        repository,
+        Map.merge(default_filter(), filter)
+      )
+
+    case call_result do
+      {200, pulls, _response} ->
+        {:ok, pulls |> process_pulls()}
+
+      {status, %{"message" => error_message}, _} ->
+        {:error, "#{status}: #{error_message}"}
     end
   end
 
