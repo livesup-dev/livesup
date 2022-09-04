@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.LordOfTheRingDatasource do
+  @moduledoc """
+    This datasource returns a quote from a hardcoded list. It does not
+    perform any external request
+  """
   def get_quote do
     quotes()
     |> Jason.decode!()

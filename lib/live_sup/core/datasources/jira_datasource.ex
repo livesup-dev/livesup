@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.JiraDatasource do
+  @moduledoc """
+    It provides an interface to the Jira API. Under the hood
+    it uses the HttpDataSource to perform the requests.
+  """
   alias LiveSup.Core.Datasources.HttpDatasource
   alias LiveSup.Helpers.DateHelper
 

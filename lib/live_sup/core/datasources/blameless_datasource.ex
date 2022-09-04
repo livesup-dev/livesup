@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.BlamelessDatasource do
+  @moduledoc """
+    It provides an interface to the Blameless API
+  """
+
   use Timex
   alias LiveSup.Core.Datasources.HttpDatasource
   alias LiveSup.Helpers.DateHelper

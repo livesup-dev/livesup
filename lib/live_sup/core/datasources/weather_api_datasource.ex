@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.WeatherApiDatasource do
+  @moduledoc """
+    It provides an interface to the Weather API. Under the hood
+    it uses the HttpDataSource to perform the requests.
+  """
   alias LiveSup.Core.Datasources.HttpDatasource
 
   # TODO: Find the way to pass this feature flag

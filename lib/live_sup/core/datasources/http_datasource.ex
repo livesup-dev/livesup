@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.HttpDatasource do
+  @moduledoc """
+    Provide a basic module to perform HTTP requests
+  """
+
   use Timex
 
   import Logger

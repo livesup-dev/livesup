@@ -1,4 +1,9 @@
 defmodule LiveSup.Core.Datasources.GithubDatasource do
+  @moduledoc """
+    It provides an interface to the Github API using their
+    own implementation Tentacat
+  """
+
   use Timex
 
   @endpoint "https://api.github.com/"

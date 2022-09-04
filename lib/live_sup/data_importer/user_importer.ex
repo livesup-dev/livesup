@@ -17,11 +17,9 @@ defmodule LiveSup.DataImporter.UserImporter do
   def import(data), do: data
 
   defp get_or_create_user(%{"id" => id} = attrs) do
-    with {:ok, user} <- Users.get(id) do
-      {:ok, user}
-    else
-      nil ->
-        Users.create(attrs)
+    case Users.get(id) do
+      {:ok, user} -> {:ok, user}
+      nil -> Users.create(attrs)
     end
   end
 

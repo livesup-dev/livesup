@@ -5,7 +5,7 @@ defmodule LiveSup.Seeds.ProjectsSeeds do
   def seed, do: insert_data()
 
   defp insert_data do
-    # TODO: This is terrible
+    # TODO: This is terrible. Please refactor
     rss_datasource = Datasources.get_by_slug!("rss-datasource")
     jira_datasource = Datasources.get_by_slug!("jira-datasource")
     github_datasource = Datasources.get_by_slug!("github-datasource")

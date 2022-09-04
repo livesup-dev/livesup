@@ -1,4 +1,7 @@
 defmodule LiveSup.Core.Datasources.ChuckNorrisApiDatasource do
+  @moduledoc """
+    It provides an interface to the Chuck Norris API
+  """
   alias LiveSup.Core.Datasources.HttpDatasource
 
   # TODO: Find the way to pass this feature flag

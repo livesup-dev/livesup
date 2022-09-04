@@ -1,4 +1,8 @@
 defmodule LiveSup.Core.Datasources.PagerDutyDatasource do
+  @moduledoc """
+    It provides an interface to the Pager Duty API. Under the hood
+    it uses the HttpDataSource to perform the requests.
+  """
   alias LiveSup.Core.Datasources.HttpDatasource
   use Timex
 
