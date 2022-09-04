@@ -66,6 +66,18 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
       assert Enum.empty?(tasks) == true
     end
 
+    test "get_with_todo/1" do
+      result = TaskQuery.get_with_todo("c4c46245-3a13-43f0-8a68-6a3c55ac823e")
+
+      assert result == nil
+    end
+
+    test "get!/1 with a non existing task" do
+      assert_raise Ecto.NoResultsError, fn ->
+        TaskQuery.get!("2800e22e-ea11-4f23-8bf6-8bd2ddb4cf4c")
+      end
+    end
+
     test "complete!/1", %{task: task} do
       TaskQuery.complete!(task.id)
       task = TaskQuery.get!(task.id)

@@ -12,7 +12,8 @@ defmodule LiveSup.Test.Setups do
     ProjectsFixtures,
     DashboardsFixtures,
     GroupsFixtures,
-    TasksFixtures
+    TasksFixtures,
+    CommentsFixtures
   }
 
   alias LiveSup.Core.{Groups, Dashboards}
@@ -61,6 +62,31 @@ defmodule LiveSup.Test.Setups do
 
     context
     |> add_to_context(%{task: task})
+  end
+
+  def setup_comments(context) do
+    comment1 =
+      context
+      |> Map.get(:task)
+      |> CommentsFixtures.comment_fixture(context[:user])
+
+    comment2 =
+      context
+      |> Map.get(:task)
+      |> CommentsFixtures.comment_fixture(context[:user])
+
+    context
+    |> add_to_context(%{comments: [comment1, comment2]})
+  end
+
+  def setup_comment(context) do
+    comment =
+      context
+      |> Map.get(:task)
+      |> CommentsFixtures.comment_fixture(context[:user])
+
+    context
+    |> add_to_context(%{comment: comment})
   end
 
   defp manage_todo(%{todo: _todo} = context), do: context

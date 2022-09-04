@@ -29,5 +29,16 @@ defmodule LiveSup.Test.Core.TasksTest do
       completed_task = Tasks.get!(task_id)
       assert completed_task.completed == false
     end
+
+    @tag :emi
+    test "add_comment", %{task: task, user: user} do
+      {:ok, comment} = Tasks.add_comment(task, user, "This is my cool comment")
+      found_task = Tasks.get_with_comments!(task)
+      assert length(found_task.comments) == 1
+
+      [first_comment] = found_task.comments
+
+      assert first_comment == comment
+    end
   end
 end

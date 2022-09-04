@@ -22,16 +22,23 @@ defmodule LiveSup.Queries.TaskQuery do
     |> Repo.all()
   end
 
-  def get!(%TodoTask{id: todo_id}) do
-    base()
+  @spec get!(TodoTask.t() | String.t(), Keyword.t()) :: TodoTask.t()
+  def get!(todo_task, params \\ [])
+
+  def get!(%TodoTask{id: todo_id}, params) do
+    base_query =
+      params
+      |> Keyword.get(:base, base())
+
+    base_query
     |> Repo.get!(todo_id)
   end
 
-  def get!(id) do
-    base()
-    |> Repo.get!(id)
+  def get!(id, params) do
+    get!(%TodoTask{id: id}, params)
   end
 
+  @spec get_with_todo(String.t()) :: {:ok, TodoTask.t()} | nil
   def get_with_todo(id) do
     base()
     |> join(:inner, [d], p in Todo, on: d.todo_id == p.id)
@@ -103,5 +110,11 @@ defmodule LiveSup.Queries.TaskQuery do
     |> update!(%{completed: false})
   end
 
-  def base, do: from(TodoTask, as: :todo, preload: [:todo, :assigned_to, :created_by])
+  def base(params \\ []) do
+    preload =
+      params
+      |> Keyword.get(:preload, [:todo, :assigned_to, :created_by])
+
+    from(TodoTask, as: :todo, preload: ^preload)
+  end
 end
