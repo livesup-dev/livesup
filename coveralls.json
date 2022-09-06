@@ -1,6 +1,7 @@
 {
     "skip_files": [
         "test",
-        "deps"
+        "deps",
+        "lib/live_sup_web"
     ]
 }
