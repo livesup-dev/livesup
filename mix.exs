@@ -115,6 +115,7 @@ defmodule LiveSup.MixProject do
       # , "run priv/repo/seeds.exs"
       "ecto.setup": ["ecto.create", "ecto.migrate", "live_sup.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup", "live_sup.seed"],
+      "ecto.reset.db": ["ecto.drop", "ecto.create", "ecto.migrate"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end

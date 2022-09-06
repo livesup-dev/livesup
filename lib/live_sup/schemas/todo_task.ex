@@ -4,7 +4,7 @@ defmodule LiveSup.Schemas.TodoTask do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias LiveSup.Schemas.{User, Todo, TodoTask}
+  alias LiveSup.Schemas.{User, Todo, TodoTask, Comment}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -19,6 +19,7 @@ defmodule LiveSup.Schemas.TodoTask do
     belongs_to :todo, Todo
     belongs_to :assigned_to, User
     belongs_to :created_by, User
+    has_many :comments, Comment, foreign_key: :task_id
 
     timestamps()
   end

@@ -21,6 +21,7 @@ defmodule LiveSupWeb.Router do
 
   pipeline :api_authenticated do
     plug LiveSupWeb.Plugs.AuthAccessPipeline
+    plug LiveSupWeb.Plugs.AuthCurrentUser
   end
 
   pipeline :mounted_apps do
@@ -81,7 +82,12 @@ defmodule LiveSupWeb.Router do
       resources "/tasks", TaskController, only: [:index, :create]
     end
 
+    resources "/tasks", TaskController do
+      resources "/comments", CommentController, only: [:index, :create]
+    end
+
     resources "/tasks", TaskController, except: [:index, :new, :create]
+    resources "/comments", CommentController, except: [:index, :new, :create]
 
     resources "/users", UserController do
       post "/links/scan", LinkScanController, :create
