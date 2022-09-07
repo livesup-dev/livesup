@@ -35,6 +35,8 @@ Disclaimer: it’s our first experience with Elixir/Phoenix so we are open to sc
 1. [Public Roadmap](#public-roadmap)
 1. [Running Livesup localy](#running-livesup-localy)
 1. [Developer Guide](/docs/develop/guide.md)
+1. [Contributing](/docs/contributing.md)
+1. [Code of Conduct](/docs/code_of_conduct.md)
 
 ## What is Livesup?
 
