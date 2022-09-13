@@ -15,6 +15,9 @@
   <a href="https://codecov.io/gh/livesup-dev/livesup">
     <img src="https://codecov.io/gh/livesup-dev/livesup/branch/main/graph/badge.svg?token=7XTN1OEUHY"/>
   </a>
+  <a href="https://github.com/livesup-dev/l/commits/master">
+    <img src="https://img.shields.io/github/last-commit/livesup-dev/livesup.svg"/>
+  </a>
 </p>
 
 ---
