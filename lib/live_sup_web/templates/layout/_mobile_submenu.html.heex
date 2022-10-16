@@ -19,7 +19,6 @@ aria-label="Secondary"
       ></div>
       <div
         class="absolute top-0 left-0 inline-flex items-center justify-center w-6 h-6 transition-all duration-200 transform scale-110 rounded-full shadow-sm"
-        :class="{ 'translate-x-0 -translate-y-px  bg-white text-primary-dark': !isDark, 'translate-x-6 text-primary-100 bg-primary-darker': isDark }"
       >
         <svg
           x-show="!isDark"
@@ -89,7 +88,7 @@ aria-label="Secondary"
       @click="open = !open"
       type="button"
       aria-haspopup="true"
-      :aria-expanded="open ? 'true' : 'false'"
+      aria-expanded="open ? 'true' : 'false'"
       class="block transition-opacity duration-200 rounded-full focus:outline-none focus:ring dark:focus:opacity-100"
     >
       <span class="sr-only">User menu</span>

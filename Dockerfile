@@ -1,6 +1,6 @@
 ARG MIX_ENV="prod"
 
-FROM hexpm/elixir:1.13.2-erlang-24.1.7-debian-bullseye-20210902-slim as build
+FROM hexpm/elixir:1.14.0-erlang-24.3.4.2-debian-bullseye-20210902-slim AS build
 
 RUN apt-get update && \
   apt-get install -y curl

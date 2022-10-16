@@ -62,7 +62,7 @@ defmodule LiveSup.MixProject do
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.17.2"},
+      {:phoenix_live_view, "~> 0.18.2"},
       {:floki, ">= 0.27.0", only: :test},
       {:phoenix_html, "~> 3.1"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
@@ -83,6 +83,7 @@ defmodule LiveSup.MixProject do
       {:prom_ex, "~> 1.5.0"},
       {:yaml_elixir, "~> 2.8.0"},
       {:earmark, "~> 1.4"},
+      {:heroicons, "~> 0.2.2"},
 
       # Additional packages
       {:bcrypt_elixir, "~> 2.0"},

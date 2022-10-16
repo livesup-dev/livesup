@@ -80,13 +80,18 @@ defmodule LiveSup.Core.Tasks do
   @doc """
   Get a task with comments
   """
-  @spec get_with_comments!(TodoTask.t()) :: TodoTask.t()
+  @spec get_with_comments!(TodoTask.t() | String.t()) :: TodoTask.t()
   def get_with_comments!(%TodoTask{id: task_id}) do
     # TODO: Please refactor
-    base_query = TaskQuery.base(preload: [:todo, :assigned_to, :created_by, :comments])
+    base_query = TaskQuery.base(preload: [:assigned_to, :created_by, :comments, todo: :project])
 
     task_id
     |> TaskQuery.get!(base: base_query)
+  end
+
+  def get_with_comments!(task_id) do
+    %TodoTask{id: task_id}
+    |> get_with_comments!()
   end
 
   @doc """

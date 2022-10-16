@@ -9,6 +9,12 @@ defmodule LiveSup.Helpers.DateHelper do
     formated_date
   end
 
+  def from_now(date) when is_binary(date) do
+    date
+    |> parse_date()
+    |> from_now()
+  end
+
   def from_now(date), do: Timex.from_now(date)
 
   def from_now(date, :short) do

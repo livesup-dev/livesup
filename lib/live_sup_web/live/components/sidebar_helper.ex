@@ -91,10 +91,9 @@ defmodule LiveSupWeb.Live.Components.SidebarHelper do
       <a href="#"
         @click="$event.preventDefault(); open = !open"
         class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-        :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
         role="button"
         aria-haspopup="true"
-        :aria-expanded="(open || isActive) ? 'true' : 'false'"
+        aria-expanded="(open || isActive) ? 'true' : 'false'"
       >
         <span aria-hidden="true">
         <.remix_icon icon={@icon} />
@@ -103,7 +102,6 @@ defmodule LiveSupWeb.Live.Components.SidebarHelper do
         <span class="ml-auto" aria-hidden="true">
         <svg
         class="w-4 h-4 transition-transform transform"
-        :class="{ 'rotate-180': open }"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

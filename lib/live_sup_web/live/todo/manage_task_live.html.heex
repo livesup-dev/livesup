@@ -1,0 +1,11 @@
+<%= LiveSupWeb.Todo.Components.ManageTodoHeaderComponent.render(%{project: @task.todo.project, todo: @task.todo}) %>
+
+<div class="flex justify-center items-center h-auto">
+  <div class="container w-full max-w-2xl">
+    <div class="text-3xl text-center mb-3"><%= @task.description %></div>
+  </div>
+</div>
+
+<%= for comment <- @task.comments do%>
+    <%= comment.body %>
+<% end %>

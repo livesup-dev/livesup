@@ -10,16 +10,16 @@ defmodule LiveSup.Schemas.TodoTask do
   @foreign_key_type :binary_id
   @derive {Phoenix.Param, key: :id}
   schema "tasks" do
-    field :description, :string
-    field :notes, :string
-    field :completed, :boolean, default: false
-    field :due_on, LiveSup.Schemas.CustomTypes.Datetime
+    field(:description, :string)
+    field(:notes, :string)
+    field(:completed, :boolean, default: false)
+    field(:due_on, LiveSup.Schemas.CustomTypes.Datetime)
 
-    belongs_to :parent, TodoTask
-    belongs_to :todo, Todo
-    belongs_to :assigned_to, User
-    belongs_to :created_by, User
-    has_many :comments, Comment, foreign_key: :task_id
+    belongs_to(:parent, TodoTask)
+    belongs_to(:todo, Todo)
+    belongs_to(:assigned_to, User)
+    belongs_to(:created_by, User)
+    has_many(:comments, Comment, foreign_key: :task_id)
 
     timestamps()
   end

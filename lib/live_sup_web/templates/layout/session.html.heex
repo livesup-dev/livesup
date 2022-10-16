@@ -4,7 +4,7 @@
     <%= render("session/_head.html", conn: @conn) %>
   </head>
   <body>
-    <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
+    <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" >
       <!-- Loading screen -->
       <div
         x-ref="loading"
