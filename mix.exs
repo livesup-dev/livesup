@@ -62,7 +62,7 @@ defmodule LiveSup.MixProject do
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.17.2"},
+      {:phoenix_live_view, "~> 0.18.0"},
       {:floki, ">= 0.27.0", only: :test},
       {:phoenix_html, "~> 3.1"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
@@ -100,6 +100,20 @@ defmodule LiveSup.MixProject do
       {:ueberauth_google, "~> 0.10"},
       {:ueberauth_github, "~> 0.8"},
       {:ex_doc, "~> 0.27", only: :dev, runtime: false}
+    ] ++ local_deps()
+  end
+
+  def local_deps() do
+    palette_dep(File.exists?("../palette"))
+  end
+
+  def palette_dep(true = _local) do
+    [{:palette, path: "../palette"}]
+  end
+
+  def palette_dep(false) do
+    [
+      {:palette, git: "https://github.com/livesup-dev/palette", tag: "0.1.0"}
     ]
   end
 

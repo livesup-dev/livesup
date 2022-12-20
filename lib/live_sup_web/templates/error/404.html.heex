@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
   </head>
   <body>
-    <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark }">
+    <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" >
       <!-- Loading screen -->
       <div
         x-ref="loading"

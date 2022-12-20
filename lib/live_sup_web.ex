@@ -114,7 +114,6 @@ defmodule LiveSupWeb do
 
       # Import LiveView helpers (live_render, live_component, live_patch, etc)
       import Phoenix.LiveView.Helpers
-      import LiveSupWeb.LiveHelpers
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
@@ -122,6 +121,8 @@ defmodule LiveSupWeb do
       import LiveSupWeb.ErrorHelpers
       import LiveSupWeb.Gettext
       alias LiveSupWeb.Router.Helpers, as: Routes
+
+      use Palette
 
       # Custom helpers
       import LiveSupWeb.Helpers

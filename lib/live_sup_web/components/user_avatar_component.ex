@@ -11,7 +11,6 @@ defmodule LiveSupWeb.Components.UserAvatarComponent do
         @click="open = !open; $nextTick(() => { if(open){ $refs.userMenu.focus() } })"
         type="button"
         aria-haspopup="true"
-        :aria-expanded="open ? 'true' : 'false'"
         class="transition-opacity duration-200 rounded-full focus:outline-none focus:ring dark:focus:opacity-100"
     >
         <span class="sr-only">User menu</span>
