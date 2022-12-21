@@ -2,6 +2,7 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
   use LiveSupWeb, :live_view
 
   alias LiveSup.Core.{Projects, Todos}
+  alias LiveSup.Schemas.Dashboard
 
   alias Palette.Components.Breadcrumb.Step
 
@@ -9,15 +10,29 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
 
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(%{"id" => project_id}, _session, socket) do
     {:ok, socket
     |> assign_defaults()
-    |> assign_breadcrumb_steps()}
+    |> assign_project(project_id)
+    |> assign_todos()
+    |> assign_breadcrumb_steps()
+  }
   end
 
-  defp assign_breadcrumb_steps(socket) do
+  defp assign_project(socket, project_id) do
+    socket
+     |> assign(:project, Projects.get_with_dashboards!(project_id))
+  end
+
+  defp assign_todos(%{assigns: %{project: %{id: project_id}}} = socket) do
+    socket
+    |> assign(todos: Todos.by_project(project_id))
+  end
+
+  defp assign_breadcrumb_steps(%{assigns: %{project: %{name: project_name}}} = socket) do
     steps = [
-      %Step{label: "Board"}
+      %Step{label: "Projects", path: "/projects"},
+      %Step{label: project_name}
     ]
 
     socket
@@ -36,16 +51,12 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
     |> assign(section: :home)
   end
 
-  @impl true
-  def handle_params(%{"id" => project_id}, _, socket) do
-    {:noreply,
-     socket
-     |> assign(:project, Projects.get_with_dashboards!(project_id))
-     |> assign_todos(project_id)}
-  end
+  # @impl true
+  # def handle_params(%{"id" => project_id}, _, socket) do
+  #   {:noreply,
+  #    socket
+  #    |> assign(:project, Projects.get_with_dashboards!(project_id))
+  #    |> assign_todos(project_id)}
+  # end
 
-  defp assign_todos(socket, project_id) do
-    socket
-    |> assign(todos: Todos.by_project(project_id))
-  end
 end

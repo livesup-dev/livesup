@@ -4,9 +4,15 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   alias LiveSup.Core.{Todos, Tasks}
   alias LiveSup.Schemas.TodoTask
 
+  alias Palette.Components.Breadcrumb.Step
+
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(%{"id" => todo_id}, _session, socket) do
-    {:ok, socket |> assign_tasks(todo_id)}
+    {:ok, socket
+    |> assign_defaults()
+    |> assign_tasks(todo_id)}
   end
 
   @impl true
@@ -58,6 +64,12 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   @impl true
   def handle_info(%{event: "update", payload: %{tasks: items}}, socket) do
     {:noreply, assign(socket, tasks: items)}
+  end
+
+  defp assign_defaults(socket) do
+    socket
+    |> assign(title: "ToDo")
+    |> assign(section: :home)
   end
 
   def completed?(%{completed: true}), do: "completed"

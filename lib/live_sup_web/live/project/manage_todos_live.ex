@@ -3,14 +3,23 @@ defmodule LiveSupWeb.Project.ManageTodosLive do
 
   alias LiveSup.Core.Projects
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, socket
+    |> assign_defaults()}
   end
 
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp assign_defaults(socket) do
+    socket
+    |> assign(title: "ToDo")
+    |> assign(section: :home)
   end
 
   defp apply_action(socket, :index, %{"id" => project_id}) do
