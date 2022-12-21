@@ -20,19 +20,14 @@ config :live_sup, LiveSupWeb.Api.Guardian,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :live_sup, LiveSupWeb.Endpoint,
-  http: [port: 4000],
+  http: [ip: {127, 0, 0, 1}, port: 4000],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch",
-      "--watch-options-stdin",
-      cd: Path.expand("../assets", __DIR__)
-    ]
+    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -94,3 +89,18 @@ config :live_sup, LiveSup.PromEx,
     upload_dashboards_on_start: true
   ],
   metrics_server: :disabled
+
+
+if System.get_env("DEBUG_OTEL") == "true" do
+  config :opentelemetry, :processors,
+    otel_batch_processor: %{
+      exporter: {:otel_exporter_stdout, []}
+    }
+else
+  config :opentelemetry,
+    traces_exporter: :none
+
+  config :opentelemetry, :processors, [
+    {:otel_simple_processor, %{}}
+  ]
+end

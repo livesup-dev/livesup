@@ -24,6 +24,33 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.16.4",
+  default: [
+    args: ~w(js/app.js
+      --bundle
+      --target=es2017
+      --outdir=../priv/static/assets
+      --external:/fonts/*
+      --external:/images/*
+      --external:/js/*
+      --external:/css/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+config :tailwind,
+  version: "3.1.8",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
 config :fun_with_flags, :cache,
   enabled: true,
   # in seconds
@@ -68,7 +95,16 @@ config :ueberauth, Ueberauth,
   base_path: "/oauth",
   providers: [
     google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]},
-    github: {Ueberauth.Strategy.Github, []}
+    github: {Ueberauth.Strategy.Github, []},
+    okta: {
+      Ueberauth.Strategy.Okta,
+      [
+        oauth2_params: [
+          scope: "openid email profile",
+          audience: {System, :get_env, ["OKTA_AUDIENCE"]}
+        ]
+      ]
+    }
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,

@@ -1,20 +1,28 @@
 <div class="w-full max-w-sm px-4 py-6 space-y-6 bg-white rounded-md dark:bg-darker">
-    <%= case @current_step.name do
-        :project -> 
-            live_component(LiveSupWeb.SetupLive.Components.ProjectComponent,
-                id: :project,
-                project: @current_project,
-                current_user: @current_user)
-        :dashboard -> 
-            live_component(LiveSupWeb.SetupLive.Components.DashboardComponent,
-                id: :dashboard,
-                current_user: @current_user,
-                project: @current_project)
-        end %>
+  <%= case @current_step.name do
+    :project ->
+      live_component(LiveSupWeb.SetupLive.Components.ProjectComponent,
+        id: :project,
+        project: @current_project,
+        current_user: @current_user
+      )
 
-    <%= if (@current_project) do %>
+    :dashboard ->
+      live_component(LiveSupWeb.SetupLive.Components.DashboardComponent,
+        id: :dashboard,
+        current_user: @current_user,
+        project: @current_project
+      )
+  end %>
+
+  <%= if (@current_project) do %>
     <div>
-        <%= live_patch "Next", to: Routes.setup_index_path(@socket, :project, @current_project.id, next_step: @current_step.next) %>
-      </div>
-    <% end %>
+      <%= live_patch("Next",
+        to:
+          Routes.setup_index_path(@socket, :project, @current_project.id,
+            next_step: @current_step.next
+          )
+      ) %>
+    </div>
+  <% end %>
 </div>

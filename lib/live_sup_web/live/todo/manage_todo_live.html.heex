@@ -1,4 +1,7 @@
-<%= LiveSupWeb.Todo.Components.ManageTodoHeaderComponent.render(%{project: @todo.project, todo: @todo}) %>
+<%= LiveSupWeb.Todo.Components.ManageTodoHeaderComponent.render(%{
+  project: @todo.project,
+  todo: @todo
+}) %>
 
 <%= if @live_action in [:edit_task] do %>
   <.modal return_to={Routes.manage_todo_path(@socket, :show, @todo)}>
@@ -24,10 +27,20 @@
           placeholder="What needs to be done?"
           autofocus=""
           required="required"
-          />
-        <input type="hidden" name="todo_id" value={@todo.id}/>
-        <button type="submit" class="text-xl text-blue-100 placeholder-blue-400 py-2 pr-5 pl-4 bg-blue-500 rounded-r-full">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        />
+        <input type="hidden" name="todo_id" value={@todo.id} />
+        <button
+          type="submit"
+          class="text-xl text-blue-100 placeholder-blue-400 py-2 pr-5 pl-4 bg-blue-500 rounded-r-full"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
           </svg>
         </button>
@@ -35,35 +48,68 @@
     </div>
     <div class="bg-gray-100 mt-5 p-5 rounded-xl shadow-lg text-gray-700">
       <h1 class="font-bold text-xl italic block mb-0 leading-none">Todo's</h1>
-      <small id="todo_stats" class="block mb-5 mt-0 text-xs text-gray-500">#remaining Todos pending, #completed Completed.</small>
+      <small id="todo_stats" class="block mb-5 mt-0 text-xs text-gray-500">
+        #remaining Todos pending, #completed Completed.
+      </small>
       <div class="max-h-80 overflow-y-auto">
         <table id="todo_table" class="table w-full">
-          
-          <tbody >
+          <tbody>
             <%= if length(@tasks) == 0 do %>
-            <tr class="odd:bg-blue-100 even:bg-blue-50">
-              <td class="text-center  px-1 py-2 text-blue-800" colspan="2">No Todos found. Add a few to begin.</td>
-            </tr>
+              <tr class="odd:bg-blue-100 even:bg-blue-50">
+                <td class="text-center  px-1 py-2 text-blue-800" colspan="2">
+                  No Todos found. Add a few to begin.
+                </td>
+              </tr>
             <% end %>
             <%= for item <- @tasks do %>
-            <tr class={row_class(item)}>
-              <td class=" px-1 py-2 text-blue-800">
-                <%= live_patch item.description, to: Routes.manage_todo_path(@socket, :edit_task, @todo, item) %>
-              </td>
-              <td class="text-center  px-1 py-2 text-blue-800 flex gap-3 justify-start">
-                <%= if checked?(item) do %>
-                <button phx-value-id={item.id} phx-click="toggle" class="text-blue-600">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </button>
-                <% else %>
-                <button class="text-blue-600" phx-value-id={item.id} phx-click="toggle">
-                  <svg width="21px" height="21px" class="h-6 w-6"  viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" fill="none" r="8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <% end %>
-              </td>
-            </tr>
+              <tr class={row_class(item)}>
+                <td class=" px-1 py-2 text-blue-800">
+                  <%= live_patch(item.description,
+                    to: Routes.manage_todo_path(@socket, :edit_task, @todo, item)
+                  ) %>
+                </td>
+                <td class="text-center  px-1 py-2 text-blue-800 flex gap-3 justify-start">
+                  <%= if checked?(item) do %>
+                    <button phx-value-id={item.id} phx-click="toggle" class="text-blue-600">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </button>
+                  <% else %>
+                    <button class="text-blue-600" phx-value-id={item.id} phx-click="toggle">
+                      <svg
+                        width="21px"
+                        height="21px"
+                        class="h-6 w-6"
+                        viewBox="0 0 21 21"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="10.5"
+                          cy="10.5"
+                          fill="none"
+                          r="8"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  <% end %>
+                </td>
+              </tr>
             <% end %>
           </tbody>
         </table>

@@ -14,12 +14,12 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
       placeholder="Search Box"
     />
     <div id="gmap" class="min-h-[300px] md:min-h-[500px] h-full" phx-update="ignore"></div>
-
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script
       src={"https://maps.googleapis.com/maps/api/js?key=#{@google_map_key}&callback=initMap&v=weekly&channel=2&libraries=places"}
       async
-    ></script>
+    >
+    </script>
 
     <script>
         (function(exports) {
@@ -242,10 +242,9 @@ defmodule LiveSupWeb.Live.Welcome.Components.GoogleMapComponent do
               });
           }
 
-
           exports.initMap = initMap;
       })((this.window = this.window || {}));
-      </script>
+    </script>
     """
   end
 end

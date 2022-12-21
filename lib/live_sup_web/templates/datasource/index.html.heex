@@ -1,13 +1,8 @@
 <%= for(datasource <- @datasources) do %>
-<ul>
+  <ul>
     <li>
-    <input
-        type="checkbox"
-        name={datasource.id}
-        id="toggle"
-    />
-  <label
-    for="toggle"
-  ><%= datasource.name %></label></li>
-</ul>
+      <input type="checkbox" name={datasource.id} id="toggle" />
+      <label for="toggle"><%= datasource.name %></label>
+    </li>
+  </ul>
 <% end %>

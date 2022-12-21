@@ -1,0 +1,5 @@
+<.sign_in
+  title="Welcome to LiveSup"
+  oauth_path={Routes.o_auth_path(LiveSupWeb.Endpoint, :request, "okta")}
+  error={get_flash(@conn, :error)}
+/>

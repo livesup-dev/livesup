@@ -58,14 +58,12 @@ defmodule LiveSup.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.0"},
+      {:phoenix, "~> 1.6.15"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.18.0"},
-      {:floki, ">= 0.27.0", only: :test},
       {:phoenix_html, "~> 3.1"},
-      {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:phoenix_live_dashboard, "~> 0.5"},
       {:telemetry, "~> 1.0"},
       {:telemetry_metrics, "~> 0.6.1"},
@@ -80,15 +78,20 @@ defmodule LiveSup.MixProject do
       {:tentacat, "~> 2.0"},
       {:bypass, "~> 2.1", only: :test},
       {:mock, "~> 0.3.0", only: :test},
+      {:floki, ">= 0.27.0", only: :test},
+      {:excoveralls, "~> 0.10", only: :test},
+      {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+      {:sobelow, "~> 0.8", only: :dev},
+      {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:prom_ex, "~> 1.5.0"},
       {:yaml_elixir, "~> 2.8.0"},
       {:earmark, "~> 1.4"},
+      {:phx_component_helpers, "~> 1.2.0"},
 
       # Additional packages
       {:bcrypt_elixir, "~> 2.0"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.10", only: :test},
-      {:sobelow, "~> 0.8", only: :dev},
       {:ecto_psql_extras, "~> 0.2"},
       {:bodyguard, "~> 2.4"},
       {:ecto_autoslug_field, "~> 3.0"},
@@ -99,7 +102,16 @@ defmodule LiveSup.MixProject do
       {:ueberauth, "~> 0.6"},
       {:ueberauth_google, "~> 0.10"},
       {:ueberauth_github, "~> 0.8"},
-      {:ex_doc, "~> 0.27", only: :dev, runtime: false}
+      {:ueberauth_okta, "~> 0.3.1"},
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false},
+
+      # Opentelemetry
+      {:opentelemetry_exporter, "~> 1.0.0-rc.3"},
+      {:opentelemetry, "~> 1.0.0-rc.3"},
+      {:opentelemetry_api, "~> 1.0.0-rc.3.2"},
+      {:opentelemetry_ecto, "~> 1.0.0-rc.3"},
+      {:opentelemetry_phoenix, "~> 1.0.0-rc.5"},
+      {:opentelemetry_liveview, "~> 1.0.0-rc.4"}
     ] ++ local_deps()
   end
 

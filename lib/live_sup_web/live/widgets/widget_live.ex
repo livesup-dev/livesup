@@ -5,7 +5,7 @@ defmodule LiveSupWeb.Live.Widgets.WidgetLive do
     quote do
       @behaviour LiveSupWeb.Live.Widgets.WidgetLive
       use Phoenix.LiveView,
-        layout: {LiveSupWeb.LayoutView, "live.html"}
+        layout: {LiveSupWeb.LayoutView, :live}
 
       import Logger
 
@@ -14,7 +14,7 @@ defmodule LiveSupWeb.Live.Widgets.WidgetLive do
 
       # Import LiveView helpers (live_render, live_component, live_patch, etc)
       import Phoenix.LiveView.Helpers
-      import LiveSupWeb.LiveHelpers
+      # import LiveSupWeb.LiveHelpers
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View

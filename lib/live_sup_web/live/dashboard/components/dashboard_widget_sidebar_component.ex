@@ -9,19 +9,30 @@ defmodule LiveSupWeb.Dashboard.Components.DashboardWidgetSidebarComponent do
       |> assign_datasources()
 
     ~H"""
-      <!-- Sidebar -->
-      <SidebarHelper.sidebar>
-        <SidebarHelper.menu>
-          <SidebarHelper.parent name="Datasources" active="true" icon="ri-database-2-line">
-              <SidebarHelper.item label="All" path={Routes.widget_path(LiveSupWeb.Endpoint, :show, @dashboard.id)}/>
-              <%= for datasource_instance <- @datasource_instances do %>
-                <SidebarHelper.item active="false" label={datasource_instance.name} path={Routes.widget_path(LiveSupWeb.Endpoint, :show, @dashboard.id, %{datasource_id: datasource_instance.datasource_id})}/>
-              <% end %>
-          </SidebarHelper.parent>
-        </SidebarHelper.menu>
-        <SidebarHelper.footer />
-      </SidebarHelper.sidebar>
-      <!-- /Sidebar -->
+    <!-- Sidebar -->
+    <SidebarHelper.sidebar>
+      <SidebarHelper.menu>
+        <SidebarHelper.parent name="Datasources" active="true" icon="ri-database-2-line">
+          <SidebarHelper.item
+            label="All"
+            path={Routes.widget_path(LiveSupWeb.Endpoint, :show, @dashboard.id)}
+          />
+          <%= for datasource_instance <- @datasource_instances do %>
+            <SidebarHelper.item
+              active="false"
+              label={datasource_instance.name}
+              path={
+                Routes.widget_path(LiveSupWeb.Endpoint, :show, @dashboard.id, %{
+                  datasource_id: datasource_instance.datasource_id
+                })
+              }
+            />
+          <% end %>
+        </SidebarHelper.parent>
+      </SidebarHelper.menu>
+      <SidebarHelper.footer />
+    </SidebarHelper.sidebar>
+    <!-- /Sidebar -->
     """
   end
 
