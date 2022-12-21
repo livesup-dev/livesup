@@ -90,7 +90,6 @@ config :live_sup, LiveSup.PromEx,
   ],
   metrics_server: :disabled
 
-
 if System.get_env("DEBUG_OTEL") == "true" do
   config :opentelemetry, :processors,
     otel_batch_processor: %{

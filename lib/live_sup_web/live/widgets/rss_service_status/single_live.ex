@@ -5,9 +5,9 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.SingleLive do
   def render_widget(assigns) do
     ~H"""
     <.live_component
+      :let={widget_data}
       module={SmartRenderComponent}
       id="core-health-status"
-      :let={widget_data}
       widget_data={@widget_data}
     >
       <!-- RSS Service -->

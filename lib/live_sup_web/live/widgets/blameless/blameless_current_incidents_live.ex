@@ -5,9 +5,9 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
   def render_widget(assigns) do
     ~H"""
     <.live_component
+      :let={widget_data}
       module={SmartRenderComponent}
       id={@widget_data.id}
-      :let={widget_data}
       widget_data={@widget_data}
     >
       <!-- Current Incidents -->

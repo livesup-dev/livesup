@@ -12,110 +12,139 @@
       </div>
     </div>
     <%= form_for @conn, Routes.user_session_path(@conn, :create), [as: :user], fn f -> %>
-    <div class="card mt-5 rounded-lg p-5 lg:p-7">
-      <label class="block">
-        <span>Username:</span>
-        <span class="relative mt-1.5 flex">
-        <%= text_input(f, :email,
-          required: true,
-          placeholder: "Email address",
-          class:
-            "form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-        ) %>
-         
-          <span class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 transition-colors duration-200"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-          </span>
-        </span>
-      </label>
-      <label class="mt-4 block">
-        <span>Password:</span>
-        <span class="relative mt-1.5 flex">
-        <%= password_input(f, :password,
-          required: true,
-          placeholder: "Password",
-          class:
-            "form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-        ) %>
+      <div class="card mt-5 rounded-lg p-5 lg:p-7">
+        <label class="block">
+          <span>Username:</span>
+          <span class="relative mt-1.5 flex">
+            <%= text_input(f, :email,
+              required: true,
+              placeholder: "Email address",
+              class:
+                "form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+            ) %>
 
-          <span class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 transition-colors duration-200"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              />
-            </svg>
+            <span class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 transition-colors duration-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </span>
           </span>
-        </span>
-      </label>
-      <div class="mt-4 flex items-center justify-between space-x-2">
-        <label class="inline-flex items-center space-x-2">
-          <input
-            class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
-            type="checkbox"
-          />
-          <span class="line-clamp-1">Remember me</span>
         </label>
-        <a
-          href="#"
-          class="text-xs text-slate-400 transition-colors line-clamp-1 hover:text-slate-800 focus:text-slate-800 dark:text-navy-300 dark:hover:text-navy-100 dark:focus:text-navy-100"
-        >
-          Forgot Password?
-        </a>
-      </div>
-      <%= submit("Login",
-      class:
-        "btn mt-5 w-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
-    ) %>
-      <div class="mt-4 text-center text-xs+">
-        <p class="line-clamp-1">
-          <span>Dont have Account?</span>
+        <label class="mt-4 block">
+          <span>Password:</span>
+          <span class="relative mt-1.5 flex">
+            <%= password_input(f, :password,
+              required: true,
+              placeholder: "Password",
+              class:
+                "form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+            ) %>
 
-          <a
-            class="text-primary transition-colors hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
-            href="pages-singup-1.html"
-          >
-            Create account
-          </a>
-        </p>
+            <span class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 transition-colors duration-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
+              </svg>
+            </span>
+          </span>
+        </label>
+        <div class="mt-4 flex items-center justify-between space-x-2">
+          <label class="inline-flex items-center space-x-2">
+            <input
+              class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
+              type="checkbox"
+            />
+            <span class="line-clamp-1">Remember me</span>
+          </label>
+
+          <%= link("Forgot password?",
+            to: Routes.user_reset_password_path(@conn, :new),
+            class:
+              "text-xs text-slate-400 transition-colors line-clamp-1 hover:text-slate-800 focus:text-slate-800 dark:text-navy-300 dark:hover:text-navy-100 dark:focus:text-navy-100"
+          ) %>
+        </div>
+        <%= submit("Login",
+          class:
+            "btn mt-5 w-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+        ) %>
+        <div class="mt-4 text-center text-xs+">
+          <p class="line-clamp-1">
+            <span>Dont have Account?</span>
+
+            <%= link("Create account",
+              to: Routes.user_registration_path(LiveSupWeb.Endpoint, :new),
+              class:
+                "text-primary transition-colors hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
+            ) %>
+          </p>
+        </div>
+        <div class="my-7 flex items-center space-x-3">
+          <div class="h-px flex-1 bg-slate-200 dark:bg-navy-500"></div>
+          <p>OR</p>
+          <div class="h-px flex-1 bg-slate-200 dark:bg-navy-500"></div>
+        </div>
+        <div class="flex space-x-4">
+          <button class="btn w-full space-x-3 border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90">
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"
+              >
+              </path>
+            </svg>
+            <span>Google</span>
+          </button>
+          <button class="btn w-full space-x-3 border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90">
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12.026,2c-5.509,0-9.974,4.465-9.974,9.974c0,4.406,2.857,8.145,6.821,9.465 c0.499,0.09,0.679-0.217,0.679-0.481c0-0.237-0.008-0.865-0.011-1.696c-2.775,0.602-3.361-1.338-3.361-1.338 c-0.452-1.152-1.107-1.459-1.107-1.459c-0.905-0.619,0.069-0.605,0.069-0.605c1.002,0.07,1.527,1.028,1.527,1.028 c0.89,1.524,2.336,1.084,2.902,0.829c0.091-0.645,0.351-1.085,0.635-1.334c-2.214-0.251-4.542-1.107-4.542-4.93 c0-1.087,0.389-1.979,1.024-2.675c-0.101-0.253-0.446-1.268,0.099-2.64c0,0,0.837-0.269,2.742,1.021 c0.798-0.221,1.649-0.332,2.496-0.336c0.849,0.004,1.701,0.115,2.496,0.336c1.906-1.291,2.742-1.021,2.742-1.021 c0.545,1.372,0.203,2.387,0.099,2.64c0.64,0.696,1.024,1.587,1.024,2.675c0,3.833-2.33,4.675-4.552,4.922 c0.355,0.308,0.675,0.916,0.675,1.846c0,1.334-0.012,2.41-0.012,2.737c0,0.267,0.178,0.577,0.687,0.479 C19.146,20.115,22,16.379,22,11.974C22,6.465,17.535,2,12.026,2z"
+              >
+              </path>
+            </svg>
+            <span>Github</span>
+          </button>
+        </div>
       </div>
-      <div class="my-7 flex items-center space-x-3">
-        <div class="h-px flex-1 bg-slate-200 dark:bg-navy-500"></div>
-        <p>OR</p>
-        <div class="h-px flex-1 bg-slate-200 dark:bg-navy-500"></div>
-      </div>
-      <div class="flex space-x-4">
-        <button class="btn w-full space-x-3 border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90">
-          <img class="h-5.5 w-5.5" src="images/100x100.png" alt="logo" />
-          <span>Google</span>
-        </button>
-        <button class="btn w-full space-x-3 border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90">
-          <img class="h-5.5 w-5.5" src="images/100x100.png" alt="logo" />
-          <span>Github</span>
-        </button>
-      </div>
-    </div>
     <% end %>
     <div class="mt-8 flex justify-center text-xs text-slate-400 dark:text-navy-300">
       <a href="#">Privacy Notice</a>
@@ -124,102 +153,3 @@
     </div>
   </div>
 </main>
-
-<h1 class="text-xl font-semibold text-center">Login</h1>
-<%= form_for @conn, Routes.user_session_path(@conn, :create), [as: :user, class: "space-y-6"], fn f -> %>
-  <%= text_input(f, :email,
-    required: true,
-    placeholder: "Email address",
-    class:
-      "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
-  ) %>
-
-  <%= password_input(f, :password,
-    required: true,
-    placeholder: "Password",
-    class:
-      "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
-  ) %>
-
-  <div class="flex items-center justify-between">
-    <!-- Remember me toggle -->
-    <label class="flex items-center">
-      <div class="relative inline-flex items-center">
-        <input
-          type="checkbox"
-          name="remembr_me"
-          class="w-10 h-4 transition bg-gray-200 border-none rounded-full shadow-inner outline-none appearance-none toggle checked:bg-primary-light disabled:bg-gray-200 focus:outline-none"
-        />
-        <span class="absolute top-0 left-0 w-4 h-4 transition-all transform scale-150 bg-white rounded-full shadow-sm">
-        </span>
-      </div>
-      <span class="ml-3 text-sm font-normal text-gray-500 dark:text-gray-400">Remember me</span>
-    </label>
-
-    <%= link("Forgot password?",
-      to: Routes.user_reset_password_path(@conn, :new),
-      class: "text-sm text-blue-600 hover:underline"
-    ) %>
-  </div>
-  <div>
-    <%= submit("Login",
-      class:
-        "w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker"
-    ) %>
-  </div>
-<% end %>
-<!-- Social login links -->
-<div class="grid grid-cols-2 gap-x-2">
-  <div>
-    <%= link to: Routes.user_oauth_path(LiveSupWeb.Endpoint, :request, "github"),
-      class: "flex items-center justify-center px-4 py-2 space-x-2 text-white transition-all duration-200 bg-black rounded-md hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 dark:focus:ring-offset-darker" do %>
-      <svg
-        aria-hidden="true"
-        class="w-6 h-6"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M12.026,2c-5.509,0-9.974,4.465-9.974,9.974c0,4.406,2.857,8.145,6.821,9.465 c0.499,0.09,0.679-0.217,0.679-0.481c0-0.237-0.008-0.865-0.011-1.696c-2.775,0.602-3.361-1.338-3.361-1.338 c-0.452-1.152-1.107-1.459-1.107-1.459c-0.905-0.619,0.069-0.605,0.069-0.605c1.002,0.07,1.527,1.028,1.527,1.028 c0.89,1.524,2.336,1.084,2.902,0.829c0.091-0.645,0.351-1.085,0.635-1.334c-2.214-0.251-4.542-1.107-4.542-4.93 c0-1.087,0.389-1.979,1.024-2.675c-0.101-0.253-0.446-1.268,0.099-2.64c0,0,0.837-0.269,2.742,1.021 c0.798-0.221,1.649-0.332,2.496-0.336c0.849,0.004,1.701,0.115,2.496,0.336c1.906-1.291,2.742-1.021,2.742-1.021 c0.545,1.372,0.203,2.387,0.099,2.64c0.64,0.696,1.024,1.587,1.024,2.675c0,3.833-2.33,4.675-4.552,4.922 c0.355,0.308,0.675,0.916,0.675,1.846c0,1.334-0.012,2.41-0.012,2.737c0,0.267,0.178,0.577,0.687,0.479 C19.146,20.115,22,16.379,22,11.974C22,6.465,17.535,2,12.026,2z"
-        >
-        </path>
-      </svg>
-      <span class="text-sm"> Login with Github </span>
-    <% end %>
-  </div>
-  <div>
-    <%= link to: Routes.user_oauth_path(LiveSupWeb.Endpoint, :request, "google"),
-      class: "flex items-center justify-center px-4 py-2 space-x-2 text-white transition-all duration-200 bg-black rounded-md hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 dark:focus:ring-offset-darker" do %>
-      <svg
-        aria-hidden="true"
-        class="w-6 h-6"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"
-        >
-        </path>
-      </svg>
-      <span class="text-sm"> Login with Google </span>
-    <% end %>
-  </div>
-</div>
-<!-- Register link -->
-<div class="text-sm text-gray-600 dark:text-gray-400">
-  Don't have an account yet? <%= link("Register",
-    to: Routes.user_registration_path(LiveSupWeb.Endpoint, :new),
-    method: :delete,
-    class: "text-blue-600 hover:underline"
-  ) %>
-</div>

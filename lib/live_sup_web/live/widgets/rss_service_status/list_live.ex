@@ -5,9 +5,9 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive do
   def render_widget(assigns) do
     ~H"""
     <.live_component
+      :let={widget_data}
       module={SmartRenderComponent}
       id="core-health-status"
-      :let={widget_data}
       widget_data={@widget_data}
     >
       <.live_component
@@ -45,7 +45,8 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive do
                 <a target="_blank" href={entry[:url]} target="blank" class="hover:underline">
                   <%= entry[:service_name] %>
                 </a>
-                <br /><a target="_blank" href={entry[:url]}>
+                <br />
+                <a target="_blank" href={entry[:url]}>
                   <span class="text-blue-500 text-sm text-stone-400">
                     Last incident: <%= entry[:created_at_ago] %>
                   </span>

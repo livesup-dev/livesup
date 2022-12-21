@@ -192,7 +192,7 @@ defmodule LiveSupWeb.Router do
   scope "/", LiveSupWeb do
     pipe_through [:browser]
 
-    delete "/users/log_out", Auth.UserSessionController, :delete
+    delete("/users/log-out", Auth.UserSessionController, :delete)
     get "/users/confirm", Auth.UserConfirmationController, :new
     post "/users/confirm", Auth.UserConfirmationController, :create
     get "/users/confirm/:token", Auth.UserConfirmationController, :confirm
