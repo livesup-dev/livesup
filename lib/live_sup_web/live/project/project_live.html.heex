@@ -21,21 +21,26 @@
         <a href="#" class="text-xs+ text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent">#NextJS  </a>
       </div>
       <div class="mt-3 flex space-x-1">
-        <button class="btn h-7 rounded-full bg-slate-150 px-3 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-          Follow
-        </button>
-        <button class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-          <i class="far fa-envelope"></i>
-        </button>
-        <button class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-          <i class="fa fa-ellipsis-h"></i>
-        </button>
+
+        <.link
+          href={Routes.project_board_path(@socket, :index, project.id)}
+          type={:navigate}
+          class="btn h-7 rounded-full bg-slate-150 px-3 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+          <i class="fa-solid fa-chess-board"></i>
+        </.link>
+        
+        <.link
+          href={Routes.dashboard_path(@socket, :index, project.id)}
+          type={:navigate}
+          class="btn h-7 rounded-full bg-slate-150 px-3 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+          <i class="fa-solid fa-chart-line"></i>
+        </.link>
       </div>
   </div>
 </div>
 
-<%= if @live_action in [:new] do %>
-  <.modal return_to={Routes.project_path(@socket, :index)}>
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.project_live_path(@socket, :index)}>
     <.live_component
       module={LiveSupWeb.Project.Components.ProjectFormComponent}
       id="new-project"

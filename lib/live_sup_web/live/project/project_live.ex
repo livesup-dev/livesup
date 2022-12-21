@@ -5,16 +5,15 @@ defmodule LiveSupWeb.Project.ProjectLive do
   alias LiveSup.Schemas.Project
   alias Palette.Components.Breadcrumb.Step
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(_params, session, socket) do
-    current_user = get_current_user(session, socket)
-
     {:ok,
      socket
      |> assign_defaults()
      |> assign_breadcrumb_steps()
-     |> assign_current_user(current_user)
-     |> assign_projects(current_user)
+     |> assign_projects()
      |> assign(:project, nil)}
   end
 
@@ -25,11 +24,6 @@ defmodule LiveSupWeb.Project.ProjectLive do
 
     socket
     |> assign(:steps, steps)
-  end
-
-  defp assign_current_user(socket, current_user) do
-    socket
-    |> assign(current_user: current_user)
   end
 
   defp assign_defaults(socket) do
@@ -44,8 +38,8 @@ defmodule LiveSupWeb.Project.ProjectLive do
     |> assign(:page_title, "Projects")
   end
 
-  defp assign_projects(socket, user) do
-    projects = user |> Projects.by_user()
+  defp assign_projects(%{assigns: %{current_user: current_user}} = socket) do
+    projects = current_user |> Projects.by_user()
 
     socket
     |> assign(projects: projects)
