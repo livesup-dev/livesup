@@ -10,7 +10,8 @@ defmodule LiveSupWeb.UserLiveAuth do
         %{"user_token" => user_token} = _session,
         socket
       ) do
-        user = Accounts.get_user_by_session_token(user_token)
+    user = Accounts.get_user_by_session_token(user_token)
+
     socket =
       assign_new(socket, :current_user, fn ->
         user

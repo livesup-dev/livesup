@@ -8,20 +8,19 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
-
   @impl true
   def mount(%{"id" => project_id}, _session, socket) do
-    {:ok, socket
-    |> assign_defaults()
-    |> assign_project(project_id)
-    |> assign_todos()
-    |> assign_breadcrumb_steps()
-  }
+    {:ok,
+     socket
+     |> assign_defaults()
+     |> assign_project(project_id)
+     |> assign_todos()
+     |> assign_breadcrumb_steps()}
   end
 
   defp assign_project(socket, project_id) do
     socket
-     |> assign(:project, Projects.get_with_dashboards!(project_id))
+    |> assign(:project, Projects.get_with_dashboards!(project_id))
   end
 
   defp assign_todos(%{assigns: %{project: %{id: project_id}}} = socket) do
@@ -58,5 +57,4 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
   #    |> assign(:project, Projects.get_with_dashboards!(project_id))
   #    |> assign_todos(project_id)}
   # end
-
 end

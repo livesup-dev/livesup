@@ -10,9 +10,10 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   @impl true
   def mount(%{"id" => todo_id}, _session, socket) do
-    {:ok, socket
-    |> assign_defaults()
-    |> assign_tasks(todo_id)}
+    {:ok,
+     socket
+     |> assign_defaults()
+     |> assign_tasks(todo_id)}
   end
 
   @impl true

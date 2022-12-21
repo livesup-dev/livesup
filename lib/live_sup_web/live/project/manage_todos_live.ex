@@ -7,8 +7,9 @@ defmodule LiveSupWeb.Project.ManageTodosLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket
-    |> assign_defaults()}
+    {:ok,
+     socket
+     |> assign_defaults()}
   end
 
   @impl true
