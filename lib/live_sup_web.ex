@@ -61,7 +61,8 @@ defmodule LiveSupWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {LiveSupWeb.LayoutView, "live.html"}
+        layout: {LiveSupWeb.LayoutView, :live},
+        container: {:main, class: "main-content w-full px-[var(--margin-x)] pb-8"}
 
       import Logger
 

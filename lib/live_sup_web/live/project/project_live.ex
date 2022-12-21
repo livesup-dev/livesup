@@ -3,6 +3,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
 
   alias LiveSup.Core.Projects
   alias LiveSup.Schemas.Project
+  alias Palette.Components.Breadcrumb.Step
 
   @impl true
   def mount(_params, session, socket) do
@@ -10,17 +11,20 @@ defmodule LiveSupWeb.Project.ProjectLive do
 
     {:ok,
      socket
-     |> assign_title()
+     |> assign_defaults()
+     |> assign_breadcrumb_steps()
      |> assign_current_user(current_user)
-     |> assign_page_title("Projects")
      |> assign_projects(current_user)
-     |> assign(:project, nil)
-     |> assign_section()}
+     |> assign(:project, nil)}
   end
 
-  defp assign_page_title(socket, page_title) do
+  defp assign_breadcrumb_steps(socket) do
+    steps = [
+      %Step{label: "Projects"}
+    ]
+
     socket
-    |> assign(page_title: page_title)
+    |> assign(:steps, steps)
   end
 
   defp assign_current_user(socket, current_user) do
@@ -28,9 +32,16 @@ defmodule LiveSupWeb.Project.ProjectLive do
     |> assign(current_user: current_user)
   end
 
-  defp assign_title(socket) do
+  defp assign_defaults(socket) do
     socket
     |> assign(title: "Projects")
+    |> assign_page_title("Projects")
+    |> assign(section: :home)
+  end
+
+  defp assign_page_title(socket, title) do
+    socket
+    |> assign(:page_title, "Projects")
   end
 
   defp assign_projects(socket, user) do
@@ -38,11 +49,6 @@ defmodule LiveSupWeb.Project.ProjectLive do
 
     socket
     |> assign(projects: projects)
-  end
-
-  defp assign_section(socket) do
-    socket
-    |> assign(section: :project_listing)
   end
 
   @impl true
