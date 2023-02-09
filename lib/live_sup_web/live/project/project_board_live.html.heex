@@ -1,67 +1,81 @@
 <%= LiveSupWeb.Project.Components.BoardHeaderComponent.render(%{project: @project}) %>
-<div class="text-center py-2.5 px-6">
-  <h1 class="text-5xl mt-0 mb-6"><%= @project.name %></h1>
+<div class="py-6 px-4">
+  <h1 class="text-base font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100"><%= @project.name %></h1>
 </div>
 
 <div class="m-2 mb-[80px]">
   <div class="xs:columns-1 sm:columns-2 lg:columns-4 gap-x-2">
     <div class="p-1 first:mt-0 my-2 break-inside-avoid-column col-span-1 phx-connected">
       <div class="bg-white rounded-md dark:bg-darker min-h-[202px]">
-        <!--Title -->
-        <div
-          class="flex items-center justify-between p-2 border-b dark:border-primary"
-          data-phx-component="2"
-          id="f81c5daa-ac42-4d19-b863-3d8495ac1e17-2-0"
-        >
-          <h4 class="text-base font-semibold text-gray-500 dark:text-light">Dashboards</h4>
-          <div class="flex items-right space-x-2"></div>
-        </div>
-        <!-- Widget Content -->
-        <div class="items-center p-4 bg-white rounded-md dark:bg-darker">
-          <div class="divide-y divide-gray-100 dark:divide-gray-500 ">
-            <%= for(dashboard <- @project.dashboards) do %>
-              <div class="gap-4 py-2 flex">
-                <a
-                  class="text-black dark:text-primary hover:underline break-all basis-9/10"
-                  href={Routes.dashboard_path(LiveSupWeb.Endpoint, :show, dashboard.id)}
-                >
-                  <%= dashboard.name %>
-                </a>
+
+	  	<div class="p-2">
+		      <!--Title -->
+              <div class="flex h-8 items-center justify-between">
+                <h2 class="font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
+                  Dashboards
+                </h2>
               </div>
-            <% end %>
-          </div>
-        </div>
+
+				<!-- Widget Content -->
+              <table class="w-full">
+                <tbody>
+				<%= for(dashboard <- @project.dashboards) do %>
+				<tr class="gap-4 py-2 flex">
+					<td class="whitespace-nowrap pt-2">
+                      <div class="flex items-center space-x-3">
+                        <div class="avatar h-9 w-9">
+						  <img
+                    src={Dashboard.default_avatar_url(dashboard)}
+                    alt=""
+                    class="rounded-full"
+                  />
+                        </div>
+                        <h3 class="font-medium text-slate-700 line-clamp-1 dark:text-navy-100">
+							<a
+							class="font-inter tracking-wide text-slate-400 hover:text-primary focus:text-primary dark:hover:text-accent-light dark:focus:text-accent-light"
+							href={Routes.dashboard_path(LiveSupWeb.Endpoint, :show, dashboard.id)}
+							>
+							<%= dashboard.name %>
+							</a>
+						</h3>
+						</div>
+					</td>
+				</tr>
+				<% end %>
+                </tbody>
+              </table>
+            </div>
         <!-- /Widget Content -->
       </div>
     </div>
 
     <div class="p-1 first:mt-0 my-2 break-inside-avoid-column col-span-1 phx-connected">
       <div class="bg-white rounded-md dark:bg-darker min-h-[202px]">
-        <!--Title -->
-        <div
-          class="flex items-center justify-between p-2 border-b dark:border-primary"
-          data-phx-component="2"
-          id="f81c5daa-ac42-4d19-b863-3d8495ac1e17-2-0"
-        >
-          <h4 class="text-base font-semibold text-gray-500 dark:text-light">
-            <a href={Routes.manage_todos_path(LiveSupWeb.Endpoint, :index, @project.id)}>ToDos</a>
-          </h4>
-          <div class="flex items-right space-x-2"></div>
-        </div>
-        <div class="items-center p-4 bg-white rounded-md dark:bg-darker">
-          <div class="divide-y divide-gray-100 dark:divide-gray-500 ">
-            <%= for(todo <- @todos) do %>
-              <div class="gap-4 py-2 flex">
-                <a
-                  class="text-black dark:text-primary hover:underline break-all basis-9/10"
-                  href={Routes.manage_todo_path(LiveSupWeb.Endpoint, :show, todo.id)}
-                >
-                  <%= todo.title %>
+	  	<div class="p-2">
+			<!--Title -->
+			<div class="flex h-8 items-center justify-between">
+				<h2 class="font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
+					ToDos
+				</h2>
+				<a href={Routes.manage_todos_path(LiveSupWeb.Endpoint, :index, @project.id)} class="border-b border-dotted border-current pb-0.5 text-xs+ font-medium text-primary outline-none transition-colors duration-300 hover:text-primary/70 focus:text-primary/70 dark:text-accent-light dark:hover:text-accent-light/70 dark:focus:text-accent-light/70">
+                    Manage
                 </a>
-              </div>
-            <% end %>
-          </div>
-        </div>
+			</div>
+			<div class="items-center p-4 bg-white rounded-md dark:bg-darker">
+			<div class="divide-y divide-gray-100 dark:divide-gray-500 ">
+				<%= for(todo <- @todos) do %>
+				<div class="gap-4 py-2 flex">
+					<a
+					class="text-black dark:text-primary hover:underline break-all basis-9/10"
+					href={Routes.manage_todo_path(LiveSupWeb.Endpoint, :show, todo.id)}
+					>
+					<%= todo.title %>
+					</a>
+				</div>
+				<% end %>
+			</div>
+			</div>
+		</div>
       </div>
     </div>
   </div>

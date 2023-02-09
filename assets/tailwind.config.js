@@ -7,6 +7,6 @@ module.exports = {
     "../../../config/*.*exs",
 
     // We need to include the Palette dependency so the classes get picked up by JIT.
-    "../deps/palette/**/*.*ex"
-  ]
+    "../deps/palette/**/*.*ex",
+  ],
 };
