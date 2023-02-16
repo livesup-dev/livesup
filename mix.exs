@@ -47,6 +47,8 @@ defmodule LiveSup.MixProject do
     ]
   end
 
+  defp elixirc_paths(:dev), do: ["lib", "deps/palette/lib"]
+
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test),
     do: ["lib", "test/support", "test/live_sup/core/datasources/data_helper"]
@@ -116,11 +118,11 @@ defmodule LiveSup.MixProject do
   end
 
   def local_deps() do
-    palette_dep(File.exists?("../palette"))
+    palette_dep(File.exists?("deps/palette"))
   end
 
   def palette_dep(true = _local) do
-    [{:palette, path: "../palette"}]
+    [{:palette, path: "deps/palette"}]
   end
 
   def palette_dep(false) do
@@ -142,7 +144,9 @@ defmodule LiveSup.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "live_sup.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup", "live_sup.seed"],
       "ecto.reset.db": ["ecto.drop", "ecto.create", "ecto.migrate"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "assets.watch": ["tailwind default --watch", "esbuild default --watch"],
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
 end
