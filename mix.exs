@@ -4,6 +4,8 @@ defmodule LiveSup.MixProject do
   @elixir_requirement "~> 1.13"
   @version "0.0.4"
   @description "Add transparency to the services you use and it creates a layer that organizes and simplifies the information you need when you need it"
+  # palette path for reference.
+  @palette_path "deps/palette"
 
   def project do
     [
@@ -47,7 +49,10 @@ defmodule LiveSup.MixProject do
     ]
   end
 
-  defp elixirc_paths(:dev), do: ["lib", "deps/palette/lib"]
+  # Specifies which paths to compile per environment for palette.
+  defp elixirc_palette_path(true), do: ["#{@palette_path}/lib"]
+  defp elixirc_palette_path(false), do: []
+  defp elixirc_paths(:dev), do: ["lib"] ++ elixirc_palette_path(File.exists?(@palette_path))
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test),
@@ -118,11 +123,11 @@ defmodule LiveSup.MixProject do
   end
 
   def local_deps() do
-    palette_dep(File.exists?("deps/palette"))
+    palette_dep(File.exists?(@palette_path))
   end
 
   def palette_dep(true = _local) do
-    [{:palette, path: "deps/palette"}]
+    [{:palette, path: @palette_path}]
   end
 
   def palette_dep(false) do
