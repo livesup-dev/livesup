@@ -16,10 +16,11 @@ defmodule LiveSup.Test.TasksFixtures do
     |> TaskQuery.get!()
   end
 
-  defp default_attrs(%{id: todo_id}) do
+  defp default_attrs(%{id: todo_id, created_by_id: created_by_id}) do
     %{
       description: "Some generic description - #{System.unique_integer()}",
-      todo_id: todo_id
+      todo_id: todo_id,
+      created_by_id: created_by_id
     }
   end
 end

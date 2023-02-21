@@ -49,11 +49,6 @@ defmodule LiveSup.MixProject do
     ]
   end
 
-  # Specifies which paths to compile per environment for palette.
-  defp elixirc_palette_path(true), do: ["#{@palette_path}/lib"]
-  defp elixirc_palette_path(false), do: []
-  defp elixirc_paths(:dev), do: ["lib"] ++ elixirc_palette_path(File.exists?(@palette_path))
-
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test),
     do: ["lib", "test/support", "test/live_sup/core/datasources/data_helper"]

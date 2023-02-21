@@ -6,7 +6,8 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
   alias LiveSup.Schemas.{Todo, TodoTask}
 
   @create_attrs %{
-    description: "cool desc"
+    description: "cool desc",
+    created_by_id: nil
   }
 
   @update_attrs %{
@@ -32,9 +33,12 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
 
     test "renders task when data is valid", %{
       conn: conn,
-      todo: %{id: todo_id}
+      todo: %{id: todo_id, created_by_id: created_by_id}
     } do
-      conn = post(conn, Routes.api_todo_task_path(conn, :create, todo_id), task: @create_attrs)
+      conn =
+        post(conn, Routes.api_todo_task_path(conn, :create, todo_id),
+          task: %{created_by_id: created_by_id, description: @create_attrs.description}
+        )
 
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
@@ -93,9 +97,9 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
       conn = delete(conn, Routes.api_task_path(conn, :delete, task))
       assert response(conn, 204)
 
-      assert_error_sent 404, fn ->
+      assert_error_sent(404, fn ->
         get(conn, Routes.api_task_path(conn, :show, task))
-      end
+      end)
     end
   end
 end

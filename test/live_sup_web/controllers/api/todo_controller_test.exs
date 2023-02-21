@@ -105,9 +105,9 @@ defmodule LiveSupWeb.Api.TodoControllerTest do
       conn = delete(conn, Routes.api_todo_path(conn, :delete, todo))
       assert response(conn, 204)
 
-      assert_error_sent 404, fn ->
+      assert_error_sent(404, fn ->
         get(conn, Routes.api_todo_path(conn, :show, todo))
-      end
+      end)
     end
   end
 
