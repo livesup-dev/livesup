@@ -70,7 +70,6 @@ defmodule LiveSup.MixProject do
       {:telemetry, "~> 1.0"},
       {:telemetry_metrics, "~> 0.6.1"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.5"},
       {:timex, ">= 0.0.0"},
