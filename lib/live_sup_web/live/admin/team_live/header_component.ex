@@ -15,10 +15,6 @@ defmodule LiveSupWeb.Admin.TeamLive.HeaderComponent do
         ) %>
         <span>Teams</span>
       </div>
-
-      <div class="flex justify-end basis-1/5 text-right items-center">
-        <%= AddButtonComponent.render(%{path: Routes.admin_team_index_path(LiveSupWeb.Endpoint, :new)}) %>
-      </div>
     </div>
     """
   end

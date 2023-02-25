@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Datasources.JiraDatasourceTest do
-  use LiveSup.DataCase, async: true
+  use LiveSup.DataCase, async: false
 
   alias LiveSup.Core.Datasources.JiraDatasource
 

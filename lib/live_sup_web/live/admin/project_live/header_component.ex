@@ -15,12 +15,6 @@ defmodule LiveSupWeb.Admin.ProjectLive.HeaderComponent do
         ) %>
         <span>Projects</span>
       </div>
-
-      <div class="flex justify-end basis-1/5 text-right items-center">
-        <%= AddButtonComponent.render(%{
-          path: Routes.admin_project_index_path(LiveSupWeb.Endpoint, :new)
-        }) %>
-      </div>
     </div>
     """
   end
