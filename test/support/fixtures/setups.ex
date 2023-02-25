@@ -46,7 +46,11 @@ defmodule LiveSup.Test.Setups do
   end
 
   def setup_todo(context) do
-    todo = TodosFixtures.todo_fixture(context[:project], %{author_id: context[:user].id})
+    todo =
+      TodosFixtures.todo_fixture(context[:project], %{
+        author_id: context[:user].id,
+        created_by_id: context[:user].id
+      })
 
     context
     |> add_to_context(%{todo: todo})

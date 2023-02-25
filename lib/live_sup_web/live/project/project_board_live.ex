@@ -1,6 +1,8 @@
 defmodule LiveSupWeb.Project.ProjectBoardLive do
   use LiveSupWeb, :live_view
 
+  alias LiveSup.Schemas.Dashboard
+
   alias LiveSup.Core.{Projects, Todos}
   alias LiveSup.Schemas.Dashboard
 

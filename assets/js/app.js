@@ -1,1 +1,1 @@
-import "palette"
+import "palette";

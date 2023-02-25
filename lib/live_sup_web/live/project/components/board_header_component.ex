@@ -16,7 +16,7 @@ defmodule LiveSupWeb.Project.Components.BoardHeaderComponent do
         ) %>
         <%= link(@project.name,
           class: "text-blue-500 after:mx-4 after:content-['>'] dark:after:text-white",
-          to: Routes.dashboard_path(LiveSupWeb.Endpoint, :index, @project.id)
+          to: Routes.project_board_path(LiveSupWeb.Endpoint, :index, @project.id)
         ) %>
         <span>Board</span>
       </div>
