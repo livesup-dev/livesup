@@ -25,7 +25,7 @@ defmodule LiveSupWeb do
       import LiveSupWeb.Gettext
       alias LiveSupWeb.Router.Helpers, as: Routes
 
-      action_fallback LiveSupWeb.FallbackController
+      action_fallback(LiveSupWeb.FallbackController)
     end
   end
 
@@ -37,7 +37,7 @@ defmodule LiveSupWeb do
       import LiveSupWeb.Gettext
       alias LiveSupWeb.Router.Helpers, as: Routes
 
-      action_fallback LiveSupWeb.Api.FallbackController
+      action_fallback(LiveSupWeb.Api.FallbackController)
     end
   end
 
@@ -100,11 +100,8 @@ defmodule LiveSupWeb do
   def component do
     quote do
       use Phoenix.Component
-      # Use all HTML functionality (forms, tags, etc)
-      use Phoenix.HTML
-      alias LiveSupWeb.Router.Helpers, as: Routes
 
-      alias LiveSupWeb.Components.AddButtonComponent
+      unquote(view_helpers())
     end
   end
 

@@ -1,5 +1,6 @@
 defmodule LiveSupWeb.Todo.Components.TodoTaskComponent do
   use LiveSupWeb, :component
+  alias Phoenix.LiveView.JS
 
   alias LiveSup.Schemas.User
 
@@ -9,7 +10,8 @@ defmodule LiveSupWeb.Todo.Components.TodoTaskComponent do
     ~H"""
     <div
       class="border-b border-slate-150 py-3 dark:border-navy-500"
-      @click="$dispatch('show-drawer', { drawerId: 'edit-todo-drawer' })"
+      phx-click={JS.push("select_task", value: %{id: @task.id})
+      |>  JS.toggle(to: "#edit-todo-drawer")}
     >
       <div class="flex items-center space-x-2 sm:space-x-3">
         <label class="flex">

@@ -58,7 +58,8 @@ defmodule LiveSup.Queries.TaskQuery do
   def create(attrs) do
     %TodoTask{}
     |> TodoTask.create_changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert!()
+    |> preload([:todo, :assigned_to, :created_by])
   end
 
   def create!(attrs) do

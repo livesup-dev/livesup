@@ -10,6 +10,14 @@
     <.sidebar_panel :if={@section == :home} title="Home">
       <.sidebar_item label="Dashboard" path="/" />
     </.sidebar_panel>
+    <.sidebar_panel :if={@section == :todo} title="Todo">
+      <.sidebar_item label="My day" path="/" />
+      <.sidebar_item label="Important" path="/" />
+      <.sidebar_item label="Task" path="/" />
+      <div class="my-4 mx-4 h-px bg-slate-200 dark:bg-navy-500"></div>
+      <.sidebar_item label="Task" path="/" />
+      <.sidebar_item label="Task" path="/" />
+    </.sidebar_panel>
   </.sidebar_panel>
 </.live_component>
 
