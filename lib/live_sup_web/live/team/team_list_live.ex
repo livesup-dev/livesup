@@ -4,6 +4,8 @@ defmodule LiveSupWeb.Teams.TeamListLive do
   alias LiveSup.Core.Teams
   alias LiveSup.Schemas.Team
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(_params, session, socket) do
     current_user = get_current_user(session, socket)

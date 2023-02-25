@@ -4,9 +4,14 @@ defmodule LiveSupWeb.Admin.TeamLive.Index do
   alias LiveSup.Core.Teams
   alias LiveSup.Schemas.Team
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :teams, list_teams())}
+    {:ok,
+     socket
+     |> assign(:teams, list_teams())
+     |> assign(:section, :home)}
   end
 
   @impl true

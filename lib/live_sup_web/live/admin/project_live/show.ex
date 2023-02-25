@@ -4,9 +4,11 @@ defmodule LiveSupWeb.Admin.ProjectLive.Show do
   alias LiveSup.Core.Projects
   alias LiveSup.Schemas.Project
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, socket |> assign(:section, :home)}
   end
 
   @impl true

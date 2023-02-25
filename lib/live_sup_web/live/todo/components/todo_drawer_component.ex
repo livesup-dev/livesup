@@ -11,7 +11,6 @@ defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
       <div class="drawer-overlay fixed inset-0 z-[100]  bg-slate-900/60"></div>
       <div class="drawer-content fixed right-0 top-0 z-[101]  h-full w-2/4">
         <div class="flex h-full w-full flex-col bg-white dark:bg-navy-700">
-
           <div class="flex h-14 items-center justify-between bg-slate-150 p-4 dark:bg-navy-800">
             <h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
               Edit Todo
@@ -41,8 +40,8 @@ defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
                   </svg>
                 </button>
                 <button
-                id="close"
-                phx-click={JS.toggle(to: "#edit-todo-drawer")}
+                  id="close"
+                  phx-click={JS.toggle(to: "#edit-todo-drawer")}
                   class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
                 >
                   <svg
@@ -64,7 +63,10 @@ defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
             <.hidden_input name="todo_id" value={@task.todo_id} />
             <.text name="description" value={@task.description} label="Description" required={true} />
             <.alert :if={@error} description={@error} color={:error} />
-            <.default_modal_actions />
+            <:actions>
+              <.close_modal_button />
+              <.save_modal_button />
+            </:actions>
           </.xform>
         </div>
       </div>

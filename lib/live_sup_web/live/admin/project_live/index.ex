@@ -4,9 +4,14 @@ defmodule LiveSupWeb.Admin.ProjectLive.Index do
   alias LiveSup.Core.Projects
   alias LiveSup.Schemas.Project
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :projects, list_projects())}
+    {:ok,
+     socket
+     |> assign(:projects, list_projects())
+     |> assign(:section, :home)}
   end
 
   @impl true

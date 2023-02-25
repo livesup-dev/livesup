@@ -4,6 +4,8 @@ defmodule LiveSupWeb.Teams.MembersLive do
   alias LiveSup.Core.Teams
   alias LiveSup.Schemas.User
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(%{"id" => team_id}, _session, socket) do
     {:ok,

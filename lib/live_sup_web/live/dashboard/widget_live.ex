@@ -3,6 +3,8 @@ defmodule LiveSupWeb.Dashboard.WidgetLive do
   alias LiveSup.Core.{Dashboards, Widgets}
   alias LiveSup.Schemas.{Widget, WidgetInstance}
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   def mount(%{"dashboard_id" => dashboard_id, "id" => widget_id}, _session, socket) do
     {:ok,
      socket

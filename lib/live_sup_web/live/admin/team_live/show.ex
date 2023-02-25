@@ -4,6 +4,8 @@ defmodule LiveSupWeb.Admin.TeamLive.Show do
   alias LiveSup.Core.Teams
   alias LiveSup.Schemas.Team
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket}
@@ -13,6 +15,7 @@ defmodule LiveSupWeb.Admin.TeamLive.Show do
   def handle_params(%{"id" => id}, _, socket) do
     {:noreply,
      socket
+     |> assign(:section, :home)
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:team, Teams.get!(id))}
   end
