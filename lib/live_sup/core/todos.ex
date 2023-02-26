@@ -31,9 +31,9 @@ defmodule LiveSup.Core.Todos do
     |> found()
   end
 
-  def get_tasks(todo_id) do
+  def get_tasks(todo_id, filters \\ []) do
     todo_id
-    |> TaskQuery.by_todo()
+    |> TaskQuery.by_todo(filters)
   end
 
   defp found(nil), do: {:error, :not_found}
@@ -83,8 +83,10 @@ defmodule LiveSup.Core.Todos do
   end
 
   def add_task(attrs) do
-    attrs
-    |> TaskQuery.create()
+    case TaskQuery.create(attrs) do
+      {:ok, task} -> {:ok, TaskQuery.get(task)}
+      {:error, changeset} -> {:error, changeset}
+    end
   end
 
   @doc """

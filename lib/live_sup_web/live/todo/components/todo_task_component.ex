@@ -8,23 +8,22 @@ defmodule LiveSupWeb.Todo.Components.TodoTaskComponent do
 
   def render(assigns) do
     ~H"""
-    <div
-      class="border-b border-slate-150 py-3 dark:border-navy-500"
-      phx-click={
-        JS.push("select_task", value: %{id: @task.id})
-        |> JS.toggle(to: "#edit-todo-drawer")
-      }
-    >
+    <div class="border-b border-slate-150 py-3 dark:border-navy-500" >
       <div class="flex items-center space-x-2 sm:space-x-3">
         <label class="flex">
-          <input
-            type="checkbox"
-            checked=""
-            @click.stop=""
-            class="form-checkbox is-outline h-5 w-5 rounded-full border-slate-400/70 before:bg-primary checked:border-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:before:bg-accent dark:checked:border-accent dark:hover:border-accent dark:focus:border-accent"
-          />
+        <input
+          phx-click="toggle"
+          phx-value-id={@task.id}
+          class="form-radio is-basic h-5 w-5 rounded-full border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
+          name="basic"
+          type="radio"
+          checked={false}
+        />
         </label>
-        <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100">
+        <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100" phx-click={
+        JS.push("select_task", value: %{id: @task.id})
+        |> JS.toggle(to: "#edit-todo-drawer")
+      }>
           <%= @task.description %>
         </h2>
       </div>

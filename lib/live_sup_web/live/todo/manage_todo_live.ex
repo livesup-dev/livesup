@@ -5,7 +5,13 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   alias LiveSup.Schemas.TodoTask
 
   alias Palette.Components.Breadcrumb.Step
-  alias LiveSupWeb.Todo.Components.{TodoHeaderComponent, TodoTaskComponent, TodoDrawerComponent}
+
+  alias LiveSupWeb.Todo.Components.{
+    TodoHeaderComponent,
+    TodoTaskComponent,
+    TodoDrawerComponent,
+    TodoAddTaskComponent
+  }
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
@@ -32,6 +38,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      |> assign(:todo, Todos.get!(todo_id))
      |> assign(:todo_task, Tasks.get!(task_id))
      |> assign(:editing, nil)
+     |> assign_breadcrumb_steps()
      |> assign_tasks()}
   end
 
@@ -40,26 +47,36 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     {:noreply,
      socket
      |> assign(:todo, Todos.get!(todo_id))
+     |> assign_breadcrumb_steps()
      |> assign(:editing, nil)
      |> assign(:todo_task, nil)
      |> assign_tasks()}
   end
 
+  def assign_breadcrumb_steps(socket) do
+    socket
+    |> assign(:breadcrumb_steps, [
+      %Step{label: "Home", path: "/"},
+      %Step{label: "Todos", path: "/todos"},
+      %Step{label: socket.assigns.todo.title, path: "/todos/#{socket.assigns.todo.id}"}
+    ])
+  end
+
   defp assign_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
     socket
-    |> assign(:tasks, Todos.get_tasks(todo_id))
+    |> assign(:tasks, Todos.get_tasks(todo_id, completed: false))
   end
 
   @impl true
   def handle_event(
-        "create",
+        "add_task",
         params,
         socket
       ) do
-    {:ok, task} = save_task(params, socket)
+    {:ok, task} = save_task(params, socket) |> dbg
 
     # LiveViewTodoWeb.Endpoint.broadcast_from(self(), @topic, "update", socket.assigns)
-    {:noreply, assign(socket, tasks: socket.assigns.task ++ [task], active: %TodoTask{})}
+    {:noreply, assign(socket, tasks: [task] ++ socket.assigns.tasks, active: %TodoTask{})}
   end
 
   def handle_event(
@@ -88,19 +105,18 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
         %{"id" => task_id, "value" => value},
         %{assigns: %{tasks: tasks}} = socket
       ) do
-    task =
-      if value do
-        Tasks.complete!(task_id)
-      else
-        Tasks.incomplete!(task_id)
-      end
+    task = toggle(task_id, value)
 
-    # TODO: This is a hack to get the task to update in the list
-    socket = assign(socket, tasks: tasks ++ [task], active: %TodoTask{})
-    {:noreply, socket}
+    # delete the updated task from the list
+    tasks = Enum.reject(tasks, &(&1.id == task.id))
+
+    {:noreply, socket |> assign(:tasks, tasks)}
   end
 
-  def save_task(%{"id" => ""} = params, %{assigns: %{current_user: %{id: user_id}}}) do
+  def toggle(task_id, "on"), do: Tasks.complete!(task_id)
+  # def toggle(task_id, "off"), do: Tasks.incomplete!(task_id)
+
+  def save_task(params, %{assigns: %{current_user: %{id: user_id}}}) do
     Todos.add_task(Map.put(params, "created_by_id", user_id))
   end
 
