@@ -12,10 +12,11 @@ defmodule LiveSup.Test.TodosFixtures do
       attrs
       |> Enum.into(default_attrs())
 
-    project
-    |> Todos.create(attrs)
-    |> elem(1)
-    |> Todos.get!()
+    {:ok, todo} =
+      project
+      |> Todos.create(attrs)
+
+    todo
   end
 
   def todo_archived_fixture(%Project{} = project, attrs \\ %{}) do

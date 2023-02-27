@@ -10,8 +10,7 @@ defmodule LiveSupWeb.Output.VegaLiteStaticComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div id={"vega-lite-#{@id}"} phx-hook="VegaLite" phx-update="ignore" data-id={@id}>
-    </div>
+    <div id={"vega-lite-#{@id}"} phx-hook="VegaLite" phx-update="ignore" data-id={@id}></div>
     """
   end
 end

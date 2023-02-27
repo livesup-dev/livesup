@@ -1,96 +1,40 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-const colors = require('tailwindcss/colors')
-
+let plugin = require("tailwindcss/plugin");
 module.exports = {
-  darkMode: 'class', // or 'media' or false
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['cairo', ...defaultTheme.fontFamily.sans],
-      },
-      colors: {
-        light: 'var(--light)',
-        dark: 'var(--dark)',
-        darker: 'var(--darker)',
-        primary: {
-          DEFAULT: 'var(--color-primary)',
-          50: 'var(--color-primary-50)',
-          100: 'var(--color-primary-100)',
-          light: 'var(--color-primary-light)',
-          lighter: 'var(--color-primary-lighter)',
-          dark: 'var(--color-primary-dark)',
-          darker: 'var(--color-primary-darker)',
-        },
-        secondary: {
-          DEFAULT: colors.fuchsia[600],
-          50: colors.fuchsia[50],
-          100: colors.fuchsia[100],
-          light: colors.fuchsia[500],
-          lighter: colors.fuchsia[400],
-          dark: colors.fuchsia[700],
-          darker: colors.fuchsia[800],
-        },
-        success: {
-          DEFAULT: colors.green[600],
-          50: colors.green[50],
-          100: colors.green[100],
-          light: colors.green[500],
-          lighter: colors.green[400],
-          dark: colors.green[700],
-          darker: colors.green[800],
-        },
-		alert: {
-			DEFAULT: colors.orange[600], 
-			50: colors.orange[50],
-			100: colors.orange[100],
-			light: colors.orange[500],
-			lighter: colors.orange[400],
-			dark: colors.orange[700],
-			darker: colors.orange[800],
-		},
-        warning: {
-          DEFAULT: colors.yellow[600],
-          50: colors.yellow[50],
-          100: colors.yellow[100],
-          light: colors.yellow[500],
-          lighter: colors.yellow[400],
-          dark: colors.yellow[700],
-          darker: colors.yellow[800],
-        },
-        danger: {
-          DEFAULT: colors.red[600],
-          50: colors.red[50],
-          100: colors.red[100],
-          light: colors.red[500],
-          lighter: colors.red[400],
-          dark: colors.red[700],
-          darker: colors.red[800],
-        },
-        info: {
-          DEFAULT: colors.cyan[600],
-          50: colors.cyan[50],
-          100: colors.cyan[100],
-          light: colors.cyan[500],
-          lighter: colors.cyan[400],
-          dark: colors.cyan[700],
-          darker: colors.cyan[800],
-        },
-		incident: {
-			DEFAULT: colors.yellow[400],
-			investigating: colors.yellow[400],
-			monitoring: colors.green[400]
-		}
-      },
-    },
-  },
   content: [
-    "../lib/live_sup_web/**/*.eex",
-    "../lib/live_sup_web/**/*.heex",
-    "../lib/live_sup_web/**/*.ex"
+    "../**/*.*exs",
+    "./js/**/*.js",
+    "../lib/*_web.ex",
+    "../lib/*_web/**/*.*ex",
   ],
+  darkMode: "class",
   plugins: [
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
-    require('@themesberg/flowbite/plugin')
-  ]
-}
+    plugin(({ addVariant }) =>
+      addVariant("phx-no-feedback", ["&.phx-no-feedback", ".phx-no-feedback &"])
+    ),
+    plugin(({ addVariant }) =>
+      addVariant("phx-click-loading", [
+        "&.phx-click-loading",
+        ".phx-click-loading &",
+      ])
+    ),
+    plugin(({ addVariant }) =>
+      addVariant("phx-submit-loading", [
+        "&.phx-submit-loading",
+        ".phx-submit-loading &",
+      ])
+    ),
+    plugin(({ addVariant }) =>
+      addVariant("phx-change-loading", [
+        "&.phx-change-loading",
+        ".phx-change-loading &",
+      ])
+    ),
+    require("@tailwindcss/line-clamp"),
+    function ({ addVariant }) {
+      addVariant(
+        "supports-backdrop",
+        "@supports ((-webkit-backdrop-filter: initial) or (backdrop-filter: initial))"
+      );
+    },
+  ],
+};

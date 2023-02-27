@@ -10,7 +10,8 @@ defmodule LiveSupWeb.Test.Live.Todo.ManageTodoLiveTest do
 
     test "display todo", %{conn: conn, todo: %{id: todo_id, title: todo_title}} do
       {:ok, _manage_todo_live, html} = live(conn, Routes.manage_todo_path(conn, :show, todo_id))
-      assert html =~ "<div class=\"text-3xl text-center mb-3\">#{todo_title}</div>"
+
+      assert html =~ "<li>#{todo_title}</li>"
     end
   end
 end

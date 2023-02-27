@@ -24,7 +24,7 @@ defmodule LiveSupWeb.Endpoint do
     at: "/",
     from: :live_sup,
     gzip: false,
-    only: ~w(assets css fonts images uploads js favicon.ico robots.txt)
+    only: ~w(assets fonts images favicon.ico robots.txt js css)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

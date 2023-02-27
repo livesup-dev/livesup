@@ -10,9 +10,9 @@ defmodule LiveSupWeb.WelcomeLive do
     current_user = get_current_user(session, socket)
 
     {:ok,
-     assign(socket,
-       current_user: current_user
-     )}
+     socket
+     |> assign(:current_user, current_user)
+     |> assign(:section, :home)}
   end
 
   @impl true

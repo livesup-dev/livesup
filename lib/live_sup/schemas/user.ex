@@ -19,25 +19,25 @@ defmodule LiveSup.Schemas.User do
   @derive {Phoenix.Param, key: :id}
   @derive {Inspect, except: [:password]}
   schema "users" do
-    field :email, :string
-    field :first_name, :string
-    field :last_name, :string
-    field :avatar_url, :string
-    field :provider, :string
-    field :password, :string, virtual: true
-    field :hashed_password, :string, redact: true
-    field :confirmed_at, :naive_datetime
-    field :state, :string
+    field(:email, :string)
+    field(:first_name, :string)
+    field(:last_name, :string)
+    field(:avatar_url, :string)
+    field(:provider, :string)
+    field(:password, :string, virtual: true)
+    field(:hashed_password, :string, redact: true)
+    field(:confirmed_at, :naive_datetime)
+    field(:state, :string)
 
-    field :location, :map, default: @default_location
+    field(:location, :map, default: @default_location)
 
-    field :settings, :map
+    field(:settings, :map)
 
     timestamps()
 
-    has_many :team_members, TeamMember
-    has_many :links, Link
-    has_many :teams, through: [:team_members, :teams]
+    has_many(:team_members, TeamMember)
+    has_many(:links, Link)
+    has_many(:teams, through: [:team_members, :teams])
   end
 
   def full_name(user) do

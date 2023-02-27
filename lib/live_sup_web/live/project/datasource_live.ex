@@ -3,6 +3,8 @@ defmodule LiveSupWeb.Project.DatasourceLive do
 
   alias LiveSup.Core.{Projects, Datasources}
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(%{"project_id" => project_id}, _session, socket) do
     project = Projects.get!(project_id)

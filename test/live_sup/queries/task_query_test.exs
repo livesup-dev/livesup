@@ -29,12 +29,13 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
 
   describe "creating a task" do
     @tag :task_query_create
-    test "create/1", %{todo: %{id: todo_id}} do
+    test "create/1", %{todo: %{id: todo_id, created_by_id: created_by_id}} do
       attrs = %{
         "description" => "alo?",
         "due_on" => "2022-09-06",
         "notes" => "some cool notes",
-        "todo_id" => todo_id
+        "todo_id" => todo_id,
+        "created_by_id" => created_by_id
       }
 
       {:ok, task} = TaskQuery.create(attrs)

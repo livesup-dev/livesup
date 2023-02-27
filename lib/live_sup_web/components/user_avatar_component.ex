@@ -7,19 +7,21 @@ defmodule LiveSupWeb.Components.UserAvatarComponent do
 
     ~H"""
     <div class="relative" x-data="{ open: false }">
-    <button
+      <button
         @click="open = !open; $nextTick(() => { if(open){ $refs.userMenu.focus() } })"
         type="button"
         aria-haspopup="true"
-        :aria-expanded="open ? 'true' : 'false'"
         class="transition-opacity duration-200 rounded-full focus:outline-none focus:ring dark:focus:opacity-100"
-    >
+      >
         <span class="sr-only">User menu</span>
-        <img class="w-10 h-10 rounded-full" src={User.default_avatar_url(@current_user)} alt={@full_name} />
-    </button>
-
-    <!-- User dropdown menu -->
-    <div
+        <img
+          class="w-10 h-10 rounded-full"
+          src={User.default_avatar_url(@current_user)}
+          alt={@full_name}
+        />
+      </button>
+      <!-- User dropdown menu -->
+      <div
         x-show="open"
         x-ref="userMenu"
         x-transition:enter="transition-all transform ease-out"
@@ -35,10 +37,19 @@ defmodule LiveSupWeb.Components.UserAvatarComponent do
         role="menu"
         aria-orientation="vertical"
         aria-label="User menu"
-    >
-        <%= link "Settings", to: Routes.user_settings_path(LiveSupWeb.Endpoint, :update), class: "block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary" %>
-        <%= link "Logout", to: Routes.user_session_path(LiveSupWeb.Endpoint, :delete), method: :delete, class: "block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary" %>
-    </div>
+      >
+        <%= link("Settings",
+          to: Routes.user_settings_path(LiveSupWeb.Endpoint, :update),
+          class:
+            "block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
+        ) %>
+        <%= link("Logout",
+          to: Routes.user_session_path(LiveSupWeb.Endpoint, :delete),
+          method: :delete,
+          class:
+            "block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
+        ) %>
+      </div>
     </div>
     """
   end

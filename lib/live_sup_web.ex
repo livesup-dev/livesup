@@ -25,7 +25,7 @@ defmodule LiveSupWeb do
       import LiveSupWeb.Gettext
       alias LiveSupWeb.Router.Helpers, as: Routes
 
-      action_fallback LiveSupWeb.FallbackController
+      action_fallback(LiveSupWeb.FallbackController)
     end
   end
 
@@ -37,7 +37,7 @@ defmodule LiveSupWeb do
       import LiveSupWeb.Gettext
       alias LiveSupWeb.Router.Helpers, as: Routes
 
-      action_fallback LiveSupWeb.Api.FallbackController
+      action_fallback(LiveSupWeb.Api.FallbackController)
     end
   end
 
@@ -61,7 +61,8 @@ defmodule LiveSupWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {LiveSupWeb.LayoutView, "live.html"}
+        layout: {LiveSupWeb.LayoutView, :live},
+        container: {:main, class: "main-content w-full px-[var(--margin-x)] pb-8"}
 
       import Logger
 
@@ -99,11 +100,8 @@ defmodule LiveSupWeb do
   def component do
     quote do
       use Phoenix.Component
-      # Use all HTML functionality (forms, tags, etc)
-      use Phoenix.HTML
-      alias LiveSupWeb.Router.Helpers, as: Routes
 
-      alias LiveSupWeb.Components.AddButtonComponent
+      unquote(view_helpers())
     end
   end
 
@@ -114,7 +112,7 @@ defmodule LiveSupWeb do
 
       # Import LiveView helpers (live_render, live_component, live_patch, etc)
       import Phoenix.LiveView.Helpers
-      import LiveSupWeb.LiveHelpers
+      import Phoenix.Component
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
@@ -122,6 +120,8 @@ defmodule LiveSupWeb do
       import LiveSupWeb.ErrorHelpers
       import LiveSupWeb.Gettext
       alias LiveSupWeb.Router.Helpers, as: Routes
+
+      use Palette
 
       # Custom helpers
       import LiveSupWeb.Helpers

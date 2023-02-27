@@ -20,34 +20,60 @@
         <table class="divide-y w-full divide-gray-100 dark:divide-dark">
           <thead class="bg-gray-50 dark:bg-darker">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider ">Name</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Slug</th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider "
+              >
+                Name
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
+              >
+                Slug
+              </th>
               <th scope="col" class="relative px-6 py-3">
                 <span class="sr-only">Actions</span>
               </th>
             </tr>
           </thead>
-          <tbody id="teams" class="bg-white dark:bg-darker divide-y divide-gray-100 dark:divide-dark">
-          <%= for team <- @teams do %>
-            <tr id={"team-#{team.id}"}>
-              <td class="px-6 py-4">
-                <div class="text-sm"><%= team.name %></div>
-              </td>
-              <td class="px-6 py-4">
-                <div class="text-sm"><%= team.slug %></div>
-              </td>
+          <tbody
+            id="teams"
+            class="bg-white dark:bg-darker divide-y divide-gray-100 dark:divide-dark"
+          >
+            <%= for team <- @teams do %>
+              <tr id={"team-#{team.id}"}>
+                <td class="px-6 py-4">
+                  <div class="text-sm"><%= team.name %></div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="text-sm"><%= team.slug %></div>
+                </td>
 
-              <td class="px-6 py-4 text-right text-sm font-medium">
-                <span class="text-indigo-600 hover:text-indigo-900"><%= live_redirect "Show", to: Routes.admin_team_show_path(@socket, :show, team) %></span>
-                <span class="text-indigo-600 hover:text-indigo-900">|</span>
-                <span class="text-indigo-600 hover:text-indigo-900"><%= live_patch "Edit", to: Routes.admin_team_index_path(@socket, :edit, team) %></span>
-                <span class="text-indigo-600 hover:text-indigo-900">|</span>
-                <span class="text-indigo-600 hover:text-indigo-900"><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: team.id, data: [confirm: "Are you sure?"] %></span>
-              </td>
-            </tr>
-          <% end %>
-          <!-- / listing teams... -->
-         </tbody>
+                <td class="px-6 py-4 text-right text-sm font-medium">
+                  <span class="text-indigo-600 hover:text-indigo-900">
+                    <%= live_redirect("Show",
+                      to: Routes.admin_team_show_path(@socket, :show, team)
+                    ) %>
+                  </span>
+                  <span class="text-indigo-600 hover:text-indigo-900">|</span>
+                  <span class="text-indigo-600 hover:text-indigo-900">
+                    <%= live_patch("Edit", to: Routes.admin_team_index_path(@socket, :edit, team)) %>
+                  </span>
+                  <span class="text-indigo-600 hover:text-indigo-900">|</span>
+                  <span class="text-indigo-600 hover:text-indigo-900">
+                    <%= link("Delete",
+                      to: "#",
+                      phx_click: "delete",
+                      phx_value_id: team.id,
+                      data: [confirm: "Are you sure?"]
+                    ) %>
+                  </span>
+                </td>
+              </tr>
+            <% end %>
+            <!-- / listing teams... -->
+          </tbody>
         </table>
       </div>
     </div>

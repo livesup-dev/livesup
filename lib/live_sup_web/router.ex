@@ -29,6 +29,10 @@ defmodule LiveSupWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :unauthenticated_layout do
+    plug(:put_root_layout, {LiveSupWeb.LayoutView, :unauthenticated})
+  end
+
   # scope "/", LiveSupWeb do
   #   pipe_through :browser
 
@@ -110,7 +114,7 @@ defmodule LiveSupWeb.Router do
   end
 
   scope "/", LiveSupWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated, :put_session_layout]
+    pipe_through [:browser, :redirect_if_user_is_authenticated, :unauthenticated_layout]
 
     get "/users/register", Auth.UserRegistrationController, :new
     post "/users/register", Auth.UserRegistrationController, :create
@@ -188,7 +192,7 @@ defmodule LiveSupWeb.Router do
   scope "/", LiveSupWeb do
     pipe_through [:browser]
 
-    delete "/users/log_out", Auth.UserSessionController, :delete
+    delete("/users/log-out", Auth.UserSessionController, :delete)
     get "/users/confirm", Auth.UserConfirmationController, :new
     post "/users/confirm", Auth.UserConfirmationController, :create
     get "/users/confirm/:token", Auth.UserConfirmationController, :confirm

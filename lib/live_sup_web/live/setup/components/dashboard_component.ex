@@ -19,20 +19,20 @@ defmodule LiveSupWeb.SetupLive.Components.DashboardComponent do
     <div>
       <h3 class="text-xl text-gray-600 dark:text-gray-200 text-center">Create a project</h3>
       <.form
-          let={f}
-          for={@changeset}
-          id="project-form"
-          phx-target={@myself}
-          phx-change="validate"
-          phx-submit="save">
+        :let={f}
+        for={@changeset}
+        id="project-form"
+        phx-target={@myself}
+        phx-change="validate"
+        phx-submit="save"
+      >
+        <%= label(f, :name) %>
+        <%= text_input(f, :name) %>
+        <%= error_tag(f, :name) %>
 
-          <%= label f, :name %>
-          <%= text_input f, :name %>
-          <%= error_tag f, :name %>
-
-          <div>
-            <%= submit "Save", phx_disable_with: "Saving..." %>
-          </div>
+        <div>
+          <%= submit("Save", phx_disable_with: "Saving...") %>
+        </div>
       </.form>
     </div>
     """

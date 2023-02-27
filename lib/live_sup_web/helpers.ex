@@ -75,7 +75,8 @@ defmodule LiveSupWeb.Helpers do
           class={"switch-button__checkbox #{@class}"}
           name={@name}
           checked={@checked}
-          {@attrs} />
+          {@attrs}
+        />
         <div class="switch-button__bg"></div>
       </label>
     </div>
@@ -97,7 +98,11 @@ defmodule LiveSupWeb.Helpers do
       |> assign(:attrs, assigns_to_attributes(assigns, [:active, :class, :disabled]))
 
     ~H"""
-    <button class={"choice-button #{if(@active, do: "active")} #{@class}"} disabled={@disabled} {@attrs}>
+    <button
+      class={"choice-button #{if(@active, do: "active")} #{@class}"}
+      disabled={@disabled}
+      {@attrs}
+    >
       <%= render_block(@inner_block) %>
     </button>
     """

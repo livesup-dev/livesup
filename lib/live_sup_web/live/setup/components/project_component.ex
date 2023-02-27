@@ -63,20 +63,27 @@ defmodule LiveSupWeb.SetupLive.Components.ProjectComponent do
     <span>
       <h3 class="text-xl text-gray-600 dark:text-gray-200 text-center">Create a project</h3>
       <.form
-          let={f}
-          for={@changeset}
-          id="project-form"
-          phx-target={@myself}
-          phx-submit="save"
-          class="space-y-6">
+        :let={f}
+        for={@changeset}
+        id="project-form"
+        phx-target={@myself}
+        phx-submit="save"
+        class="space-y-6"
+      >
+        <%= label(f, :name) %>
+        <%= text_input(f, :name,
+          class:
+            "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+        ) %>
+        <%= error_tag(f, :name) %>
 
-          <%= label f, :name %>
-          <%= text_input f, :name, class: "w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker" %>
-          <%= error_tag f, :name %>
-
-          <div>
-            <%= submit "Save", phx_disable_with: "Saving...", class: "w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker"%>
-          </div>
+        <div>
+          <%= submit("Save",
+            phx_disable_with: "Saving...",
+            class:
+              "w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker"
+          ) %>
+        </div>
       </.form>
       <%= if length(@projects) > 0 do %>
         <p>Or</p>
@@ -85,9 +92,9 @@ defmodule LiveSupWeb.SetupLive.Components.ProjectComponent do
             <span class="text-gray-700">Select an existing one</span>
             <select name="project" id="project_list" class="form-select block w-full mt-1">
               <option value="">&nbsp;</option>
-              <%= for project <- @projects do%>
+              <%= for project <- @projects do %>
                 <option value={project.id}><%= project.name %></option>
-              <% end  %>
+              <% end %>
             </select>
           </label>
         </form>

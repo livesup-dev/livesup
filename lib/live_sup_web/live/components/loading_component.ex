@@ -9,9 +9,9 @@ defmodule LiveSupWeb.Live.Components.LoadingComponent do
       |> assign_new(:loaded_class, fn -> "hidden" end)
 
     ~H"""
-      <div class={"#{@loaded_class} fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-primary-darker"}>
-        Loading.....
-      </div>
+    <div class={"#{@loaded_class} fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-primary-darker"}>
+      Loading.....
+    </div>
     """
   end
 end

@@ -93,9 +93,9 @@ defmodule LiveSupWeb.Api.CommentControllerTest do
       conn = delete(conn, Routes.api_comment_path(conn, :delete, comment))
       assert response(conn, 204)
 
-      assert_error_sent 404, fn ->
+      assert_error_sent(404, fn ->
         get(conn, Routes.api_comment_path(conn, :show, comment))
-      end
+      end)
     end
   end
 end

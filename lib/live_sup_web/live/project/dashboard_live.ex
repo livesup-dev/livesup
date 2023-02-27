@@ -5,6 +5,8 @@ defmodule LiveSupWeb.Project.DashboardLive do
   alias LiveSup.Core.Utils
   alias LiveSup.Schemas.Dashboard
 
+  on_mount(LiveSupWeb.UserLiveAuth)
+
   @impl true
   def mount(_params, session, socket) do
     current_user = get_current_user(session, socket)

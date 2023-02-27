@@ -10,19 +10,26 @@ defmodule LiveSup.Queries.TaskQuery do
     |> Repo.all()
   end
 
-  def by_todo(%Todo{id: todo_id}) do
+  def by_todo(todo, filters \\ [])
+
+  def by_todo(%Todo{id: todo_id}, filters) do
     todo_id
-    |> by_todo()
+    |> by_todo(filters)
   end
 
-  def by_todo(todo_id) when is_binary(todo_id) do
+  def by_todo(todo_id, filters) when is_binary(todo_id) do
     base()
     |> where([p], p.todo_id == ^todo_id)
+    |> (fn query ->
+          case Keyword.has_key?(filters, :completed) do
+            true -> where(query, [p], p.completed == ^filters[:completed])
+            false -> query
+          end
+        end).()
     |> order_by([task], asc: task.completed, desc: task.inserted_at)
     |> Repo.all()
   end
 
-  @spec get!(TodoTask.t() | String.t(), Keyword.t()) :: TodoTask.t()
   def get!(todo_task, params \\ [])
 
   def get!(%TodoTask{id: todo_id}, params) do

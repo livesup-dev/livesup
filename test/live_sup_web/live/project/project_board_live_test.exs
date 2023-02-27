@@ -11,7 +11,7 @@ defmodule LiveSupWeb.Test.Live.Project.BoardLiveTest do
     test "show board", %{conn: conn, project: %{id: project_id, name: name}} do
       {:ok, _index_live, html} = live(conn, Routes.project_board_path(conn, :index, project_id))
 
-      assert html =~ "<h1 class=\"text-5xl mt-0 mb-6\">#{name}</h1>"
+      assert html =~ "<li>#{name}</li>"
     end
   end
 end
