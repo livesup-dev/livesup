@@ -115,6 +115,22 @@ config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id: {:system, "GITHUB_OAUTH_CLIENT_ID"},
   client_secret: {:system, "GITHUB_OAUTH_CLIENT_SECRET"}
 
+config :live_sup, Oban,
+  repo: LiveSup.Repo,
+  plugins: [
+    # prune jobs after 5 minutes
+    {Oban.Plugins.Pruner, max_age: 300},
+    {Oban.Plugins.Cron,
+     crontab: [
+       # Run job every minute
+       {"*/5 * * * *", LiveSup.Workers.TodoDatasourceSupervisorWorker}
+     ]}
+  ],
+  queues: [
+    default: 10,
+    todo_datasources: 10
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

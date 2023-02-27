@@ -42,6 +42,35 @@ defmodule LiveSup.Test.DatasourcesFixtures do
     }
   end
 
+  def add_github_datasource() do
+    %{
+      name: "Github",
+      slug: "github-datasource",
+      enabled: "true",
+      settings: %{
+        "token" => %{
+          "source" => "local",
+          "value" => "gb-token",
+          "required" => true,
+          "type" => "string"
+        },
+        "owner" => %{
+          "type" => "string",
+          "required" => true,
+          "value" => "livesup-dev",
+          "source" => "local"
+        },
+        "repository" => %{
+          "type" => "string",
+          "required" => true,
+          "value" => "livesup",
+          "source" => "local"
+        }
+      }
+    }
+    |> datasource_fixture()
+  end
+
   def add_jira_datasource() do
     %{
       name: "Jira",

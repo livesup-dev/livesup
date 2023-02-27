@@ -13,6 +13,20 @@ defmodule LiveSup.Seeds.Core.UsersSeeds do
     [
       %{
         user: %{
+          id: "8b6e5f20-fc2e-4734-ba20-c636a1cbc75d",
+          first_name: "LiveSup",
+          last_name: "Bot",
+          avatar_url:
+            "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/5a390ef9280a8d389404eebe/53550071-f045-44f3-bc75-96956f8541c3/48",
+          email: "bot@livesup.com",
+          password: "Very@Safe@Password#{:crypto.strong_rand_bytes(5)}",
+          location: User.default_location(),
+          system_identifier: "livesup_bot",
+          system: true
+        }
+      },
+      %{
+        user: %{
           first_name: "Emiliano",
           last_name: "Jankowski",
           avatar_url:

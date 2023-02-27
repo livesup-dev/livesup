@@ -1,7 +1,7 @@
 defmodule LiveSup.Queries.TodoQuery do
   import Ecto.Query
 
-  alias LiveSup.Schemas.{Project, Todo}
+  alias LiveSup.Schemas.{Project, Todo, TodoDatasource}
   alias LiveSup.Repo
 
   def all do
@@ -56,6 +56,12 @@ defmodule LiveSup.Queries.TodoQuery do
     |> Repo.insert()
   end
 
+  def create!(attrs) do
+    %Todo{}
+    |> Todo.changeset(attrs)
+    |> Repo.insert!()
+  end
+
   def update(model, attrs) do
     model
     |> Todo.changeset(attrs)
@@ -88,5 +94,11 @@ defmodule LiveSup.Queries.TodoQuery do
     |> Repo.update()
   end
 
-  def base, do: from(Todo, as: :todo, preload: [:project])
+  def upsert_datasource!(todo, data) do
+    %TodoDatasource{}
+    |> TodoDatasource.changeset(Map.merge(%{todo_id: todo.id}, data))
+    |> Repo.insert!(on_conflict: :nothing)
+  end
+
+  def base, do: from(Todo, as: :todo, preload: [:project, :datasources])
 end

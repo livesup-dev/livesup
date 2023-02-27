@@ -4,7 +4,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
 
   import LiveSup.Test.Setups
 
-  alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources, Teams, Metrics}
+  alias LiveSup.Core.{Projects, Dashboards, Widgets, Datasources, Teams, Metrics, Todos}
   alias LiveSup.Queries.{MetricValueQuery, DatasourceInstanceQuery}
   alias LiveSup.Schemas.{Dashboard, WidgetInstance}
   alias LiveSup.Test.ProjectsFixtures
@@ -66,6 +66,13 @@ defmodule LiveSup.Test.DataImporter.Importer do
              } = dashboard_widget
 
       assert DatasourceInstanceQuery.count() == 1
+
+      todo = Todos.get!("cd5c19b7-a460-4a42-a64a-937dfad3f3f3")
+      assert %{title: "Elixir projects"} = todo
+
+      first_datasource = todo.datasources |> Enum.at(0)
+      assert length(todo.datasources) == 2
+      assert %{"location" => %{"value" => "Mahon"}} = first_datasource.settings
 
       # Make sure it does not fail when running twice
       LiveSup.DataImporter.Importer.import(yaml_data())
@@ -192,6 +199,34 @@ defmodule LiveSup.Test.DataImporter.Importer do
           - id: 8f871123-54fd-4749-9030-fd520c016bbd
             value: 2000
             value_date: 2022-03-14 00:00:00
+    todos:
+      - id: cd5c19b7-a460-4a42-a64a-937dfad3f3f3
+        title: Elixir projects
+        datasources:
+          -
+            id: 3f9adddb-1180-41a4-bda5-20018c9c5ef4
+            slug: weather-api-datasource
+            settings:
+              location:
+                source: local
+                type: string
+                value: Mahon
+              runs_every:
+                source: local
+                type: int
+                value: 43200
+          -
+            id: d5e6c027-2fb3-4a0b-b712-d94ebc5035aa
+            slug: weather-api-datasource
+            settings:
+              location:
+                source: local
+                type: string
+                value: Madrid
+              runs_every:
+                source: local
+                type: int
+                value: 43200
     """
   end
 

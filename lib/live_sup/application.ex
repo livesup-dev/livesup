@@ -17,7 +17,8 @@ defmodule LiveSup.Application do
       # Start the Endpoint (http/https)
       LiveSupWeb.Endpoint,
       {Task.Supervisor, name: LiveSup.Core.Widgets.WorkerTaskSupervisor},
-      {LiveSup.Core.Widgets.WidgetSupervisor, [name: :widget_supervisor]}
+      {LiveSup.Core.Widgets.WidgetSupervisor, [name: :widget_supervisor]},
+      {Oban, Application.fetch_env!(:live_sup, Oban)}
 
       # Start a worker by calling: LiveSup.Worker.start_link(arg)
       # {LiveSup.Worker, arg}

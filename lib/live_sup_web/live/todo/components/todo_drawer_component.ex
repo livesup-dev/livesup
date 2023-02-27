@@ -1,6 +1,9 @@
 defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
   use LiveSupWeb, :component
+  alias LiveSupWeb.Todo.Components.TodoTaskComponent
   alias Phoenix.LiveView.JS
+  alias LiveSup.Schemas.TodoTask
+  alias LiveSupWeb.Live.Todo.Components.TaskDetails.TaskComponent
 
   attr(:task, :map, required: true)
   attr(:error, :any, default: nil)
@@ -58,16 +61,7 @@ defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
               </div>
             </div>
           </div>
-          <.xform for={:task}>
-            <.hidden_input name="id" value={@task.id} />
-            <.hidden_input name="todo_id" value={@task.todo_id} />
-            <.text name="description" value={@task.description} label="Description" required={true} />
-            <.alert :if={@error} description={@error} color={:error} />
-            <:actions>
-              <.close_modal_button />
-              <.save_modal_button />
-            </:actions>
-          </.xform>
+          <TaskComponent.render task={@task} error={@error} />
         </div>
       </div>
     </div>

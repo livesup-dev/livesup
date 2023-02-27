@@ -3,9 +3,10 @@ defmodule LiveSup.Core.Todos do
   The Todos context.
   """
 
-  alias LiveSup.Schemas.{Todo, Project}
-  alias LiveSup.Queries.{TodoQuery, TaskQuery}
+  alias LiveSup.Schemas.{Todo, Project, TodoDatasource, DatasourceInstance}
+  alias LiveSup.Queries.{TodoQuery, TaskQuery, TodoDatasourceQuery}
   alias LiveSup.Helpers.StringHelper
+  alias LiveSup.Core.Users
 
   @doc """
   Returns the list of todos.
@@ -18,6 +19,8 @@ defmodule LiveSup.Core.Todos do
   """
   defdelegate by_project(project, filter \\ %{}), to: TodoQuery
   defdelegate archive(todo), to: TodoQuery
+  defdelegate create!(attrs), to: TodoQuery
+  defdelegate upsert_datasource!(todo, data), to: TodoQuery
 
   def get(id) do
     id
@@ -89,6 +92,14 @@ defmodule LiveSup.Core.Todos do
     end
   end
 
+  def add_task!(attrs) do
+    TaskQuery.create!(attrs)
+  end
+
+  def upsert_task(attrs) do
+    TaskQuery.upsert!(attrs)
+  end
+
   @doc """
   Deletes a todo.
 
@@ -109,6 +120,101 @@ defmodule LiveSup.Core.Todos do
   def delete_all(%Project{} = project) do
     project
     |> TodoQuery.delete_all()
+  end
+
+  def run_datasource(%TodoDatasource{} = todo_datasource) do
+    case todo_datasource
+         |> build_context()
+         |> do_run_datasource do
+      {:ok, tasks} ->
+        TodoDatasourceQuery.update(todo_datasource, %{last_run_at: DateTime.utc_now()})
+        {:ok, tasks}
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
+  defp build_context(%TodoDatasource{last_run_at: last_run_at} = todo_datasource) do
+    %{
+      todo_datasource: todo_datasource,
+      last_run_at: last_run_at,
+      run_from: last_run_at |> parse_last_run_date(),
+      run_to: DateTime.utc_now() |> parse_last_run_date()
+    }
+  end
+
+  defp parse_last_run_date(nil) do
+    DateTime.utc_now()
+    |> Timex.shift(months: -6)
+    |> Timex.format!("{YYYY}-{0M}-{0D}")
+  end
+
+  defp parse_last_run_date(date) do
+    date
+    |> Timex.format!("{YYYY}-{0M}-{0D}")
+  end
+
+  def do_run_datasource(%{
+        run_from: run_from,
+        run_to: run_to,
+        todo_datasource:
+          %{
+            todo: todo,
+            datasource_instance:
+              %DatasourceInstance{
+                datasource: %{slug: "github-datasource"}
+              } = datasource_instance
+          } = todo_datasource
+      }) do
+    case todo_datasource
+         |> TodoDatasource.get_settings([
+           "owner",
+           "repository",
+           "token",
+           "limit",
+           "token"
+         ])
+         |> Map.merge(%{
+           "sort" => "created",
+           "direction" => "desc",
+           "state" => "open,close",
+           "updated" => "#{run_from}..#{run_to}"
+         })
+         |> LiveSup.Core.Widgets.Github.PullRequests.Handler.get_data() do
+      {:ok, pull_requests} ->
+        pull_requests |> add_tasks_from_pull_requests(todo, datasource_instance)
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
+  def add_tasks_from_pull_requests(pull_requests, todo, %{
+        id: datasource_instance_id,
+        datasource: %{slug: datasource_slug}
+      }) do
+    tasks =
+      pull_requests
+      |> Enum.map(fn pull_request ->
+        %{
+          title: pull_request[:title],
+          description: pull_request[:body],
+          todo_id: todo.id,
+          tags: ["github", pull_request[:repo][:name]],
+          external_identifier: pull_request[:id],
+          external_metadata: pull_request,
+          datasource_instance_id: datasource_instance_id,
+          datasource_slug: datasource_slug,
+          created_by_id: Users.get_default_system_account!().id,
+          inserted_at: pull_request[:created_at],
+          updated_at: pull_request[:updated_at],
+          completed: pull_request[:merged] || pull_request[:closed]
+        }
+        |> upsert_task()
+      end)
+
+    {:ok, tasks}
   end
 
   @doc """

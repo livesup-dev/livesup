@@ -8,7 +8,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   alias LiveSupWeb.Todo.Components.{
     TodoHeaderComponent,
-    TodoTaskComponent,
+    TaskRowComponent,
     TodoDrawerComponent,
     TodoAddTaskComponent
   }
@@ -73,7 +73,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
         params,
         socket
       ) do
-    {:ok, task} = save_task(params, socket) |> dbg
+    {:ok, task} = save_task(params, socket)
 
     # LiveViewTodoWeb.Endpoint.broadcast_from(self(), @topic, "update", socket.assigns)
     {:noreply, assign(socket, tasks: [task] ++ socket.assigns.tasks, active: %TodoTask{})}
@@ -95,7 +95,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     {:noreply, assign(socket, tasks: tasks, selected_task: %TodoTask{})}
   end
 
-  def handle_event("select_task", %{"id" => task_id} = task, socket) do
+  def handle_event("select_task", %{"id" => task_id}, socket) do
     {:noreply, assign(socket, selected_task: Tasks.get!(task_id))}
   end
 
@@ -116,13 +116,14 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   def toggle(task_id, "on"), do: Tasks.complete!(task_id)
   # def toggle(task_id, "off"), do: Tasks.incomplete!(task_id)
 
-  def save_task(params, %{assigns: %{current_user: %{id: user_id}}}) do
-    Todos.add_task(Map.put(params, "created_by_id", user_id))
-  end
-
-  def save_task(%{"id" => _} = params, %{assigns: %{selected_task: %{id: selected_task}}}) do
+  def save_task(%{"id" => id} = params, %{assigns: %{selected_task: selected_task}})
+      when is_binary(id) do
     selected_task
     |> Tasks.update(params)
+  end
+
+  def save_task(params, %{assigns: %{current_user: %{id: user_id}}}) do
+    Todos.add_task(Map.put(params, "created_by_id", user_id))
   end
 
   @impl true
@@ -134,6 +135,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     socket
     |> assign(title: "ToDo")
     |> assign(section: @section)
+    |> assign(page_title: "Manage ToDo")
     |> assign(:error, nil)
     |> assign(selected_task: %TodoTask{todo_id: todo_id})
   end

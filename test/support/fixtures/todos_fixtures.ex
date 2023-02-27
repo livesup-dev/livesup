@@ -4,8 +4,9 @@ defmodule LiveSup.Test.TodosFixtures do
   entities via the `LiveSup.Core.Projects` context.
   """
 
+  alias LiveSup.Queries.TodoDatasourceQuery
   alias LiveSup.Core.Todos
-  alias LiveSup.Schemas.Project
+  alias LiveSup.Schemas.{Project, Todo, Datasource}
 
   def todo_fixture(%Project{} = project, attrs \\ %{}) do
     attrs =
@@ -17,6 +18,21 @@ defmodule LiveSup.Test.TodosFixtures do
       |> Todos.create(attrs)
 
     todo
+    |> Todos.get!()
+  end
+
+  def todo_datasource(%Todo{} = todo, %Datasource{} = datasource) do
+    %{id: datasource_instance_id} =
+      datasource
+      |> LiveSup.Test.DatasourcesFixtures.datasource_instance_fixture()
+
+    %{id: id} =
+      Todos.upsert_datasource!(todo, %{
+        datasource_instance_id: datasource_instance_id,
+        settings: %{state: "open", limit: 10}
+      })
+
+    TodoDatasourceQuery.get!(id)
   end
 
   def todo_archived_fixture(%Project{} = project, attrs \\ %{}) do

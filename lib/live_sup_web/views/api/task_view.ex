@@ -13,6 +13,7 @@ defmodule LiveSupWeb.Api.TaskView do
   def render("task.json", %{task: %{todo: %Ecto.Association.NotLoaded{}} = task}) do
     %{
       id: task.id,
+      title: task.title,
       description: task.description,
       notes: task.notes,
       completed: task.completed,
@@ -28,6 +29,7 @@ defmodule LiveSupWeb.Api.TaskView do
   def render("task.json", %{task: task}) do
     %{
       id: task.id,
+      title: task.title,
       description: task.description,
       notes: task.notes,
       completed: task.completed,

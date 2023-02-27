@@ -1,6 +1,8 @@
 defmodule LiveSupWeb.Todo.Components.TodoAddTaskComponent do
   use LiveSupWeb, :component
 
+  alias LiveSupWeb.Live.Todo.Components.ColorsComponent
+
   attr(:todo, :map, required: true)
 
   def render(assigns) do
@@ -11,7 +13,7 @@ defmodule LiveSupWeb.Todo.Components.TodoAddTaskComponent do
           <.hidden_input value={@todo.id} name="todo_id" />
           <input
             type="text"
-            name="description"
+            name="title"
             placeholder="What needs to be done?"
             autofocus=""
             class="w-96 text-xl placeholder-blue-400 py-2 px-5 outline-blue-300"
@@ -22,6 +24,7 @@ defmodule LiveSupWeb.Todo.Components.TodoAddTaskComponent do
           >
           </button>
         </form>
+        <ColorsComponent.render />
       </div>
     </div>
     """

@@ -117,6 +117,26 @@ defmodule LiveSup.Queries.TaskQuery do
     |> update!(%{completed: false})
   end
 
+  def upsert!(attrs) do
+    # Make sure we have all the keys converted to atoms
+    attrs =
+      attrs
+      |> Palette.Utils.StringHelper.keys_to_atoms()
+
+    %TodoTask{}
+    |> TodoTask.create_changeset(attrs)
+    |> Repo.insert!(
+      on_conflict: [
+        set: [
+          completed: attrs[:completed],
+          title: attrs[:title],
+          description: attrs[:description]
+        ]
+      ],
+      conflict_target: [:external_identifier, :datasource_instance_id]
+    )
+  end
+
   def base(params \\ []) do
     preload =
       params

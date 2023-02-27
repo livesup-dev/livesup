@@ -3,6 +3,20 @@ defmodule LiveSup.Queries.UserQuery do
   alias LiveSup.Repo
   import Ecto.Query
 
+  def get_system_account(identifier) do
+    base()
+    |> where([u], u.system == true)
+    |> where([u], u.system_identifier == ^identifier)
+    |> Repo.one()
+  end
+
+  def get_system_account!(identifier) do
+    base()
+    |> where([u], u.system == true)
+    |> where([u], u.system_identifier == ^identifier)
+    |> Repo.one!()
+  end
+
   def all do
     base()
     |> Repo.all()
