@@ -14,13 +14,15 @@
 
 <.breadcrumb title={@title} steps={@steps}>
   <:actions>
-    <.action_link type={:patch} path={Routes.project_board_path(@socket, :new_todo, @project)} tooltip="Add Todo" />
+    <.action_link
+      type={:patch}
+      path={Routes.project_board_path(@socket, :new_todo, @project)}
+      tooltip="Add Todo"
+    />
   </:actions>
 </.breadcrumb>
 
-
 <div class="mt-4 sm:mt-5 lg:mt-6">
-  <.card title="This is a demo project. You can create your own projects by clicking the button below. and more" />
   <h3 class="text-base font-medium text-slate-600 dark:text-navy-100">
     Dashboards
   </h3>

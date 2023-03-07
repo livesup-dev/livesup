@@ -6,19 +6,19 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
     <div>
       <%= if @widget_data.state == :error do %>
         <!-- Widget Error -->
-        <div class="ring-1 shadow ring-red-500 ring-opacity-50 items-center justify-between bg-white rounded-md dark:bg-darker min-h-[202px]">
+        <div class="ls-widget-error">
           <!-- Widget Error Detail -->
-          <div class="bg-white rounded-md dark:bg-darker">
-            <div class="flex items-center justify-between p-2 border-b dark:border-primary">
-              <h4 class="text-base font-semibold text-gray-500 dark:text-light">
+          <div class="ls-widget-error-detail">
+            <div class="ls-widget-error-title">
+              <h2>
                 <%= @widget_data.title %>
-              </h4>
+              </h2>
               <%= if @widget_data.icon do %>
-                <span><img class="w-4" src={@widget_data.icon} /></span>
+                <span><img src={@widget_data.icon} /></span>
               <% end %>
             </div>
-            <div class="items-center p-6 text-center space-x-2">
-              <p class="flex justify-center">
+            <div class="ls-widget-error-body">
+              <p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-12 w-12 mb-2 text-danger-darker"
@@ -36,11 +36,14 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
               </p>
               <p><%= @widget_data.data.error_description %></p>
             </div>
-            <div class="px-2 py-1 border-t border-gray-700">
-              <div class="space-x-2 text-right">
-                <span class="text-xs text-gray-500">
-                  Updated at <%= @widget_data.updated_in_minutes %>
-                </span>
+            <div class="ls-widget-error-footer">
+              <div class="text-right">
+                <p class="text-xs text-slate-400 dark:text-navy-300">
+                  Updated at
+                </p>
+                <p class="text-sm font-medium text-primary dark:text-accent-light">
+                  <%= @widget_data.updated_in_minutes %>
+                </p>
               </div>
             </div>
           </div>
@@ -51,17 +54,17 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
 
       <%= if @widget_data.state == :in_progress do %>
         <!-- Widget Loading -->
-        <div class="opacity-50 ring-1 shadow ring-indigo-300 ring-opacity-50 items-center justify-between bg-white rounded-md dark:bg-darker animate-pulse min-h-[202px]">
+        <div class="ls-widget-in-progress">
           <!-- Widget Loading Detail -->
-          <div class="bg-white rounded-md dark:bg-darker">
-            <div class="flex items-center justify-between p-2 border-b dark:border-primary">
-              <h4 class="text-base font-semibold text-gray-500 dark:text-light">
+          <div class="ls-widget-in-progress-detail">
+            <div class="ls-widget-title">
+              <h2>
                 <%= @widget_data.title %>
-              </h4>
+              </h2>
               <div class="flex items-right space-x-2"></div>
             </div>
-            <div class="p-6 text-center space-x-2 dark:text-info-light">
-              <p class="flex justify-center">
+            <div class="ls-widget-body">
+              <p>
                 <svg
                   class="animate-spin mb-2 h-12 w-12"
                   xmlns="http://www.w3.org/2000/svg"
@@ -94,8 +97,11 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
       <% end %>
 
       <%= if @widget_data.state == :ready do %>
-        <div id={"#{@widget_data.id}-widget"} class="bg-white rounded-md dark:bg-darker min-h-[202px]">
-          <%= render_slot(@inner_block, @widget_data) %>
+        <div class="ls-widget">
+          <!-- Widget Detail -->
+          <div id={"#{@widget_data.id}-widget"} class="ls-widget-detail">
+            <%= render_slot(@inner_block, @widget_data) %>
+          </div>
         </div>
       <% end %>
     </div>
