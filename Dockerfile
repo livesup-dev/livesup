@@ -1,15 +1,15 @@
 ARG MIX_ENV="prod"
 
-FROM hexpm/elixir:1.13.2-erlang-24.1.7-debian-bullseye-20210902-slim as build
+FROM hexpm/elixir:1.14.3-erlang-24.3.4.2-debian-bullseye-20210902-slim as build
 
 RUN apt-get update && \
-  apt-get install -y curl
+    apt-get install -y curl
 
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \
-        build-essential git nodejs && \
+    build-essential git nodejs && \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
@@ -44,25 +44,24 @@ COPY priv priv
 COPY assets assets
 COPY lib lib
 
-RUN npm run --prefix ./assets deploy
-RUN mix phx.digest
+RUN mix assets.deploy
 
 RUN mix do compile, release
 
 # prepare release image
-FROM hexpm/elixir:1.13.2-erlang-24.1.7-debian-bullseye-20210902-slim AS app
+FROM hexpm/elixir:1.14.3-erlang-24.3.4.2-debian-bullseye-20210902-slim
 
 # install runtime dependencies
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \
-        # Runtime dependencies
-        build-essential ca-certificates libncurses5-dev \
-        # In case someone uses `Mix.install/2` and point to a git repo
-        git \
-        # Additional standard tools
-        wget \
-        # We need it to check the state of the db server
-        postgresql-client && \
+    # Runtime dependencies
+    build-essential ca-certificates libncurses5-dev \
+    # In case someone uses `Mix.install/2` and point to a git repo
+    git \
+    # Additional standard tools
+    wget \
+    # We need it to check the state of the db server
+    postgresql-client && \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
