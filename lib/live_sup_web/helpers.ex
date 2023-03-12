@@ -21,26 +21,6 @@ defmodule LiveSupWeb.Helpers do
   end
 
   @doc """
-  Renders a list of select input options with the given one selected.
-  ## Examples
-      <.select
-        name="language"
-        selected={@language}
-        options={[en: "English", pl: "Polski", fr: "Français"]} />
-  """
-  def select(assigns) do
-    ~H"""
-    <select class="input" name={@name}>
-      <%= for {value, label} <- @options do %>
-        <option value={value} selected={value == @selected}>
-          <%= label %>
-        </option>
-      <% end %>
-    </select>
-    """
-  end
-
-  @doc """
   Renders a checkbox input styled as a switch.
   Also, a hidden input with the same name is rendered
   alongside the checkbox, so the submitted value is

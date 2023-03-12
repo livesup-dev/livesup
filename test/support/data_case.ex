@@ -20,6 +20,8 @@ defmodule LiveSup.DataCase do
     quote do
       alias LiveSup.Repo
 
+      use Oban.Testing, repo: LiveSup.Repo
+
       import Ecto
       import Ecto.Changeset
       import Ecto.Query

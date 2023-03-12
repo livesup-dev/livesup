@@ -38,3 +38,5 @@ config :live_sup, LiveSup.PromEx,
   drop_metrics_groups: [],
   grafana: :disabled,
   metrics_server: :disabled
+
+config :live_sup, Oban, testing: :inline

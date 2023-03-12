@@ -3,22 +3,23 @@ defmodule LiveSup.Schemas.DatasourceInstance do
   import Ecto.Changeset
   import LiveSup.Schemas.Helpers.SettingsHandler
 
-  alias LiveSup.Schemas.{WidgetInstance, Datasource, DatasourceInstance, Project}
+  alias LiveSup.Schemas.{WidgetInstance, Datasource, DatasourceInstance, Project, TodoDatasource}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   @derive {Phoenix.Param, key: :id}
   schema "datasource_instances" do
-    field :name, :string
-    field :enabled, :boolean
-    field :settings, :map
+    field(:name, :string)
+    field(:enabled, :boolean)
+    field(:settings, :map)
 
-    has_many :widgets_instances, WidgetInstance
+    has_many(:widgets_instances, WidgetInstance)
+    has_many(:todo_datasources, TodoDatasource)
 
     # If the project isn't present then
     # it's a public datasource instance
-    belongs_to :project, Project
-    belongs_to :datasource, Datasource
+    belongs_to(:project, Project)
+    belongs_to(:datasource, Datasource)
 
     timestamps()
   end

@@ -18,6 +18,7 @@ defmodule LiveSup.Test.TasksFixtures do
 
   defp default_attrs(%{id: todo_id, created_by_id: created_by_id}) do
     %{
+      title: "Some generic title - #{System.unique_integer()}",
       description: "Some generic description - #{System.unique_integer()}",
       todo_id: todo_id,
       created_by_id: created_by_id

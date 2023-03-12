@@ -14,6 +14,8 @@ defmodule LiveSup.Schemas.User do
     "lng" => 3.8389047
   }
 
+  @livesup_bot_identifier "livesup_bot"
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   @derive {Phoenix.Param, key: :id}
@@ -28,6 +30,8 @@ defmodule LiveSup.Schemas.User do
     field(:hashed_password, :string, redact: true)
     field(:confirmed_at, :naive_datetime)
     field(:state, :string)
+    field(:system_identifier, :string)
+    field(:system, :boolean, default: false)
 
     field(:location, :map, default: @default_location)
 
@@ -39,6 +43,20 @@ defmodule LiveSup.Schemas.User do
     has_many(:links, Link)
     has_many(:teams, through: [:team_members, :teams])
   end
+
+  @optional_fields [
+    :email,
+    :password,
+    :first_name,
+    :last_name,
+    :avatar_url,
+    :location,
+    :settings,
+    :provider,
+    :state,
+    :system,
+    :system_identifier
+  ]
 
   def full_name(user) do
     "#{user.first_name} #{user.last_name}"
@@ -63,17 +81,7 @@ defmodule LiveSup.Schemas.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [
-      :email,
-      :password,
-      :first_name,
-      :last_name,
-      :avatar_url,
-      :location,
-      :settings,
-      :provider,
-      :state
-    ])
+    |> cast(attrs, @optional_fields)
     |> validate_required([])
     |> validate_email()
     |> validate_password(opts)
@@ -108,7 +116,9 @@ defmodule LiveSup.Schemas.User do
       :location,
       :settings,
       :provider,
-      :state
+      :state,
+      :system,
+      :system_identifier
     ])
     |> validate_required([])
     |> validate_email()
@@ -247,4 +257,6 @@ defmodule LiveSup.Schemas.User do
 
   def external_provider?(%__MODULE__{provider: nil}), do: false
   def external_provider?(%__MODULE__{provider: _}), do: true
+
+  def default_bot_identifier, do: @livesup_bot_identifier
 end

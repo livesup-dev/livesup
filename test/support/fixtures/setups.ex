@@ -38,6 +38,20 @@ defmodule LiveSup.Test.Setups do
     |> add_to_context(%{datasource: datasource})
   end
 
+  def setup_github_datasource(context) do
+    datasource = DatasourcesFixtures.add_github_datasource()
+
+    datasource_instance =
+      datasource
+      |> LiveSup.Test.DatasourcesFixtures.datasource_instance_fixture()
+
+    context
+    |> add_to_context(%{
+      github_datasource: datasource,
+      github_datasource_instance: datasource_instance
+    })
+  end
+
   def setup_project(context) do
     project = ProjectsFixtures.project_fixture()
 
@@ -54,6 +68,20 @@ defmodule LiveSup.Test.Setups do
 
     context
     |> add_to_context(%{todo: todo})
+  end
+
+  def setup_todo_datasource(%{todo: todo, datasource: datasource} = context) do
+    todo_datasource = TodosFixtures.todo_datasource(todo, datasource)
+
+    context
+    |> add_to_context(%{todo_datasource: todo_datasource})
+  end
+
+  def setup_github_todo_datasource(%{todo: todo, github_datasource: datasource} = context) do
+    todo_datasource = TodosFixtures.todo_datasource(todo, datasource)
+
+    context
+    |> add_to_context(%{todo_github_datasource: todo_datasource})
   end
 
   def setup_task(context) do
@@ -142,6 +170,11 @@ defmodule LiveSup.Test.Setups do
   def setup_user(context) do
     context
     |> add_to_context(%{user: LiveSup.Test.AccountsFixtures.user_fixture()})
+  end
+
+  def setup_default_bot(context) do
+    context
+    |> add_to_context(%{bot: LiveSup.Test.AccountsFixtures.default_bot_fixture()})
   end
 
   def setup_user_with_groups(%{all_users_group: _, admin_group: _} = context) do

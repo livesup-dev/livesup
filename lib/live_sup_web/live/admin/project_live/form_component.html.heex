@@ -17,7 +17,7 @@
     <%= error_tag(f, :name) %>
 
     <%= label(f, :avatar) %>
-    <%= live_file_input(@uploads.avatar) %>
+    <.live_file_input upload={@uploads.avatar} />
     <%= for entry <- @uploads.avatar.entries do %>
       <%= for err <- upload_errors(@uploads.avatar, entry) do %>
         <p class="alert alert-danger">

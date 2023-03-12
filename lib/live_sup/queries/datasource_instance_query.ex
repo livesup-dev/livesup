@@ -30,7 +30,6 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
     base()
     |> join_datasource()
     |> where([di], di.datasource_id == ^datasource_id)
-    |> preload([:datasource])
     |> Repo.all()
   end
 
@@ -39,7 +38,6 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
     base()
     |> join_datasource()
     |> where([datasource: datasource], datasource.slug == ^slug)
-    |> preload([:datasource])
     |> Repo.all()
   end
 
@@ -56,13 +54,18 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
 
   def all_by_project(%Project{id: project_id}) do
     by_project_query =
-      project_id
-      |> by_project_query()
+      from(DatasourceInstance, as: :datasource_instance)
+      |> where([di], di.project_id == ^project_id)
       |> where([di], di.enabled == true)
 
-    union_query = union_all(by_project_query, ^global_instances_query())
+    global_instances_query =
+      from(DatasourceInstance, as: :datasource_instance)
+      |> where([di], is_nil(di.project_id))
+
+    union_query = union_all(by_project_query, ^global_instances_query)
 
     from(u in subquery(union_query), order_by: u.name)
+    |> preload([:datasource])
     |> Repo.all()
   end
 
@@ -95,7 +98,7 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
 
   # TODO: Change this to an OR condition
   defp global_instances_query(%Datasource{id: datasource_id}) do
-    base()
+    base_without_preload()
     |> where([di], is_nil(di.project_id) and di.datasource_id == ^datasource_id)
   end
 
@@ -114,5 +117,6 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
     |> join(:inner, [di], d in assoc(di, :datasource), as: :datasource)
   end
 
-  def base, do: from(DatasourceInstance, as: :datasource_instance)
+  def base, do: from(DatasourceInstance, as: :datasource_instance, preload: [:datasource])
+  def base_without_preload, do: from(DatasourceInstance, as: :datasource_instance)
 end

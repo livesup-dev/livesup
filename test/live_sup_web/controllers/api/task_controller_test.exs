@@ -7,15 +7,17 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
 
   @create_attrs %{
     description: "cool desc",
+    title: "cool title",
     created_by_id: nil
   }
 
   @update_attrs %{
+    title: "cool title updated",
     description: "cool desc updated",
     completed: true
   }
 
-  @invalid_attrs %{description: nil}
+  @invalid_attrs %{title: nil}
 
   setup [:create_user_and_assign_valid_jwt, :setup_project, :setup_task]
 
@@ -37,7 +39,11 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
     } do
       conn =
         post(conn, Routes.api_todo_task_path(conn, :create, todo_id),
-          task: %{created_by_id: created_by_id, description: @create_attrs.description}
+          task: %{
+            created_by_id: created_by_id,
+            description: @create_attrs.description,
+            title: @create_attrs.title
+          }
         )
 
       assert %{"id" => id} = json_response(conn, 201)["data"]
@@ -46,6 +52,7 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
 
       assert %{
                "id" => ^id,
+               "title" => "cool title",
                "description" => "cool desc",
                "todo" => %{
                  "id" => ^todo_id
@@ -77,6 +84,7 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
 
       assert %{
                "id" => ^task_id,
+               "title" => "cool title updated",
                "description" => "cool desc updated",
                "completed" => true,
                "todo" => %{"id" => ^todo_id}

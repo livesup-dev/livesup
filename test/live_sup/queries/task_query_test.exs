@@ -10,7 +10,8 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
 
   setup [
     :setup_user_and_default_project,
-    :setup_todo
+    :setup_todo,
+    :setup_github_datasource
   ]
 
   describe "getting tasks" do
@@ -31,6 +32,7 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
     @tag :task_query_create
     test "create/1", %{todo: %{id: todo_id, created_by_id: created_by_id}} do
       attrs = %{
+        "title" => "this is the title",
         "description" => "alo?",
         "due_on" => "2022-09-06",
         "notes" => "some cool notes",
@@ -39,8 +41,42 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
       }
 
       {:ok, task} = TaskQuery.create(attrs)
+      assert task.title == "this is the title"
       assert task.description == "alo?"
       assert task.due_on == ~U[2022-09-06 00:00:00Z]
+    end
+
+    @tag :task_query_upsert
+    test "upsert/1", %{
+      todo: %{
+        id: todo_id,
+        created_by_id: created_by_id
+      },
+      github_datasource_instance: %{id: datasource_instance_id}
+    } do
+      attrs = %{
+        "title" => "this is the title",
+        "description" => "alo?",
+        "due_on" => "2022-09-06",
+        "notes" => "some cool notes",
+        "todo_id" => todo_id,
+        "external_identifier" => "123",
+        "datasource_instance_id" => datasource_instance_id,
+        "created_by_id" => created_by_id
+      }
+
+      {:ok, task} = TaskQuery.create(attrs)
+      assert task.title == "this is the title"
+      assert task.external_identifier == "123"
+      assert task.datasource_instance_id == datasource_instance_id
+      assert task.completed == false
+
+      task = TaskQuery.upsert!(Map.merge(attrs, %{"completed" => true, "title" => "new title"}))
+
+      assert task.title == "new title"
+      assert task.external_identifier == "123"
+      assert task.datasource_instance_id == datasource_instance_id
+      assert task.completed == true
     end
   end
 

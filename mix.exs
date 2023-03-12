@@ -89,6 +89,7 @@ defmodule LiveSup.MixProject do
       {:yaml_elixir, "~> 2.9.0"},
       {:earmark, "~> 1.4"},
       {:phx_component_helpers, "~> 1.3.0"},
+      {:oban, "~> 2.14"},
 
       # Additional packages
       {:bcrypt_elixir, "~> 3.0"},
@@ -126,7 +127,7 @@ defmodule LiveSup.MixProject do
 
   def palette_dep(false) do
     [
-      {:palette, git: "https://github.com/livesup-dev/palette", tag: "0.1.31"}
+      {:palette, git: "https://github.com/livesup-dev/palette", tag: "0.1.33"}
     ]
   end
 
