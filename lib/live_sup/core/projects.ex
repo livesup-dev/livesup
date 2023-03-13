@@ -6,6 +6,7 @@ defmodule LiveSup.Core.Projects do
   alias LiveSup.Schemas.Project
   alias LiveSup.Queries.{ProjectQuery, GroupQuery, ProjectGroupQuery}
   alias LiveSup.Core.Dashboards
+  alias Palette.Utils.ColorHelper
 
   @doc """
   Returns the list of projects.
@@ -71,6 +72,7 @@ defmodule LiveSup.Core.Projects do
   def create_public_project(attrs \\ %{}) do
     project =
       attrs
+      |> Map.merge(%{"color" => ColorHelper.hex()})
       |> ProjectQuery.create!()
 
     group = GroupQuery.get_all_users_group()

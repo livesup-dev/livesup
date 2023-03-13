@@ -1,63 +1,7 @@
-<.breadcrumb title={@title} steps={@steps} />
-
-<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-  <div :for={project <- @projects} class="card grow items-center p-4 text-center sm:p-5">
-    <div class="avatar h-18 w-18">
-      <img class="rounded-full" src={Project.default_avatar_url(project)} alt="avatar" />
-    </div>
-    <h3 class="my-2 grow">
-      <.link
-        type={:redirect}
-        path={Routes.dashboard_path(@socket, :index, project.id)}
-        class="text-base font-medium text-slate-700 dark:text-navy-100"
-      >
-        <%= project.name %>
-      </.link>
-    </h3>
-    <div>
-      <a
-        href="#"
-        class="text-xs+ text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
-      >
-        #PHP
-      </a>
-      <a
-        href="#"
-        class="text-xs+ text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
-      >
-        #ReactJS
-      </a>
-      <a
-        href="#"
-        class="text-xs+ text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
-      >
-        #NextJS
-      </a>
-    </div>
-    <div class="mt-3 flex space-x-1">
-      <.link
-        href={Routes.project_board_path(@socket, :index, project.id)}
-        type={:navigate}
-        class="btn h-7 rounded-full bg-slate-150 px-3 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
-      >
-        <i class="fa-solid fa-chess-board"></i>
-      </.link>
-
-      <.link
-        href={Routes.dashboard_path(@socket, :index, project.id)}
-        type={:navigate}
-        class="btn h-7 rounded-full bg-slate-150 px-3 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
-      >
-        <i class="fa-solid fa-chart-line"></i>
-      </.link>
-    </div>
-  </div>
-</div>
-
 <%= if @live_action in [:new, :edit] do %>
-  <.modal return_to={Routes.project_live_path(@socket, :index)}>
+  <.modal return_to={Routes.project_path(@socket, :index)} title="Project">
     <.live_component
-      module={LiveSupWeb.Project.Components.ProjectFormComponent}
+      module={ProjectFormComponent}
       id="new-project"
       title={@page_title}
       action={@live_action}
@@ -67,3 +11,55 @@
     />
   </.modal>
 <% end %>
+
+<.breadcrumb title={@title} steps={@steps}>
+  <:actions>
+    <.action_link type={:patch} path={Routes.project_path(@socket, :new)} tooltip="Add Project" />
+  </:actions>
+</.breadcrumb>
+
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
+  <div :for={project <- @projects} class="card grow items-center p-4 text-center sm:p-5">
+    <div class="w-10 h-10 rounded-full" style={"background-color: ##{project.color}"}></div>
+    <h3 class="my-2 grow">
+      <.link
+        type={:redirect}
+        path={Routes.dashboard_path(@socket, :index, project.id)}
+        class="text-base font-medium text-slate-700 dark:text-navy-100"
+      >
+        <%= project.name %>
+      </.link>
+    </h3>
+    <p class="text-xs+"><%= project.description %></p>
+    <div>
+      <a
+        :for={label <- project.labels}
+        href="#"
+        class="text-xs+ text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
+      >
+        #<%= label %>
+      </a>
+    </div>
+    <div class="my-3.5 flex flex-wrap space-x-2">
+      <div class="avatar h-8 w-8">
+        <div class="is-initial rounded-full bg-info/10 text-xs+ uppercase text-info">
+          sm
+        </div>
+      </div>
+      <div class="avatar h-8 w-8">
+        <div class="is-initial rounded-full border border-warning/30 bg-warning/10 text-xs+ uppercase text-warning">
+          uh
+        </div>
+      </div>
+    </div>
+    <div class="mt-5 pb-1">
+      <.link
+        href={Routes.project_board_path(@socket, :index, project.id)}
+        type={:navigate}
+        class="border-b border-dashed border-current pb-0.5 font-medium text-primary outline-none transition-colors duration-300 hover:text-primary/70 focus:text-primary/70 dark:text-accent-light dark:hover:text-accent-light/70 dark:focus:text-accent-light/70"
+      >
+        View Board
+      </.link>
+    </div>
+  </div>
+</div>

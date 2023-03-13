@@ -4,6 +4,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
   alias LiveSup.Core.Projects
   alias LiveSup.Schemas.Project
   alias Palette.Components.Breadcrumb.Step
+  alias LiveSupWeb.ProjectLive.LiveComponents.ProjectFormComponent
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
@@ -19,7 +20,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
 
   defp assign_breadcrumb_steps(socket) do
     steps = [
-      %Step{label: "Projects"}
+      %Step{label: "Home"}
     ]
 
     socket

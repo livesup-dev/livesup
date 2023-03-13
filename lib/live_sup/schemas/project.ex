@@ -12,6 +12,8 @@ defmodule LiveSup.Schemas.Project do
     field :internal, :boolean, default: false
     field :labels, {:array, :string}
     field :name, :string
+    field :color, :string
+    field :description, :string
     field :settings, :map
     field :parent_id, :binary_id
     field :slug, ProjectSlug.Type
@@ -36,7 +38,9 @@ defmodule LiveSup.Schemas.Project do
     :labels,
     :slug,
     :avatar_url,
-    :id
+    :id,
+    :description,
+    :color
   ]
 
   @doc false
