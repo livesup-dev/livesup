@@ -32,7 +32,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: "16.x"
       - name: Cache npm dependencies
         uses: actions/cache@v2
         with:
