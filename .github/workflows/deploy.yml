@@ -44,8 +44,6 @@ jobs:
         run: rm -rf static/{js,css}
       - name: Install npm dependencies
         run: npm ci --prefix assets
-      - name: Build assets
-        run: npm run deploy --prefix assets
       - name: Push updated assets
         id: push_assets
         uses: stefanzweifel/git-auto-commit-action@v4
