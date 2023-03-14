@@ -6,7 +6,7 @@ defmodule LiveSup.Core.Projects do
   alias LiveSup.Schemas.Project
   alias LiveSup.Queries.{ProjectQuery, GroupQuery, ProjectGroupQuery}
   alias LiveSup.Core.Dashboards
-  alias Palette.Utils.ColorHelper
+  alias Palette.Utils.{ColorHelper, StringHelper}
 
   @doc """
   Returns the list of projects.
@@ -72,6 +72,7 @@ defmodule LiveSup.Core.Projects do
   def create_public_project(attrs \\ %{}) do
     project =
       attrs
+      |> StringHelper.keys_to_strings()
       |> Map.merge(%{"color" => ColorHelper.hex()})
       |> ProjectQuery.create!()
 

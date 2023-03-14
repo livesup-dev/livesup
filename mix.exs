@@ -127,7 +127,7 @@ defmodule LiveSup.MixProject do
 
   def palette_dep(false) do
     [
-      {:palette, git: "https://github.com/livesup-dev/palette", tag: "0.1.33"}
+      {:palette, git: "https://github.com/livesup-dev/palette", tag: "0.1.34"}
     ]
   end
 
