@@ -15,6 +15,15 @@ defmodule LiveSup.Tests.Queries.ProjectQueryTest do
   describe "managing project queries" do
     @describetag :project_query
 
+    test "return projects with users", %{project: %{id: id}, user: %{id: user_id}} do
+      project = ProjectQuery.get_with_users(id)
+      assert length(project.groups) == 2
+      users = project.groups |> Enum.flat_map(& &1.users)
+      %{id: user_id_from_group} = users |> Enum.at(0)
+      assert length(users) == 1
+      assert user_id_from_group == user_id
+    end
+
     test "return default internal project", %{project: %{id: id}} do
       default_project = ProjectQuery.get_internal_default_project()
       assert default_project.id == id

@@ -20,7 +20,7 @@ defmodule LiveSup.Schemas.Project do
     field :avatar_url, :string
 
     has_many :projects_groups, ProjectGroup
-    has_many :groups, through: [:projects_groups, :groups]
+    has_many :groups, through: [:projects_groups, :group]
     has_many :dashboards, Dashboard
     has_many :todos, Todo
     has_many :datasource_instances, DatasourceInstance
