@@ -19,7 +19,7 @@
 </.breadcrumb>
 
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-  <div :for={project <- @projects} class="card grow items-center p-4 text-center sm:p-5">
+  <div :for={{dom_id, project} <- @streams.projects} class="card grow items-center p-4 text-center sm:p-5">
     <div class="w-10 h-10 rounded-full" style={"background-color: ##{project.color}"}></div>
     <h3 class="my-2 grow">
       <.link
@@ -41,15 +41,13 @@
       </a>
     </div>
     <div class="my-3.5 flex flex-wrap space-x-2">
-      <div class="avatar h-8 w-8">
-        <div class="is-initial rounded-full bg-info/10 text-xs+ uppercase text-info">
-          sm
-        </div>
-      </div>
-      <div class="avatar h-8 w-8">
-        <div class="is-initial rounded-full border border-warning/30 bg-warning/10 text-xs+ uppercase text-warning">
-          uh
-        </div>
+      <div class="avatar h-8 w-8" :for={user <- users_from_groups(project.groups)} x-tooltip={"'#{User.full_name(user)}'"}>
+        <img
+            class="rounded-full ring ring-white dark:ring-navy-700"
+            src={User.default_avatar_url(user)}
+            alt="avatar"
+          />
+        
       </div>
     </div>
     <div class="mt-5 pb-1">

@@ -2,7 +2,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
   use LiveSupWeb, :live_view
 
   alias LiveSup.Core.Projects
-  alias LiveSup.Schemas.Project
+  alias LiveSup.Schemas.{Project, User}
   alias Palette.Components.Breadcrumb.Step
   alias LiveSupWeb.ProjectLive.LiveComponents.ProjectFormComponent
 
@@ -43,7 +43,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
     projects = current_user |> Projects.by_user()
 
     socket
-    |> assign(projects: projects)
+    |> stream(:projects, projects)
   end
 
   @impl true
@@ -61,5 +61,12 @@ defmodule LiveSupWeb.Project.ProjectLive do
     socket
     |> assign_page_title("Projects")
     |> assign(:project, nil)
+  end
+
+  defp users_from_groups(groups) do
+    groups
+    |> Enum.map(fn group -> group.users end)
+    |> List.flatten()
+    |> Enum.uniq()
   end
 end

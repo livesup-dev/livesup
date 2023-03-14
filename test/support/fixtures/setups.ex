@@ -211,7 +211,7 @@ defmodule LiveSup.Test.Setups do
 
     Groups.add_project(context[:project], context[:admin_group])
     Groups.add_project(context[:project], context[:all_users_group])
-    # Groups.add_user(context[:user], context[:all_users_group])
+    Groups.add_user(context[:user], context[:all_users_group])
 
     context
   end
