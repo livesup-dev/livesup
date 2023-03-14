@@ -7,6 +7,7 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
   alias LiveSup.Schemas.Dashboard
 
   alias Palette.Components.Breadcrumb.Step
+  alias LiveSupWeb.ProjectLive.LiveComponents.TodoFormComponent
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
@@ -52,11 +53,10 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
     |> assign(section: :home)
   end
 
-  # @impl true
-  # def handle_params(%{"id" => project_id}, _, socket) do
-  #   {:noreply,
-  #    socket
-  #    |> assign(:project, Projects.get_with_dashboards!(project_id))
-  #    |> assign_todos(project_id)}
-  # end
+  @impl true
+  def handle_params(%{"id" => project_id}, _, socket) do
+    {:noreply,
+     socket
+     |> assign(:project, Projects.get_with_dashboards!(project_id))}
+  end
 end
