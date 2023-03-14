@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
   def render(%{editing_task: false} = assigns) do
     ~H"""
     <.xform as={:task}>
-      <.markdown_field value={@task.description} empty_value="No description provided."/>
+      <.markdown_field value={@task.description} empty_value="No description provided." />
 
       <:actions>
         <.close_modal_button />

@@ -61,7 +61,7 @@ defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
               </div>
             </div>
           </div>
-          <TaskComponent.render task={@task} error={@error} editing_task={@editing_task}/>
+          <TaskComponent.render task={@task} error={@error} editing_task={@editing_task} />
         </div>
       </div>
     </div>
