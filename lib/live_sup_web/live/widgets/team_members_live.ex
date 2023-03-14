@@ -17,7 +17,7 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
         widget_data={widget_data}
       />
       <!-- Widget Content -->
-      <div class="items-center p-2 bg-white rounded-md dark:bg-darker min-h-[132px]">
+      <div class="ls-widget-body-default">
         <%= if Enum.any?(widget_data.data) do %>
           <div class="divide-y divide-gray-100 dark:divide-gray-500">
             <%= for user <- widget_data.data do %>

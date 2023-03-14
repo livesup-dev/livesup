@@ -21,7 +21,7 @@
 }
 
 .ls-widget-body-default {
-  @apply ls-widget-body min-h-[132px];
+  @apply ls-widget-body my-2 min-h-[132px];
 }
 
 .ls-widget-footer {
