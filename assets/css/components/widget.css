@@ -1,0 +1,67 @@
+.ls-widget {
+  @apply card;
+  /* @apply min-h-[202px]; */
+}
+
+.ls-widget-title {
+  @apply flex items-center justify-between py-2 border-b border-slate-200 dark:border-navy-500;
+}
+
+.ls-widget > .ls-widget-detail > .ls-widget-title > h2 {
+  @apply text-sm font-medium;
+}
+.ls-widget > .ls-widget-detail > .ls-widget-title > img {
+  @apply w-4;
+}
+.ls-widget-detail {
+  @apply px-3;
+}
+.ls-widget-body {
+  @apply items-center;
+}
+
+.ls-widget-body-default {
+  @apply ls-widget-body min-h-[132px];
+}
+
+.ls-widget-footer {
+  @apply px-2 py-1 text-xs space-x-2 text-right border-t border-slate-200 dark:border-navy-500;
+}
+
+/* In Progress Widget */
+.ls-widget-in-progress {
+  @apply ls-widget ring-1 shadow ring-indigo-300 opacity-50 animate-pulse;
+}
+
+.ls-widget-in-progress > .ls-widget-in-progress-detail {
+  @apply px-3 py-1;
+}
+
+/* Error Widget */
+.ls-widget-error {
+  @apply ls-widget ring-1 shadow ring-red-500;
+}
+
+.ls-widget-error > .ls-widget-error-detail {
+  @apply px-3 py-1;
+}
+
+.ls-widget-error > .ls-widget-error-detail > .ls-widget-error-title {
+  @apply ls-widget-title;
+}
+
+.ls-widget-error > .ls-widget-error-detail > .ls-widget-error-title > h2 {
+  @apply text-sm font-medium;
+}
+.ls-widget-error > .ls-widget-error-detail > .ls-widget-error-title > img {
+  @apply w-4;
+}
+.ls-widget-error > .ls-widget-error-detail > .ls-widget-error-body {
+  @apply items-center p-6 text-center space-x-2;
+}
+.ls-widget-error > .ls-widget-error-detail > .ls-widget-error-body > p {
+  @apply flex justify-center;
+}
+.ls-widget-error > .ls-widget-error-detail > .ls-widget-error-footer {
+  @apply ls-widget-footer;
+}
