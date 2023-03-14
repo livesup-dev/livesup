@@ -1,11 +1,11 @@
 defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
   use LiveSupWeb, :component
-  alias LiveSupWeb.Todo.Components.TodoTaskComponent
   alias Phoenix.LiveView.JS
   alias LiveSup.Schemas.TodoTask
   alias LiveSupWeb.Live.Todo.Components.TaskDetails.TaskComponent
 
   attr(:task, :map, required: true)
+  attr(:editing_task, :boolean, default: false)
   attr(:error, :any, default: nil)
 
   def render(assigns) do
@@ -61,7 +61,7 @@ defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
               </div>
             </div>
           </div>
-          <TaskComponent.render task={@task} error={@error} />
+          <TaskComponent.render task={@task} error={@error} editing_task={@editing_task}/>
         </div>
       </div>
     </div>
