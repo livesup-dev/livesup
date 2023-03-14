@@ -155,7 +155,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
           <% end %>
         <% else %>
           <svg
-            class="h-20 w-20 m-auto"
+            class="h-12 w-12 m-auto"
             viewBox="0 0 81 80"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

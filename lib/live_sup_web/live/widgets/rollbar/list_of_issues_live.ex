@@ -16,8 +16,8 @@ defmodule LiveSupWeb.Live.Widgets.Rollbar.ListOfIssuesLive do
         id={"#{widget_data.id}-header"}
         widget_data={widget_data}
       />
-      <div class="items-center p-4 bg-white rounded-md dark:bg-darker">
-        <div class="">
+      <div class="ls-widget-body-default">
+        <div class="my-3">
           <%= if Enum.any?(widget_data.data) do %>
             <div class="gap-2 pb-2 flex">
               <span class="text-x font-bold basis-9/12">Error</span>
