@@ -1,5 +1,6 @@
 defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.GithubPullRequestTaskComponent do
   use LiveSupWeb, :component
+  alias LiveSup.Views.TodoTaskHelper
 
   def render(assigns) do
     ~H"""
@@ -11,7 +12,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.GithubPullRequestTaskCompo
       <div class="rounded-md rounded-t-none border border-gray-400 text-gray-700 divide-y divide-gray-400">
         <div class="prose max-w-none px-4">
           <section class="mt-4 space-y-2">
-            <%= raw(body_to_html(@task)) %>
+            <%= raw(TodoTaskHelper.body_to_html(@task.external_metadata["body"])) %>
           </section>
         </div>
       </div>
@@ -27,10 +28,5 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.GithubPullRequestTaskCompo
       </div>
     </.card>
     """
-  end
-
-  def body_to_html(%{external_metadata: %{"body" => body}}) do
-    {:ok, html_content, []} = Earmark.as_html(body, compact_output: true)
-    html_content
   end
 end

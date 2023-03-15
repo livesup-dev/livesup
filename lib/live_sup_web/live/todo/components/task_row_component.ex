@@ -4,7 +4,6 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
 
   alias LiveSup.Schemas.User
   alias LiveSup.Views.TodoTaskHelper
-  alias LiveSup.Schemas.TodoTask
   alias LiveSupWeb.Live.Todo.Components.TaskActionComponent
 
   attr(:task, :map, required: true)

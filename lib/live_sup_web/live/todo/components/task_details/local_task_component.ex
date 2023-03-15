@@ -8,8 +8,31 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
   alias LiveSupWeb.Live.Todo.Components.TaskActionComponent
 
   attr(:task, :map, required: true)
+  attr(:editing_task, :boolean, default: false)
 
-  def render(assigns) do
+  def render(%{editing_task: false} = assigns) do
+    ~H"""
+    <.xform as={:task}>
+      <.markdown_field value={@task.description} empty_value="No description provided." />
+
+      <:actions>
+        <.close_modal_button />
+        <button
+          id="edit-mode"
+          type="button"
+          phx-click="edit_mode"
+          phx-value-mode="true"
+          class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+        >
+          <i class="fa-regular fa-pen-to-square mr-3"></i>
+          <span class="inner-text">Edit</span>
+        </button>
+      </:actions>
+    </.xform>
+    """
+  end
+
+  def render(%{editing_task: true} = assigns) do
     ~H"""
     <.xform as={:task}>
       <.hidden_input name="id" value={@task.id} />
