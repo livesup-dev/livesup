@@ -13,14 +13,14 @@ defmodule LiveSup.Queries.CommentQuery do
   Get all comments by task
   """
   def by_task(%TodoTask{id: task_id}) do
+    by_task(task_id)
+  end
+
+  def by_task(task_id) do
     base()
     |> where([c], c.task_id == ^task_id)
     |> order_by([comment], comment.inserted_at)
     |> Repo.all()
-  end
-
-  def by_task(task_id) do
-    by_task(%TodoTask{id: task_id})
   end
 
   @doc """

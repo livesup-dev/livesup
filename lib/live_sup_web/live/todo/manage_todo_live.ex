@@ -81,7 +81,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   def handle_event(
         "save",
-        %{"id" => id} = params,
+        %{"id" => _id} = params,
         %{assigns: %{selected_task: _selected_task, tasks: tasks}} = socket
       ) do
     {:ok, updated_task} = save_task(params, socket)
@@ -104,6 +104,15 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   def handle_event("edit_mode", %{"mode" => "true"}, socket) do
     {:noreply, assign(socket, editing_task: true)}
+  end
+
+  def handle_event(
+        "add_comment",
+        %{"body" => body},
+        %{assigns: %{selected_task: task, current_user: current_user}} = socket
+      ) do
+    Tasks.add_comment(task, current_user, body)
+    {:noreply, socket}
   end
 
   @impl true

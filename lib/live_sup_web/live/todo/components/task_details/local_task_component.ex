@@ -1,16 +1,18 @@
 defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
   use LiveSupWeb, :component
-  alias Phoenix.LiveView.JS
 
-  alias LiveSup.Schemas.User
-  alias LiveSup.Views.TodoTaskHelper
   alias LiveSup.Schemas.TodoTask
-  alias LiveSupWeb.Live.Todo.Components.TaskActionComponent
+  alias LiveSup.Core.Tasks
+  alias LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent
 
   attr(:task, :map, required: true)
   attr(:editing_task, :boolean, default: false)
 
-  def render(%{editing_task: false} = assigns) do
+  def render(%{editing_task: false, task: task} = assigns) do
+    assigns =
+      assigns
+      |> assign(:comments, fetch_comments(task))
+
     ~H"""
     <.xform as={:task}>
       <.markdown_field value={@task.description} empty_value="No description provided." />
@@ -29,6 +31,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
         </button>
       </:actions>
     </.xform>
+    <CommentsComponent.render comments={@comments} />
     """
   end
 
@@ -54,5 +57,12 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
       </:actions>
     </.xform>
     """
+  end
+
+  defp fetch_comments(%{id: nil}), do: []
+
+  defp fetch_comments(%{id: _id} = task) do
+    task
+    |> Tasks.get_comments()
   end
 end

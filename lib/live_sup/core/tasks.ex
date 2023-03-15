@@ -89,6 +89,12 @@ defmodule LiveSup.Core.Tasks do
     |> TaskQuery.get!(base: base_query)
   end
 
+  def get_comments(%TodoTask{id: task_id}) do
+    task_id
+    |> IO.inspect()
+    |> CommentQuery.by_task()
+  end
+
   @doc """
   Updates a task.
 

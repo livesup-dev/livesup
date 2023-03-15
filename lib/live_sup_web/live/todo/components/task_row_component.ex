@@ -60,6 +60,12 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
           <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
         </div>
         <div class="flex items-center space-x-1">
+          <div
+            :if={length(@task.comments) > 0}
+            class="flex h-4.5 min-w-[1.125rem] items-center justify-center rounded-full bg-primary px-1.5 text-tiny+ font-medium leading-none text-white dark:bg-accent"
+          >
+            <%= length(@task.comments) %>
+          </div>
           <div class="avatar h-6 w-6">
             <img class="rounded-full" src={created_by_avatar(@task)} alt="avatar" />
           </div>
