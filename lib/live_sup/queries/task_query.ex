@@ -140,7 +140,7 @@ defmodule LiveSup.Queries.TaskQuery do
   def base(params \\ []) do
     preload =
       params
-      |> Keyword.get(:preload, [:todo, :assigned_to, :created_by])
+      |> Keyword.get(:preload, [:todo, :assigned_to, :created_by, :comments])
 
     from(TodoTask, as: :todo, preload: ^preload)
   end
