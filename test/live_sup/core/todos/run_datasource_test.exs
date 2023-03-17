@@ -6,7 +6,7 @@ defmodule LiveSup.Core.Todos.RunDatasourceTest do
 
   import LiveSup.Test.Setups
 
-  alias LiveSup.Core.Widgets.Github.PullRequests.Handler
+  alias LiveSup.Core.Datasources.GithubDatasource
 
   setup [
     :setup_default_bot,
@@ -49,8 +49,8 @@ defmodule LiveSup.Core.Todos.RunDatasourceTest do
     todo_github_datasource:
       %{datasource_instance: %{id: datasource_instance_id}} = todo_github_datasource
   } do
-    with_mock Handler,
-      get_data: fn _arg -> @handler_response end do
+    with_mock GithubDatasource,
+      search_pull_requests: fn _owner, _repo, _params -> @handler_response end do
       %{todo: todo} = todo_github_datasource = TodoDatasourceQuery.get!(todo_github_datasource.id)
       {:ok, new_tasks} = Todos.run_datasource(todo_github_datasource)
 
