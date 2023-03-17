@@ -167,21 +167,22 @@ defmodule LiveSup.Core.Todos do
               } = datasource_instance
           } = todo_datasource
       }) do
-    case todo_datasource
-         |> TodoDatasource.get_settings([
-           "owner",
-           "repository",
-           "token",
-           "limit",
-           "token"
-         ])
-         |> Map.merge(%{
-           "sort" => "created",
-           "direction" => "desc",
-           "state" => "open,close",
-           "updated" => "#{run_from}..#{run_to}"
-         })
-         |> LiveSup.Core.Widgets.Github.PullRequests.Handler.get_data() do
+    %{"owner" => owner, "repository" => repository, "token" => token} =
+      todo_datasource
+      |> TodoDatasource.get_settings([
+        "owner",
+        "repository",
+        "token",
+        "limit",
+        "token"
+      ])
+
+    filter = "updated:#{run_from}..#{run_to}"
+
+    case LiveSup.Core.Datasources.GithubDatasource.search_pull_requests(owner, repository,
+           token: token,
+           filter: filter
+         ) do
       {:ok, pull_requests} ->
         pull_requests |> add_tasks_from_pull_requests(todo, datasource_instance)
 

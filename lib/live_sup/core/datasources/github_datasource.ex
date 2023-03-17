@@ -32,6 +32,43 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
     end
   end
 
+  def search_pull_requests(owner, repository, opts) do
+    token = Keyword.fetch!(opts, :token)
+    endpoint = Keyword.get(opts, :endpoint, @endpoint)
+    filter = Keyword.get(opts, :filter, nil)
+
+    query =
+      if filter do
+        "is:pr repo:#{owner}/#{repository} #{filter}"
+      else
+        "is:pr repo:#{owner}/#{repository}"
+      end
+
+    call_result =
+      Tentacat.Search.issues(
+        client(endpoint, token),
+        %{q: query, sort: "created"}
+      )
+
+    case call_result do
+      {200, pulls, _response} ->
+        {:ok, pulls |> process_pulls()}
+
+      {status, %{"message" => error_message}, _} ->
+        {:error, "#{status}: #{error_message}"}
+    end
+  end
+
+  defp process_pulls(%{"items" => pulls}) do
+    pulls |> IO.inspect()
+
+    pulls
+    |> Enum.map(fn pull_request ->
+      pull_request
+      |> build_pull_map()
+    end)
+  end
+
   defp process_pulls(pulls) do
     pulls
     |> Enum.map(fn pull_request ->
@@ -160,7 +197,7 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
 
   defp default_filter() do
     %{
-      per_page: 10,
+      per_page: 20,
       page: 1,
       pagination: "none"
     }
