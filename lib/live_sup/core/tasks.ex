@@ -91,7 +91,6 @@ defmodule LiveSup.Core.Tasks do
 
   def get_comments(%TodoTask{id: task_id}) do
     task_id
-    |> IO.inspect()
     |> CommentQuery.by_task()
   end
 

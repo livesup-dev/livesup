@@ -60,8 +60,6 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
   end
 
   defp process_pulls(%{"items" => pulls}) do
-    pulls |> IO.inspect()
-
     pulls
     |> Enum.map(fn pull_request ->
       pull_request
@@ -86,7 +84,7 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
     created_at_details = pull_request |> build_created_at_date()
     merged_at_details = pull_request |> build_merged_at_date()
     updated_at_details = pull_request |> build_updated_at_date()
-    closed_at_details = pull_request |> build_merged_at_date()
+    closed_at_details = pull_request |> build_closed_at_date()
 
     %{
       id: Integer.to_string(pull_request["id"]),
@@ -96,17 +94,10 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
       short_title: StringHelper.truncate(pull_request["title"], max_length: 55),
       number: pull_request["number"],
       html_url: pull_request["html_url"],
-      head: %{
-        label: "livesup:adding_tags",
-        ref: "adding_tags"
-      },
-      base: %{
-        label: "livesup:main",
-        ref: "main"
-      },
       repo: %{
-        name: pull_request["head"]["repo"]["name"],
-        html_url: pull_request["head"]["repo"]["html_url"]
+        name: repo_name(pull_request),
+        owner: repo_owner(pull_request),
+        html_url: repo_url(pull_request)
       },
       user: %{
         id: pull_request["user"]["id"],
@@ -184,6 +175,28 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
       merged_at: merged_at,
       merged_at_ago: merged_at_ago
     }
+  end
+
+  def repo_owner(%{"base" => %{"repo" => %{"owner" => %{"login" => owner}}}}), do: owner
+
+  def repo_owner(%{"pull_request" => %{"url" => url}}) do
+    {owner, _repo} = parse_github_url(url)
+    owner
+  end
+
+  def repo_name(%{"head" => %{"repo" => %{"name" => name}}}), do: name
+
+  def repo_name(%{"pull_request" => %{"url" => url}}) do
+    {_owner, repo} = parse_github_url(url)
+    repo
+  end
+
+  def repo_url(%{"head" => %{"repo" => %{"html_url" => html_url}}}), do: html_url
+  def repo_url(%{"pull_request" => %{"html_url" => html_url}}), do: html_url
+
+  def parse_github_url(url) do
+    [_, _, _, "repos", owner, repo, "pulls" | _rest] = String.split(url, "/")
+    {owner, repo}
   end
 
   defp client(endpoint, token) do

@@ -11,7 +11,7 @@ defmodule LiveSup.Test.Core.Datasources.GithubDatasourceTest do
   describe "Github datasource" do
     @describetag :datasource
     @describetag :github_datasource
-    test "Get current sprint", %{bypass: bypass} do
+    test "Get pull requests", %{bypass: bypass} do
       Bypass.expect_once(bypass, "GET", "/repos/phoenixframework/phoenix/pulls", fn conn ->
         Plug.Conn.resp(conn, 200, response())
       end)
@@ -48,6 +48,40 @@ defmodule LiveSup.Test.Core.Datasources.GithubDatasourceTest do
 
       assert {:error, "401: Bad credentials"} = data
     end
+
+    @tag :search_pull_requests
+    test "search pull requests", %{bypass: bypass} do
+      Bypass.expect_once(
+        bypass,
+        "GET",
+        "/search/issues",
+        fn conn ->
+          Plug.Conn.resp(conn, 200, response_search_pull_requests())
+        end
+      )
+
+      data =
+        GithubDatasource.search_pull_requests(
+          "phoenixframework",
+          "phoenix",
+          token: "xxxx",
+          endpoint: endpoint_url(bypass.port)
+        )
+
+      assert {:ok,
+              [
+                %{
+                  title: "Init",
+                  short_title: "Init",
+                  state: "open",
+                  repo: %{
+                    name: "oban-admin",
+                    owner: "livesup-dev",
+                    html_url: "https://github.com/livesup-dev/oban-admin/pull/1"
+                  }
+                }
+              ]} = data
+    end
   end
 
   defp endpoint_url(port), do: "http://localhost:#{port}/"
@@ -58,6 +92,86 @@ defmodule LiveSup.Test.Core.Datasources.GithubDatasourceTest do
       "documentation_url": "https://docs.github.com/rest",
       "message": "Bad credentials"
     }
+    """
+  end
+
+  defp response_search_pull_requests() do
+    """
+    {
+      "total_count": 1,
+      "incomplete_results": false,
+      "items": [
+          {
+              "url": "https://api.github.com/repos/livesup-dev/oban-admin/issues/1",
+              "repository_url": "https://api.github.com/repos/livesup-dev/oban-admin",
+              "labels_url": "https://api.github.com/repos/livesup-dev/oban-admin/issues/1/labels{/name}",
+              "comments_url": "https://api.github.com/repos/livesup-dev/oban-admin/issues/1/comments",
+              "events_url": "https://api.github.com/repos/livesup-dev/oban-admin/issues/1/events",
+              "html_url": "https://github.com/livesup-dev/oban-admin/pull/1",
+              "id": 1629533472,
+              "node_id": "PR_kwDOJGHxns5MUW6i",
+              "number": 1,
+              "title": "Init",
+              "user": {
+                  "login": "mustela",
+                  "id": 325222,
+                  "node_id": "MDQ6VXNlcjMyNTIyMg==",
+                  "avatar_url": "https://avatars.githubusercontent.com/u/325222?v=4",
+                  "gravatar_id": "",
+                  "url": "https://api.github.com/users/mustela",
+                  "html_url": "https://github.com/mustela",
+                  "followers_url": "https://api.github.com/users/mustela/followers",
+                  "following_url": "https://api.github.com/users/mustela/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/mustela/gists{/gist_id}",
+                  "starred_url": "https://api.github.com/users/mustela/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/mustela/subscriptions",
+                  "organizations_url": "https://api.github.com/users/mustela/orgs",
+                  "repos_url": "https://api.github.com/users/mustela/repos",
+                  "events_url": "https://api.github.com/users/mustela/events{/privacy}",
+                  "received_events_url": "https://api.github.com/users/mustela/received_events",
+                  "type": "User",
+                  "site_admin": false
+              },
+              "labels": [],
+              "state": "open",
+              "locked": false,
+              "assignee": null,
+              "assignees": [],
+              "milestone": null,
+              "comments": 0,
+              "created_at": "2023-03-17T15:44:23Z",
+              "updated_at": "2023-03-17T17:11:34Z",
+              "closed_at": null,
+              "author_association": "MEMBER",
+              "active_lock_reason": null,
+              "draft": false,
+              "pull_request": {
+                  "url": "https://api.github.com/repos/livesup-dev/oban-admin/pulls/1",
+                  "html_url": "https://github.com/livesup-dev/oban-admin/pull/1",
+                  "diff_url": "https://github.com/livesup-dev/oban-admin/pull/1.diff",
+                  "patch_url": "https://github.com/livesup-dev/oban-admin/pull/1.patch",
+                  "merged_at": null
+              },
+              "body": null,
+              "reactions": {
+                  "url": "https://api.github.com/repos/livesup-dev/oban-admin/issues/1/reactions",
+                  "total_count": 0,
+                  "+1": 0,
+                  "-1": 0,
+                  "laugh": 0,
+                  "hooray": 0,
+                  "confused": 0,
+                  "heart": 0,
+                  "rocket": 0,
+                  "eyes": 0
+              },
+              "timeline_url": "https://api.github.com/repos/livesup-dev/oban-admin/issues/1/timeline",
+              "performed_via_github_app": null,
+              "state_reason": null,
+              "score": 1.0
+          }
+      ]
+      }
     """
   end
 

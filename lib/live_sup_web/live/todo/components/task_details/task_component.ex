@@ -8,6 +8,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.TaskComponent do
 
   attr(:task, :map, required: true)
   attr(:editing_task, :boolean, default: false)
+  attr(:error, :string, default: nil)
 
   def render(%{task: %{datasource_slug: nil}} = assigns) do
     assigns
