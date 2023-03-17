@@ -76,6 +76,7 @@ defmodule LiveSup.Test.Core.Datasources.GithubDatasourceTest do
                   state: "open",
                   repo: %{
                     name: "oban-admin",
+                    owner: "livesup-dev",
                     html_url: "https://github.com/livesup-dev/oban-admin/pull/1"
                   }
                 }

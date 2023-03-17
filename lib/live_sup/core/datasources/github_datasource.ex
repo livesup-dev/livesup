@@ -95,8 +95,9 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
       number: pull_request["number"],
       html_url: pull_request["html_url"],
       repo: %{
-        name: pull_request_name(pull_request),
-        html_url: pull_request_url(pull_request)
+        name: repo_name(pull_request),
+        owner: repo_owner(pull_request),
+        html_url: repo_url(pull_request)
       },
       user: %{
         id: pull_request["user"]["id"],
@@ -176,15 +177,22 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
     }
   end
 
-  def pull_request_name(%{"head" => %{"repo" => %{"pull_name" => pull_name}}}), do: pull_name
+  def repo_owner(%{"base" => %{"repo" => %{"owner" => %{"login" => owner}}}}), do: owner
 
-  def pull_request_name(%{"pull_request" => %{"url" => url}}) do
+  def repo_owner(%{"pull_request" => %{"url" => url}}) do
+    {owner, _repo} = parse_github_url(url)
+    owner
+  end
+
+  def repo_name(%{"head" => %{"repo" => %{"pull_name" => pull_name}}}), do: pull_name
+
+  def repo_name(%{"pull_request" => %{"url" => url}}) do
     {_owner, repo} = parse_github_url(url)
     repo
   end
 
-  def pull_request_url(%{"head" => %{"repo" => %{"pull_url" => pull_url}}}), do: pull_url
-  def pull_request_url(%{"pull_request" => %{"html_url" => html_url}}), do: html_url
+  def repo_url(%{"head" => %{"repo" => %{"pull_url" => pull_url}}}), do: pull_url
+  def repo_url(%{"pull_request" => %{"html_url" => html_url}}), do: html_url
 
   def parse_github_url(url) do
     [_, _, _, "repos", owner, repo, "pulls" | _rest] = String.split(url, "/")
