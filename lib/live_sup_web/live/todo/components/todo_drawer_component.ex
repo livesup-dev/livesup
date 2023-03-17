@@ -1,7 +1,6 @@
 defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
   use LiveSupWeb, :component
   alias Phoenix.LiveView.JS
-  alias LiveSup.Schemas.TodoTask
   alias LiveSupWeb.Live.Todo.Components.TaskDetails.TaskComponent
 
   attr(:task, :map, required: true)

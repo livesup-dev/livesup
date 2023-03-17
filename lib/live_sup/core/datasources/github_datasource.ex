@@ -184,14 +184,14 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
     owner
   end
 
-  def repo_name(%{"head" => %{"repo" => %{"pull_name" => pull_name}}}), do: pull_name
+  def repo_name(%{"head" => %{"repo" => %{"name" => name}}}), do: name
 
   def repo_name(%{"pull_request" => %{"url" => url}}) do
     {_owner, repo} = parse_github_url(url)
     repo
   end
 
-  def repo_url(%{"head" => %{"repo" => %{"pull_url" => pull_url}}}), do: pull_url
+  def repo_url(%{"head" => %{"repo" => %{"html_url" => html_url}}}), do: html_url
   def repo_url(%{"pull_request" => %{"html_url" => html_url}}), do: html_url
 
   def parse_github_url(url) do
