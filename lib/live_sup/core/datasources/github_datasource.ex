@@ -75,7 +75,7 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
     end)
   end
 
-  defp build_pull_map(%{"state" => "closed", "merged_at" => nil}), do: nil
+  # defp build_pull_map(%{"state" => "closed", "merged_at" => nil}), do: nil
 
   defp build_pull_map(nil), do: nil
 
@@ -129,7 +129,7 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
     }
   end
 
-  defp build_merged_at_date(%{"closed_at" => nil}) do
+  defp build_closed_at_date(%{"closed_at" => nil}) do
     %{
       closed: false,
       closed_at: "",
@@ -155,6 +155,25 @@ defmodule LiveSup.Core.Datasources.GithubDatasource do
     %{
       created_at: created_at,
       created_at_ago: created_at_ago
+    }
+  end
+
+  defp build_merged_at_date(%{"pull_request" => %{"merged_at" => nil}}) do
+    %{
+      merged: false,
+      merged_at: "",
+      merged_at_ago: ""
+    }
+  end
+
+  defp build_merged_at_date(%{"pull_request" => %{"merged_at" => merged_at}}) do
+    merged_at = merged_at |> DateHelper.parse_date()
+    merged_at_ago = merged_at |> DateHelper.from_now()
+
+    %{
+      merged: true,
+      merged_at: merged_at,
+      merged_at_ago: merged_at_ago
     }
   end
 
