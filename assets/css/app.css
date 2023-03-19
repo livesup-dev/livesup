@@ -33,3 +33,7 @@
 .border-l-incident-investigating {
   @apply border-l-orange-400 !important;
 }
+
+#edit-todo-drawer.show {
+  display: block;
+}

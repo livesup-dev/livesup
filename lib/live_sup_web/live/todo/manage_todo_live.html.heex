@@ -1,13 +1,3 @@
-<%= if @live_action in [:edit_task] do %>
-  <.modal return_to={Routes.manage_todo_path(@socket, :show, @todo)}>
-    <.live_component
-      module={LiveSupWeb.ManageTodoLive.LiveComponents.ManageTaskComponent}
-      id={@todo_task.id}
-      action={@live_action}
-      todo_task={@todo_task}
-    />
-  </.modal>
-<% end %>
 <.breadcrumb title="Manage ToDo" steps={@breadcrumb_steps} />
 
 <TodoHeaderComponent.render todo={@todo} />
@@ -19,4 +9,8 @@
   </div>
 </div>
 
-<TodoDrawerComponent.render task={@selected_task} editing_task={@editing_task} />
+<TodoDrawerComponent.render
+  task={@selected_task}
+  editing_task={@editing_task}
+  drawer_class={@drawer_class}
+/>

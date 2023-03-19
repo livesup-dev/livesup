@@ -6,10 +6,11 @@ defmodule LiveSupWeb.Todo.Components.TodoDrawerComponent do
   attr(:task, :map, required: true)
   attr(:editing_task, :boolean, default: false)
   attr(:error, :any, default: nil)
+  attr(:drawer_class, :string, default: "hidden")
 
   def render(assigns) do
     ~H"""
-    <div id="edit-todo-drawer" class="drawer drawer-right hidden">
+    <div id="edit-todo-drawer" class={"drawer drawer-right #{@drawer_class}"}>
       <div class="drawer-overlay fixed inset-0 z-[100]  bg-slate-900/60"></div>
       <div class="drawer-content fixed right-0 top-0 z-[101]  h-full w-2/4">
         <div class="flex h-full w-full flex-col bg-white dark:bg-navy-700">

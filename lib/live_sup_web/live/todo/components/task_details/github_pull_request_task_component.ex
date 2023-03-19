@@ -12,7 +12,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.GithubPullRequestTaskCompo
       <div class="rounded-md rounded-t-none border border-gray-400 text-gray-700 divide-y divide-gray-400">
         <div class="prose max-w-none px-4">
           <section class="mt-4 space-y-2">
-            <%= raw(TodoTaskHelper.body_to_html(@task.external_metadata["body"])) %>
+            <%= raw(body_to_html(@task.external_metadata["body"])) %>
           </section>
         </div>
       </div>
@@ -28,5 +28,12 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.GithubPullRequestTaskCompo
       </div>
     </.card>
     """
+  end
+
+  defp body_to_html(nil), do: "No description provided."
+  defp body_to_html(""), do: "No description provided."
+
+  defp body_to_html(body) when is_binary(body) do
+    Palette.Utils.StringHelper.markdown_to_html(body)
   end
 end
