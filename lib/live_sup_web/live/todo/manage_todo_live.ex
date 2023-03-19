@@ -36,10 +36,10 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     {:noreply,
      socket
      |> assign(:todo, Todos.get!(todo_id))
-     |> assign(:todo_task, Tasks.get!(task_id))
-     |> assign(:editing, nil)
+     |> assign(:selected_task, Tasks.get!(task_id))
      |> assign_breadcrumb_steps()
-     |> assign_tasks()}
+     |> assign(:drawer_class, "show")
+     |> assign(:editing_task, false)}
   end
 
   @impl true
@@ -99,7 +99,10 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     {:noreply,
      socket
      |> assign(:selected_task, Tasks.get!(task_id))
-     |> assign(:editing_task, false)}
+     |> assign(:editing_task, false)
+     |> push_patch(
+       to: Routes.manage_todo_path(socket, :edit_task, socket.assigns.todo.id, task_id)
+     )}
   end
 
   def handle_event("edit_mode", %{"mode" => "true"}, socket) do
@@ -153,6 +156,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     |> assign(section: @section)
     |> assign(page_title: "Manage ToDo")
     |> assign(:error, nil)
+    |> assign(:drawer_class, "hidden")
     |> assign(:editing_task, false)
     |> assign(selected_task: %TodoTask{todo_id: todo_id})
   end
