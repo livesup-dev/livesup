@@ -1,0 +1,25 @@
+.incident-monitoring {
+  @apply text-yellow-400 !important;
+}
+.bg-incident-monitoring {
+  @apply bg-yellow-400 !important;
+}
+.bg-incident-monitoring\/10 {
+  @apply bg-yellow-400/10 !important;
+}
+.border-l-incident-monitoring {
+  @apply border-l-yellow-400 !important;
+}
+
+.incident-investigating {
+  @apply text-orange-400 !important;
+}
+.bg-incident-investigating {
+  @apply bg-orange-400 !important;
+}
+.bg-incident-investigating\/10 {
+  @apply bg-orange-400/10 !important;
+}
+.border-l-incident-investigating {
+  @apply border-l-orange-400 !important;
+}
