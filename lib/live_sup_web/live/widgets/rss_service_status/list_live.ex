@@ -18,7 +18,12 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive do
       <div class="flex-auto divide-y divide-gray-100 dark:divide-gray-500 p-2">
         <%= for {entry, _counter} <- Enum.with_index(widget_data.data) do %>
           <div class="flex pt-2 pb-2">
-            <p class="basis-1/6 pt-1"><img src={entry[:icon]} width="35px" /></p>
+            <p class="basis-1/6 pt-1">
+              <img
+                src={entry[:icon]}
+                class="rounded-full bg-slate-100 w-8 ring-1 ring-slate-200 dark:ring-white dark:bg-transparent"
+              />
+            </p>
 
             <%= if entry[:status] == :incident do %>
               <p class="basis-3/4">

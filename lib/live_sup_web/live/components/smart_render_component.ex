@@ -39,10 +39,7 @@ defmodule LiveSupWeb.Live.Components.SmartRenderComponent do
             <div class="ls-widget-error-footer">
               <div class="text-right">
                 <p class="text-xs text-slate-400 dark:text-navy-300">
-                  Updated at
-                </p>
-                <p class="text-sm font-medium text-primary dark:text-accent-light">
-                  <%= @widget_data.updated_in_minutes %>
+                  Updated at <time><%= @widget_data.updated_in_minutes %></time>
                 </p>
               </div>
             </div>

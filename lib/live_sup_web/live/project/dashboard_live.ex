@@ -4,6 +4,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
   alias LiveSup.Core.{Projects, Dashboards, Widgets.WidgetManager}
   alias LiveSup.Core.Utils
   alias LiveSup.Schemas.Dashboard
+  alias Palette.Components.Breadcrumb.Step
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
@@ -15,7 +16,8 @@ defmodule LiveSupWeb.Project.DashboardLive do
      socket
      |> assign(:draggable_class, "")
      |> assign(:current_user, current_user)
-     |> assign(:dashboard, nil)}
+     |> assign(:dashboard, nil)
+     |> assign_defaults()}
   end
 
   @impl true
@@ -42,6 +44,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
     |> assign_title(project)
     |> assign_project(project)
     |> assign_dashboards(project)
+    |> assign_breadcrumb_project_steps(project)
     |> assign_section()
     |> redirect_if_one_dashboard()
   end
@@ -71,6 +74,8 @@ defmodule LiveSupWeb.Project.DashboardLive do
     |> assign_dashboards(dashboard.project)
     |> assign(:project, dashboard.project)
     |> assign(:section, :dashboard)
+    |> assign(:title, "Dashboard")
+    |> assign_breadcrumb_dashboard_steps(dashboard)
   end
 
   def redirect_if_one_dashboard(socket) when length(socket.assigns.dashboards) == 1 do
@@ -94,14 +99,60 @@ defmodule LiveSupWeb.Project.DashboardLive do
     {:noreply, socket}
   end
 
+  defp assign_defaults(socket) do
+    steps = [
+      %Step{label: "Home"}
+    ]
+
+    socket
+    |> assign(title: "Dashboards")
+    |> assign(:page_title, "Projects")
+    |> assign(section: :dashboard)
+    |> assign(:steps, steps)
+  end
+
   defp assign_title(socket, %{name: name}) do
     socket
-    |> assign(title: "#{name} > Dashboards")
+    |> assign(title: "Dashboards")
   end
 
   defp assign_project(socket, project) do
     socket
     |> assign(project: project)
+  end
+
+  defp assign_breadcrumb_dashboard_steps(socket, dashboard) do
+    steps = [
+      %Step{label: "Projects", path: Routes.project_path(socket, :index)},
+      %Step{
+        label: dashboard.project.name,
+        path: Routes.project_board_path(socket, :index, dashboard.project.id)
+      },
+      %Step{
+        label: "Dashboards",
+        path: Routes.dashboard_path(socket, :index, dashboard.project.id)
+      },
+      %Step{label: dashboard.name}
+    ]
+
+    socket
+    |> assign(:steps, steps)
+  end
+
+  defp assign_breadcrumb_project_steps(socket, project) do
+    steps = [
+      %Step{label: "Projects", path: Routes.project_path(socket, :index)},
+      %Step{
+        label: project.name,
+        path: Routes.project_board_path(socket, :index, project.id)
+      },
+      %Step{
+        label: "Dashboards"
+      }
+    ]
+
+    socket
+    |> assign(:steps, steps)
   end
 
   defp assign_dashboards(socket, %{id: project_id}) do

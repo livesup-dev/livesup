@@ -18,52 +18,57 @@
   </:actions>
 </.breadcrumb>
 
-<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-  <div
-    :for={{dom_id, project} <- @streams.projects}
-    class="card grow items-center p-4 text-center sm:p-5"
-  >
-    <div class="w-10 h-10 rounded-full" style={"background-color: ##{project.color}"}></div>
-    <h3 class="my-2 grow">
-      <.link
-        type={:redirect}
-        path={Routes.dashboard_path(@socket, :index, project.id)}
-        class="text-base font-medium text-slate-700 dark:text-navy-100"
-      >
-        <%= project.name %>
-      </.link>
-    </h3>
-    <p class="text-xs+"><%= project.description %></p>
-    <div>
-      <a
-        :for={label <- project.labels}
-        href="#"
-        class="text-xs+ text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
-      >
-        #<%= label %>
-      </a>
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-5 xl:grid-cols-5">
+  <div :for={{dom_id, project} <- @streams.projects} class="flex shrink-0 flex-col items-center">
+    <div
+      class="z-10 h-12 w-12 rounded-full bg-slate-400"
+      {if project.color, do: "#" <> project.color, else: ''}
+    >
     </div>
-    <div class="my-3.5 flex flex-wrap space-x-2">
-      <div
-        :for={user <- users_from_groups(project.groups)}
-        class="avatar h-8 w-8"
-        x-tooltip={"'#{User.full_name(user)}'"}
-      >
-        <img
-          class="rounded-full ring ring-white dark:ring-navy-700"
-          src={User.default_avatar_url(user)}
-          alt="avatar"
-        />
+    <div class="card -mt-5 w-full rounded-2xl px-3 py-5 text-center flex-1">
+      <h3 class="my-4 text-base font-medium text-slate-700 dark:text-navy-100">
+        <.link
+          navigate={Routes.project_board_path(@socket, :index, project.id)}
+          type={:navigate}
+          class="text-base font-medium text-slate-700 dark:text-navy-100"
+        >
+          <%= project.name %>
+        </.link>
+      </h3>
+      <p class="font-inter text-xs+ tracking-wide text-slate-400 hover:text-primary focus:text-primary dark:hover:text-accent-light dark:focus:text-accent-light">
+        <%= project.description %>
+      </p>
+      <div>
+        <a
+          :for={label <- project.labels}
+          href="#"
+          class="text-xs+ text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
+        >
+          #<%= label %>
+        </a>
       </div>
-    </div>
-    <div class="mt-5 pb-1">
-      <.link
-        href={Routes.project_board_path(@socket, :index, project.id)}
-        type={:navigate}
-        class="border-b border-dashed border-current pb-0.5 font-medium text-primary outline-none transition-colors duration-300 hover:text-primary/70 focus:text-primary/70 dark:text-accent-light dark:hover:text-accent-light/70 dark:focus:text-accent-light/70"
-      >
-        View Board
-      </.link>
+      <div class="flex -space-x-3 self-center mb-6">
+        <div
+          :for={user <- users_from_groups(project.groups)}
+          class="avatar h-8 w-8 hover:z-10"
+          x-tooltip={"'#{User.full_name(user)}'"}
+        >
+          <img
+            class="rounded-full ring ring-white dark:ring-navy-700"
+            src={User.default_avatar_url(user)}
+            alt="avatar"
+          />
+        </div>
+      </div>
+      <div class="mt-auto pb-1">
+        <.link
+          navigate={Routes.project_board_path(@socket, :index, project.id)}
+          type={:navigate}
+          class="border-b border-dashed border-current pb-0.5 font-medium text-primary outline-none transition-colors duration-300 hover:text-primary/70 focus:text-primary/70 dark:text-accent-light dark:hover:text-accent-light/70 dark:focus:text-accent-light/70"
+        >
+          View Board
+        </.link>
+      </div>
     </div>
   </div>
 </div>
