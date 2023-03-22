@@ -100,5 +100,26 @@ defmodule LiveSup.Queries.TodoQuery do
     |> Repo.insert!(on_conflict: :nothing)
   end
 
-  def base, do: from(Todo, as: :todo, preload: [:project, :datasources])
+  def base do
+    # TODO: We need to move these counts into they own columns
+    # instead of calculating them on the fly
+    from(todo in Todo,
+      as: :todo,
+      preload: [:project, :datasources],
+      select_merge: %{
+        open_tasks_count:
+          fragment(
+            "SELECT count(*) FROM tasks WHERE todo_id = ? AND completed = ?",
+            todo.id,
+            false
+          ),
+        completed_tasks_count:
+          fragment(
+            "SELECT count(*) FROM tasks WHERE todo_id = ? AND completed = ?",
+            todo.id,
+            true
+          )
+      }
+    )
+  end
 end

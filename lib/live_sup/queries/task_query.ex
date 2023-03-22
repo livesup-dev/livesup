@@ -26,6 +26,12 @@ defmodule LiveSup.Queries.TaskQuery do
             false -> query
           end
         end).()
+    |> (fn query ->
+          case Keyword.has_key?(filters, :limit) do
+            true -> limit(query, ^filters[:limit])
+            false -> query
+          end
+        end).()
     |> order_by([task], asc: task.completed, desc: task.inserted_at)
     |> Repo.all()
   end
