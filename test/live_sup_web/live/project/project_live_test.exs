@@ -10,7 +10,7 @@ defmodule LiveSupWeb.Test.Live.ProjectLiveTest do
 
     test "list projects", %{conn: conn, project: %{name: name}} do
       {:ok, _index_live, html} = live(conn, Routes.project_path(conn, :index))
-      assert html =~ "type=\"navigate\">#{name}</a>"
+      assert html =~ "type=\"navigate\">\n#{name}\n        </a>"
     end
   end
 end

@@ -20,11 +20,7 @@
 
 <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-5 xl:grid-cols-5">
   <div :for={{dom_id, project} <- @streams.projects} class="flex shrink-0 flex-col items-center">
-    <div
-      class="z-10 h-12 w-12 rounded-full bg-slate-400"
-      style={"background-color:#{project_color(project)}"}
-    >
-    </div>
+    <div class="z-10 h-12 w-12 rounded-full bg-slate-400" style={project_color(project)}></div>
     <div class="card -mt-5 w-full rounded-2xl px-3 py-5 text-center flex-1">
       <h3 class="my-4 text-base font-medium text-slate-700 dark:text-navy-100">
         <.link

@@ -71,5 +71,5 @@ defmodule LiveSupWeb.Project.ProjectLive do
   end
 
   defp project_color(%Project{color: nil}), do: ""
-  defp project_color(%Project{color: color}), do: "##{color}"
+  defp project_color(%Project{color: color}), do: "background-color:##{color}"
 end
