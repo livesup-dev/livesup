@@ -69,4 +69,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
     |> List.flatten()
     |> Enum.uniq()
   end
+
+  defp project_color(%Project{color: nil}), do: ""
+  defp project_color(%Project{color: color}), do: "##{color}"
 end

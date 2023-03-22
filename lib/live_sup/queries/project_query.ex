@@ -76,7 +76,8 @@ defmodule LiveSup.Queries.ProjectQuery do
       name: "My Stuff",
       slug: @internal_default_project_slug,
       internal: true,
-      default: true
+      default: true,
+      color: Palette.Utils.ColorHelper.hex()
     }
 
     %Project{}

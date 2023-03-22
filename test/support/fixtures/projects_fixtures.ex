@@ -24,7 +24,8 @@ defmodule LiveSup.Test.ProjectsFixtures do
     %{
       name: "Random-#{id}",
       slug: "random-#{id}",
-      internal: false
+      internal: false,
+      color: Palette.Utils.ColorHelper.hex()
     }
   end
 end
