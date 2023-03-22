@@ -1,12 +1,17 @@
 <%= if assigns[:section] == :dashboard_selection do %>
-  <%= LiveSupWeb.Project.Components.DashboardsHeaderComponent.render(%{project: @project}) %>
+  <.breadcrumb title={@title} steps={@steps}>
+    <:actions>
+      <.action_link
+        type={:patch}
+        path={Routes.dashboard_path(@socket, :new, @project.id)}
+        tooltip="Add Dashboard"
+      />
+    </:actions>
+  </.breadcrumb>
 <% end %>
 
 <%= if assigns[:section] == :dashboard do %>
-  <%= LiveSupWeb.Components.DashboardHeaderComponent.render(%{
-    project: @project,
-    dashboard: @dashboard
-  }) %>
+  <.breadcrumb title={@title} steps={@steps}></.breadcrumb>
 <% end %>
 
 <%= if @live_action in [:index] do %>
@@ -19,7 +24,7 @@
 <% end %>
 
 <%= if @live_action in [:new] do %>
-  <.modal return_to={Routes.dashboard_path(@socket, :index, @project.id)}>
+  <.modal return_to={Routes.dashboard_path(@socket, :index, @project.id)} title="Dashboard">
     <.live_component
       module={LiveSupWeb.Project.Components.ManageDashboardFormComponent}
       id="new-dashboard"
