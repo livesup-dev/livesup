@@ -14,6 +14,8 @@ defmodule LiveSup.Schemas.Todo do
     field(:position, :integer)
     field(:archived, :boolean)
     field(:archived_at, :naive_datetime)
+    field(:open_tasks_count, :integer, default: 0, virtual: true)
+    field(:completed_tasks_count, :integer, default: 0, virtual: true)
 
     belongs_to(:project, Project)
     belongs_to(:created_by, User)

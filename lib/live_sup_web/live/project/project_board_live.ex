@@ -3,7 +3,7 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
 
   alias LiveSup.Schemas.Dashboard
 
-  alias LiveSup.Core.{Projects, Todos}
+  alias LiveSup.Core.{Projects, Todos, Tasks}
   alias LiveSup.Schemas.Dashboard
 
   alias Palette.Components.Breadcrumb.Step
@@ -58,5 +58,9 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
     {:noreply,
      socket
      |> assign(:project, Projects.get_with_dashboards!(project_id))}
+  end
+
+  defp open_tasks(%{id: id}) do
+    Tasks.by_todo(id, limit: 3, completed: false)
   end
 end

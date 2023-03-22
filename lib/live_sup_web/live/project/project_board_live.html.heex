@@ -25,21 +25,7 @@
             navigate={Routes.dashboard_path(@socket, :show, dashboard.id)}
             class="btn h-7 w-7 rounded-full bg-slate-150 p-0 font-medium text-slate-800 hover:bg-slate-200 hover:shadow-lg hover:shadow-slate-200/50 focus:bg-slate-200 focus:shadow-lg focus:shadow-slate-200/50 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:hover:shadow-navy-450/50 dark:focus:bg-navy-450 dark:focus:shadow-navy-450/50 dark:active:bg-navy-450/90"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 rotate-45"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M7 11l5-5m0 0l5 5m-5-5v12"
-              >
-              </path>
-            </svg>
+            <i class="fa-solid fa-arrow-right h-5 w-5"></i>
           </.link>
         </div>
       </div>
@@ -68,23 +54,13 @@
             <.from_now value={todo.inserted_at} />
           </p>
           <div class="badge mt-2 bg-primary/10 text-primary dark:bg-accent-light/15 dark:text-accent-light">
-            7 tasks
+            <%= todo.completed_tasks_count %>/<%= todo.completed_tasks_count +
+              todo.open_tasks_count %> completed tasks
           </div>
+          <ul>
+            <li :for={task <- open_tasks(todo)}><%= task.title %></li>
+          </ul>
           <div class="mt-5 flex items-center justify-between space-x-2">
-            <div class="flex -space-x-3">
-              <div class="avatar h-8 w-8 hover:z-10">
-                <img
-                  class="rounded-full ring ring-white dark:ring-navy-700"
-                  src="images/avatar/avatar-5.jpg"
-                  alt="avatar"
-                />
-              </div>
-              <div class="avatar h-8 w-8 hover:z-10">
-                <div class="is-initial rounded-full bg-error text-xs+ uppercase text-white ring ring-white dark:ring-navy-700">
-                  yt
-                </div>
-              </div>
-            </div>
             <.link navigate={Routes.manage_todo_path(LiveSupWeb.Endpoint, :show, todo.id)}>
               <i class="fa-solid fa-arrow-right h-8 w-8"></i>
             </.link>

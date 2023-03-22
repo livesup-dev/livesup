@@ -16,7 +16,7 @@ defmodule LiveSup.Core.Tasks do
       [%Todo{}, ...]
 
   """
-  defdelegate by_todo(todo_id), to: TaskQuery
+  defdelegate by_todo(todo_id, filters \\ []), to: TaskQuery
   defdelegate get!(id), to: TaskQuery
   defdelegate complete!(id), to: TaskQuery
   defdelegate incomplete!(id), to: TaskQuery
