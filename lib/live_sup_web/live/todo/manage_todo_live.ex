@@ -9,7 +9,6 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   alias LiveSupWeb.Todo.Components.{
     TodoHeaderComponent,
     TaskRowComponent,
-    CompletedTaskRowComponent,
     TodoDrawerComponent,
     TodoAddTaskComponent
   }
