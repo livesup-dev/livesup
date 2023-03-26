@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
+defmodule LiveSupWeb.Todo.Components.CompletedTaskRowComponent do
   use LiveSupWeb, :component
   alias Phoenix.LiveView.JS
 
@@ -12,11 +12,8 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
     ~H"""
     <div class={border_color(@task.inserted_at)}>
       <div class="flex items-center space-x-2 sm:space-x-3 ml-2">
-        <label class="flex">
-          <TaskActionComponent.render task={@task} />
-        </label>
         <h2
-          class={row_class(@task.completed)}
+          class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100 line-through"
           phx-click={
             JS.push("select_task", value: %{id: @task.id})
             |> JS.toggle(to: "#edit-todo-drawer")
@@ -27,7 +24,7 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
       </div>
       <div class="mt-1 flex items-end justify-between ml-2">
         <div class="flex flex-wrap items-center font-inter text-xs">
-          <p><.from_now value={@task.inserted_at} /></p>
+          <p><.from_now value={@task.completed_at} /></p>
           <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
           <span class="flex items-center space-x-1">
             <svg
@@ -91,13 +88,5 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
       end
 
     "border-l-4 #{color} border-b py-3 dark:border-navy-500 hover:bg-slate-100 dark:hover:bg-navy-600 mb-1"
-  end
-
-  def row_class(true) do
-    "cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100 line-through"
-  end
-
-  def row_class(false) do
-    "cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100"
   end
 end

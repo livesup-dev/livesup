@@ -2,6 +2,7 @@ defmodule LiveSupWeb.Project.ManageTodosLive do
   use LiveSupWeb, :live_view
 
   alias LiveSup.Core.Projects
+  alias Palette.Components.Breadcrumb.Step
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
@@ -9,7 +10,8 @@ defmodule LiveSupWeb.Project.ManageTodosLive do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign_defaults()}
+     |> assign_defaults()
+     |> assign_breadcrumb_steps()}
   end
 
   @impl true
@@ -21,6 +23,20 @@ defmodule LiveSupWeb.Project.ManageTodosLive do
     socket
     |> assign(title: "ToDo")
     |> assign(section: :home)
+  end
+
+  def assign_breadcrumb_steps(
+        %{assigns: %{project: %{name: project_name, id: project_id}}} = socket
+      ) do
+    steps = [
+      %Step{label: "Home", path: "/"},
+      %Step{label: "Projects", path: "/projects"},
+      %Step{label: "Board", path: "/projects/#{project_id}/board"},
+      %Step{label: project_name}
+    ]
+
+    socket
+    |> assign(:breadcrumb_steps, steps)
   end
 
   defp apply_action(socket, :index, %{"id" => project_id}) do

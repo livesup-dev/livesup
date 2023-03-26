@@ -9,6 +9,13 @@
   </div>
 </div>
 
+<div class="card px-4 pt-2 pb-4 mt-4">
+  Completed
+  <div class="max-h-screen overflow-auto">
+    <TaskRowComponent.render :for={task <- @completed_tasks} task={task} />
+  </div>
+</div>
+
 <TodoDrawerComponent.render
   task={@selected_task}
   editing_task={@editing_task}

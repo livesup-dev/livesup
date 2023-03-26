@@ -9,6 +9,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   alias LiveSupWeb.Todo.Components.{
     TodoHeaderComponent,
     TaskRowComponent,
+    CompletedTaskRowComponent,
     TodoDrawerComponent,
     TodoAddTaskComponent
   }
@@ -26,11 +27,6 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      |> assign_tasks()}
   end
 
-  def assign_todo(socket, todo_id) do
-    socket
-    |> assign(:todo, Todos.get!(todo_id))
-  end
-
   @impl true
   def handle_params(%{"id" => todo_id, "task_id" => task_id}, _, socket) do
     {:noreply,
@@ -46,25 +42,40 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   def handle_params(%{"id" => todo_id}, _, socket) do
     {:noreply,
      socket
-     |> assign(:todo, Todos.get!(todo_id))
+     |> assign_todo(todo_id)
      |> assign_breadcrumb_steps()
      |> assign(:editing, nil)
      |> assign(:todo_task, nil)
-     |> assign_tasks()}
+     |> assign_tasks()
+     |> assign_completed_tasks()}
   end
 
-  def assign_breadcrumb_steps(socket) do
+  def assign_todo(socket, todo_id) do
+    todo = Todos.get!(todo_id)
+
+    socket
+    |> assign(:todo, todo)
+    |> assign(:project, todo.project)
+  end
+
+  def assign_breadcrumb_steps(%{assigns: %{todo: todo, project: project}} = socket) do
     socket
     |> assign(:breadcrumb_steps, [
       %Step{label: "Home", path: "/"},
-      %Step{label: "Todos", path: "/todos"},
-      %Step{label: socket.assigns.todo.title, path: "/todos/#{socket.assigns.todo.id}"}
+      %Step{label: "Projects", path: "/projects"},
+      %Step{label: "#{project.name}'s board", path: "/projects/#{project.id}/board"},
+      %Step{label: todo.title, path: "/todos/#{todo.id}"}
     ])
   end
 
   defp assign_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
     socket
     |> assign(:tasks, Todos.get_tasks(todo_id, completed: false))
+  end
+
+  defp assign_completed_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
+    socket
+    |> assign(:completed_tasks, Todos.get_tasks(todo_id, completed: true))
   end
 
   @impl true

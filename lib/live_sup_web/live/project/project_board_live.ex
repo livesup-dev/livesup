@@ -7,7 +7,6 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
   alias LiveSup.Schemas.Dashboard
 
   alias Palette.Components.Breadcrumb.Step
-  alias LiveSupWeb.ProjectLive.LiveComponents.TodoFormComponent
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
@@ -38,7 +37,7 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
     ]
 
     socket
-    |> assign(:steps, steps)
+    |> assign(:breadcrumb_steps, steps)
   end
 
   defp assign_page_title(socket, title) do

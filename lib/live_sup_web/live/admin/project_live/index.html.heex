@@ -1,18 +1,21 @@
 <%= LiveSupWeb.Admin.ProjectLive.HeaderComponent.render(%{}) %>
 <%= LiveSupWeb.Admin.Components.FormMessageComponent.render(%{flash: @flash}) %>
 
-<%= if @live_action in [:new, :edit] do %>
-  <.modal return_to={Routes.admin_project_index_path(@socket, :index)}>
-    <.live_component
-      module={LiveSupWeb.Admin.ProjectLive.FormComponent}
-      id={@project.id || :new}
-      title={@page_title}
-      action={@live_action}
-      project={@project}
-      return_to={Routes.admin_project_index_path(@socket, :index)}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  title={@page_title}
+  show
+  return_to={Routes.admin_project_index_path(@socket, :index)}
+>
+  <.live_component
+    module={LiveSupWeb.Admin.ProjectLive.FormComponent}
+    id={@project.id || :new}
+    title={@page_title}
+    action={@live_action}
+    project={@project}
+    return_to={Routes.admin_project_index_path(@socket, :index)}
+  />
+</.modal>
 
 <div class="flex flex-col m-4">
   <div class="overflow-x-auto">

@@ -1,16 +1,19 @@
-<%= if @live_action in [:new, :edit] do %>
-  <.modal return_to={Routes.project_path(@socket, :index)} title="Project">
-    <.live_component
-      module={ProjectFormComponent}
-      id="new-project"
-      title={@page_title}
-      action={@live_action}
-      return_to={Routes.project_path(@socket, :index)}
-      user={@current_user}
-      project={@project}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  show
+  return_to={Routes.project_path(@socket, :index)}
+  title="Project"
+>
+  <.live_component
+    module={ProjectFormComponent}
+    id="new-project"
+    title={@page_title}
+    action={@live_action}
+    return_to={Routes.project_path(@socket, :index)}
+    user={@current_user}
+    project={@project}
+  />
+</.modal>
 
 <.breadcrumb title={@title} steps={@steps}>
   <:actions>

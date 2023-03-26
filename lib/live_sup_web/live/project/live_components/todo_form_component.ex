@@ -30,7 +30,7 @@ defmodule LiveSupWeb.ProjectLive.LiveComponents.TodoFormComponent do
     save(socket, socket.assigns.action, todo_params)
   end
 
-  defp save(%{assigns: %{project: project}} = socket, :new_todo, todo_params) do
+  defp save(%{assigns: %{project: project}} = socket, :new, todo_params) do
     case Projects.create_todo(project, todo_params) do
       {:ok, todo} ->
         {:noreply,

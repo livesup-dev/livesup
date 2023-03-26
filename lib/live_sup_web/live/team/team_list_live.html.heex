@@ -23,29 +23,35 @@
   </div>
 </div>
 
-<%= if @live_action in [:new] do %>
-  <.modal return_to={Routes.team_list_path(@socket, :index)}>
-    <.live_component
-      module={LiveSupWeb.Team.Components.TeamFormComponent}
-      id="new-team"
-      title={@page_title}
-      action={@live_action}
-      user={@current_user}
-      team={@team}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:new]}
+  show
+  return_to={Routes.team_list_path(@socket, :index)}
+  title="New member"
+>
+  <.live_component
+    module={LiveSupWeb.Team.Components.TeamFormComponent}
+    id="new-team"
+    title={@page_title}
+    action={@live_action}
+    user={@current_user}
+    team={@team}
+  />
+</.modal>
 
-<%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.members_path(@socket, :index, @team.id)}>
-    <.live_component
-      module={LiveSupWeb.Team.Components.TeamFormComponent}
-      id="edit-team"
-      return_to={Routes.members_path(@socket, :index, @team.id)}
-      title={@page_title}
-      action={@live_action}
-      user={@current_user}
-      team={@team}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:edit]}
+  show
+  title="Edit team"
+  return_to={Routes.members_path(@socket, :index, @team.id)}
+>
+  <.live_component
+    module={LiveSupWeb.Team.Components.TeamFormComponent}
+    id="edit-team"
+    return_to={Routes.members_path(@socket, :index, @team.id)}
+    title={@page_title}
+    action={@live_action}
+    user={@current_user}
+    team={@team}
+  />
+</.modal>

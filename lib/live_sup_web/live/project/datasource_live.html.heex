@@ -2,18 +2,21 @@
   datasource: @datasource,
   project: @project
 }) %>
-<%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.datasource_path(@socket, :index, @project.id)}>
-    <.live_component
-      module={LiveSupWeb.Project.Components.DatasourceFormComponent}
-      id={@datasource.id}
-      title={@page_title}
-      action={@live_action}
-      return_to={Routes.datasource_path(@socket, :index, @project.id)}
-      datasource={@datasource}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:edit]}
+  title="Edit Datasource"
+  show
+  return_to={Routes.datasource_path(@socket, :index, @project.id)}
+>
+  <.live_component
+    module={LiveSupWeb.Project.Components.DatasourceFormComponent}
+    id={@datasource.id}
+    title={@page_title}
+    action={@live_action}
+    return_to={Routes.datasource_path(@socket, :index, @project.id)}
+    datasource={@datasource}
+  />
+</.modal>
 <div class="mt-2">
   <div class="grid grid-cols-1 gap-2 p-4 lg:grid-cols-3 xl:grid-cols-3">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

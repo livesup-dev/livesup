@@ -67,18 +67,21 @@
   </div>
 </div>
 
-<%= if @live_action in [:add] do %>
-  <.modal return_to={Routes.widget_path(@socket, :show, @dashboard.id)}>
-    <.live_component
-      module={LiveSupWeb.Dashboard.Components.AddWidgetFormComponent}
-      id="add-widget"
-      title={@page_title}
-      action={@live_action}
-      return_to={Routes.widget_path(@socket, :show, @dashboard.id)}
-      dashboard={@dashboard}
-      widget_instance={@widget_instance}
-      widget={@widget}
-      datasource_id={@datasource_id}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:add]}
+  title="Add widget"
+  show
+  return_to={Routes.widget_path(@socket, :show, @dashboard.id)}
+>
+  <.live_component
+    module={LiveSupWeb.Dashboard.Components.AddWidgetFormComponent}
+    id="add-widget"
+    title={@page_title}
+    action={@live_action}
+    return_to={Routes.widget_path(@socket, :show, @dashboard.id)}
+    dashboard={@dashboard}
+    widget_instance={@widget_instance}
+    widget={@widget}
+    datasource_id={@datasource_id}
+  />
+</.modal>

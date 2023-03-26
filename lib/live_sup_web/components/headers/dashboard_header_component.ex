@@ -1,6 +1,5 @@
 defmodule LiveSupWeb.Components.DashboardHeaderComponent do
   use LiveSupWeb, :component
-  alias Palette.Components.Breadcrumb.Step
 
   def render(assigns) do
     ~H"""

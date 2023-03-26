@@ -16,6 +16,7 @@ defmodule LiveSup.Schemas.TodoTask do
     field(:priority, :string)
     field(:tags, {:array, :string}, default: [])
     field(:completed, :boolean, default: false)
+    field(:completed_at, LiveSup.Schemas.CustomTypes.Datetime)
     field(:external_identifier, :string)
     field(:external_metadata, :map, default: %{})
     field(:datasource_slug, :string)
@@ -45,6 +46,7 @@ defmodule LiveSup.Schemas.TodoTask do
   @optional_fields [
     :notes,
     :completed,
+    :completed_at,
     :due_on,
     :parent_id,
     :assigned_to_id,

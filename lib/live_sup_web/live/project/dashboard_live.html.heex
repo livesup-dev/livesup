@@ -23,20 +23,23 @@
   />
 <% end %>
 
-<%= if @live_action in [:new] do %>
-  <.modal return_to={Routes.dashboard_path(@socket, :index, @project.id)} title="Dashboard">
-    <.live_component
-      module={LiveSupWeb.Project.Components.ManageDashboardFormComponent}
-      id="new-dashboard"
-      title={@page_title}
-      action={@live_action}
-      return_to={Routes.dashboard_path(@socket, :index, @project.id)}
-      user={@current_user}
-      project={@project}
-      dashboard={@dashboard}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:new]}
+  show
+  return_to={Routes.dashboard_path(@socket, :index, @project.id)}
+  title="Dashboard"
+>
+  <.live_component
+    module={LiveSupWeb.Project.Components.ManageDashboardFormComponent}
+    id="new-dashboard"
+    title={@page_title}
+    action={@live_action}
+    return_to={Routes.dashboard_path(@socket, :index, @project.id)}
+    user={@current_user}
+    project={@project}
+    dashboard={@dashboard}
+  />
+</.modal>
 
 <%= if @live_action in [:show, :edit] do %>
   <div class="m-2 mb-[80px]">

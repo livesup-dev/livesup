@@ -115,12 +115,12 @@ defmodule LiveSup.Queries.TaskQuery do
 
   def complete!(task_id) when is_binary(task_id) do
     get!(task_id)
-    |> update!(%{completed: true})
+    |> update!(%{completed: true, completed_at: DateTime.utc_now()})
   end
 
   def incomplete!(task_id) when is_binary(task_id) do
     get!(task_id)
-    |> update!(%{completed: false})
+    |> update!(%{completed: false, completed_at: nil})
   end
 
   def upsert!(attrs) do

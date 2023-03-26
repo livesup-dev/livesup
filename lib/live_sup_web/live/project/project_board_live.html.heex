@@ -1,4 +1,12 @@
-<.breadcrumb title={@title} steps={@steps}></.breadcrumb>
+<.breadcrumb title={@title} steps={@breadcrumb_steps}>
+  <:actions>
+    <.action_link
+      type={:patch}
+      path={Routes.manage_todos_path(@socket, :new, @project)}
+      tooltip="Add Todo"
+    />
+  </:actions>
+</.breadcrumb>
 
 <div class="mt-4 grid grid-cols-12 gap-4 transition-all duration-[.25s] sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6">
   <div class="col-span-12 flex flex-col sm:col-span-6 lg:col-span-4">
@@ -70,3 +78,18 @@
     </div>
   </div>
 </div>
+
+<.modal
+  :if={@live_action == :new}
+  show
+  title="New Todo"
+  return_to={Routes.manage_todos_path(@socket, :index, @project.id)}
+>
+  <.live_component
+    module={LiveSupWeb.ProjectLive.LiveComponents.TodoFormComponent}
+    id="manage_todo"
+    action={@live_action}
+    project={@project}
+    return_to={Routes.manage_todos_path(@socket, :index, @project.id)}
+  />
+</.modal>

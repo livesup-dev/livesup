@@ -41,15 +41,18 @@
   <% end %>
 <% end %>
 
-<%= if @live_action in [:add] do %>
-  <.modal return_to={Routes.members_path(@socket, :index, @team.id)}>
-    <.live_component
-      module={LiveSupWeb.Team.Components.AddTeamMemberFormComponent}
-      id="add-team-member"
-      title={@page_title}
-      action={@live_action}
-      return_to={Routes.members_path(@socket, :index, @team.id)}
-      team={@team}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:add]}
+  show
+  title="Add a new member"
+  return_to={Routes.members_path(@socket, :index, @team.id)}
+>
+  <.live_component
+    module={LiveSupWeb.Team.Components.AddTeamMemberFormComponent}
+    id="add-team-member"
+    title={@page_title}
+    action={@live_action}
+    return_to={Routes.members_path(@socket, :index, @team.id)}
+    team={@team}
+  />
+</.modal>

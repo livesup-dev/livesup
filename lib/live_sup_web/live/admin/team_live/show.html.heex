@@ -1,17 +1,20 @@
 <%= LiveSupWeb.Admin.TeamLive.HeaderComponentShow.render(%{team: @team}) %>
 
-<%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.admin_team_show_path(@socket, :show, @team)}>
-    <.live_component
-      module={LiveSupWeb.Admin.TeamLive.FormComponent}
-      id={@team.id}
-      title={@page_title}
-      action={@live_action}
-      team={@team}
-      return_to={Routes.admin_team_show_path(@socket, :show, @team)}
-    />
-  </.modal>
-<% end %>
+<.modal
+  :if={@live_action in [:edit]}
+  show
+  title="Edit Team"
+  return_to={Routes.admin_team_show_path(@socket, :show, @team)}
+>
+  <.live_component
+    module={LiveSupWeb.Admin.TeamLive.FormComponent}
+    id={@team.id}
+    title={@page_title}
+    action={@live_action}
+    team={@team}
+    return_to={Routes.admin_team_show_path(@socket, :show, @team)}
+  />
+</.modal>
 <div class="flex flex-col m-4">
   <div class="w-full lg:w-1/2">
     <div class="bg-white dark:bg-darker shadow overflow-hidden sm:rounded-lg">
