@@ -1,5 +1,5 @@
 <div>
-  <.xform target={@myself} for={:todo}>
+  <.xform target={@myself} for={:todo} as={:todo}>
     <.text name="title" value={@todo.title} required={true} label="Title" />
     <.textarea
       name="description"
