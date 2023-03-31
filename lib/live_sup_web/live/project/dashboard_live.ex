@@ -3,8 +3,9 @@ defmodule LiveSupWeb.Project.DashboardLive do
 
   alias LiveSup.Core.{Projects, Dashboards, Widgets.WidgetManager}
   alias LiveSup.Core.Utils
-  alias LiveSup.Schemas.Dashboard
+  alias LiveSup.Schemas.{Project, Dashboard, User}
   alias Palette.Components.Breadcrumb.Step
+  alias LiveSupWeb.ProjectLive.LiveComponents.DashboardFormComponent
 
   on_mount(LiveSupWeb.UserLiveAuth)
 

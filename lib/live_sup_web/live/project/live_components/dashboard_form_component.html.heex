@@ -1,0 +1,10 @@
+<div>
+  <.xform target={@myself} for={%{}} as={:dashboard}>
+    <.text name="name" value={@dashboard.name} required={true} label="Name" />
+
+    <.alert :if={@error} description={@error} color={:error} />
+    <:actions>
+      <.default_modal_actions action={@action} />
+    </:actions>
+  </.xform>
+</div>
