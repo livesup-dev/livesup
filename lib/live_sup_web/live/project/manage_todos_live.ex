@@ -7,16 +7,22 @@ defmodule LiveSupWeb.Project.ManageTodosLive do
   on_mount(LiveSupWeb.UserLiveAuth)
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(%{"id" => project_id}, _session, socket) do
     {:ok,
      socket
      |> assign_defaults()
+     |> assign_project(project_id)
      |> assign_breadcrumb_steps()}
   end
 
+  def assign_project(socket, project_id) do
+    socket
+    |> assign(:project, Projects.get_with_todos!(project_id))
+  end
+
   @impl true
-  def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  def handle_params(_params, _url, socket) do
+    {:noreply, socket}
   end
 
   defp assign_defaults(socket) do
@@ -37,15 +43,5 @@ defmodule LiveSupWeb.Project.ManageTodosLive do
 
     socket
     |> assign(:breadcrumb_steps, steps)
-  end
-
-  defp apply_action(socket, :index, %{"id" => project_id}) do
-    socket
-    |> assign(:project, Projects.get_with_todos!(project_id))
-  end
-
-  defp apply_action(socket, :new, %{"id" => project_id}) do
-    socket
-    |> assign(:project, Projects.get_with_todos!(project_id))
   end
 end
