@@ -15,7 +15,6 @@ defmodule LiveSup.MixProject do
       description: @description,
       elixir: @elixir_requirement,
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -60,11 +59,12 @@ defmodule LiveSup.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.15"},
+      {:phoenix, "~> 1.7.0"},
+      {:phoenix_view, "~> 2.0"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.18.0"},
+      {:phoenix_live_view, "~> 0.18"},
       {:phoenix_html, "~> 3.1"},
       {:phoenix_live_dashboard, "~> 0.5"},
       {:telemetry, "~> 1.0"},
@@ -85,7 +85,7 @@ defmodule LiveSup.MixProject do
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:sobelow, "~> 0.8", only: :dev},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
-      {:prom_ex, "~> 1.7.1"},
+      {:prom_ex, "~> 1.7"},
       {:yaml_elixir, "~> 2.9.0"},
       {:earmark, "~> 1.4"},
       {:phx_component_helpers, "~> 1.3.0"},

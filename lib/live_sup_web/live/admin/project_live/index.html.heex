@@ -5,7 +5,7 @@
   :if={@live_action in [:new, :edit]}
   title={@page_title}
   show
-  return_to={Routes.admin_project_index_path(@socket, :index)}
+  return_to={~p"/admin/projects"}
 >
   <.live_component
     module={LiveSupWeb.Admin.ProjectLive.FormComponent}
@@ -13,7 +13,7 @@
     title={@page_title}
     action={@live_action}
     project={@project}
-    return_to={Routes.admin_project_index_path(@socket, :index)}
+    return_to={~p"/admin/projects"}
   />
 </.modal>
 
@@ -66,13 +66,13 @@
                 <td class="px-6 py-4  text-right text-sm font-medium">
                   <span class="text-indigo-600 hover:text-indigo-900">
                     <%= live_redirect("Show",
-                      to: Routes.admin_project_show_path(@socket, :show, project)
+                      to: ~p"/admin/projects/#{project}"
                     ) %>
                   </span>
                   <span class="text-indigo-600 hover:text-indigo-900">|</span>
                   <span class="text-indigo-600 hover:text-indigo-900">
                     <%= live_patch("Edit",
-                      to: Routes.admin_project_index_path(@socket, :edit, project)
+                      to: ~p"/admin/projects/#{project}/edit"
                     ) %>
                   </span>
                   <span class="text-indigo-600 hover:text-indigo-900">|</span>

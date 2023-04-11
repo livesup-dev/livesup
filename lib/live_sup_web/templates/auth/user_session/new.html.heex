@@ -11,7 +11,7 @@
         </p>
       </div>
     </div>
-    <%= form_for @conn, Routes.user_session_path(@conn, :create), [as: :user], fn f -> %>
+    <%= form_for @conn, ~p"/users/log-in", [as: :user], fn f -> %>
       <div class="card mt-5 rounded-lg p-5 lg:p-7">
         <label class="block">
           <span>Username:</span>
@@ -79,7 +79,7 @@
           </label>
 
           <%= link("Forgot password?",
-            to: Routes.user_reset_password_path(@conn, :new),
+            to: ~p"/users/reset-password",
             class:
               "text-xs text-slate-400 transition-colors line-clamp-1 hover:text-slate-800 focus:text-slate-800 dark:text-navy-300 dark:hover:text-navy-100 dark:focus:text-navy-100"
           ) %>
@@ -93,7 +93,7 @@
             <span>Dont have Account?</span>
 
             <%= link("Create account",
-              to: Routes.user_registration_path(LiveSupWeb.Endpoint, :new),
+              to: ~p"/users/register",
               class:
                 "text-primary transition-colors hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
             ) %>

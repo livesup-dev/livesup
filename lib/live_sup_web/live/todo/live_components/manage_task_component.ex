@@ -34,7 +34,7 @@ defmodule LiveSupWeb.ManageTodoLive.LiveComponents.ManageTaskComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Task updated successfully")
-         |> push_redirect(to: Routes.manage_todo_path(socket, :show, task.todo_id))}
+         |> push_redirect(to: ~p"/todos/#{task.todo_id}/manage")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

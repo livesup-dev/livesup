@@ -6,7 +6,7 @@ defmodule LiveSupWeb.HomeControllerTest do
   describe "home" do
     @describetag :controllers
     test "get /", %{conn: conn} do
-      conn = get(conn, Routes.home_path(conn, :index))
+      conn = get(conn, ~p"/")
       response = html_response(conn, 302)
 
       assert response =~

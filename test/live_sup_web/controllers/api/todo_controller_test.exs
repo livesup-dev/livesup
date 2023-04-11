@@ -24,7 +24,7 @@ defmodule LiveSupWeb.Api.TodoControllerTest do
     @describetag :todos_request
 
     test "lists all todos", %{conn: conn, project: %{id: project_id}} do
-      conn = get(conn, Routes.api_project_todo_path(conn, :index, project_id))
+      conn = get(conn, ~p"/api/projects/#{project_id}/todos")
       assert length(json_response(conn, 200)["data"]) == 2
     end
   end
@@ -36,12 +36,11 @@ defmodule LiveSupWeb.Api.TodoControllerTest do
       conn: conn,
       project: %{id: project_id, name: project_name}
     } do
-      conn =
-        post(conn, Routes.api_project_todo_path(conn, :create, project_id), todo: @create_attrs)
+      conn = post(conn, ~p"/api/projects/#{project_id}/todos", todo: @create_attrs)
 
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.api_todo_path(conn, :show, id))
+      conn = get(conn, ~p"/api/todos/#{id}")
 
       assert %{
                "id" => ^id,
@@ -58,8 +57,7 @@ defmodule LiveSupWeb.Api.TodoControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, project: %{id: project_id}} do
-      conn =
-        post(conn, Routes.api_project_todo_path(conn, :create, project_id), todo: @invalid_attrs)
+      conn = post(conn, ~p"/api/projects/#{project_id}/todos", todo: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -75,11 +73,11 @@ defmodule LiveSupWeb.Api.TodoControllerTest do
       project: %Project{id: project_id},
       todos: [%Todo{id: id} = todo, _second_todo]
     } do
-      conn = put(conn, Routes.api_todo_path(conn, :update, todo), todo: @update_attrs)
+      conn = put(conn, ~p"/api/todos/#{todo}", todo: @update_attrs)
 
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.api_todo_path(conn, :show, id))
+      conn = get(conn, ~p"/api/todos/#{id}")
 
       assert %{
                "id" => ^id,
@@ -90,7 +88,7 @@ defmodule LiveSupWeb.Api.TodoControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, todo: todo} do
-      conn = put(conn, Routes.api_todo_path(conn, :update, todo), todo: @invalid_attrs)
+      conn = put(conn, ~p"/api/todos/#{todo}", todo: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -102,11 +100,11 @@ defmodule LiveSupWeb.Api.TodoControllerTest do
     setup [:create_todo]
 
     test "deletes chosen todo", %{conn: conn, todo: todo} do
-      conn = delete(conn, Routes.api_todo_path(conn, :delete, todo))
+      conn = delete(conn, ~p"/api/todos/#{todo}")
       assert response(conn, 204)
 
       assert_error_sent(404, fn ->
-        get(conn, Routes.api_todo_path(conn, :show, todo))
+        get(conn, ~p"/api/todos/#{todo}")
       end)
     end
   end

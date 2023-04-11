@@ -1,18 +1,13 @@
 <%= LiveSupWeb.Admin.TeamLive.HeaderComponent.render(%{}) %>
 
-<.modal
-  :if={@live_action in [:new, :edit]}
-  title="Team"
-  show
-  return_to={Routes.admin_team_index_path(@socket, :index)}
->
+<.modal :if={@live_action in [:new, :edit]} title="Team" show return_to={~p"/admin/teams"}>
   <.live_component
     module={LiveSupWeb.Admin.TeamLive.FormComponent}
     id={@team.id || :new}
     title={@page_title}
     action={@live_action}
     team={@team}
-    return_to={Routes.admin_team_index_path(@socket, :index)}
+    return_to={~p"/admin/teams"}
   />
 </.modal>
 
@@ -56,12 +51,12 @@
                 <td class="px-6 py-4 text-right text-sm font-medium">
                   <span class="text-indigo-600 hover:text-indigo-900">
                     <%= live_redirect("Show",
-                      to: Routes.admin_team_show_path(@socket, :show, team)
+                      to: ~p"/admin/teams/#{team}"
                     ) %>
                   </span>
                   <span class="text-indigo-600 hover:text-indigo-900">|</span>
                   <span class="text-indigo-600 hover:text-indigo-900">
-                    <%= live_patch("Edit", to: Routes.admin_team_index_path(@socket, :edit, team)) %>
+                    <%= live_patch("Edit", to: ~p"/admin/teams/#{team}/edit") %>
                   </span>
                   <span class="text-indigo-600 hover:text-indigo-900">|</span>
                   <span class="text-indigo-600 hover:text-indigo-900">

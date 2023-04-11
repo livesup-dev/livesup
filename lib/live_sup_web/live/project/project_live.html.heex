@@ -1,15 +1,10 @@
-<.modal
-  :if={@live_action in [:new, :edit]}
-  show
-  return_to={Routes.project_path(@socket, :index)}
-  title="Project"
->
+<.modal :if={@live_action in [:new, :edit]} show return_to={~p"/projects"} title="Project">
   <.live_component
     module={ProjectFormComponent}
     id="new-project"
     title={@page_title}
     action={@live_action}
-    return_to={Routes.project_path(@socket, :index)}
+    return_to={~p"/projects"}
     user={@current_user}
     project={@project}
   />
@@ -17,7 +12,7 @@
 
 <.breadcrumb title={@title} steps={@steps}>
   <:actions>
-    <.action_link type={:patch} path={Routes.project_path(@socket, :new)} tooltip="Add Project" />
+    <.action_link type={:patch} path={~p"/projects/new"} tooltip="Add Project" />
   </:actions>
 </.breadcrumb>
 
@@ -27,7 +22,7 @@
     <div class="card -mt-5 w-full rounded-2xl px-3 py-5 text-center flex-1">
       <h3 class="my-4 text-base font-medium text-slate-700 dark:text-navy-100">
         <.link
-          navigate={Routes.project_board_path(@socket, :index, project.id)}
+          navigate={~p"/projects"}
           type={:navigate}
           class="text-base font-medium text-slate-700 dark:text-navy-100"
         >
@@ -61,7 +56,7 @@
       </div>
       <div class="mt-auto pb-1">
         <.link
-          navigate={Routes.project_board_path(@socket, :index, project.id)}
+          navigate={~p"/projects/#{project}/board"}
           type={:navigate}
           class="border-b border-dashed border-current pb-0.5 font-medium text-primary outline-none transition-colors duration-300 hover:text-primary/70 focus:text-primary/70 dark:text-accent-light dark:hover:text-accent-light/70 dark:focus:text-accent-light/70"
         >

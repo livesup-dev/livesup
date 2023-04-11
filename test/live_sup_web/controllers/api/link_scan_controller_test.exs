@@ -16,7 +16,7 @@ defmodule LiveSupWeb.Api.LinkScanControllerTest do
     test "create links when email is found", %{conn: conn, user: %{id: user_id}} do
       with_mock JiraDatasource,
         search_user: fn _email_or_name, _args -> {:ok, jira_user()} end do
-        conn = post(conn, Routes.api_user_link_scan_path(conn, :create, user_id), @create_attrs)
+        conn = post(conn, "/api/users/#{user_id}/links/scan", @create_attrs)
 
         assert [
                  %{
@@ -38,7 +38,7 @@ defmodule LiveSupWeb.Api.LinkScanControllerTest do
       user
       |> LinksFixtures.add_jira_link(datasource_instance)
 
-      conn = post(conn, Routes.api_user_link_scan_path(conn, :create, user_id), @create_attrs)
+      conn = post(conn, ~p"/api/users/#{user_id}/links/scan", @create_attrs)
 
       assert [
                %{
@@ -64,7 +64,7 @@ defmodule LiveSupWeb.Api.LinkScanControllerTest do
            end
          ]}
       ]) do
-        conn = post(conn, Routes.api_user_link_scan_path(conn, :create, user_id), @create_attrs)
+        conn = post(conn, "/api/users/#{user_id}/links/scan", @create_attrs)
 
         assert [
                  %{
@@ -94,7 +94,7 @@ defmodule LiveSupWeb.Api.LinkScanControllerTest do
            end
          ]}
       ]) do
-        conn = post(conn, Routes.api_user_link_scan_path(conn, :create, user_id), @create_attrs)
+        conn = post(conn, "/api/users/#{user_id}/links/scan", @create_attrs)
 
         assert [%{"state" => "user_not_found"}] = json_response(conn, 201)["data"]
       end

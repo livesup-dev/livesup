@@ -3,14 +3,14 @@
   :if={@live_action == :new}
   show
   title="New Todo"
-  return_to={Routes.manage_todos_path(@socket, :index, @project.id)}
+  return_to={~p"/projects/#{@project.id}/todos"}
 >
   <.live_component
     module={LiveSupWeb.ProjectLive.LiveComponents.TodoFormComponent}
     id="manage_todo"
     action={@live_action}
     project={@project}
-    return_to={Routes.manage_todos_path(@socket, :index, @project.id)}
+    return_to={~p"/projects/#{@project.id}/todos"}
   />
 </.modal>
 

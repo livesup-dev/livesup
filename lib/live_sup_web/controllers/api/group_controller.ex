@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Api.GroupController do
     with {:ok, %Group{} = group} <- Groups.create(group_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_group_path(conn, :show, group))
+      |> put_resp_header("location", "/api/groups/#{group.id}")
       |> render("show.json", group: group)
     end
   end

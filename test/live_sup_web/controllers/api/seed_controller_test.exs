@@ -38,13 +38,13 @@ defmodule LiveSupWeb.Api.SeedControllerTest do
     @describetag :seed_request
 
     test "create projects", %{conn: conn} do
-      conn = post(conn, Routes.api_seed_path(conn, :create), @create_with_teams_attrs)
+      conn = post(conn, ~p"/api/seed", @create_with_teams_attrs)
 
       assert %{"status" => "ok"} == json_response(conn, 201)
     end
 
     test "create projects and teams", %{conn: conn} do
-      conn = post(conn, Routes.api_seed_path(conn, :create), @create_attrs)
+      conn = post(conn, ~p"/api/seed", @create_attrs)
 
       assert %{"status" => "ok"} == json_response(conn, 201)
     end

@@ -27,7 +27,7 @@ defmodule LiveSupWeb.Api.MetricControllerTest do
     @describetag :metrics_request
 
     test "lists all metrics", %{conn: conn} do
-      conn = get(conn, Routes.api_metric_path(conn, :index))
+      conn = get(conn, ~p"/api/metrics")
       assert json_response(conn, 200)["data"] == []
     end
   end
@@ -36,10 +36,10 @@ defmodule LiveSupWeb.Api.MetricControllerTest do
     @describetag :metrics_request
 
     test "renders metric when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.api_metric_path(conn, :create), metric: @create_attrs)
+      conn = post(conn, ~p"/api/metrics", metric: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.api_metric_path(conn, :show, id))
+      conn = get(conn, ~p"/api/metrics/#{id}")
 
       assert %{
                "id" => ^id,
@@ -52,7 +52,7 @@ defmodule LiveSupWeb.Api.MetricControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.api_metric_path(conn, :create), metric: @invalid_attrs)
+      conn = post(conn, ~p"/api/metrics", metric: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -63,10 +63,10 @@ defmodule LiveSupWeb.Api.MetricControllerTest do
     setup [:create_metric]
 
     test "renders metric when data is valid", %{conn: conn, metric: %Metric{id: id} = metric} do
-      conn = put(conn, Routes.api_metric_path(conn, :update, metric), metric: @update_attrs)
+      conn = put(conn, ~p"/api/metrics/#{metric}", metric: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.api_metric_path(conn, :show, id))
+      conn = get(conn, ~p"/api/metrics/#{id}")
 
       assert %{
                "id" => ^id,
@@ -79,7 +79,7 @@ defmodule LiveSupWeb.Api.MetricControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, metric: metric} do
-      conn = put(conn, Routes.api_metric_path(conn, :update, metric), metric: @invalid_attrs)
+      conn = put(conn, ~p"/api/metrics/#{metric}", metric: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -90,11 +90,11 @@ defmodule LiveSupWeb.Api.MetricControllerTest do
     setup [:create_metric]
 
     test "deletes chosen metric", %{conn: conn, metric: metric} do
-      conn = delete(conn, Routes.api_metric_path(conn, :delete, metric))
+      conn = delete(conn, ~p"/api/metrics/#{metric}")
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.api_metric_path(conn, :show, metric))
+        get(conn, ~p"/api/metrics/#{metric}")
       end
     end
   end

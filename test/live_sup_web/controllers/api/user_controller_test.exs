@@ -34,7 +34,7 @@ defmodule LiveSupWeb.Api.UserControllerTest do
   describe "index" do
     @describetag :users_request
     test "lists all users", %{conn: conn, user: user} do
-      conn = get(conn, Routes.api_user_path(conn, :index))
+      conn = get(conn, ~p"/api/users")
 
       assert json_response(conn, 200)["data"] == [
                %{
@@ -55,10 +55,10 @@ defmodule LiveSupWeb.Api.UserControllerTest do
   describe "create user" do
     @describetag :users_request
     test "renders user when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.api_user_path(conn, :create), user: @create_attrs)
+      conn = post(conn, ~p"/api/users", user: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.api_user_path(conn, :show, id))
+      conn = get(conn, ~p"/api/users/#{id}")
 
       assert %{
                "id" => ^id,
@@ -71,7 +71,7 @@ defmodule LiveSupWeb.Api.UserControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.api_user_path(conn, :create), user: @invalid_attrs)
+      conn = post(conn, ~p"/api/users", user: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -80,10 +80,10 @@ defmodule LiveSupWeb.Api.UserControllerTest do
     setup [:create_user]
 
     test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
-      conn = put(conn, Routes.api_user_path(conn, :update, user), user: @update_attrs)
+      conn = put(conn, ~p"/api/users/#{user}", user: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.api_user_path(conn, :show, id))
+      conn = get(conn, ~p"/api/users/#{id}")
 
       assert %{
                "id" => ^id,
@@ -96,7 +96,7 @@ defmodule LiveSupWeb.Api.UserControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do
-      conn = put(conn, Routes.api_user_path(conn, :update, user), user: @invalid_attrs)
+      conn = put(conn, ~p"/api/users/#{user}", user: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -105,11 +105,11 @@ defmodule LiveSupWeb.Api.UserControllerTest do
     setup [:create_user]
 
     test "deletes chosen user", %{conn: conn, user: user} do
-      conn = delete(conn, Routes.api_user_path(conn, :delete, user))
+      conn = delete(conn, ~p"/api/users/#{user}")
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.api_user_path(conn, :show, user))
+        get(conn, ~p"/api/users/#{user}")
       end
     end
   end

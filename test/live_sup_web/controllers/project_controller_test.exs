@@ -11,7 +11,7 @@ defmodule LiveSupWeb.ProjectControllerTest do
     @describetag :controllers
 
     test "get a list of all my projects", %{conn: conn, project: %{id: id, name: name}} do
-      conn = get(conn, Routes.project_path(conn, :index))
+      conn = get(conn, ~p"/projects")
       response = html_response(conn, 200)
       assert response =~ "Select a project"
       assert response =~ "<a href=\"/projects/#{id}/dashboards\"> #{name} </a>"

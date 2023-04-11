@@ -36,7 +36,7 @@ defmodule LiveSupWeb.ProjectLive.LiveComponents.TodoFormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Todo created successfully")
-         |> push_redirect(to: Routes.manage_todo_path(socket, :show, todo.id))}
+         |> push_redirect(to: ~p"/todos/#{todo.id}/manage")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

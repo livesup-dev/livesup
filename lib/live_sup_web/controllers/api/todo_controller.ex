@@ -14,7 +14,7 @@ defmodule LiveSupWeb.Api.TodoController do
            Todos.create(Map.merge(todo_params, %{"project_id" => project_id})) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_todo_path(conn, :show, todo))
+      |> put_resp_header("location", "/api/todos/#{todo.id}")
       |> render("show.json", todo: todo)
     end
   end

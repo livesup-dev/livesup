@@ -7,16 +7,16 @@ defmodule LiveSupWeb.Teams.Components.TeamMembersHeaderComponent do
       <div class="flex items-center basis-4/5 flex-wrap">
         <%= link("Home",
           class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white",
-          to: Routes.home_path(LiveSupWeb.Endpoint, :index)
+          to: ~p"/"
         ) %>
         <%= link("Teams",
           class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white",
-          to: Routes.team_list_path(LiveSupWeb.Endpoint, :index)
+          to: ~p"/teams"
         ) %>
         <span><%= @team.name %></span>
       </div>
       <div class="flex justify-end basis-1/5 text-right items-center">
-        <%= link to: Routes.team_list_path(LiveSupWeb.Endpoint, :edit, @team.id), class: "w-10 h-10 block relative ml-2 p-2 transition-colors duration-200 rounded-full text-primary-lighter dark:bg-darker hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker" do %>
+        <%= link to: ~p"/teams/#{@team.id}/edit", class: "w-10 h-10 block relative ml-2 p-2 transition-colors duration-200 rounded-full text-primary-lighter dark:bg-darker hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker" do %>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -33,7 +33,7 @@ defmodule LiveSupWeb.Teams.Components.TeamMembersHeaderComponent do
           </svg>
         <% end %>
         <%= AddButtonComponent.render(%{
-          path: Routes.members_path(LiveSupWeb.Endpoint, :add, @team.id)
+          path: ~p"/teams/#{@team.id}/members/add"
         }) %>
       </div>
     </div>

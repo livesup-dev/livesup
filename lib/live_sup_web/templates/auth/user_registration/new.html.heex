@@ -1,6 +1,6 @@
 <h1 class="text-xl font-semibold text-center">Register</h1>
 
-<%= form_for @changeset, Routes.user_registration_path(@conn, :create), [class: "space-y-6 w-80"], fn f -> %>
+<%= form_for @changeset, ~p"/users/register", [class: "space-y-6 w-80"], fn f -> %>
   <%= if @changeset.action do %>
     <div
       class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
@@ -62,7 +62,7 @@
   <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
 
   <%= link("Or Log in",
-    to: Routes.user_session_path(@conn, :new),
+    to: ~p"/users/log-in",
     class: "text-sm font-semibold text-center uppercase hover:underline"
   ) %>
 

@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Api.MetricController do
     with {:ok, %Metric{} = metric} <- Metrics.create(metric_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_metric_path(conn, :show, metric))
+      |> put_resp_header("location", "/api/metrics/#{metric.id}")
       |> render("show.json", metric: metric)
     end
   end

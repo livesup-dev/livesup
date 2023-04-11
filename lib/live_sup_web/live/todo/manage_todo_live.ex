@@ -110,9 +110,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      socket
      |> assign(:selected_task, Tasks.get!(task_id))
      |> assign(:editing_task, false)
-     |> push_patch(
-       to: Routes.manage_todo_path(socket, :edit_task, socket.assigns.todo.id, task_id)
-     )}
+     |> push_patch(to: ~p"/todos/#{socket.assigns.todo.id}/tasks/#{task_id}/edit")}
   end
 
   def handle_event("edit_mode", %{"mode" => "true"}, socket) do
@@ -169,6 +167,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     |> assign(:drawer_class, "hidden")
     |> assign(:editing_task, false)
     |> assign(selected_task: %TodoTask{todo_id: todo_id})
+    |> assign(:completed_tasks, [])
   end
 
   def completed?(%{completed: true}), do: "completed"

@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Api.TeamController do
     with {:ok, %Team{} = team} <- Teams.create(team_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_team_path(conn, :show, team))
+      |> put_resp_header("location", "/api/teams/#{team.id}")
       |> render("show.json", team: team)
     end
   end

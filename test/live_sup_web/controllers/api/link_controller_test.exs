@@ -18,7 +18,7 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
 
     @tag :links_get_all
     test "lists all links", %{conn: conn, user: %{id: user_id}} do
-      conn = get(conn, Routes.api_user_link_path(conn, :index, user_id))
+      conn = get(conn, "/api/users/#{user_id}/links")
       assert json_response(conn, 200)["data"] == []
     end
   end
@@ -40,11 +40,11 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
         settings: %{account: "1234"}
       }
 
-      conn = post(conn, Routes.api_user_link_path(conn, :create, user_id), link: create_attrs)
+      conn = post(conn, "/api/users/#{user_id}/links", link: create_attrs)
 
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.api_link_path(conn, :show, id))
+      conn = get(conn, "/api/links/#{id}")
 
       assert %{
                "id" => ^id,
@@ -55,7 +55,7 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: %{id: user_id}} do
-      conn = post(conn, Routes.api_user_link_path(conn, :create, user_id), link: @invalid_attrs)
+      conn = post(conn, "/api/users/#{user_id}/links", link: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -71,11 +71,11 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
       conn: conn,
       link: %Link{id: id, datasource_instance_id: datasource_instance_id, user_id: user_id} = link
     } do
-      conn = put(conn, Routes.api_link_path(conn, :update, link), link: @update_attrs)
+      conn = put(conn, "/api/links/#{link.id}", link: @update_attrs)
 
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.api_link_path(conn, :show, id))
+      conn = get(conn, "/api/links/#{id}")
 
       assert %{
                "id" => ^id,
@@ -86,7 +86,7 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, link: link} do
-      conn = put(conn, Routes.api_link_path(conn, :update, link), link: @invalid_attrs)
+      conn = put(conn, "/api/links/#{link.id}", link: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -98,11 +98,11 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
     setup [:setup_link]
 
     test "deletes chosen link", %{conn: conn, link: link} do
-      conn = delete(conn, Routes.api_link_path(conn, :delete, link))
+      conn = delete(conn, "/api/links/#{link.id}")
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.api_link_path(conn, :show, link))
+        get(conn, "/api/links/#{link.id}")
       end
     end
   end

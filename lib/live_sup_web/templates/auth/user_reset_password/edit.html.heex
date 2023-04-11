@@ -1,6 +1,6 @@
 <h3 class="text-xl text-gray-600 dark:text-gray-200 text-center">Reset password</h3>
 
-<%= form_for @changeset, Routes.user_reset_password_path(@conn, :update, @token), fn f -> %>
+<%= form_for @changeset, ~p"/users/reset-password/#{@token}", fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -32,11 +32,11 @@
   <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
 
   <%= link("Register",
-    to: Routes.user_registration_path(@conn, :new),
+    to: ~p"/users/register",
     class: "text-xs text-gray-500 dark:text-gray-400 uppercase hover:underline"
   ) %>
   <%= link("Log in",
-    to: Routes.user_session_path(@conn, :new),
+    to: ~p"/users/log-in",
     class: "text-xs text-gray-500 dark:text-gray-400 uppercase hover:underline"
   ) %>
 

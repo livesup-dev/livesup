@@ -7,7 +7,7 @@ defmodule LiveSupWeb.Components.ProjectsHeaderComponent do
       <div class="flex items-center basis-4/5 flex-wrap">
         <%= link("Home",
           class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white",
-          to: Routes.home_path(LiveSupWeb.Endpoint, :index)
+          to: ~p"/"
         ) %>
         <span>Projects</span>
       </div>

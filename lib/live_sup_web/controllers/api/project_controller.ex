@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Api.ProjectController do
     with {:ok, %Project{} = project} <- Projects.create(project_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_project_path(conn, :show, project))
+      |> put_resp_header("location", "/api/projects/#{project.id}")
       |> render("show.json", project: project)
     end
   end

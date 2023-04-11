@@ -11,7 +11,7 @@ defmodule LiveSupWeb.DashboardControllerTest do
 
     @tag :dashboard_200
     test "get my dashboard", %{conn: conn, dashboard: %{id: dashboard_id}} do
-      conn = get(conn, Routes.dashboard_path(conn, :show, dashboard_id))
+      conn = get(conn, ~p"/dashboards/#{dashboard_id}")
       response = html_response(conn, 200)
       # TODO: We need to find a better way to check if the
       # dashboard has been loaded.
@@ -20,14 +20,14 @@ defmodule LiveSupWeb.DashboardControllerTest do
 
     @tag :dashboard_404
     test "handling 404", %{conn: conn} do
-      conn = get(conn, Routes.dashboard_path(conn, :show, "bdb208df-8258-4760-a04a-cdfd71e12fa2"))
+      conn = get(conn, ~p"/dashboards/#{"bdb208df-8258-4760-a04a-cdfd71e12fa2"}")
       html_response(conn, 404)
     end
 
     test "when I dont have access", %{conn: conn} do
       %{dashboard: dashboard} = LiveSup.Test.Setups.setup_dashboard(%{})
 
-      conn = get(conn, Routes.dashboard_path(conn, :show, dashboard.id))
+      conn = get(conn, ~p"/dashboards/#{dashboard.id}")
       html_response(conn, 404)
     end
   end

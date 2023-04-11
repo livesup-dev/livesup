@@ -36,7 +36,7 @@ defmodule LiveSupWeb.ProjectLive.LiveComponents.DashboardFormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Dashboard created successfully")
-         |> push_redirect(to: Routes.dashboard_path(socket, :index, project.id))}
+         |> push_redirect(to: ~p"/projects/#{project.id}/dashboards")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

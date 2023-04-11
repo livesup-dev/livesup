@@ -12,7 +12,7 @@ defmodule LiveSupWeb.Components.DashboardSidebarComponent do
             <SidebarHelper.item
               active={@current_dashboard.id == dashboard.id}
               label={dashboard.name}
-              path={Routes.dashboard_path(LiveSupWeb.Endpoint, :show, dashboard.id)}
+              path={~p"/dashboards/#{dashboard.id}"}
             />
           <% end %>
         </SidebarHelper.parent>

@@ -6,14 +6,14 @@
   :if={@live_action in [:edit]}
   title="Edit Datasource"
   show
-  return_to={Routes.datasource_path(@socket, :index, @project.id)}
+  return_to={~p"/projects/#{@project.id}/datasources"}
 >
   <.live_component
     module={LiveSupWeb.Project.Components.DatasourceFormComponent}
     id={@datasource.id}
     title={@page_title}
     action={@live_action}
-    return_to={Routes.datasource_path(@socket, :index, @project.id)}
+    return_to={~p"/projects/#{@project.id}/datasources"}
     datasource={@datasource}
   />
 </.modal>
@@ -40,7 +40,7 @@
                     </label>
                     <span class="basis-3/12 text-blue-500 hover:underline text-right">
                       <%= live_patch("Edit",
-                        to: Routes.datasource_path(@socket, :edit, @project.id, instance.id)
+                        to: ~p"/projects/#{@project.id}/datasources/#{instance.id}/edit"
                       ) %>
                     </span>
                   </div>

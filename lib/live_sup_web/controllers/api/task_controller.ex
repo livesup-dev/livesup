@@ -15,7 +15,7 @@ defmodule LiveSupWeb.Api.TaskController do
            Todos.add_task(Map.merge(task_params, %{"todo_id" => todo_id})) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_task_path(conn, :show, task))
+      |> put_resp_header("location", "/api/tasks/#{task.id}")
       |> render("show.json", task: task)
     end
   end

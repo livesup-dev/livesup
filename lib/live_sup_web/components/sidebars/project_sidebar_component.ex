@@ -11,7 +11,7 @@ defmodule LiveSupWeb.Components.ProjectSidebarComponent do
           <SidebarHelper.item
             active="false"
             label="Datasources"
-            path={Routes.datasource_path(LiveSupWeb.Endpoint, :index, @project.id)}
+            path={~p"/projects/#{@project.id}/datasources"}
           />
         </SidebarHelper.parent>
       </SidebarHelper.menu>

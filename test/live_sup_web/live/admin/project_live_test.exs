@@ -21,19 +21,19 @@ defmodule LiveSupWeb.Test.Live.Admin.ProjectLive do
     setup [:register_and_log_in_user, :create_project]
 
     test "lists all projects", %{conn: conn, project: project} do
-      {:ok, _index_live, html} = live(conn, Routes.admin_project_index_path(conn, :index))
+      {:ok, _index_live, html} = live(conn, ~p"/admin/projects")
 
       assert html =~ project.name
     end
 
     @tag :skip
     test "saves new project", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, Routes.admin_project_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, ~p"/admin/projects")
 
       assert index_live |> element(~s{[href="/admin/projects/new"]}) |> render_click() =~
                "New Project"
 
-      assert_patch(index_live, Routes.admin_project_index_path(conn, :new))
+      assert_patch(index_live, ~p"/admin/projects/new")
 
       assert index_live
              |> form("#project-form", project: @invalid_attrs)
@@ -43,19 +43,19 @@ defmodule LiveSupWeb.Test.Live.Admin.ProjectLive do
         index_live
         |> form("#project-form", project: @create_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.admin_project_index_path(conn, :index))
+        |> follow_redirect(conn, ~p"/admin/projects")
 
       assert html =~ "Project created successfully"
       assert html =~ "some name"
     end
 
     test "updates project in listing", %{conn: conn, project: project} do
-      {:ok, index_live, _html} = live(conn, Routes.admin_project_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, ~p"/admin/projects")
 
       assert index_live |> element("#project-#{project.id} a", "Edit") |> render_click() =~
                "Edit Project"
 
-      assert_patch(index_live, Routes.admin_project_index_path(conn, :edit, project))
+      assert_patch(index_live, ~p"/admin/projects/#{project}/edit")
 
       assert index_live
              |> form("#project-form", project: @invalid_attrs)
@@ -65,14 +65,14 @@ defmodule LiveSupWeb.Test.Live.Admin.ProjectLive do
         index_live
         |> form("#project-form", project: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.admin_project_index_path(conn, :index))
+        |> follow_redirect(conn, ~p"/admin/projects")
 
       assert html =~ "Project updated successfully"
       assert html =~ "some updated name"
     end
 
     test "deletes project in listing", %{conn: conn, project: project} do
-      {:ok, index_live, _html} = live(conn, Routes.admin_project_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, ~p"/admin/projects")
 
       assert index_live |> element("#project-#{project.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#project-#{project.id}")
@@ -85,19 +85,19 @@ defmodule LiveSupWeb.Test.Live.Admin.ProjectLive do
     setup [:register_and_log_in_user, :create_project]
 
     test "displays project", %{conn: conn, project: project} do
-      {:ok, _show_live, html} = live(conn, Routes.admin_project_show_path(conn, :show, project))
+      {:ok, _show_live, html} = live(conn, ~p"/admin/projects/#{project}")
 
       assert html =~ "Project Details"
       assert html =~ project.name
     end
 
     test "updates project within modal", %{conn: conn, project: project} do
-      {:ok, show_live, _html} = live(conn, Routes.admin_project_show_path(conn, :show, project))
+      {:ok, show_live, _html} = live(conn, ~p"/admin/projects/#{project}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Project"
 
-      assert_patch(show_live, Routes.admin_project_show_path(conn, :edit, project))
+      assert_patch(show_live, ~p"/admin/projects/#{project}/show/edit")
 
       assert show_live
              |> form("#project-form", project: @invalid_attrs)
@@ -107,7 +107,7 @@ defmodule LiveSupWeb.Test.Live.Admin.ProjectLive do
         show_live
         |> form("#project-form", project: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.admin_project_show_path(conn, :show, project))
+        |> follow_redirect(conn, ~p"/admin/projects/#{project}")
 
       assert html =~ "Project updated successfully"
       assert html =~ "some updated name"
