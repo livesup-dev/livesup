@@ -26,7 +26,7 @@ defmodule LiveSupWeb.Api.DashboardControllerTest do
     @describetag :dashboards_request
 
     test "lists all dashboards", %{conn: conn, project: %{id: project_id}} do
-      conn = get(conn, Routes.api_project_dashboard_path(conn, :index, project_id))
+      conn = get(conn, "/api/projects/#{project_id}/dashboards")
       assert json_response(conn, 200)["data"] == []
     end
   end
@@ -35,14 +35,11 @@ defmodule LiveSupWeb.Api.DashboardControllerTest do
     @describetag :dashboards_request
 
     test "renders dashboard when data is valid", %{conn: conn, project: %{id: project_id}} do
-      conn =
-        post(conn, Routes.api_project_dashboard_path(conn, :create, project_id),
-          dashboard: @create_attrs
-        )
+      conn = post(conn, "/api/projects/#{project_id}/dashboards", dashboard: @create_attrs)
 
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.api_dashboard_path(conn, :show, id))
+      conn = get(conn, "/api/dashboards/#{id}")
 
       assert %{
                "id" => ^id,
@@ -53,10 +50,7 @@ defmodule LiveSupWeb.Api.DashboardControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, project: %{id: project_id}} do
-      conn =
-        post(conn, Routes.api_project_dashboard_path(conn, :create, project_id),
-          dashboard: @invalid_attrs
-        )
+      conn = post(conn, "/api/projects/#{project_id}/dashboards", dashboard: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -71,12 +65,11 @@ defmodule LiveSupWeb.Api.DashboardControllerTest do
       conn: conn,
       dashboard: %Dashboard{id: id} = dashboard
     } do
-      conn =
-        put(conn, Routes.api_dashboard_path(conn, :update, dashboard), dashboard: @update_attrs)
+      conn = put(conn, "/api/dashboards/#{dashboard.id}", dashboard: @update_attrs)
 
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.api_dashboard_path(conn, :show, id))
+      conn = get(conn, "/api/dashboards/#{id}")
 
       assert %{
                "id" => ^id,
@@ -87,8 +80,7 @@ defmodule LiveSupWeb.Api.DashboardControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, dashboard: dashboard} do
-      conn =
-        put(conn, Routes.api_dashboard_path(conn, :update, dashboard), dashboard: @invalid_attrs)
+      conn = put(conn, "/api/dashboards/#{dashboard.id}", dashboard: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -100,11 +92,11 @@ defmodule LiveSupWeb.Api.DashboardControllerTest do
     setup [:create_dashboard]
 
     test "deletes chosen dashboard", %{conn: conn, dashboard: dashboard} do
-      conn = delete(conn, Routes.api_dashboard_path(conn, :delete, dashboard))
+      conn = delete(conn, "/api/dashboards/#{dashboard.id}")
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.api_dashboard_path(conn, :show, dashboard))
+        get(conn, "/api/dashboards/#{dashboard.id}")
       end
     end
   end

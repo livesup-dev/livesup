@@ -1,4 +1,4 @@
 <h4>Select a project</h4>
 <%= for project <- @projects do %>
-  <a href={Routes.dashboard_path(LiveSupWeb.Endpoint, :index, project.id)}><%= project.name %></a>
+  <a href={~p"/projects/#{project.id}/dashboards"}><%= project.name %></a>
 <% end %>

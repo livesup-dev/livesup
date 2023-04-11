@@ -1,9 +1,5 @@
 <.live_component module={Palette.Components.Sidebar} id="sidebar">
-  <.sidebar_main
-    logo="/images/logo.png"
-    logout_path={Routes.user_session_path(@socket, :delete)}
-    user={@current_user}
-  >
+  <.sidebar_main logo="/images/logo.png" logout_path={~p"/users/log-out"} user={@current_user}>
   </.sidebar_main>
 
   <.sidebar_panel>

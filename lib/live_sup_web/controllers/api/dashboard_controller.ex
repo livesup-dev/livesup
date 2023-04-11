@@ -14,7 +14,7 @@ defmodule LiveSupWeb.Api.DashboardController do
            Dashboards.create(Map.merge(dashboard_params, %{"project_id" => project_id})) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_dashboard_path(conn, :show, dashboard))
+      |> put_resp_header("location", "/api/dashboards/#{dashboard.id}")
       |> render("show.json", dashboard: dashboard)
     end
   end

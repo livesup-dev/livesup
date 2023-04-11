@@ -21,7 +21,7 @@ defmodule LiveSupWeb.Api.CommentControllerTest do
     @describetag :comments_request
 
     test "lists all comments", %{conn: conn, task: %{id: task_id}} do
-      conn = get(conn, Routes.api_task_comment_path(conn, :index, task_id))
+      conn = get(conn, "/api/tasks/#{task_id}/comments")
       assert length(json_response(conn, 200)["data"]) == 1
     end
   end
@@ -33,12 +33,11 @@ defmodule LiveSupWeb.Api.CommentControllerTest do
       conn: conn,
       task: %{id: task_id}
     } do
-      conn =
-        post(conn, Routes.api_task_comment_path(conn, :create, task_id), comment: @create_attrs)
+      conn = post(conn, "/api/tasks/#{task_id}/comments", comment: @create_attrs)
 
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.api_comment_path(conn, :show, id))
+      conn = get(conn, "/api/comments/#{id}")
 
       assert %{
                "id" => ^id,
@@ -51,8 +50,7 @@ defmodule LiveSupWeb.Api.CommentControllerTest do
 
     @tag :emi2
     test "renders errors when data is invalid", %{conn: conn, task: %{id: task_id}} do
-      conn =
-        post(conn, Routes.api_task_comment_path(conn, :create, task_id), comment: @invalid_attrs)
+      conn = post(conn, "/api/tasks/#{task_id}/comments", comment: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -66,11 +64,11 @@ defmodule LiveSupWeb.Api.CommentControllerTest do
       task: %{id: task_id},
       comment: %Comment{id: comment_id} = comment
     } do
-      conn = put(conn, Routes.api_comment_path(conn, :update, comment), comment: @update_attrs)
+      conn = put(conn, "/api/comments/#{comment.id}", comment: @update_attrs)
 
       assert %{"id" => ^comment_id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.api_comment_path(conn, :show, comment_id))
+      conn = get(conn, "/api/comments/#{comment_id}")
 
       assert %{
                "id" => ^comment_id,
@@ -80,7 +78,7 @@ defmodule LiveSupWeb.Api.CommentControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, comment: comment} do
-      conn = put(conn, Routes.api_comment_path(conn, :update, comment), comment: @invalid_attrs)
+      conn = put(conn, "/api/comments/#{comment.id}", comment: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -90,11 +88,11 @@ defmodule LiveSupWeb.Api.CommentControllerTest do
     @describetag :comments_request
 
     test "deletes chosen comment", %{conn: conn, comment: comment} do
-      conn = delete(conn, Routes.api_comment_path(conn, :delete, comment))
+      conn = delete(conn, "/api/comments/#{comment.id}")
       assert response(conn, 204)
 
       assert_error_sent(404, fn ->
-        get(conn, Routes.api_comment_path(conn, :show, comment))
+        get(conn, "/api/comments/#{comment.id}")
       end)
     end
   end

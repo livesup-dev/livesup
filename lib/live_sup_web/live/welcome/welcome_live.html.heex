@@ -10,7 +10,7 @@
             </h2>
             <div class="mt-8 sm:my-4 flex lg:mt-0 lg:flex-shrink-0 ">
               <div class="inline-flex rounded-md shadow">
-                <%= live_redirect to: Routes.project_path(@socket, :index), class: "text-primary-lighter dark:bg-darker hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark inline-flex items-center justify-center px-5 py-3 rounded-md" do %>
+                <%= live_redirect to: ~p"/projects", class: "text-primary-lighter dark:bg-darker hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark inline-flex items-center justify-center px-5 py-3 rounded-md" do %>
                   Go to projects
                 <% end %>
               </div>

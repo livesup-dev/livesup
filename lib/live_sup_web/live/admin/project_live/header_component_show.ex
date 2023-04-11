@@ -8,15 +8,15 @@ defmodule LiveSupWeb.Admin.ProjectLive.HeaderComponentShow do
         <%= link("Home",
           class:
             "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white hidden md:block",
-          to: Routes.home_path(LiveSupWeb.Endpoint, :index)
+          to: ~p"/"
         ) %>
         <%= link("Admin",
           class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white",
-          to: Routes.home_path(LiveSupWeb.Endpoint, :index)
+          to: ~p"/"
         ) %>
         <%= link("Projects",
           class: "text-blue-500 after:mx-4  after:content-['>'] dark:after:text-white",
-          to: Routes.admin_project_index_path(LiveSupWeb.Endpoint, :index)
+          to: ~p"/admin/projects"
         ) %>
         <span><%= @project.name %></span>
       </div>

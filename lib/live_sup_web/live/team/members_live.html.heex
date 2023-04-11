@@ -23,7 +23,7 @@
   </div>
 <% else %>
   It seems you dont have any member, let's invite someone!
-  <%= live_patch to: Routes.members_path(@socket, :add, @team.id), class: "w-10 h-10 block relative ml-2 p-2 transition-colors duration-200 rounded-full text-primary-lighter dark:bg-darker hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker" do %>
+  <%= live_patch to: ~p"/teams/#{@team.id}/members/add", class: "w-10 h-10 block relative ml-2 p-2 transition-colors duration-200 rounded-full text-primary-lighter dark:bg-darker hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker" do %>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="h-6 w-6"
@@ -45,14 +45,14 @@
   :if={@live_action in [:add]}
   show
   title="Add a new member"
-  return_to={Routes.members_path(@socket, :index, @team.id)}
+  return_to={~p"/teams/#{@team.id}/members"}
 >
   <.live_component
     module={LiveSupWeb.Team.Components.AddTeamMemberFormComponent}
     id="add-team-member"
     title={@page_title}
     action={@live_action}
-    return_to={Routes.members_path(@socket, :index, @team.id)}
+    return_to={~p"/teams/#{@team.id}/members"}
     team={@team}
   />
 </.modal>

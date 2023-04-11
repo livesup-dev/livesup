@@ -84,7 +84,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
       socket.assigns.dashboards
       |> Enum.at(0)
 
-    redirect(socket, to: Routes.dashboard_path(socket, :show, dashboard_id))
+    redirect(socket, to: ~p"/dashboards/#{dashboard_id}")
   end
 
   def redirect_if_one_dashboard(socket) when length(socket.assigns.dashboards) != 1, do: socket
@@ -124,14 +124,14 @@ defmodule LiveSupWeb.Project.DashboardLive do
 
   defp assign_breadcrumb_dashboard_steps(socket, dashboard) do
     steps = [
-      %Step{label: "Projects", path: Routes.project_path(socket, :index)},
+      %Step{label: "Projects", path: ~p"/projects"},
       %Step{
         label: dashboard.project.name,
-        path: Routes.project_board_path(socket, :index, dashboard.project.id)
+        path: ~p"/projects"
       },
       %Step{
         label: "Dashboards",
-        path: Routes.dashboard_path(socket, :index, dashboard.project.id)
+        path: ~p"/projects/#{dashboard.project.id}/dashboards"
       },
       %Step{label: dashboard.name}
     ]
@@ -142,10 +142,10 @@ defmodule LiveSupWeb.Project.DashboardLive do
 
   defp assign_breadcrumb_project_steps(socket, project) do
     steps = [
-      %Step{label: "Projects", path: Routes.project_path(socket, :index)},
+      %Step{label: "Projects", path: ~p"/projects"},
       %Step{
         label: project.name,
-        path: Routes.project_board_path(socket, :index, project.id)
+        path: ~p"/projects"
       },
       %Step{
         label: "Dashboards"

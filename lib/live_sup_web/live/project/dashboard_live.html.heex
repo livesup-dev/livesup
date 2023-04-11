@@ -3,7 +3,7 @@
     <:actions>
       <.action_link
         type={:patch}
-        path={Routes.dashboard_path(@socket, :new, @project.id)}
+        path={~p"/projects/#{@project.id}/dashboards/new"}
         tooltip="Add Dashboard"
       />
     </:actions>
@@ -607,7 +607,7 @@
 <.modal
   :if={@live_action in [:new]}
   show
-  return_to={Routes.dashboard_path(@socket, :index, @project.id)}
+  return_to={~p"/projects/#{@project.id}/dashboards"}
   title="Dashboard"
 >
   <.live_component
@@ -615,7 +615,7 @@
     id="new-dashboard"
     title={@page_title}
     action={@live_action}
-    return_to={Routes.dashboard_path(@socket, :index, @project.id)}
+    return_to={~p"/projects/#{@project.id}/dashboards"}
     user={@current_user}
     project={@project}
     dashboard={@dashboard}

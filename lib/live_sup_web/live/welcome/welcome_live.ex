@@ -88,7 +88,7 @@ defmodule LiveSupWeb.WelcomeLive do
     {:noreply,
      socket
      |> put_flash(:info, "Location updated successfully")
-     |> push_redirect(to: Routes.welcome_path(socket, :thank_you))}
+     |> push_redirect(to: ~p"/welcome/thank-you")}
   end
 
   defp associate_teams(socket, %{"id" => user_id, "teams" => teams}) do

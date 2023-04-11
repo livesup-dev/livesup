@@ -1,6 +1,6 @@
 <h1 class="text-xl font-semibold text-center">Forgot your password?</h1>
 
-<%= form_for :user, Routes.user_reset_password_path(@conn, :create), [class: "space-y-6 w-80"], fn f -> %>
+<%= form_for :user, ~p"/users/reset-password", [class: "space-y-6 w-80"], fn f -> %>
   <div class="mt-4">
     <%= email_input(f, :email,
       required: true,
@@ -22,12 +22,12 @@
   <span class="border-b dark:border-gray-600 w-1/5 md:w-1/4"></span>
 
   <%= link("Register",
-    to: Routes.user_registration_path(@conn, :new),
+    to: ~p"/users/register",
     class: "text-sm font-semibold text-center uppercase hover:underline"
   ) %>
   <span class="border-b dark:border-gray-600 w-1/12"></span>
   <%= link("Log in",
-    to: Routes.user_session_path(@conn, :new),
+    to: ~p"/users/log-in",
     class: "text-sm font-semibold text-center uppercase hover:underline"
   ) %>
 

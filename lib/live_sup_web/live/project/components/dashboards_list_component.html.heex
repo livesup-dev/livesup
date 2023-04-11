@@ -10,16 +10,13 @@
           />
           <div class="card -mt-10 w-full rounded-2xl px-3 py-5 text-center flex-1">
             <h3 class="my-10 text-base font-medium ">
-              <.link
-                type={:navigate}
-                navigate={Routes.dashboard_path(@socket, :show, dashboard.id)}
-              >
+              <.link type={:navigate} navigate={~p"/dashboards/#{dashboard.id}"}>
                 <%= dashboard.name %>
               </.link>
             </h3>
             <div class="mt-auto pb-1">
               <.link
-                navigate={Routes.dashboard_path(@socket, :show, dashboard.id)}
+                navigate={~p"/dashboards/#{dashboard.id}"}
                 type={:navigate}
                 class="border-b border-dashed border-current pb-0.5 font-medium text-primary outline-none transition-colors duration-300 hover:text-primary/70 focus:text-primary/70 dark:text-accent-light dark:hover:text-accent-light/70 dark:focus:text-accent-light/70"
               >

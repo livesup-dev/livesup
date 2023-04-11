@@ -1,7 +1,7 @@
 <ul>
   <%= for dashboard <- @dashboards do %>
     <li>
-      <a href={Routes.dashboard_path(LiveSupWeb.Endpoint, :show, dashboard.id)}>
+      <a href={~p"/dashboards/#{dashboard.id}"}>
         <%= dashboard.name %>
       </a>
     </li>

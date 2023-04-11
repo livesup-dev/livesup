@@ -14,7 +14,7 @@ defmodule LiveSupWeb.UserConfirmationControllerTest do
   describe "GET /users/confirm" do
     @describetag :skip
     test "renders the confirmation page", %{conn: conn} do
-      conn = get(conn, Routes.user_confirmation_path(conn, :new))
+      conn = get(conn, ~p"/users/confirm")
       response = html_response(conn, 200)
       assert response =~ "<h1>Resend confirmation instructions</h1>"
     end
@@ -25,7 +25,7 @@ defmodule LiveSupWeb.UserConfirmationControllerTest do
     @tag :capture_log
     test "sends a new confirmation token", %{conn: conn, user: user} do
       conn =
-        post(conn, Routes.user_confirmation_path(conn, :create), %{
+        post(conn, ~p"/users/confirm", %{
           "user" => %{"email" => user.email}
         })
 
@@ -38,7 +38,7 @@ defmodule LiveSupWeb.UserConfirmationControllerTest do
       Repo.update!(User.confirm_changeset(user))
 
       conn =
-        post(conn, Routes.user_confirmation_path(conn, :create), %{
+        post(conn, ~p"/users/confirm", %{
           "user" => %{"email" => user.email}
         })
 
@@ -49,7 +49,7 @@ defmodule LiveSupWeb.UserConfirmationControllerTest do
 
     test "does not send confirmation token if email is invalid", %{conn: conn} do
       conn =
-        post(conn, Routes.user_confirmation_path(conn, :create), %{
+        post(conn, ~p"/users/confirm", %{
           "user" => %{"email" => "unknown@example.com"}
         })
 
@@ -67,7 +67,7 @@ defmodule LiveSupWeb.UserConfirmationControllerTest do
           Accounts.deliver_user_confirmation_instructions(user, url)
         end)
 
-      conn = get(conn, Routes.user_confirmation_path(conn, :confirm, token))
+      conn = get(conn, ~p"/users/confirm/#{token}")
       assert redirected_to(conn) == "/"
       assert get_flash(conn, :info) =~ "Account confirmed successfully"
       assert Accounts.get_user!(user.id).confirmed_at
@@ -75,7 +75,7 @@ defmodule LiveSupWeb.UserConfirmationControllerTest do
       assert Repo.all(UserToken) == []
 
       # When not logged in
-      conn = get(conn, Routes.user_confirmation_path(conn, :confirm, token))
+      conn = get(conn, ~p"/users/confirm/#{token}")
       assert redirected_to(conn) == "/"
       assert get_flash(conn, :error) =~ "Account confirmation link is invalid or it has expired"
 
@@ -83,14 +83,14 @@ defmodule LiveSupWeb.UserConfirmationControllerTest do
       conn =
         build_conn()
         |> log_in_user(user)
-        |> get(Routes.user_confirmation_path(conn, :confirm, token))
+        |> get(~p"/users/confirm/#{token}")
 
       assert redirected_to(conn) == "/"
       refute get_flash(conn, :error)
     end
 
     test "does not confirm email with invalid token", %{conn: conn, user: user} do
-      conn = get(conn, Routes.user_confirmation_path(conn, :confirm, "oops"))
+      conn = get(conn, ~p"/users/confirm/#{"oops"}")
       assert redirected_to(conn) == "/"
       assert get_flash(conn, :error) =~ "Account confirmation link is invalid or it has expired"
       refute Accounts.get_user!(user.id).confirmed_at

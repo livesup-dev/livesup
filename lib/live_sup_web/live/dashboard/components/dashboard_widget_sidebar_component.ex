@@ -13,10 +13,7 @@ defmodule LiveSupWeb.Dashboard.Components.DashboardWidgetSidebarComponent do
     <SidebarHelper.sidebar>
       <SidebarHelper.menu>
         <SidebarHelper.parent name="Datasources" active="true" icon="ri-database-2-line">
-          <SidebarHelper.item
-            label="All"
-            path={Routes.widget_path(LiveSupWeb.Endpoint, :show, @dashboard.id)}
-          />
+          <SidebarHelper.item label="All" path={~p"/dashboards/#{@dashboard.id}/widgets"} />
           <%= for datasource_instance <- @datasource_instances do %>
             <SidebarHelper.item
               active="false"

@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Auth.UserResetPasswordController do
     if user = Accounts.get_user_by_email(email) do
       Accounts.deliver_user_reset_password_instructions(
         user,
-        &Routes.user_reset_password_url(conn, :edit, &1)
+        &url(~p"/users/reset-password/#{&1}")
       )
     end
 
@@ -37,7 +37,7 @@ defmodule LiveSupWeb.Auth.UserResetPasswordController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Password reset successfully.")
-        |> redirect(to: Routes.user_session_path(conn, :new))
+        |> redirect(to: ~p"/users/log-in")
 
       {:error, changeset} ->
         render(conn, "edit.html", changeset: changeset)

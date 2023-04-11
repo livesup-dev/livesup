@@ -29,6 +29,8 @@ defmodule LiveSupWeb.ConnCase do
       # The default endpoint for testing
       @endpoint LiveSupWeb.Endpoint
 
+      use LiveSupWeb, :verified_routes
+
       import LiveSup.Test.Setups
     end
   end

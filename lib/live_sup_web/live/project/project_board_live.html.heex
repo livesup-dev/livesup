@@ -1,10 +1,6 @@
 <.breadcrumb title={@title} steps={@breadcrumb_steps}>
   <:actions>
-    <.action_link
-      type={:patch}
-      path={Routes.manage_todos_path(@socket, :new, @project)}
-      tooltip="Add Todo"
-    />
+    <.action_link type={:patch} path={~p"/projects/#{@project}/todos/new"} tooltip="Add Todo" />
   </:actions>
 </.breadcrumb>
 
@@ -30,7 +26,7 @@
             </div>
           </div>
           <.link
-            navigate={Routes.dashboard_path(@socket, :show, dashboard.id)}
+            navigate={~p"/dashboards/#{dashboard.id}"}
             class="btn h-7 w-7 rounded-full bg-slate-150 p-0 font-medium text-slate-800 hover:bg-slate-200 hover:shadow-lg hover:shadow-slate-200/50 focus:bg-slate-200 focus:shadow-lg focus:shadow-slate-200/50 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:hover:shadow-navy-450/50 dark:focus:bg-navy-450 dark:focus:shadow-navy-450/50 dark:active:bg-navy-450/90"
           >
             <i class="fa-solid fa-arrow-right h-3 w-3"></i>
@@ -69,7 +65,7 @@
             <li :for={task <- open_tasks(todo)}><%= task.title %></li>
           </ul>
           <div class="mt-5 flex items-center justify-between space-x-2">
-            <.link navigate={Routes.manage_todo_path(LiveSupWeb.Endpoint, :show, todo.id)}>
+            <.link navigate={~p"/todos/#{todo.id}/manage"}>
               <i class="fa-solid fa-arrow-right h-8 w-8"></i>
             </.link>
           </div>
@@ -83,13 +79,13 @@
   :if={@live_action == :new}
   show
   title="New Todo"
-  return_to={Routes.manage_todos_path(@socket, :index, @project.id)}
+  return_to={~p"/projects/#{@project.id}/todos"}
 >
   <.live_component
     module={LiveSupWeb.ProjectLive.LiveComponents.TodoFormComponent}
     id="manage_todo"
     action={@live_action}
     project={@project}
-    return_to={Routes.manage_todos_path(@socket, :index, @project.id)}
+    return_to={~p"/projects/#{@project.id}/todos"}
   />
 </.modal>

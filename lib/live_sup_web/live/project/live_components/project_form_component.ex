@@ -35,7 +35,7 @@ defmodule LiveSupWeb.ProjectLive.LiveComponents.ProjectFormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Project created successfully")
-         |> push_redirect(to: Routes.project_path(socket, :index))}
+         |> push_redirect(to: ~p"/projects")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

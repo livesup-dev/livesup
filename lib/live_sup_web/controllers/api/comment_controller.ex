@@ -21,7 +21,7 @@ defmodule LiveSupWeb.Api.CommentController do
            Tasks.add_comment(task, current_user, comment_body) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_comment_path(conn, :show, comment))
+      |> put_resp_header("location", "/api/comments/#{comment.id}")
       |> render("show.json", comment: comment)
     end
   end

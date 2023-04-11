@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Api.UserController do
     with {:ok, %User{} = user} <- Users.create(user_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_user_path(conn, :show, user))
+      |> put_resp_header("location", "/api/users/#{user.id}")
       |> render("show.json", user: user)
     end
   end

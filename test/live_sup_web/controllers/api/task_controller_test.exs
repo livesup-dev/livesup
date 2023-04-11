@@ -25,7 +25,7 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
     @describetag :tasks_request
 
     test "lists all tasks", %{conn: conn, todo: %{id: todo_id}} do
-      conn = get(conn, Routes.api_todo_task_path(conn, :index, todo_id))
+      conn = get(conn, ~p"/api/todos/#{todo_id}/tasks")
       assert length(json_response(conn, 200)["data"]) == 1
     end
   end
@@ -38,7 +38,7 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
       todo: %{id: todo_id, created_by_id: created_by_id}
     } do
       conn =
-        post(conn, Routes.api_todo_task_path(conn, :create, todo_id),
+        post(conn, ~p"/api/todos/#{todo_id}/tasks",
           task: %{
             created_by_id: created_by_id,
             description: @create_attrs.description,
@@ -48,7 +48,7 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
 
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.api_task_path(conn, :show, id))
+      conn = get(conn, ~p"/api/tasks/#{id}")
 
       assert %{
                "id" => ^id,
@@ -62,7 +62,7 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, task: %{id: task_id}} do
-      conn = post(conn, Routes.api_todo_task_path(conn, :create, task_id), task: @invalid_attrs)
+      conn = post(conn, ~p"/api/todos/#{task_id}/tasks", task: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -76,11 +76,11 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
       task: %TodoTask{id: task_id} = task,
       todo: %Todo{id: todo_id}
     } do
-      conn = put(conn, Routes.api_task_path(conn, :update, task), task: @update_attrs)
+      conn = put(conn, ~p"/api/tasks/#{task}", task: @update_attrs)
 
       assert %{"id" => ^task_id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.api_task_path(conn, :show, task_id))
+      conn = get(conn, ~p"/api/tasks/#{task_id}")
 
       assert %{
                "id" => ^task_id,
@@ -92,7 +92,7 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, task: task} do
-      conn = put(conn, Routes.api_task_path(conn, :update, task), task: @invalid_attrs)
+      conn = put(conn, ~p"/api/tasks/#{task}", task: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -102,11 +102,11 @@ defmodule LiveSupWeb.Api.TaskControllerTest do
     @describetag :tasks_request
 
     test "deletes chosen task", %{conn: conn, task: task} do
-      conn = delete(conn, Routes.api_task_path(conn, :delete, task))
+      conn = delete(conn, ~p"/api/tasks/#{task}")
       assert response(conn, 204)
 
       assert_error_sent(404, fn ->
-        get(conn, Routes.api_task_path(conn, :show, task))
+        get(conn, ~p"/api/tasks/#{task}")
       end)
     end
   end

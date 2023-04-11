@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Api.WidgetController do
     with {:ok, %Widget{} = widget} <- Widgets.create(widget_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_widget_path(conn, :show, widget))
+      |> put_resp_header("location", "/api/widgets/#{widget.id}")
       |> render("show.json", widget: widget)
     end
   end

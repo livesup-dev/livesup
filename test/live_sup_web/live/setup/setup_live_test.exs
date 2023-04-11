@@ -9,13 +9,13 @@ defmodule LiveSupWeb.Test.Live.SetupLiveTest do
     @describetag :setup
     @describetag :skip
     test "start setup", %{conn: conn} do
-      {:ok, _index_live, html} = live(conn, Routes.setup_index_path(conn, :index))
+      {:ok, _index_live, html} = live(conn, ~p"/setup")
 
       assert html =~ "Create a project"
     end
 
     test "saves new project", %{conn: conn} do
-      {:ok, _index_live, _html} = live(conn, Routes.setup_index_path(conn, :index))
+      {:ok, _index_live, _html} = live(conn, ~p"/setup")
 
       # TODO: Fix validation
       # assert index_live

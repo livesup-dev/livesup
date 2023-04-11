@@ -14,7 +14,7 @@ defmodule LiveSupWeb.Api.LinkController do
            Links.create(Map.merge(link_params, %{"user_id" => user_id})) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_link_path(conn, :show, link))
+      |> put_resp_header("location", "/api/links/#{link.id}")
       |> render("show.json", link: link)
     end
   end
