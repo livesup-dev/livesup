@@ -15,13 +15,7 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
         <label class="flex">
           <TaskActionComponent.render task={@task} />
         </label>
-        <h2
-          class={row_class(@task.completed)}
-          phx-click={
-            JS.push("select_task", value: %{id: @task.id})
-            |> JS.toggle(to: "#edit-todo-drawer")
-          }
-        >
+        <h2 class={row_class(@task.completed)} phx-click={JS.navigate(~p"/tasks/#{@task.id}/edit")}>
           <%= @task.title %>
         </h2>
       </div>

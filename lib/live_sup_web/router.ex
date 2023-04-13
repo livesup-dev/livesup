@@ -174,6 +174,7 @@ defmodule LiveSupWeb.Router do
 
     live("/todos/:id/manage", Todo.ManageTodoLive, :show)
     live("/todos/:id/tasks/:task_id/edit", Todo.ManageTodoLive, :edit_task)
+    live("/tasks/:task_id/edit", Todo.ManageTodoLive, :edit_task)
 
     live("/teams/new", Teams.TeamListLive, :new)
     live("/teams", Teams.TeamListLive, :index)

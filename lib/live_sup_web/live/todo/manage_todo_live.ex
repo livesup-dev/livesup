@@ -27,11 +27,25 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   end
 
   @impl true
-  def handle_params(%{"id" => todo_id, "task_id" => task_id}, _, socket) do
+  def mount(%{"task_id" => task_id}, _session, socket) do
+    task = Tasks.get!(task_id)
+
+    {:ok,
+     socket
+     |> assign_todo(task.todo_id)
+     |> assign_defaults()
+     |> assign(:selected_task, task)
+     |> assign_tasks()}
+  end
+
+  @impl true
+  def handle_params(%{"task_id" => task_id}, _, socket) do
+    task = Tasks.get!(task_id)
+
     {:noreply,
      socket
-     |> assign(:todo, Todos.get!(todo_id))
-     |> assign(:selected_task, Tasks.get!(task_id))
+     |> assign(:selected_task, task)
+     |> assign(:todo, Todos.get!(task.todo_id))
      |> assign_breadcrumb_steps()
      |> assign(:drawer_class, "show")
      |> assign(:editing_task, false)}
@@ -115,15 +129,6 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   def handle_event("edit_mode", %{"mode" => "true"}, socket) do
     {:noreply, assign(socket, editing_task: true)}
-  end
-
-  def handle_event(
-        "add_comment",
-        %{"body" => body},
-        %{assigns: %{selected_task: task, current_user: current_user}} = socket
-      ) do
-    Tasks.add_comment(task, current_user, body)
-    {:noreply, socket}
   end
 
   @impl true

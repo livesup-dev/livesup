@@ -69,12 +69,18 @@ defmodule LiveSup.Core.Tasks do
           String.t()
         ) :: {:ok, LiveSup.Schemas.Comment.t()}
   def add_comment(%TodoTask{id: task_id}, %User{id: user_id}, comment) do
-    %{
-      created_by_id: user_id,
-      body: comment,
-      task_id: task_id
-    }
-    |> CommentQuery.create()
+    result =
+      %{
+        created_by_id: user_id,
+        body: comment,
+        task_id: task_id
+      }
+      |> CommentQuery.create()
+
+    case result do
+      {:ok, comment} -> {:ok, CommentQuery.get!(comment)}
+      {:error, changeset} -> {:error, changeset}
+    end
   end
 
   @doc """
