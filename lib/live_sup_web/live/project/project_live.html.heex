@@ -33,8 +33,18 @@
         <%= project.description %>
       </p>
       <div class="flex space-x-2">
-        <ProjectStatComponent.render icon="fa-solid fa-chart-line" label="Todos" value={project.todos_count} color="info"/>
-        <ProjectStatComponent.render icon="fa-solid fa-list-check" label="Dashboards" value={project.dashboards_count} color="success"/>
+        <ProjectStatComponent.render
+          icon="fa-solid fa-chart-line"
+          label="Todos"
+          value={project.todos_count}
+          color="info"
+        />
+        <ProjectStatComponent.render
+          icon="fa-solid fa-list-check"
+          label="Dashboards"
+          value={project.dashboards_count}
+          color="success"
+        />
       </div>
       <div>
         <a

@@ -27,6 +27,8 @@ defmodule LiveSup.Tests.Queries.ProjectQueryTest do
     test "return default internal project", %{project: %{id: id}} do
       default_project = ProjectQuery.get_internal_default_project()
       assert default_project.id == id
+      assert default_project.dashboards_count == 1
+      assert default_project.todos_count == 0
     end
 
     test "return projects by users", %{user: user} do
