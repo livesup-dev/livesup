@@ -5,6 +5,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
   alias LiveSup.Schemas.{Project, User}
   alias Palette.Components.Breadcrumb.Step
   alias LiveSupWeb.ProjectLive.LiveComponents.ProjectFormComponent
+  alias LiveSupWeb.Project.Components.ProjectStatComponent
 
   on_mount(LiveSupWeb.UserLiveAuth)
 

@@ -33,28 +33,8 @@
         <%= project.description %>
       </p>
       <div class="flex space-x-2">
-        <div class="flex items-center space-x-4 rounded-2xl p-4">
-          <div class="mask is-star-2 flex h-8 w-8 items-center justify-center bg-blue-500/10 dark:bg-warning">
-            <i class="h-4 w-4 text-blue-500 dark:text-white fa-solid fa-chart-line"></i>
-          </div>
-          <div class="font-inter">
-            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
-              <%= project.todos_count %>
-            </p>
-            <p>ToDos</p>
-          </div>
-        </div>
-        <div class="flex items-center space-x-4 rounded-2xl p-4">
-          <div class="mask is-star-2 flex h-8 w-8 items-center justify-center bg-warning/10 dark:bg-warning">
-            <i class="h-4 w-4 fa-solid fa-list-check  text-warning dark:text-white"></i>
-          </div>
-          <div class="font-inter">
-            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
-              <%= project.dashboards_count %>
-            </p>
-            <p>Dashboards</p>
-          </div>
-        </div>
+        <ProjectStatComponent.render icon="fa-solid fa-chart-line" label="Todos" value={project.todos_count} color="info"/>
+        <ProjectStatComponent.render icon="fa-solid fa-list-check" label="Dashboards" value={project.dashboards_count} color="success"/>
       </div>
       <div>
         <a
