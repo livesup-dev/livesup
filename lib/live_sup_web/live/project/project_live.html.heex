@@ -32,6 +32,20 @@
       <p class="font-inter text-xs+ tracking-wide text-slate-400 hover:text-primary focus:text-primary dark:hover:text-accent-light dark:focus:text-accent-light">
         <%= project.description %>
       </p>
+      <div class="flex space-x-2">
+        <ProjectStatComponent.render
+          icon="fa-solid fa-chart-line"
+          label="Todos"
+          value={project.todos_count}
+          color="info"
+        />
+        <ProjectStatComponent.render
+          icon="fa-solid fa-list-check"
+          label="Dashboards"
+          value={project.dashboards_count}
+          color="success"
+        />
+      </div>
       <div>
         <a
           :for={label <- project.labels}

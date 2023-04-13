@@ -5,11 +5,12 @@ defmodule LiveSupWeb.Project.ProjectLive do
   alias LiveSup.Schemas.{Project, User}
   alias Palette.Components.Breadcrumb.Step
   alias LiveSupWeb.ProjectLive.LiveComponents.ProjectFormComponent
+  alias LiveSupWeb.Project.Components.ProjectStatComponent
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
   @impl true
-  def mount(_params, session, socket) do
+  def mount(_params, _session, socket) do
     {:ok,
      socket
      |> assign_defaults()
@@ -36,7 +37,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
 
   defp assign_page_title(socket, title) do
     socket
-    |> assign(:page_title, "Projects")
+    |> assign(:page_title, title)
   end
 
   defp assign_projects(%{assigns: %{current_user: current_user}} = socket) do

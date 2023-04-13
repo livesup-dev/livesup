@@ -18,6 +18,8 @@ defmodule LiveSup.Schemas.Project do
     field :parent_id, :binary_id
     field :slug, ProjectSlug.Type
     field :avatar_url, :string
+    field(:todos_count, :integer, default: 0, virtual: true)
+    field(:dashboards_count, :integer, default: 0, virtual: true)
 
     has_many :projects_groups, ProjectGroup
     has_many :groups, through: [:projects_groups, :group]
