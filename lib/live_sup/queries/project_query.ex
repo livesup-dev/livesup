@@ -162,5 +162,21 @@ defmodule LiveSup.Queries.ProjectQuery do
     )
   end
 
-  def base, do: from(Project, as: :project)
+  def base do
+    from(project in Project,
+      as: :project,
+      select_merge: %{
+        todos_count:
+          fragment(
+            "SELECT count(*) FROM todos WHERE project_id = ?",
+            project.id
+          ),
+        dashboards_count:
+          fragment(
+            "SELECT count(*) FROM dashboards WHERE project_id = ?",
+            project.id
+          )
+      }
+    )
+  end
 end
