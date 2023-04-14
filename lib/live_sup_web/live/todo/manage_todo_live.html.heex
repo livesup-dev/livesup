@@ -20,6 +20,7 @@
   :if={@live_action in [:edit_task]}
   title={@page_title}
   show
+  width={:large}
   return_to={~p"/todos/#{@todo.id}/manage"}
 >
   <.live_component

@@ -13,12 +13,12 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
       <div
         id="comments"
         phx-update="stream"
-        class="grow overflow-y-auto px-[calc(var(--margin-x)-.5rem)] py-5 transition-all duration-[.25s] scrollbar-sm"
+        class="grow overflow-y-auto overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm"
       >
         <div
           :for={{dom_id, comment} <- @comments}
           id={dom_id}
-          class="flex items-start space-x-2.5 sm:space-x-5"
+          class="flex items-start space-x-2.5 sm:space-x-5 mb-4"
         >
           <div class="avatar">
             <img class="rounded-full" src={User.default_avatar_url(comment.created_by)} alt="avatar" />
@@ -38,7 +38,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
       </div>
 
       <.form for={%{}} as={:comment} phx-submit="add_comment" phx-target={@target}>
-        <div class="chat-footer relative flex h-12 w-full shrink-0 items-center justify-between border-t border-slate-150 bg-white px-[calc(var(--margin-x)-.25rem)] transition-[padding,width] duration-[.25s] dark:border-navy-600 dark:bg-navy-800">
+        <div class="chat-footer relative flex h-12 w-full shrink-0 items-center justify-between border-t border-slate-150 bg-white px-2 transition-[padding,width] duration-[.25s] dark:border-navy-600 dark:bg-navy-800">
           <div class="-ml-1.5 flex flex-1 space-x-2">
             <button class="btn h-9 w-9 shrink-0 rounded-full p-0 text-slate-500 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-200 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
               <svg

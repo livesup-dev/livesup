@@ -103,32 +103,12 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     {:noreply, assign(socket, tasks: [task] ++ socket.assigns.tasks, active: %TodoTask{})}
   end
 
-  def handle_event(
-        "save",
-        %{"id" => _id} = params,
-        %{assigns: %{selected_task: _selected_task, tasks: tasks}} = socket
-      ) do
-    {:ok, updated_task} = save_task(params, socket)
-
-    # delete the updated task from the list
-    tasks = Enum.reject(tasks, &(&1.id == updated_task.id))
-
-    # add the updated task to the list
-    tasks = tasks ++ [updated_task]
-
-    {:noreply, assign(socket, tasks: tasks, selected_task: %TodoTask{})}
-  end
-
   def handle_event("select_task", %{"id" => task_id}, socket) do
     {:noreply,
      socket
      |> assign(:selected_task, Tasks.get!(task_id))
      |> assign(:editing_task, false)
      |> push_patch(to: ~p"/todos/#{socket.assigns.todo.id}/tasks/#{task_id}/edit")}
-  end
-
-  def handle_event("edit_mode", %{"mode" => "true"}, socket) do
-    {:noreply, assign(socket, editing_task: true)}
   end
 
   @impl true
@@ -147,12 +127,6 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   def toggle(task_id, "on"), do: Tasks.complete!(task_id)
   # def toggle(task_id, "off"), do: Tasks.incomplete!(task_id)
-
-  def save_task(%{"id" => id} = params, %{assigns: %{selected_task: selected_task}})
-      when is_binary(id) do
-    selected_task
-    |> Tasks.update(params)
-  end
 
   def save_task(params, %{assigns: %{current_user: %{id: user_id}}}) do
     Todos.add_task(Map.put(params, "created_by_id", user_id))
