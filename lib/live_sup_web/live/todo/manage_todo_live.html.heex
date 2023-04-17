@@ -16,8 +16,28 @@
   </div>
 </div>
 
+<.modal
+  :if={@live_action in [:edit_task]}
+  title={@page_title}
+  show
+  width={:large}
+  return_to={~p"/todos/#{@todo.id}/manage"}
+>
+  <.live_component
+    module={LiveSupWeb.ManageTodoLive.LiveComponents.ManageTaskComponent}
+    id="edit"
+    title={@page_title}
+    action={@live_action}
+    todo={@todo}
+    task={@selected_task}
+    current_user={@current_user}
+    return_to={~p"/todos/#{@todo.id}/manage"}
+  />
+</.modal>
+
+<%!-- 
 <TodoDrawerComponent.render
   task={@selected_task}
   editing_task={@editing_task}
   drawer_class={@drawer_class}
-/>
+/> --%>
