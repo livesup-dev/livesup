@@ -30,7 +30,7 @@ defmodule LiveSup.Test.Core.TasksTest do
       assert completed_task.completed == false
     end
 
-    @tag :emi
+    @tag :add_comment
     test "add_comment", %{task: task, user: user} do
       {:ok, comment} = Tasks.add_comment(task, user, "This is my cool comment")
       found_task = Tasks.get_with_comments!(task)
