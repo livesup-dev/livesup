@@ -4,6 +4,8 @@ defmodule LiveSupWeb.Todo.Components.TodoHeaderComponent do
   alias Phoenix.LiveView.JS
 
   attr(:todo, :map, required: true)
+  attr(:completed_tasks_count, :integer, required: true)
+  attr(:open_tasks_count, :integer, required: true)
 
   def render(assigns) do
     ~H"""
@@ -14,12 +16,9 @@ defmodule LiveSupWeb.Todo.Components.TodoHeaderComponent do
     >
       <div x-show="!isSearchbarActive" class="flex items-center justify-between">
         <div>
-          <div class="flex space-x-2">
-            <p class="text-xl font-medium text-slate-800 dark:text-navy-50">
-              <%= @todo.title %>
-            </p>
-          </div>
-          <p class="mt-1 text-xs"><%= LiveSup.Core.Utils.format_date(@todo.inserted_at) %></p>
+          <p class="mt-1 font-semibold leading-tight text-xs text-slate-400">
+            Created <.from_now value={@todo.inserted_at} />
+          </p>
         </div>
         <div class="flex items-center space-x-2">
           <label class="relative hidden sm:flex">

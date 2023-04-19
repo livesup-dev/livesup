@@ -1,7 +1,7 @@
 defmodule LiveSupWeb.ProjectLive.LiveComponents.DashboardFormComponent do
   use LiveSupWeb, :live_component
 
-  alias LiveSup.Core.{Dashboards, Projects}
+  alias LiveSup.Core.Dashboards
   alias LiveSup.Schemas.Dashboard
 
   @impl true

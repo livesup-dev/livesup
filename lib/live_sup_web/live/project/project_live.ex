@@ -32,7 +32,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
     socket
     |> assign(title: "Projects")
     |> assign_page_title("Projects")
-    |> assign(section: :home)
+    |> assign(section: :projects)
   end
 
   defp assign_page_title(socket, title) do

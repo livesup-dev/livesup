@@ -14,8 +14,8 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
   def mount(%{"id" => project_id}, _session, socket) do
     {:ok,
      socket
-     |> assign_defaults()
      |> assign_project(project_id)
+     |> assign_defaults()
      |> assign_todos()
      |> assign_breadcrumb_steps()}
   end
@@ -30,10 +30,11 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
     |> assign(todos: Todos.by_project(project_id))
   end
 
-  defp assign_breadcrumb_steps(%{assigns: %{project: %{name: project_name}}} = socket) do
+  defp assign_breadcrumb_steps(socket) do
     steps = [
+      %Step{label: "Home", path: "/"},
       %Step{label: "Projects", path: "/projects"},
-      %Step{label: project_name}
+      %Step{label: "Board"}
     ]
 
     socket
@@ -42,14 +43,14 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
 
   defp assign_page_title(socket, title) do
     socket
-    |> assign(:page_title, "Projects")
+    |> assign(:page_title, title)
   end
 
-  defp assign_defaults(socket) do
+  defp assign_defaults(%{assigns: %{project: %{name: name}}} = socket) do
     socket
-    |> assign(title: "Board")
-    |> assign_page_title("Board")
-    |> assign(section: :home)
+    |> assign(title: name)
+    |> assign_page_title("#{name} - Project")
+    |> assign(section: :projects)
   end
 
   @impl true

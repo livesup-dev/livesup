@@ -15,7 +15,7 @@ defmodule LiveSupWeb.Todo.Components.TodoAddTaskComponent do
             type="text"
             name="title"
             placeholder="What needs to be done?"
-            autofocus=""
+            autofocus="autofocus"
             class="w-96 text-xl placeholder-blue-400 py-2 px-5 outline-blue-300"
           />
           <button

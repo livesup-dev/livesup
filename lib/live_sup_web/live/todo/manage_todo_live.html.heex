@@ -1,19 +1,32 @@
-<.breadcrumb title="Manage ToDo" steps={@breadcrumb_steps} />
+<.breadcrumb title={@todo.title} steps={@breadcrumb_steps} />
 
-<TodoHeaderComponent.render todo={@todo} />
+<TodoHeaderComponent.render
+  todo={@todo}
+  completed_tasks_count={@completed_tasks_count}
+  open_tasks_count={@open_tasks_count}
+/>
 
-<div class="card px-4 pt-2 pb-4">
-  <TodoAddTaskComponent.render todo={@todo} />
-  <div class="max-h-screen overflow-auto">
-    <TaskRowComponent.render :for={task <- @tasks} task={task} />
-  </div>
-</div>
+<div class="space-y-4">
+  <.card title={"Open tasks (#{@open_tasks_count})"}>
+    <TodoAddTaskComponent.render todo={@todo} />
+    <div class="max-h-screen overflow-auto" id="tasks" phx-update="stream">
+      <TaskRowComponent.render
+        :for={{dom_id, task} <- @streams.tasks}
+        task={task}
+        dom_id={dom_id}
+      />
+    </div>
+  </.card>
 
-<div class="card px-4 pt-2 pb-4 mt-4">
-  Completed
-  <div class="max-h-screen overflow-auto">
-    <TaskRowComponent.render :for={task <- @completed_tasks} task={task} />
-  </div>
+  <.card title={"Completed tasks (#{@completed_tasks_count})"}>
+    <div class="max-h-screen overflow-auto" id="completed_tasks" phx-update="stream">
+      <TaskRowComponent.render
+        :for={{dom_id, task} <- @streams.completed_tasks}
+        task={task}
+        dom_id={dom_id}
+      />
+    </div>
+  </.card>
 </div>
 
 <.modal
@@ -34,10 +47,3 @@
     return_to={~p"/todos/#{@todo.id}/manage"}
   />
 </.modal>
-
-<%!-- 
-<TodoDrawerComponent.render
-  task={@selected_task}
-  editing_task={@editing_task}
-  drawer_class={@drawer_class}
-/> --%>

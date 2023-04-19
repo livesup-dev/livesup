@@ -1,6 +1,5 @@
 defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.GithubPullRequestTaskComponent do
   use LiveSupWeb, :component
-  alias LiveSup.Views.TodoTaskHelper
 
   def render(assigns) do
     ~H"""

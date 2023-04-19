@@ -3,7 +3,6 @@ defmodule LiveSupWeb.Auth.UserAuth do
   import Phoenix.Controller
 
   alias LiveSup.Core.Accounts
-  alias LiveSupWeb.Router.Helpers, as: Routes
 
   # Make the remember me cookie valid for 60 days.
   # If you want bump or reduce this value, also change

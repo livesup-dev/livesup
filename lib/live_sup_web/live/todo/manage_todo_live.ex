@@ -9,13 +9,12 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   alias LiveSupWeb.Todo.Components.{
     TodoHeaderComponent,
     TaskRowComponent,
-    TodoDrawerComponent,
     TodoAddTaskComponent
   }
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
-  @section :todo
+  @section :projects
 
   @impl true
   def mount(%{"id" => todo_id}, _session, socket) do
@@ -23,7 +22,8 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      socket
      |> assign_todo(todo_id)
      |> assign_defaults()
-     |> assign_tasks()}
+     |> assign_tasks()
+     |> assign_completed_tasks()}
   end
 
   @impl true
@@ -35,7 +35,8 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      |> assign_todo(task.todo_id)
      |> assign_defaults()
      |> assign(:selected_task, task)
-     |> assign_tasks()}
+     |> assign_tasks()
+     |> assign_completed_tasks()}
   end
 
   @impl true
@@ -58,9 +59,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      |> assign_todo(todo_id)
      |> assign_breadcrumb_steps()
      |> assign(:editing, nil)
-     |> assign(:todo_task, nil)
-     |> assign_tasks()
-     |> assign_completed_tasks()}
+     |> assign(:todo_task, nil)}
   end
 
   def assign_todo(socket, todo_id) do
@@ -71,36 +70,45 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     |> assign(:project, todo.project)
   end
 
-  def assign_breadcrumb_steps(%{assigns: %{todo: todo, project: project}} = socket) do
+  def assign_breadcrumb_steps(%{assigns: %{project: project}} = socket) do
     socket
     |> assign(:breadcrumb_steps, [
       %Step{label: "Home", path: "/"},
       %Step{label: "Projects", path: "/projects"},
       %Step{label: "#{project.name}'s board", path: "/projects/#{project.id}/board"},
-      %Step{label: todo.title, path: "/todos/#{todo.id}"}
+      %Step{label: "Todos"}
     ])
   end
 
   defp assign_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
+    tasks = Todos.get_tasks(todo_id, completed: false)
+
     socket
-    |> assign(:tasks, Todos.get_tasks(todo_id, completed: false))
+    |> stream(:tasks, tasks)
+    |> assign(:open_tasks_count, length(tasks))
   end
 
   defp assign_completed_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
+    completed_tasks = Todos.get_tasks(todo_id, completed: true)
+
     socket
-    |> assign(:completed_tasks, Todos.get_tasks(todo_id, completed: true))
+    |> stream(:completed_tasks, completed_tasks)
+    |> assign(:completed_tasks_count, length(completed_tasks))
   end
 
   @impl true
   def handle_event(
         "add_task",
         params,
-        socket
+        %{assigns: %{open_tasks_count: open_tasks_count}} = socket
       ) do
     {:ok, task} = save_task(params, socket)
 
-    # LiveViewTodoWeb.Endpoint.broadcast_from(self(), @topic, "update", socket.assigns)
-    {:noreply, assign(socket, tasks: [task] ++ socket.assigns.tasks, active: %TodoTask{})}
+    {:noreply,
+     socket
+     |> stream_insert(:tasks, task)
+     |> assign(:active, %TodoTask{})
+     |> assign(:open_tasks_count, open_tasks_count + 1)}
   end
 
   def handle_event("select_task", %{"id" => task_id}, socket) do
@@ -115,14 +123,15 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   def handle_event(
         "toggle",
         %{"id" => task_id, "value" => value},
-        %{assigns: %{tasks: tasks}} = socket
+        %{assigns: %{completed_tasks_count: completed_tasks_count}} = socket
       ) do
     task = toggle(task_id, value)
 
-    # delete the updated task from the list
-    tasks = Enum.reject(tasks, &(&1.id == task.id))
-
-    {:noreply, socket |> assign(:tasks, tasks)}
+    {:noreply,
+     socket
+     |> stream_insert(:completed_tasks, task)
+     |> stream_delete(:tasks, task)
+     |> assign(:completed_tasks_count, completed_tasks_count + 1)}
   end
 
   def toggle(task_id, "on"), do: Tasks.complete!(task_id)
@@ -132,18 +141,17 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     Todos.add_task(Map.put(params, "created_by_id", user_id))
   end
 
-  @impl true
-  def handle_info(%{event: "update", payload: %{tasks: items}}, socket) do
-    {:noreply, assign(socket, tasks: items)}
-  end
+  # @impl true
+  # def handle_info(%{event: "update", payload: %{tasks: items}}, socket) do
+  #   {:noreply, assign(socket, tasks: items)}
+  # end
 
-  defp assign_defaults(%{assigns: %{todo: %{id: todo_id}}} = socket) do
+  defp assign_defaults(%{assigns: %{todo: %{id: todo_id, title: title}}} = socket) do
     socket
-    |> assign(title: "ToDo")
+    |> assign(title: title)
     |> assign(section: @section)
-    |> assign(page_title: "Manage ToDo")
+    |> assign(page_title: "#{title} - Todo")
     |> assign(:error, nil)
-    |> assign(:drawer_class, "hidden")
     |> assign(:editing_task, false)
     |> assign(selected_task: %TodoTask{todo_id: todo_id})
     |> assign(:completed_tasks, [])
