@@ -11,7 +11,8 @@ defmodule LiveSupWeb.Test.Live.Todo.ManageTodoLiveTest do
     test "display todo", %{conn: conn, todo: %{id: todo_id, title: todo_title}} do
       {:ok, _manage_todo_live, html} = live(conn, ~p"/todos/#{todo_id}/manage")
 
-      assert html =~ "<li>#{todo_title}</li>"
+      assert html =~
+               "<h2 class=\"text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl\">\n      #{todo_title}\n    </h2>"
     end
   end
 end
