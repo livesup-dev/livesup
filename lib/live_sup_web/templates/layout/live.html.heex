@@ -1,10 +1,20 @@
 <.live_component module={Palette.Components.Sidebar} id="sidebar">
   <.sidebar_main logo="/images/logo.png" logout_path={~p"/users/log-out"} user={@current_user}>
+    <.sidebar_main_item label="Home" path="/" icon="fa-solid fa-house" active={@section == :home} />
+    <.sidebar_main_item
+      label="Projects"
+      path="/projects"
+      icon="fa-solid fa-diagram-project"
+      active={@section == :projects}
+    />
   </.sidebar_main>
 
   <.sidebar_panel>
     <.sidebar_panel :if={@section == :home} title="Home">
       <.sidebar_item label="Dashboard" path="/" />
+    </.sidebar_panel>
+    <.sidebar_panel :if={@section == :projects} title="Projects">
+      <.sidebar_item label="Projects" path="/projects" />
     </.sidebar_panel>
     <.sidebar_panel :if={@section == :todo} title="Todo">
       <.sidebar_item label="My day" path="/" />

@@ -186,13 +186,6 @@ defmodule LiveSupWeb.Router do
   end
 
   scope "/", LiveSupWeb do
-    pipe_through([:browser, :require_authenticated_user, :put_setup_layout])
-
-    live("/setup", SetupLive.Index, :index)
-    live("/setup/projects/:id", SetupLive.Index, :project)
-  end
-
-  scope "/", LiveSupWeb do
     pipe_through([:browser])
 
     delete("/users/log-out", Auth.UserSessionController, :delete)

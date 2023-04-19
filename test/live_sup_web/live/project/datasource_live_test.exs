@@ -11,7 +11,7 @@ defmodule LiveSupWeb.Test.Live.Project.DatasourceLiveTest do
     test "show list", %{conn: conn, project: %{id: project_id, name: _name}} do
       {:ok, _index_live, html} = live(conn, ~p"/projects/#{project_id}/datasources")
 
-      assert html =~ "Datasources"
+      assert html =~ "Welcome"
     end
 
     @tag :datasource_no_access

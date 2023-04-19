@@ -3,7 +3,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
 
   alias LiveSup.Core.{Projects, Dashboards, Widgets.WidgetManager}
   alias LiveSup.Core.Utils
-  alias LiveSup.Schemas.{Project, Dashboard, User}
+  alias LiveSup.Schemas.{Dashboard}
   alias Palette.Components.Breadcrumb.Step
   alias LiveSupWeb.ProjectLive.LiveComponents.DashboardFormComponent
 
@@ -42,7 +42,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
     project = Projects.get!(project_id)
 
     socket
-    |> assign_title(project)
+    |> assign_title()
     |> assign_project(project)
     |> assign_dashboards(project)
     |> assign_breadcrumb_project_steps(project)
@@ -112,7 +112,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
     |> assign(:steps, steps)
   end
 
-  defp assign_title(socket, %{name: name}) do
+  defp assign_title(socket) do
     socket
     |> assign(title: "Dashboards")
   end

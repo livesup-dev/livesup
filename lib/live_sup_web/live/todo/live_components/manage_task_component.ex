@@ -2,7 +2,6 @@ defmodule LiveSupWeb.ManageTodoLive.LiveComponents.ManageTaskComponent do
   use LiveSupWeb, :live_component
 
   alias LiveSup.Core.Tasks
-  alias LiveSup.Schemas.TodoTask
   alias LiveSupWeb.Live.Todo.Components.TaskDetails.{TaskComponent, CommentsComponent}
 
   @impl true
@@ -26,6 +25,7 @@ defmodule LiveSupWeb.ManageTodoLive.LiveComponents.ManageTaskComponent do
     |> stream(:comments, fetch_comments(task))
   end
 
+  @impl true
   def handle_event("edit_mode", %{"mode" => "true"}, socket) do
     {:noreply, assign(socket, editing_task: true)}
   end

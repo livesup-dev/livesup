@@ -11,7 +11,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
     ~H"""
     <.xform as={:task}>
       <.field label="Title" value={@task.title} />
-      <.markdown_field value={@task.description} class="ml-2" empty_value="No description provided." />
+      <.markdown_field value={@task.description} empty_value="No description provided." />
 
       <:actions>
         <.close_modal_button />

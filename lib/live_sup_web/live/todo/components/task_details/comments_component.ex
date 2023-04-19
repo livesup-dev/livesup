@@ -1,8 +1,7 @@
 defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
   use LiveSupWeb, :component
 
-  alias LiveSup.Schemas.{User, TodoTask}
-  alias LiveSup.Core.Tasks
+  alias LiveSup.Schemas.User
 
   attr(:comments, :list, required: true)
   attr(:target, :any, required: true)
