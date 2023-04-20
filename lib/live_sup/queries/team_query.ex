@@ -125,7 +125,7 @@ defmodule LiveSup.Queries.TeamQuery do
 
   def all() do
     base()
-    |> preload([:team_members])
+    |> preload([:members])
     |> order_by(asc: :name)
     |> Repo.all()
   end

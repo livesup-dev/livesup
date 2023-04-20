@@ -19,75 +19,11 @@ defmodule LiveSupWeb do
 
   def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
 
-  def controller do
-    quote do
-      use Phoenix.Controller, namespace: LiveSupWeb
-
-      import Plug.Conn
-      import LiveSupWeb.Gettext
-      alias LiveSupWeb.Router.Helpers, as: Routes
-
-      action_fallback(LiveSupWeb.FallbackController)
-
-      unquote(verified_routes())
-    end
-  end
-
-  def api_controller do
-    quote do
-      use Phoenix.Controller, namespace: LiveSupWeb
-
-      import Plug.Conn
-      import LiveSupWeb.Gettext
-      alias LiveSupWeb.Router.Helpers, as: Routes
-
-      action_fallback(LiveSupWeb.Api.FallbackController)
-    end
-  end
-
-  def view do
-    quote do
-      use Phoenix.View,
-        root: "lib/live_sup_web/templates",
-        pattern: "**/*",
-        # container: {:div, class: "flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light"},
-        namespace: LiveSupWeb
-
-      # Import convenience functions from controllers
-      import Phoenix.Controller,
-        only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
-
-      # Include shared imports and aliases for views
-      unquote(view_helpers())
-    end
-  end
-
-  def live_view do
-    quote do
-      use Phoenix.LiveView,
-        layout: {LiveSupWeb.LayoutView, :live},
-        container: {:main, class: "main-content w-full px-[var(--margin-x)] pb-8"}
-
-      import Logger
-
-      import LiveSupWeb.Live.AuthHelper
-
-      unquote(view_helpers())
-    end
-  end
-
-  def live_component do
-    quote do
-      use Phoenix.LiveComponent
-
-      unquote(view_helpers())
-    end
-  end
-
   def router do
     quote do
-      use Phoenix.Router
+      use Phoenix.Router, helpers: false
 
+      # Import common connection and controller functions to use in pipelines
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
@@ -97,7 +33,88 @@ defmodule LiveSupWeb do
   def channel do
     quote do
       use Phoenix.Channel
+    end
+  end
+
+  def controller do
+    quote do
+      use Phoenix.Controller,
+        # namespace: LiveSupWeb,
+        formats: [:html, :json],
+        layouts: [html: LiveSupWeb.Layouts]
+
+      import Plug.Conn
       import LiveSupWeb.Gettext
+      # alias LiveSupWeb.Router.Helpers, as: Routes
+
+      action_fallback(LiveSupWeb.FallbackController)
+
+      unquote(verified_routes())
+    end
+  end
+
+  def html do
+    quote do
+      use Phoenix.Component
+
+      # Import convenience functions from controllers
+      import Phoenix.Controller,
+        only: [get_csrf_token: 0, view_module: 1, view_template: 1]
+
+      # Include general helpers for rendering HTML
+      unquote(html_helpers())
+    end
+  end
+
+  def api_controller do
+    quote do
+      use Phoenix.Controller,
+        # namespace: LiveSupWeb,
+        formats: [:html, :json],
+        layouts: [html: LiveSupWeb.Layouts]
+
+      import Plug.Conn
+      import LiveSupWeb.Gettext
+      alias LiveSupWeb.Router.Helpers, as: Routes
+
+      action_fallback(LiveSupWeb.Api.FallbackController)
+    end
+  end
+
+  # def view do
+  #   quote do
+  #     use Phoenix.View,
+  #       root: "lib/live_sup_web/templates",
+  #       pattern: "**/*",
+  #       # container: {:div, class: "flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light"},
+  #       namespace: LiveSupWeb
+
+  #     # Import convenience functions from controllers
+  #     import Phoenix.Controller,
+  #       only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
+
+  #     # Include shared imports and aliases for views
+  #     unquote(html_helpers())
+  #   end
+  # end
+
+  def live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {LiveSupWeb.Layouts, :live},
+        container: {:main, class: "main-content w-full px-[var(--margin-x)] pb-8"}
+
+      import LiveSupWeb.Live.AuthHelper
+
+      unquote(html_helpers())
+    end
+  end
+
+  def live_component do
+    quote do
+      use Phoenix.LiveComponent
+
+      unquote(html_helpers())
     end
   end
 
@@ -105,25 +122,28 @@ defmodule LiveSupWeb do
     quote do
       use Phoenix.Component
 
-      unquote(view_helpers())
+      unquote(html_helpers())
     end
   end
 
-  defp view_helpers do
+  defp html_helpers do
     quote do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
       # Import LiveView helpers (live_render, live_component, live_patch, etc)
-      import Phoenix.LiveView.Helpers
-      import Phoenix.Component
+      # import Phoenix.LiveView.Helpers
+      # import Phoenix.Component
 
       # Import basic rendering functionality (render, render_layout, etc)
-      import Phoenix.View
+      # import Phoenix.View
 
       import LiveSupWeb.ErrorHelpers
       import LiveSupWeb.Gettext
-      alias LiveSupWeb.Router.Helpers, as: Routes
+      # alias LiveSupWeb.Router.Helpers, as: Routes
+
+      # Shortcut for generating JS commands
+      alias Phoenix.LiveView.JS
 
       use Palette
 

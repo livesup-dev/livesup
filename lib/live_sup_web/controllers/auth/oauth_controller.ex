@@ -9,7 +9,7 @@ defmodule LiveSupWeb.OAuthController do
         %{assigns: %{ueberauth_auth: %{info: user_info}}} = conn,
         %{
           "provider" => _provider
-        } = params
+        }
       ) do
     # params |> dbg
     # conn |> dbg

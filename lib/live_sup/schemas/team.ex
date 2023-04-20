@@ -9,15 +9,16 @@ defmodule LiveSup.Schemas.Team do
   @foreign_key_type :binary_id
   @derive {Phoenix.Param, key: :id}
   schema "teams" do
-    field :name, :string
-    field :slug, TeamSlug.Type
-    field :avatar_url, :string
-    field :description, :string
-    field :settings, :map, default: %{}
-    field :labels, {:array, :string}, default: []
+    field(:name, :string)
+    field(:slug, TeamSlug.Type)
+    field(:avatar, :string)
+    field(:description, :string)
+    field(:settings, :map, default: %{})
+    field(:labels, {:array, :string}, default: [])
 
-    has_many :team_members, TeamMember
-    belongs_to :project, Project
+    has_many(:team_members, TeamMember)
+    has_many(:members, through: [:team_members, :user])
+    belongs_to(:project, Project)
 
     timestamps()
   end
@@ -28,7 +29,7 @@ defmodule LiveSup.Schemas.Team do
 
   @optional_fields [
     :id,
-    :avatar_url,
+    :avatar,
     :settings,
     :labels,
     :slug,
@@ -43,7 +44,7 @@ defmodule LiveSup.Schemas.Team do
     |> TeamSlug.maybe_generate_slug()
   end
 
-  def default_avatar_url(%__MODULE__{avatar_url: avatar_url}) do
-    avatar_url || "/images/default-team-avatar.png"
+  def default_avatar(%__MODULE__{avatar: avatar}) do
+    avatar || "/images/default-team-avatar.png"
   end
 end

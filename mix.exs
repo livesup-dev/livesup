@@ -59,7 +59,7 @@ defmodule LiveSup.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.7.0"},
+      {:phoenix, "~> 1.7.2"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
@@ -90,6 +90,7 @@ defmodule LiveSup.MixProject do
       {:earmark, "~> 1.4"},
       {:phx_component_helpers, "~> 1.3.0"},
       {:oban, "~> 2.14"},
+      {:exmoji, "~> 0.3.0"},
 
       # Additional packages
       {:bcrypt_elixir, "~> 3.0"},

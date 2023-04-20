@@ -7,7 +7,8 @@ config :live_sup, LiveSup.Repo,
   database: "sup_dev",
   hostname: System.get_env("PGHOST") || "localhost",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  stacktrace: true
 
 config :live_sup, LiveSupWeb.Api.Guardian,
   issuer: "livesup",
@@ -61,10 +62,13 @@ config :live_sup, LiveSupWeb.Endpoint,
     iframe_attrs: [class: "hidden"],
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"lib/live_sup_web/(live|views)/.*(ex)$",
-      ~r"lib/live_sup_web/templates/.*(eex)$"
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/live_sup_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
+
+# Enable dev routes for dashboard and mailbox
+config :live_sup, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
