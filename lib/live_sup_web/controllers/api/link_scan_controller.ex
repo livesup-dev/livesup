@@ -7,7 +7,7 @@ defmodule LiveSupWeb.Api.LinkScanController do
     with {:ok, links} <- Scanner.scan(user_id, datasource) do
       conn
       |> put_status(:created)
-      |> render("index.json", links: links)
+      |> render(:index, links: links)
     end
   end
 end

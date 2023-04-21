@@ -5,7 +5,7 @@ defmodule LiveSupWeb.FallbackController do
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
-    |> put_view(json: OneSevenWeb.ChangesetJSON)
+    |> put_view(json: LiveSupWeb.ChangesetJSON)
     |> render(:error, changeset: changeset)
   end
 
@@ -13,7 +13,7 @@ defmodule LiveSupWeb.FallbackController do
   def call(conn, {:error, :not_found}) do
     conn
     |> put_status(:not_found)
-    |> put_view(html: OneSevenWeb.ErrorHTML, json: OneSevenWeb.ErrorJSON)
+    |> put_view(html: LiveSupWeb.ErrorHTML, json: LiveSupWeb.ErrorJSON)
     |> render(:"404")
   end
 end

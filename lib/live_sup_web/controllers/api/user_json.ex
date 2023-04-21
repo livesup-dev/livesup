@@ -9,6 +9,9 @@ defmodule LiveSupWeb.Api.UserJSON do
     %{data: data(user)}
   end
 
+  def data(nil), do: %{}
+  def data(%Ecto.Association.NotLoaded{}), do: %{}
+
   def data(%User{} = user) do
     %{
       id: user.id,

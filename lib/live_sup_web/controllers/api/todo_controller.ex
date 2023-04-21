@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.TodoController do
 
   def index(conn, %{"project_id" => project_id}) do
     todos = project_id |> Todos.by_project()
-    render(conn, "index.json", todos: todos)
+    render(conn, :index, todos: todos)
   end
 
   def create(conn, %{"project_id" => project_id, "todo" => todo_params}) do
@@ -15,13 +15,13 @@ defmodule LiveSupWeb.Api.TodoController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/todos/#{todo.id}")
-      |> render("show.json", todo: todo)
+      |> render(:show, todo: todo)
     end
   end
 
   def show(conn, %{"id" => id}) do
     todo = Todos.get!(id)
-    render(conn, "show.json", todo: todo)
+    render(conn, :show, todo: todo)
   end
 
   def update(conn, %{"id" => id, "todo" => todo_params}) do
@@ -29,7 +29,7 @@ defmodule LiveSupWeb.Api.TodoController do
 
     with {:ok, %Todo{} = todo} <-
            Todos.update(todo, todo_params) do
-      render(conn, "show.json", todo: todo)
+      render(conn, :show, todo: todo)
     end
   end
 

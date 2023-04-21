@@ -45,6 +45,6 @@ defmodule LiveSup.Schemas.Team do
   end
 
   def default_avatar(%__MODULE__{avatar: avatar}) do
-    avatar || "/images/default-team-avatar.png"
+    avatar || "alien"
   end
 end

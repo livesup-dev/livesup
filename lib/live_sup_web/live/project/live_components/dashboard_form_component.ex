@@ -5,7 +5,7 @@ defmodule LiveSupWeb.ProjectLive.LiveComponents.DashboardFormComponent do
   alias LiveSup.Schemas.Dashboard
 
   @impl true
-  def update(%{dashboard: dashboard, project: project} = assigns, socket) do
+  def update(%{dashboard: _dashboard, project: project} = assigns, socket) do
     changeset = Dashboards.change(%Dashboard{}, %{project_id: project.id})
 
     {:ok,

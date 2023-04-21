@@ -4,7 +4,7 @@ defmodule LiveSupWeb.Api.FallbackController do
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
-    |> put_view(json: LiveSupWeb.Api.ChangesetJSON)
+    |> put_view(json: LiveSupWeb.ChangesetJSON)
     |> render(:error, changeset: changeset)
   end
 

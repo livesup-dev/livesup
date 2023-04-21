@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.TaskController do
 
   def index(conn, %{"todo_id" => todo_id}) do
     tasks = todo_id |> Tasks.by_todo()
-    render(conn, "index.json", tasks: tasks)
+    render(conn, :index, tasks: tasks)
   end
 
   def create(conn, %{"todo_id" => todo_id, "task" => task_params}) do
@@ -16,13 +16,13 @@ defmodule LiveSupWeb.Api.TaskController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/tasks/#{task.id}")
-      |> render("show.json", task: task)
+      |> render(:show, task: task)
     end
   end
 
   def show(conn, %{"id" => id}) do
     task = Tasks.get!(id)
-    render(conn, "show.json", task: task)
+    render(conn, :show, task: task)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do
@@ -30,7 +30,7 @@ defmodule LiveSupWeb.Api.TaskController do
 
     with {:ok, %TodoTask{} = task} <-
            Tasks.update(task, task_params) do
-      render(conn, "show.json", task: task)
+      render(conn, :show, task: task)
     end
   end
 

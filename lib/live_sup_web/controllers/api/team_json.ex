@@ -5,7 +5,7 @@ defmodule LiveSupWeb.Api.TeamJSON do
     %{data: for(team <- teams, do: data(team))}
   end
 
-  def data(%{team: team}) do
+  def show(%{team: team}) do
     %{data: data(team)}
   end
 
@@ -15,7 +15,7 @@ defmodule LiveSupWeb.Api.TeamJSON do
       name: team.name,
       slug: team.slug,
       description: team.description,
-      avatar_url: team.avatar_url,
+      avatar: team.avatar,
       inserted_at: team.inserted_at,
       updated_at: team.updated_at
     }

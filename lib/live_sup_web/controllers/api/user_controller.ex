@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.UserController do
 
   def index(conn, _params) do
     users = Users.all()
-    render(conn, "index.json", users: users)
+    render(conn, :index, users: users)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -14,20 +14,20 @@ defmodule LiveSupWeb.Api.UserController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/users/#{user.id}")
-      |> render("show.json", user: user)
+      |> render(:show, user: user)
     end
   end
 
   def show(conn, %{"id" => id}) do
     user = Users.get!(id)
-    render(conn, "show.json", user: user)
+    render(conn, :show, user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Users.get!(id)
 
     with {:ok, %User{} = user} <- Users.update(user, user_params) do
-      render(conn, "show.json", user: user)
+      render(conn, :show, user: user)
     end
   end
 

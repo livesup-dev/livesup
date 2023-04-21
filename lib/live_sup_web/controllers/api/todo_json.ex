@@ -10,7 +10,10 @@ defmodule LiveSupWeb.Api.TodoJSON do
     %{data: data(todo)}
   end
 
-  def data(%Todo{project: %Ecto.Association.NotLoaded{} = todo}) do
+  def data(nil), do: %{}
+  def data(%Ecto.Association.NotLoaded{}), do: %{}
+
+  def data(%Todo{project: %Ecto.Association.NotLoaded{}} = todo) do
     %{
       id: todo.id,
       title: todo.title,
@@ -30,7 +33,7 @@ defmodule LiveSupWeb.Api.TodoJSON do
       title: todo.title,
       color_code: todo.color_code,
       description: todo.description,
-      project: ProjectJSON.show(project: todo.project),
+      project: ProjectJSON.data(todo.project),
       inserted_at: todo.inserted_at,
       updated_at: todo.updated_at
     }

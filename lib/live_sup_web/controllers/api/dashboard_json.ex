@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.DashboardJSON do
-  alias LiveSupWeb.Api.{ProjectJSON, DashboardJSON}
+  alias LiveSupWeb.Api.ProjectJSON
   alias LiveSup.Schemas.Dashboard
 
   def index(%{dashboards: dashboards}) do
@@ -32,7 +32,7 @@ defmodule LiveSupWeb.Api.DashboardJSON do
       labels: dashboard.labels,
       settings: dashboard.settings,
       default: dashboard.default,
-      project: ProjectJSON.show(project: dashboard.project),
+      project: ProjectJSON.data(dashboard.project),
       inserted_at: dashboard.inserted_at,
       updated_at: dashboard.updated_at
     }

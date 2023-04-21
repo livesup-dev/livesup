@@ -1,7 +1,7 @@
 defmodule LiveSupWeb.Api.ProjectJSON do
   alias LiveSup.Schemas.Project
 
-  def render(%{projects: projects}) do
+  def index(%{projects: projects}) do
     %{data: for(project <- projects, do: data(project))}
   end
 

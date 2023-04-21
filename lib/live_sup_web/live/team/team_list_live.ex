@@ -48,7 +48,7 @@ defmodule LiveSupWeb.Teams.TeamListLive do
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
+  def handle_params(_params, _url, socket) do
     "mount" |> IO.inspect(label: "team_debug")
     {:noreply, socket}
   end
@@ -74,7 +74,7 @@ defmodule LiveSupWeb.Teams.TeamListLive do
   #   socket
   # end
 
-  defp team_avatar(%Team{avatar: avatar}) do
+  defp team_avatar(%Team{avatar: _avatar}) do
     Exmoji.from_short_name("alien") |> EmojiChar.render()
   end
 end

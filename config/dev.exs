@@ -59,11 +59,10 @@ config :live_sup, LiveSupWeb.Endpoint,
 # Watch static and templates for browser reloading.
 config :live_sup, LiveSupWeb.Endpoint,
   live_reload: [
-    iframe_attrs: [class: "hidden"],
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/live_sup_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/one_seven_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
 

@@ -140,7 +140,7 @@ defmodule LiveSupWeb do
 
       import LiveSupWeb.ErrorHelpers
       import LiveSupWeb.Gettext
-      # alias LiveSupWeb.Router.Helpers, as: Routes
+      alias LiveSupWeb.Router.Helpers, as: Routes
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
