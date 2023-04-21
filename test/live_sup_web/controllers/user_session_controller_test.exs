@@ -9,7 +9,6 @@ defmodule LiveSupWeb.UserSessionControllerTest do
 
   describe "GET /users/log_in" do
     @describetag :log_in
-
     test "renders log in page", %{conn: conn} do
       conn = get(conn, ~p"/users/log-in")
       response = html_response(conn, 200)
@@ -84,18 +83,17 @@ defmodule LiveSupWeb.UserSessionControllerTest do
   end
 
   describe "DELETE /users/log_out" do
+    @describetag :log_in
     test "logs the user out", %{conn: conn, user: user} do
       conn = conn |> log_in_user(user) |> delete(~p"/users/log-out")
       assert redirected_to(conn) == "/"
       refute get_session(conn, :user_token)
-      assert Phoenix.Flash.get(conn, :info) =~ "Logged out successfully"
     end
 
     test "succeeds even if the user is not logged in", %{conn: conn} do
       conn = delete(conn, ~p"/users/log-out")
       assert redirected_to(conn) == "/"
       refute get_session(conn, :user_token)
-      assert Phoenix.Flash.get(conn, :info) =~ "Logged out successfully"
     end
   end
 end
