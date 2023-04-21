@@ -211,9 +211,4 @@ defmodule LiveSupWeb.Router do
     live("/teams/:id", TeamLive.Show, :show)
     live("/teams/:id/show/edit", TeamLive.Show, :edit)
   end
-
-  scope path: "/admin/feature-flags" do
-    pipe_through(:mounted_apps)
-    forward("/", FunWithFlags.UI.Router, namespace: "admin/feature-flags")
-  end
 end

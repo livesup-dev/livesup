@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.DashboardController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Dashboards
   alias LiveSup.Schemas.Dashboard

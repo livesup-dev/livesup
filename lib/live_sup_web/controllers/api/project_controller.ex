@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.ProjectController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Projects
   alias LiveSup.Schemas.Project

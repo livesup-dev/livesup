@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.LinkController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Links
   alias LiveSup.Schemas.Link

@@ -48,31 +48,25 @@ defmodule LiveSupWeb.Teams.TeamListLive do
   end
 
   @impl true
-  def handle_params(_params, _url, socket) do
-    "mount" |> IO.inspect(label: "team_debug")
-    {:noreply, socket}
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  # @impl true
-  # def handle_params(params, _url, socket) do
-  #   {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  # end
+  defp apply_action(socket, :new, _params) do
+    socket
+    |> assign_page_title("New team")
+    |> assign(:team, %Team{})
+  end
 
-  # defp apply_action(socket, :new, _params) do
-  #   socket
-  #   |> assign_page_title("New team")
-  #   |> assign(:team, %Team{})
-  # end
+  defp apply_action(socket, :edit, %{"id" => team_id}) do
+    socket
+    |> assign_page_title("Edit team")
+    |> assign(:team, Teams.get!(team_id))
+  end
 
-  # defp apply_action(socket, :edit, %{"id" => team_id}) do
-  #   socket
-  #   |> assign_page_title("Edit team")
-  #   |> assign(:team, Teams.get!(team_id))
-  # end
-
-  # defp apply_action(socket, :index, _params) do
-  #   socket
-  # end
+  defp apply_action(socket, :index, _params) do
+    socket
+  end
 
   defp team_avatar(%Team{avatar: _avatar}) do
     Exmoji.from_short_name("alien") |> EmojiChar.render()

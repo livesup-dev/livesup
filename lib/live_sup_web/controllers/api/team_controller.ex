@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.TeamController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Teams
   alias LiveSup.Schemas.Team

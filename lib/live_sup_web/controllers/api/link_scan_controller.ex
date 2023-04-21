@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.LinkScanController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.LinksScanners.Scanner
 
