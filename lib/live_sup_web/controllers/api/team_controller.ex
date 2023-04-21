@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.TeamController do
 
   def index(conn, _params) do
     teams = Teams.all()
-    render(conn, "index.json", teams: teams)
+    render(conn, :index, teams: teams)
   end
 
   def create(conn, %{"team" => team_params}) do
@@ -14,20 +14,20 @@ defmodule LiveSupWeb.Api.TeamController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/teams/#{team.id}")
-      |> render("show.json", team: team)
+      |> render(:show, team: team)
     end
   end
 
   def show(conn, %{"id" => id}) do
     team = Teams.get!(id)
-    render(conn, "show.json", team: team)
+    render(conn, :show, team: team)
   end
 
   def update(conn, %{"id" => id, "team" => team_params}) do
     team = Teams.get!(id)
 
     with {:ok, %Team{} = team} <- Teams.update(team, team_params) do
-      render(conn, "show.json", team: team)
+      render(conn, :show, team: team)
     end
   end
 

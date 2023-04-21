@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.MetricController do
 
   def index(conn, _params) do
     metrics = Metrics.all()
-    render(conn, "index.json", metrics: metrics)
+    render(conn, :index, metrics: metrics)
   end
 
   def create(conn, %{"metric" => metric_params}) do
@@ -14,20 +14,20 @@ defmodule LiveSupWeb.Api.MetricController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/metrics/#{metric.id}")
-      |> render("show.json", metric: metric)
+      |> render(:show, metric: metric)
     end
   end
 
   def show(conn, %{"id" => id}) do
     metric = Metrics.get!(id)
-    render(conn, "show.json", metric: metric)
+    render(conn, :show, metric: metric)
   end
 
   def update(conn, %{"id" => id, "metric" => metric_params}) do
     metric = Metrics.get!(id)
 
     with {:ok, %Metric{} = metric} <- Metrics.update(metric, metric_params) do
-      render(conn, "show.json", metric: metric)
+      render(conn, :show, metric: metric)
     end
   end
 

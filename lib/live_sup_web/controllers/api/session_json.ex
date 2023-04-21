@@ -1,7 +1,5 @@
-defmodule LiveSupWeb.Api.SessionView do
-  use LiveSupWeb, :view
-
-  def render("create.json", %{user: user, jwt: jwt}) do
+defmodule LiveSupWeb.Api.SessionJSON do
+  def create(%{user: user, jwt: jwt}) do
     %{
       status: :ok,
       data: %{
@@ -13,7 +11,7 @@ defmodule LiveSupWeb.Api.SessionView do
     }
   end
 
-  def render("error.json", %{message: message}) do
+  def error(%{message: message}) do
     %{
       status: :not_found,
       data: %{},

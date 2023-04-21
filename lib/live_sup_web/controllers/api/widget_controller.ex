@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.WidgetController do
 
   def index(conn, _params) do
     widgets = Widgets.all()
-    render(conn, "index.json", widgets: widgets)
+    render(conn, :index, widgets: widgets)
   end
 
   def create(conn, %{"widget" => widget_params}) do
@@ -14,20 +14,20 @@ defmodule LiveSupWeb.Api.WidgetController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/widgets/#{widget.id}")
-      |> render("show.json", widget: widget)
+      |> render(:show, widget: widget)
     end
   end
 
   def show(conn, %{"id" => id}) do
     widget = Widgets.get!(id)
-    render(conn, "show.json", widget: widget)
+    render(conn, :show, widget: widget)
   end
 
   def update(conn, %{"id" => id, "widget" => widget_params}) do
     widget = Widgets.get!(id)
 
     with {:ok, %Widget{} = widget} <- Widgets.update(widget, widget_params) do
-      render(conn, "show.json", widget: widget)
+      render(conn, :show, widget: widget)
     end
   end
 

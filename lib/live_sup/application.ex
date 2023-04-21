@@ -7,7 +7,7 @@ defmodule LiveSup.Application do
 
   def start(_type, _args) do
     children = [
-      LiveSup.PromEx,
+      # LiveSup.PromEx,
       # Start the Ecto repository
       LiveSup.Repo,
       # Start the Telemetry supervisor

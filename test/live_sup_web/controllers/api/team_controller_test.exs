@@ -6,11 +6,11 @@ defmodule LiveSupWeb.Api.TeamControllerTest do
   alias LiveSup.Schemas.Team
 
   @create_attrs %{
-    avatar_url: "www.image.com/something.jpg",
+    avatar: "www.image.com/something.jpg",
     name: "some name"
   }
   @update_attrs %{
-    avatar_url: "www.image.com/something2.jpg",
+    avatar: "www.image.com/something2.jpg",
     name: "some updated name"
   }
   @invalid_attrs %{name: nil}
@@ -37,7 +37,7 @@ defmodule LiveSupWeb.Api.TeamControllerTest do
 
       assert %{
                "id" => ^id,
-               "avatar_url" => "www.image.com/something.jpg",
+               "avatar" => "www.image.com/something.jpg",
                "name" => "some name"
              } = json_response(conn, 200)["data"]
     end
@@ -60,7 +60,7 @@ defmodule LiveSupWeb.Api.TeamControllerTest do
 
       assert %{
                "id" => ^id,
-               "avatar_url" => "www.image.com/something2.jpg",
+               "avatar" => "www.image.com/something2.jpg",
                "name" => "some updated name"
              } = json_response(conn, 200)["data"]
     end
@@ -79,9 +79,9 @@ defmodule LiveSupWeb.Api.TeamControllerTest do
       conn = delete(conn, ~p"/api/teams/#{team}")
       assert response(conn, 204)
 
-      assert_error_sent 404, fn ->
+      assert_error_sent(404, fn ->
         get(conn, ~p"/api/teams/#{team}")
-      end
+      end)
     end
   end
 

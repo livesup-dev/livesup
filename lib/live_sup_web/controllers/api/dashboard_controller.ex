@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.DashboardController do
 
   def index(conn, %{"project_id" => project_id}) do
     dashboards = project_id |> Dashboards.by_project()
-    render(conn, "index.json", dashboards: dashboards)
+    render(conn, :index, dashboards: dashboards)
   end
 
   def create(conn, %{"project_id" => project_id, "dashboard" => dashboard_params}) do
@@ -15,13 +15,13 @@ defmodule LiveSupWeb.Api.DashboardController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/dashboards/#{dashboard.id}")
-      |> render("show.json", dashboard: dashboard)
+      |> render(:show, dashboard: dashboard)
     end
   end
 
   def show(conn, %{"id" => id}) do
     dashboard = Dashboards.get!(id)
-    render(conn, "show.json", dashboard: dashboard)
+    render(conn, :show, dashboard: dashboard)
   end
 
   def update(conn, %{"id" => id, "dashboard" => dashboard_params}) do
@@ -29,7 +29,7 @@ defmodule LiveSupWeb.Api.DashboardController do
 
     with {:ok, %Dashboard{} = dashboard} <-
            Dashboards.update(dashboard, dashboard_params) do
-      render(conn, "show.json", dashboard: dashboard)
+      render(conn, :show, dashboard: dashboard)
     end
   end
 

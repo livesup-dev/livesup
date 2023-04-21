@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.CommentController do
 
   def index(conn, %{"task_id" => task_id}) do
     comments = task_id |> Comments.by_task()
-    render(conn, "index.json", comments: comments)
+    render(conn, :index, comments: comments)
   end
 
   def create(conn, %{
@@ -22,13 +22,13 @@ defmodule LiveSupWeb.Api.CommentController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/comments/#{comment.id}")
-      |> render("show.json", comment: comment)
+      |> render(:show, comment: comment)
     end
   end
 
   def show(conn, %{"id" => id}) do
     comment = Comments.get!(id)
-    render(conn, "show.json", comment: comment)
+    render(conn, :show, comment: comment)
   end
 
   def update(conn, %{"id" => id, "comment" => comment_params}) do
@@ -36,7 +36,7 @@ defmodule LiveSupWeb.Api.CommentController do
 
     with {:ok, %Comment{} = comment} <-
            Comments.update(comment, comment_params) do
-      render(conn, "show.json", comment: comment)
+      render(conn, :show, comment: comment)
     end
   end
 

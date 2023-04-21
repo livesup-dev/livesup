@@ -6,7 +6,7 @@ defmodule LiveSupWeb.Api.LinkController do
 
   def index(conn, %{"user_id" => user_id}) do
     links = user_id |> Links.get_by_user()
-    render(conn, "index.json", links: links)
+    render(conn, :index, links: links)
   end
 
   def create(conn, %{"user_id" => user_id, "link" => link_params}) do
@@ -15,13 +15,13 @@ defmodule LiveSupWeb.Api.LinkController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/api/links/#{link.id}")
-      |> render("show.json", link: link)
+      |> render(:show, link: link)
     end
   end
 
   def show(conn, %{"id" => id}) do
     link = Links.get!(id)
-    render(conn, "show.json", link: link)
+    render(conn, :show, link: link)
   end
 
   def update(conn, %{"id" => id, "link" => link_params}) do
@@ -29,7 +29,7 @@ defmodule LiveSupWeb.Api.LinkController do
 
     with {:ok, %Link{} = link} <-
            Links.update(link, link_params) do
-      render(conn, "show.json", link: link)
+      render(conn, :show, link: link)
     end
   end
 

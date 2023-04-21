@@ -3,13 +3,12 @@ defmodule LiveSupWeb.Router do
 
   import LiveSupWeb.Auth.UserAuth
   import LiveSupWeb.Live.Auth.ProjectAuth
-  import LiveSupWeb.LayoutHelper
 
   pipeline :browser do
     plug(:accepts, ["html"])
     plug(:fetch_session)
     plug(:fetch_live_flash)
-    plug(:put_root_layout, {LiveSupWeb.LayoutView, :root})
+    plug(:put_root_layout, {LiveSupWeb.Layouts, :root})
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
     plug(:fetch_current_user)
@@ -20,6 +19,7 @@ defmodule LiveSupWeb.Router do
   end
 
   pipeline :api_authenticated do
+    plug(:accepts, ["json"])
     plug(LiveSupWeb.Plugs.AuthAccessPipeline)
     plug(LiveSupWeb.Plugs.AuthCurrentUser)
   end
@@ -30,7 +30,7 @@ defmodule LiveSupWeb.Router do
   end
 
   pipeline :unauthenticated_layout do
-    plug(:put_root_layout, {LiveSupWeb.LayoutView, :unauthenticated})
+    plug(:put_root_layout, {LiveSupWeb.Layouts, :unauthenticated})
   end
 
   # scope "/", LiveSupWeb do

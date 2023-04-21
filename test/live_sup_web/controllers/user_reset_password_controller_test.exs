@@ -10,7 +10,7 @@ defmodule LiveSupWeb.UserResetPasswordControllerTest do
   end
 
   describe "GET /users/reset_password" do
-    @describetag :controllers
+    @describetag :reset_password_controller
     test "renders the reset password page", %{conn: conn} do
       conn = get(conn, ~p"/users/reset-password")
       response = html_response(conn, 200)

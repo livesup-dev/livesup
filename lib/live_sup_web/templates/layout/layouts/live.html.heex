@@ -7,6 +7,12 @@
       icon="fa-solid fa-diagram-project"
       active={@section == :projects}
     />
+    <.sidebar_main_item
+      label="Teams"
+      path="/teams"
+      icon="fa-solid fa-people-group"
+      active={@section == :teams}
+    />
   </.sidebar_main>
 
   <.sidebar_panel>
@@ -15,6 +21,9 @@
     </.sidebar_panel>
     <.sidebar_panel :if={@section == :projects} title="Projects">
       <.sidebar_item label="Projects" path="/projects" />
+    </.sidebar_panel>
+    <.sidebar_panel :if={@section == :teams} title="Teams">
+      <.sidebar_item label="Teams" path="/teams" />
     </.sidebar_panel>
     <.sidebar_panel :if={@section == :todo} title="Todo">
       <.sidebar_item label="My day" path="/" />

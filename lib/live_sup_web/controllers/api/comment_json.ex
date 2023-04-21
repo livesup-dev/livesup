@@ -1,16 +1,16 @@
-defmodule LiveSupWeb.Api.CommentView do
-  use LiveSupWeb, :view
-  alias LiveSupWeb.Api.{CommentView, TaskView, UserView}
+defmodule LiveSupWeb.Api.CommentJSON do
+  alias LiveSupWeb.Api.{TaskJSON, UserJSON}
+  alias LiveSup.Schemas.Comment
 
-  def render("index.json", %{comments: comments}) do
-    %{data: render_many(comments, CommentView, "comment.json")}
+  def index(%{comments: comments}) do
+    %{data: for(comment <- comments, do: data(comment))}
   end
 
-  def render("show.json", %{comment: comment}) do
-    %{data: render_one(comment, CommentView, "comment.json")}
+  def show(%{comment: comment}) do
+    %{data: data(comment)}
   end
 
-  def render("comment.json", %{comment: comment}) do
+  def data(%Comment{} = comment) do
     %{
       id: comment.id,
       body: comment.body,
@@ -33,7 +33,7 @@ defmodule LiveSupWeb.Api.CommentView do
   end
 
   defp render_created_by(%{created_by: created_by}) do
-    render_one(created_by, UserView, "user.json")
+    UserJSON.data(created_by)
   end
 
   defp render_task(%{task: %Ecto.Association.NotLoaded{}, task_id: task_id}) do
@@ -43,6 +43,6 @@ defmodule LiveSupWeb.Api.CommentView do
   end
 
   defp render_task(%{task: task}) do
-    render_one(task, TaskView, "task.json")
+    TaskJSON.data(task)
   end
 end

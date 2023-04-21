@@ -3,10 +3,10 @@ defmodule LiveSupWeb.Auth.UserResetPasswordController do
 
   alias LiveSup.Core.Accounts
 
-  plug :get_user_by_reset_password_token when action in [:edit, :update]
+  plug(:get_user_by_reset_password_token when action in [:edit, :update])
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    render(conn, :new)
   end
 
   def create(conn, %{"user" => %{"email" => email}}) do

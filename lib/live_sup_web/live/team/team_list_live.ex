@@ -1,22 +1,32 @@
 defmodule LiveSupWeb.Teams.TeamListLive do
   use LiveSupWeb, :live_view
 
+  alias Exmoji.EmojiChar
   alias LiveSup.Core.Teams
   alias LiveSup.Schemas.Team
+  alias Palette.Components.Breadcrumb.Step
 
   on_mount(LiveSupWeb.UserLiveAuth)
 
   @impl true
-  def mount(_params, session, socket) do
-    current_user = get_current_user(session, socket)
+  def mount(_params, _session, socket) do
+    "mount" |> IO.inspect(label: "team_debug")
 
     {:ok,
      socket
-     |> assign_title()
-     |> assign_current_user(current_user)
-     |> assign_page_title("Teams")
-     |> assign(:team, nil)
+     |> assign_defaults()
+     |> assign_breadcrumb_steps()
      |> assign_teams()}
+  end
+
+  defp assign_breadcrumb_steps(socket) do
+    steps = [
+      %Step{label: "Home", path: "/"},
+      %Step{label: "Teams"}
+    ]
+
+    socket
+    |> assign(:steps, steps)
   end
 
   defp assign_page_title(socket, page_title) do
@@ -24,41 +34,47 @@ defmodule LiveSupWeb.Teams.TeamListLive do
     |> assign(page_title: page_title)
   end
 
-  defp assign_current_user(socket, current_user) do
-    socket
-    |> assign(current_user: current_user)
-  end
-
-  defp assign_title(socket) do
+  defp assign_defaults(socket) do
     socket
     |> assign(title: "Teams")
+    |> assign(:team, %Team{})
+    |> assign_page_title("Teams")
+    |> assign(section: :teams)
   end
 
   defp assign_teams(socket) do
     socket
-    |> assign(teams: Teams.all())
+    |> stream(:teams, Teams.all())
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  def handle_params(_params, _url, socket) do
+    "mount" |> IO.inspect(label: "team_debug")
+    {:noreply, socket}
   end
 
-  defp apply_action(socket, :new, _params) do
-    socket
-    |> assign_page_title("New team")
-    |> assign(:team, %Team{})
-  end
+  # @impl true
+  # def handle_params(params, _url, socket) do
+  #   {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  # end
 
-  defp apply_action(socket, :edit, %{"id" => team_id}) do
-    socket
-    |> assign_page_title("Edit team")
-    |> assign(:team, Teams.get!(team_id))
-  end
+  # defp apply_action(socket, :new, _params) do
+  #   socket
+  #   |> assign_page_title("New team")
+  #   |> assign(:team, %Team{})
+  # end
 
-  defp apply_action(socket, :index, _params) do
-    socket
-    |> assign_page_title("Teams")
-    |> assign(:team, nil)
+  # defp apply_action(socket, :edit, %{"id" => team_id}) do
+  #   socket
+  #   |> assign_page_title("Edit team")
+  #   |> assign(:team, Teams.get!(team_id))
+  # end
+
+  # defp apply_action(socket, :index, _params) do
+  #   socket
+  # end
+
+  defp team_avatar(%Team{avatar: _avatar}) do
+    Exmoji.from_short_name("alien") |> EmojiChar.render()
   end
 end

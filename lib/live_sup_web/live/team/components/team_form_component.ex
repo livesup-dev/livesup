@@ -48,7 +48,7 @@ defmodule LiveSupWeb.Team.Components.TeamFormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Team creted successfully")
-         |> push_redirect(to: Routes.members_path(socket, :index, team.id))}
+         |> push_redirect(to: ~p"/teams/#{team.id}/members")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
@@ -61,7 +61,7 @@ defmodule LiveSupWeb.Team.Components.TeamFormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Team updated successfully")
-         |> push_redirect(to: Routes.members_path(socket, :index, team.id))}
+         |> push_redirect(to: ~p"/teams/#{team.id}/members")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}

@@ -7,7 +7,7 @@ defmodule LiveSupWeb.Api.SeedController do
     with :ok <- Importer.import(data) do
       conn
       |> put_status(:created)
-      |> render("show.json", %{result: :ok})
+      |> render(:show, %{result: :ok})
     end
   end
 end

@@ -12,7 +12,10 @@ config :live_sup, ecto_repos: [LiveSup.Repo], generators: [binary_id: true]
 # Configures the endpoint
 config :live_sup, LiveSupWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: LiveSupWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [
+    formats: [html: LiveSupWeb.ErrorHTML, json: LiveSupWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: LiveSup.PubSub,
   live_view: [signing_salt: "livesup_ygEB"]
 
@@ -26,7 +29,7 @@ config :phoenix, :json_library, Jason
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.16.4",
+  version: "0.17.11",
   default: [
     args: ~w(js/app.js
       --bundle
