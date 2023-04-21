@@ -8,24 +8,19 @@ defmodule LiveSupWeb.UserSessionControllerTest do
   end
 
   describe "GET /users/log_in" do
-    @describetag :skip
-
-    setup do
-      # https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.Sandbox.html#module-shared-mode
-      Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
-    end
+    @describetag :log_in
 
     test "renders log in page", %{conn: conn} do
       conn = get(conn, ~p"/users/log-in")
       response = html_response(conn, 200)
-      assert response =~ "Log in</h3>"
+      assert response =~ "Login</button>"
       assert response =~ "Forgot password?</a>"
-      assert response =~ "Register</a>"
+      assert response =~ "Create account</a>"
     end
 
     test "redirects if already logged in", %{conn: conn, user: user} do
       conn = conn |> log_in_user(user) |> get(~p"/users/log-in")
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/projects"
     end
   end
 
@@ -41,7 +36,7 @@ defmodule LiveSupWeb.UserSessionControllerTest do
       assert redirected_to(conn) =~ "/"
 
       # Now do a logged in request and assert on the menu
-      conn = get(conn, "/")
+      conn = get(conn, "/projects")
       response = html_response(conn, 200)
       assert response =~ user.email
       assert response =~ "Settings</a>"
@@ -93,14 +88,14 @@ defmodule LiveSupWeb.UserSessionControllerTest do
       conn = conn |> log_in_user(user) |> delete(~p"/users/log-out")
       assert redirected_to(conn) == "/"
       refute get_session(conn, :user_token)
-      assert get_flash(conn, :info) =~ "Logged out successfully"
+      assert Phoenix.Flash.get(conn, :info) =~ "Logged out successfully"
     end
 
     test "succeeds even if the user is not logged in", %{conn: conn} do
       conn = delete(conn, ~p"/users/log-out")
       assert redirected_to(conn) == "/"
       refute get_session(conn, :user_token)
-      assert get_flash(conn, :info) =~ "Logged out successfully"
+      assert Phoenix.Flash.get(conn, :info) =~ "Logged out successfully"
     end
   end
 end
