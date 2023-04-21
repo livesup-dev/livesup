@@ -2,7 +2,7 @@ defmodule LiveSupWeb.Dashboard.Components.AddWidgetFormComponent do
   use LiveSupWeb, :live_component
 
   alias LiveSup.Core.{Widgets, Datasources, Dashboards}
-  alias LiveSup.Schemas.{Widget, Dashboard, Project, Datasource}
+  alias LiveSup.Schemas.{Dashboard, Project, Datasource}
 
   @impl true
   def update(%{widget_instance: widget_instance} = assigns, socket) do

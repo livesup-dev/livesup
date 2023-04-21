@@ -44,7 +44,7 @@ defmodule LiveSup.MixProject do
   def application do
     [
       mod: {LiveSup.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ssl]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -62,11 +62,11 @@ defmodule LiveSup.MixProject do
       {:phoenix, "~> 1.7.2"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.4"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.18"},
       {:phoenix_html, "~> 3.1"},
       {:phoenix_live_dashboard, "~> 0.5"},
+      {:ecto_sql, "~> 3.4"},
+      {:postgrex, ">= 0.0.0"},
       {:telemetry, "~> 1.0"},
       {:telemetry_metrics, "~> 0.6.1"},
       {:telemetry_poller, "~> 1.0"},
@@ -75,7 +75,6 @@ defmodule LiveSup.MixProject do
       {:timex, ">= 0.0.0"},
       {:elixir_feed_parser, ">= 0.0.0"},
       {:finch, "~> 0.10"},
-      {:fun_with_flags, "~> 1.10.1"},
       {:tentacat, "~> 2.0"},
       {:bypass, "~> 2.1", only: :test},
       {:mock, "~> 0.3.0", only: :test},

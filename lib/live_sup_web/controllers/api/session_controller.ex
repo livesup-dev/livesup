@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.SessionController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Accounts
   alias LiveSup.Schemas.User

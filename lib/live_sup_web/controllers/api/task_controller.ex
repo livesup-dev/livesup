@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.TaskController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.{Todos, Tasks}
   alias LiveSup.Schemas.TodoTask

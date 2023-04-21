@@ -7,7 +7,8 @@ defmodule LiveSupWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_live_sup_key",
-    signing_salt: "PQiFey9T"
+    signing_salt: "PQiFey9T",
+    same_site: "Lax"
   ]
 
   # socket "/socket", LiveSupWeb.UserSocket,

@@ -54,25 +54,8 @@ config :tailwind,
     cd: Path.expand("../assets", __DIR__)
   ]
 
-config :fun_with_flags, :cache,
-  enabled: true,
-  # in seconds
-  ttl: 900
-
-config :fun_with_flags, :cache_bust_notifications, enabled: true
-
-config :fun_with_flags, :persistence,
-  adapter: FunWithFlags.Store.Persistent.Ecto,
-  repo: LiveSup.Repo
-
 config :tentacat,
   pagination: :none
-
-# FunWithFlags configuration
-config :fun_with_flags, :cache_bust_notifications,
-  enabled: true,
-  adapter: FunWithFlags.Notifications.PhoenixPubSub,
-  client: LiveSup.PubSub
 
 config :live_sup,
        :config,

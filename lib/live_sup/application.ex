@@ -15,14 +15,16 @@ defmodule LiveSup.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: LiveSup.PubSub},
       # Start the Endpoint (http/https)
-      LiveSupWeb.Endpoint,
-      {Task.Supervisor, name: LiveSup.Core.Widgets.WorkerTaskSupervisor},
-      {LiveSup.Core.Widgets.WidgetSupervisor, [name: :widget_supervisor]},
-      {Oban, Application.fetch_env!(:live_sup, Oban)}
+      LiveSupWeb.Endpoint
 
       # Start a worker by calling: LiveSup.Worker.start_link(arg)
       # {LiveSup.Worker, arg}
     ]
+
+    # ,
+    #   {Task.Supervisor, name: LiveSup.Core.Widgets.WorkerTaskSupervisor},
+    #   {LiveSup.Core.Widgets.WidgetSupervisor, [name: :widget_supervisor]},
+    #   {Oban, Application.fetch_env!(:live_sup, Oban)}
 
     services = [
       {Finch, name: SupFinch}

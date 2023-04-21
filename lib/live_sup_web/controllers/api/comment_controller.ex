@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.CommentController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.{Comments, Tasks}
   alias LiveSup.Schemas.Comment

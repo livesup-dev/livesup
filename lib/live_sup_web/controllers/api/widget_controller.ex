@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.WidgetController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Widgets
   alias LiveSup.Schemas.Widget

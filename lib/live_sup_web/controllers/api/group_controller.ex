@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.GroupController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Groups
   alias LiveSup.Schemas.Group

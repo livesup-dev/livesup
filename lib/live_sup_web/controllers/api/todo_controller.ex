@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.TodoController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Todos
   alias LiveSup.Schemas.Todo

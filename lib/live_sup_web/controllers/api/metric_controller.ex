@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Api.MetricController do
-  use LiveSupWeb, :api_controller
+  use LiveSupWeb, :controller
 
   alias LiveSup.Core.Metrics
   alias LiveSup.Schemas.Metric
