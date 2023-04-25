@@ -54,7 +54,13 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
   end
 
   def percentage_completed_tasks(todo) do
-    todo.completed_tasks_count / (todo.completed_tasks_count + todo.open_tasks_count) * 100
+    case todo.completed_tasks_count do
+      0 ->
+        0
+
+      _ ->
+        todo.completed_tasks_count / (todo.completed_tasks_count + todo.open_tasks_count) * 100
+    end
   end
 
   @impl true
