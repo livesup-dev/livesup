@@ -53,6 +53,10 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
     |> assign(section: :projects)
   end
 
+  def percentage_completed_tasks(todo) do
+    todo.completed_tasks_count / (todo.completed_tasks_count + todo.open_tasks_count) * 100
+  end
+
   @impl true
   def handle_params(%{"id" => project_id}, _, socket) do
     {:noreply,

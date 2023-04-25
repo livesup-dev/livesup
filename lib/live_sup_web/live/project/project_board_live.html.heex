@@ -36,38 +36,55 @@
     </div>
   </div>
 
-  <div class="col-span-12 mt-4 sm:col-span-6 lg:col-span-6">
+  <div class="col-span-12 mt-4 sm:col-span-6 lg:col-span-8">
     <h3 class="text-base font-medium text-slate-600 dark:text-navy-100">
       ToDos
     </h3>
     <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
-      <div :for={todo <- @todos} class="card justify-between p-4 sm:p-5">
-        <div class="flex items-center space-x-4">
-          <div class="w-10 h-10 bg-orange-400 rounded-full"></div>
-
-          <div>
-            <h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
-              <%= todo.title %>
-            </h3>
-            <p class="text-xs"><%= todo.description %></p>
+      <div :for={todo <- @todos} class="card p-4 sm:p-5">
+        <div class="flex justify-between ">
+          <div class="flex items-start space-x-4">
+            <div>
+              <svg
+                class="w-8 h-8 mt-1 rounded-full bg-orange-200 dark:bg-accent-light"
+                viewBox="0 0 20 20"
+              >
+                <circle
+                  r="5"
+                  cx="10"
+                  cy="10"
+                  style="transition: stroke-dasharray 3s ease;"
+                  class="fill-transparent stroke-orange-500 dark:stroke-accent"
+                  stroke-width="10"
+                  stroke-dasharray={"calc(#{percentage_completed_tasks(todo)} * 32 /100) 32"}
+                  transform="rotate(-90) translate(-20)"
+                />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
+                <%= todo.title %>
+              </h3>
+              <p class="text-xs text-slate-400 line-clamp-1 dark:text-navy-300">
+                <%= todo.completed_tasks_count %>/<%= todo.completed_tasks_count +
+                  todo.open_tasks_count %> completed tasks
+              </p>
+              <%= if todo.description do %>
+                <p class="text-s text-slate-400 line-clamp-1 dark:text-navy-300">
+                  <%= todo.description %>
+                </p>
+              <% end %>
+            </div>
           </div>
-        </div>
-        <div class="mt-4">
-          <p class="text-xs+">Created</p>
-          <p class="text-xl font-medium text-slate-700 dark:text-navy-100">
-            <.from_now value={todo.inserted_at} />
-          </p>
-          <div class="badge mt-2 bg-primary/10 text-primary dark:bg-accent-light/15 dark:text-accent-light">
-            <%= todo.completed_tasks_count %>/<%= todo.completed_tasks_count +
-              todo.open_tasks_count %> completed tasks
-          </div>
-          <ul>
-            <li :for={task <- open_tasks(todo)}><%= task.title %></li>
-          </ul>
-          <div class="mt-5 flex items-center justify-between space-x-2">
-            <.link navigate={~p"/todos/#{todo.id}/manage"}>
-              <i class="fa-solid fa-arrow-right h-8 w-8"></i>
-            </.link>
+          <div class="mt-4">
+            <div class="mt-5 flex place-content-end space-x-2">
+              <.link
+                navigate={~p"/todos/#{todo.id}/manage"}
+                class="btn h-7 w-7 rounded-full bg-slate-150 p-0 font-medium text-slate-800 hover:bg-slate-200 hover:shadow-lg hover:shadow-slate-200/50 focus:bg-slate-200 focus:shadow-lg focus:shadow-slate-200/50 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:hover:shadow-navy-450/50 dark:focus:bg-navy-450 dark:focus:shadow-navy-450/50 dark:active:bg-navy-450/90"
+              >
+                <i class="fa-solid fa-arrow-right h-3 w-3"></i>
+              </.link>
+            </div>
           </div>
         </div>
       </div>

@@ -10,8 +10,8 @@
   phx-update="stream"
 >
   <div :for={{dom_id, team} <- @streams.teams} class="flex shrink-0 flex-col items-center">
-    <div class="z-10 h-12 w-12 rounded-full bg-slate-400 opacity-50" style={}>
-      <span class="text-4xl justify-center"><%= team_avatar(team) %></span>
+    <div class="flex z-10 h-12 w-12 rounded-full bg-slate-400" style={}>
+      <span class="text-4xl m-auto"><%= team_avatar(team) %></span>
     </div>
     <div class="card -mt-5 w-full rounded-2xl px-3 py-5 text-center flex-1">
       <h3 class="my-4 text-base font-medium text-slate-700 dark:text-navy-100">
