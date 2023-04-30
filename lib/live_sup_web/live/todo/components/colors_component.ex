@@ -7,7 +7,7 @@ defmodule LiveSupWeb.Live.Todo.Components.ColorsComponent do
       |> assign(:colors, ["bg-orange-900", "bg-orange-700", "bg-orange-300", "bg-orange-100"])
 
     ~H"""
-    <div class="min-w-0 flex-1 grid grid-cols-5 2xl:grid-cols-10 gap-x-4 gap-y-3 2xl:gap-x-2">
+    <div class="flex columns-6 gap-x-4">
       <span>Newer</span>
       <div :for={color <- @colors} class="relative flex">
         <div class="space-y-1.5">
