@@ -8,7 +8,7 @@ defmodule LiveSupWeb.Todo.Components.TodoAddTaskComponent do
   def render(assigns) do
     ~H"""
     <div class="border-b border-slate-150 py-3 dark:border-navy-500">
-      <div class="flex items-center space-x-2 sm:space-x-3">
+      <div class="flex h-8 items-center justify-between">
         <form phx-submit="add_task" class="flex justify-center">
           <.hidden_input value={@todo.id} name="todo_id" />
           <input

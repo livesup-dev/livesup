@@ -9,7 +9,11 @@
       />
     </div>
     <div class="w-1/2 h-600px overflow-y-auto overflow-x-hidden border border-gray-200">
-      <CommentsComponent.render comments={@streams.comments} target={@myself} />
+      <CommentsComponent.render
+        comments={@streams.comments}
+        target={@myself}
+        current_user={@current_user}
+      />
     </div>
   </div>
 </div>

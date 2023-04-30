@@ -1,40 +1,49 @@
 defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
   use LiveSupWeb, :component
+  use Timex
 
   alias LiveSup.Schemas.User
 
   attr(:comments, :list, required: true)
   attr(:target, :any, required: true)
+  attr(:current_user, :any, required: true)
 
   def render(assigns) do
     ~H"""
     <div class="mt-0 flex w-full flex-col lg:mr-80">
-      <div
-        id="comments"
-        phx-update="stream"
-        class="grow overflow-y-auto overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm"
-      >
+      <%= if Enum.count(@comments) > 0 do %>
         <div
-          :for={{dom_id, comment} <- @comments}
-          id={dom_id}
-          class="flex items-start space-x-2.5 sm:space-x-5 mb-4"
+          id="comments"
+          phx-update="stream"
+          class="grow overflow-y-auto overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm"
         >
-          <div class="avatar">
-            <img class="rounded-full" src={User.default_avatar_url(comment.created_by)} alt="avatar" />
-          </div>
-
-          <div class="flex flex-col items-start space-y-3.5">
-            <div class="mr-4 max-w-lg sm:mr-10">
-              <div class="rounded-2xl rounded-tl-none bg-info/10 p-3 text-slate-700 shadow-sm dark:bg-accent dark:text-white">
-                <.markdown_field value={comment.body} />
+          <div
+            :for={{dom_id, comment} <- @comments}
+            id={dom_id}
+            class={"flex #{if(@current_user, do: "justify-end", else: "")} space-x-2 sm:space-x-3 mb-3"}
+          >
+            <div class={"avatar  #{if(@current_user, do: "order-last ml-2 sm:ml-3", else: "")}"}>
+              <img
+                class="rounded-full"
+                src={User.default_avatar_url(comment.created_by)}
+                alt="avatar"
+              />
+            </div>
+            <div class="flex flex-col items-start space-y-3.5">
+              <div class="flex relative rounded-2xl rounded-tl-none bg-info/10 p-3 text-slate-700 shadow-sm dark:bg-accent dark:text-white">
+                <div class="grow pb-2 shrink-0">
+                  <.markdown_field value={comment.body} />
+                </div>
+                <p class="mt-1 mb-1 mr-3 bottom-0 right-0 absolute flex-1 text-right text-tiny text-slate-400 dark:text-navy-300">
+                  <%= Timex.format!(comment.inserted_at, "%H:%M", :strftime) %>
+                </p>
               </div>
-              <p class="mt-1 ml-auto text-right text-xs text-slate-400 dark:text-navy-300">
-                <.from_now value={comment.inserted_at} />
-              </p>
             </div>
           </div>
         </div>
-      </div>
+      <% else %>
+        <p class="m-2">There are no comments yet.</p>
+      <% end %>
 
       <.form for={%{}} as={:comment} phx-submit="add_comment" phx-target={@target}>
         <div class="chat-footer relative flex h-12 w-full shrink-0 items-center justify-between border-t border-slate-150 bg-white px-2 transition-[padding,width] duration-[.25s] dark:border-navy-600 dark:bg-navy-800">
