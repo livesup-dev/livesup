@@ -1,6 +1,7 @@
 defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
   use LiveSupWeb, :component
   use Timex
+  use Phoenix.HTML
 
   alias LiveSup.Schemas.User
 
@@ -17,12 +18,13 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
           phx-update="stream"
           class="grow overflow-y-auto overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm"
         >
+
           <div
             :for={{dom_id, comment} <- @comments}
             id={dom_id}
-            class={"flex #{if(@current_user, do: "justify-end", else: "")} space-x-2 sm:space-x-3 mb-3"}
+            class={"flex #{if(!is_nil(comment.created_by) && @current_user.id == comment.created_by.id, do: "justify-end", else: "")} space-x-2 sm:space-x-3 mb-3"}
           >
-            <div class={"avatar  #{if(@current_user, do: "order-last ml-2 sm:ml-3", else: "")}"}>
+            <div class={"avatar  #{if(!is_nil(comment.created_by) && @current_user.id == comment.created_by.id, do: "order-last ml-2 sm:ml-3", else: "")}"}>
               <img
                 class="rounded-full"
                 src={User.default_avatar_url(comment.created_by)}
