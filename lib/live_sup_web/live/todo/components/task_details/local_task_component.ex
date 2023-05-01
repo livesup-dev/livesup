@@ -9,7 +9,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
 
   def render(%{editing_task: false} = assigns) do
     ~H"""
-    <.xform as={:task}>
+    <.simple_form as={:task}>
       <.field label="Title" value={@task.title} />
       <.markdown_field value={@task.description} empty_value="No description provided." />
 
@@ -27,13 +27,13 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
           <span class="inner-text">Edit</span>
         </button>
       </:actions>
-    </.xform>
+    </.simple_form>
     """
   end
 
   def render(%{editing_task: true} = assigns) do
     ~H"""
-    <.xform as={:task} target={@target}>
+    <.simple_form as={:task} target={@target}>
       <.hidden_input name="id" value={@task.id} />
       <.hidden_input name="todo_id" value={@task.todo_id} />
       <.text name="title" value={@task.title} label="title" required={true} />
@@ -51,7 +51,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
         <.close_modal_button />
         <.save_modal_button />
       </:actions>
-    </.xform>
+    </.simple_form>
     """
   end
 end
