@@ -1,5 +1,5 @@
 <div>
-  <.xform target={@myself} for={:todo} as={:todo}>
+  <.simple_form target={@myself} for={:todo} as={:todo}>
     <.text name="title" value={@todo.title} required={true} label="Title" />
     <.textarea
       name="description"
@@ -12,5 +12,5 @@
     <:actions>
       <.default_modal_actions action={@action} />
     </:actions>
-  </.xform>
+  </.simple_form>
 </div>
