@@ -135,10 +135,12 @@ defmodule LiveSupWeb.UserAuthTest do
 
   describe "require_authenticated_user/2" do
     test "redirects if user is not authenticated", %{conn: conn} do
-      conn = conn |> fetch_flash() |> UserAuth.require_authenticated_user([])
+      %{assigns: %{flash: flash}} =
+        conn = conn |> fetch_flash() |> UserAuth.require_authenticated_user([])
+
       assert conn.halted
       assert redirected_to(conn) == ~p"/users/log-in"
-      assert get_flash(conn, :error) == "You must log in to access this page."
+      assert Phoenix.Flash.get(flash, :error) == "You must log in to access this page."
     end
 
     test "stores the path to redirect to on GET", %{conn: conn} do

@@ -19,7 +19,7 @@ defmodule LiveSup.Tests.Helpers.DateHelperTest do
 
       result = DateHelper.from_now(Timex.shift(Timex.now(), months: -2), :short)
 
-      assert result == "1mo"
+      assert result == "2mo"
     end
   end
 end

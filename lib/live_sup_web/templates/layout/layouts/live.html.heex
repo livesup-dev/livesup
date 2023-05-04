@@ -16,16 +16,16 @@
   </.sidebar_main>
 
   <.sidebar_panel>
-    <.sidebar_panel :if={@section == :home} title="Home">
+    <.sidebar_panel :if={@section == :home}>
       <.sidebar_item label="Dashboard" path="/" />
     </.sidebar_panel>
-    <.sidebar_panel :if={@section == :projects} title="Projects">
+    <.sidebar_panel :if={@section == :projects}>
       <.sidebar_item label="Projects" path="/projects" />
     </.sidebar_panel>
-    <.sidebar_panel :if={@section == :teams} title="Teams">
+    <.sidebar_panel :if={@section == :teams}>
       <.sidebar_item label="Teams" path="/teams" />
     </.sidebar_panel>
-    <.sidebar_panel :if={@section == :todo} title="Todo">
+    <.sidebar_panel :if={@section == :todo}>
       <.sidebar_item label="My day" path="/" />
       <.sidebar_item label="Important" path="/" />
       <.sidebar_item label="Task" path="/" />

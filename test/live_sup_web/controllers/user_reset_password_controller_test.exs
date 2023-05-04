@@ -28,7 +28,7 @@ defmodule LiveSupWeb.UserResetPasswordControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert Phoenix.Flash.get(conn, :info) =~ "If your email is in our system"
       assert Repo.get_by!(Accounts.UserToken, user_id: user.id).context == "reset_password"
     end
 
@@ -39,7 +39,7 @@ defmodule LiveSupWeb.UserResetPasswordControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert Phoenix.Flash.get(conn, :info) =~ "If your email is in our system"
       assert Repo.all(Accounts.UserToken) == []
     end
   end
@@ -63,7 +63,7 @@ defmodule LiveSupWeb.UserResetPasswordControllerTest do
     test "does not render reset password with invalid token", %{conn: conn} do
       conn = get(conn, ~p"/users/reset-password/#{"oops"}")
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :error) =~ "Reset password link is invalid or it has expired"
+      assert Phoenix.Flash.get(conn, :error) =~ "Reset password link is invalid or it has expired"
     end
   end
 
@@ -89,7 +89,7 @@ defmodule LiveSupWeb.UserResetPasswordControllerTest do
 
       assert redirected_to(conn) == ~p"/users/log-in"
       refute get_session(conn, :user_token)
-      assert get_flash(conn, :info) =~ "Password reset successfully"
+      assert Phoenix.Flash.get(conn, :info) =~ "Password reset successfully"
       assert Accounts.get_user_by_email_and_password(user.email, "new valid password")
     end
 
@@ -111,7 +111,7 @@ defmodule LiveSupWeb.UserResetPasswordControllerTest do
     test "does not reset password with invalid token", %{conn: conn} do
       conn = put(conn, ~p"/users/reset-password/#{"oops"}")
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :error) =~ "Reset password link is invalid or it has expired"
+      assert Phoenix.Flash.get(conn, :error) =~ "Reset password link is invalid or it has expired"
     end
   end
 end
