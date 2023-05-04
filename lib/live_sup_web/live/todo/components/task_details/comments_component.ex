@@ -18,7 +18,6 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
           phx-update="stream"
           class="grow overflow-y-auto overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm"
         >
-
           <div
             :for={{dom_id, comment} <- @comments}
             id={dom_id}
