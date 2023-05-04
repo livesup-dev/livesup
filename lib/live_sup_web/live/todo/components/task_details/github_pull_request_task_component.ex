@@ -3,12 +3,15 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.GithubPullRequestTaskCompo
 
   def render(assigns) do
     ~H"""
-    <.card title={@task.title}>
-      <.card_field label="State">
-        <.badge description={@task.external_metadata["state"]} color={:success} />
-      </.card_field>
+    <.card>
+        <div class="flex justify-between">
+          <h3 class="text-base font-medium text-slate-600 dark:text-navy-100">
+            <%= @task.title %>
+          </h3>
+          <.badge description={@task.external_metadata["state"]} color={:success} />
+        </div>
 
-      <div class="rounded-md rounded-t-none border border-gray-400 text-gray-700 divide-y divide-gray-400">
+      <div class="rounded-md rounded-t-none text-gray-700 divide-y divide-gray-400">
         <div class="prose max-w-none px-4">
           <section class="mt-4 space-y-2">
             <%= raw(body_to_html(@task.external_metadata["body"])) %>

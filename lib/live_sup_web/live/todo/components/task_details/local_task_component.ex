@@ -9,6 +9,15 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
 
   def render(%{editing_task: false} = assigns) do
     ~H"""
+    <div class="card px-4 py-4 sm:px-5 ">
+    <div class="flex justify-between">
+          <h3 class="text-base font-medium text-slate-600 dark:text-navy-100">
+          Todo filter styles
+          </h3>
+          <span class=" badge bg-success text-white">open</span>
+        </div>
+    </div>
+
     <.simple_form as={:task}>
       <.field label="Title" value={@task.title} />
       <.markdown_field value={@task.description} empty_value="No description provided." />
@@ -36,7 +45,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
     <.simple_form as={:task} target={@target}>
       <.hidden_input name="id" value={@task.id} />
       <.hidden_input name="todo_id" value={@task.todo_id} />
-      <.text name="title" value={@task.title} label="title" required={true} />
+      <.text name="title" value={@task.title} label="Title" required={true} />
       <.textarea name="description" value={@task.description} label="Description" />
       <.select
         id="priority"
