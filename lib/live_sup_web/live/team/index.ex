@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Teams.TeamListLive do
+defmodule LiveSupWeb.Live.Teams.Index do
   use LiveSupWeb, :live_view
 
   alias Exmoji.EmojiChar
@@ -6,12 +6,8 @@ defmodule LiveSupWeb.Teams.TeamListLive do
   alias LiveSup.Schemas.Team
   alias Palette.Components.Breadcrumb.Step
 
-  on_mount(LiveSupWeb.UserLiveAuth)
-
   @impl true
   def mount(_params, _session, socket) do
-    "mount" |> IO.inspect(label: "team_debug")
-
     {:ok,
      socket
      |> assign_defaults()

@@ -46,11 +46,23 @@ defmodule LiveSup.Queries.TeamQuery do
     |> Repo.one()
   end
 
-  def members(team_id) do
+  def users(team_id) do
     query =
       from(
         u in User,
         join: tm in assoc(u, :team_members),
+        where: tm.team_id == ^team_id
+      )
+
+    query
+    |> Repo.all()
+  end
+
+  def members(team_id) do
+    query =
+      from(
+        tm in TeamMember,
+        preload: [:user],
         where: tm.team_id == ^team_id
       )
 

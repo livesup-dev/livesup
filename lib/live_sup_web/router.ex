@@ -152,36 +152,39 @@ defmodule LiveSupWeb.Router do
     # get "/projects/:project_id/dashboards", DashboardController, :index
     # get "/dashboards/:dashboard_id", DashboardController, :show
 
-    live("/welcome", WelcomeLive, :home)
-    live("/welcome/teams", WelcomeLive, :teams)
-    live("/welcome/location", WelcomeLive, :location)
-    live("/welcome/thank-you", WelcomeLive, :thank_you)
+    live_session :default, on_mount: LiveSupWeb.UserLiveAuth do
+      live("/welcome", WelcomeLive, :home)
+      live("/welcome/teams", WelcomeLive, :teams)
+      live("/welcome/location", WelcomeLive, :location)
+      live("/welcome/thank-you", WelcomeLive, :thank_you)
 
-    live("/projects", Project.ProjectLive, :index)
-    live("/projects/:id/board", Project.ProjectBoardLive, :index)
-    live("/projects/:id/board/new-todo", Project.ProjectBoardLive, :new_todo)
-    live("/projects/new", Project.ProjectLive, :new)
-    live("/projects/:id/dashboards", Project.DashboardLive, :index)
-    live("/projects/:id/dashboards/new", Project.DashboardLive, :new)
-    live("/dashboards/:id/edit", Project.DashboardLive, :edit)
-    live("/dashboards/:id", Project.DashboardLive, :show)
-    live("/dashboards/:id/widgets", Dashboard.WidgetLive, :show)
-    live("/dashboards/:dashboard_id/widgets/:id", Dashboard.WidgetLive, :add)
-    live("/projects/:project_id/datasources", Project.DatasourceLive, :index)
-    live("/projects/:project_id/datasources/:id/edit", Project.DatasourceLive, :edit)
-    live("/projects/:id/todos", Project.ManageTodosLive, :index)
-    live("/projects/:id/todos/new", Project.ManageTodosLive, :new)
+      live("/projects", Project.ProjectLive, :index)
+      live("/projects/:id/board", Project.ProjectBoardLive, :index)
+      live("/projects/:id/board/new-todo", Project.ProjectBoardLive, :new_todo)
+      live("/projects/new", Project.ProjectLive, :new)
+      live("/projects/:id/dashboards", Project.DashboardLive, :index)
+      live("/projects/:id/dashboards/new", Project.DashboardLive, :new)
+      live("/dashboards/:id/edit", Project.DashboardLive, :edit)
+      live("/dashboards/:id", Project.DashboardLive, :show)
+      live("/dashboards/:id/widgets", Dashboard.WidgetLive, :show)
+      live("/dashboards/:dashboard_id/widgets/:id", Dashboard.WidgetLive, :add)
+      live("/projects/:project_id/datasources", Project.DatasourceLive, :index)
+      live("/projects/:project_id/datasources/:id/edit", Project.DatasourceLive, :edit)
+      live("/projects/:id/todos", Project.ManageTodosLive, :index)
+      live("/projects/:id/todos/new", Project.ManageTodosLive, :new)
 
-    live("/todos/:id/manage", Todo.ManageTodoLive, :show)
-    live("/todos/:id/tasks/:task_id/edit", Todo.ManageTodoLive, :edit_task)
-    live("/tasks/:task_id/edit", Todo.ManageTodoLive, :edit_task)
+      live("/todos/:id/manage", Todo.ManageTodoLive, :show)
+      live("/todos/:id/tasks/:task_id/edit", Todo.ManageTodoLive, :edit_task)
+      live("/tasks/:task_id/edit", Todo.ManageTodoLive, :edit_task)
 
-    live("/teams/new", Teams.TeamListLive, :new)
-    live("/teams", Teams.TeamListLive, :index)
-    live("/teams/:id", Teams.TeamListLive, :show)
-    live("/teams/:id/edit", Teams.TeamListLive, :edit)
-    live("/teams/:id/members", Teams.MembersLive, :index)
-    live("/teams/:id/members/add", Teams.MembersLive, :add)
+      live("/teams/new", Live.Teams.Index, :new)
+      live("/teams", Live.Teams.Index, :index)
+      live("/teams/:id", Live.Teams.Index, :show)
+      # live("/teams/:id/edit", Teams.TeamListLive, :edit)
+      live("/teams/:id/members", Live.Team.Member.Index, :index)
+      live("/teams/:id/members/add", Live.Team.Member.Index, :add)
+    end
+
     # get "/projects/:id/datasources", DatasourceController, :index
   end
 

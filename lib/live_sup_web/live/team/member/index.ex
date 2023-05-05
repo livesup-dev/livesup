@@ -1,18 +1,18 @@
-defmodule LiveSupWeb.Teams.MembersLive do
+defmodule LiveSupWeb.Live.Team.Member.Index do
   use LiveSupWeb, :live_view
 
   alias LiveSup.Core.Teams
   alias LiveSup.Schemas.User
 
-  on_mount(LiveSupWeb.UserLiveAuth)
-
   alias Palette.Components.Breadcrumb.Step
+  alias LiveSupWeb.Live.Team.Components.MemberFormComponent
 
   @impl true
   def mount(%{"id" => team_id}, _session, socket) do
     {:ok,
      socket
      |> assign_team(team_id)
+     |> assign_members()
      |> assign_defaults()
      |> assign_breadcrumb_steps()}
   end
@@ -45,6 +45,11 @@ defmodule LiveSupWeb.Teams.MembersLive do
 
     socket
     |> assign(team: team)
+  end
+
+  defp assign_members(%{assigns: %{team: team}} = socket) do
+    socket
+    |> stream(:members, Teams.members(team.id))
   end
 
   defp assign_title(%{assigns: %{team: %{name: name}}} = socket) do

@@ -21,4 +21,8 @@ defmodule LiveSup.Core.Users do
   def get_default_system_account! do
     get_system_account!(User.default_bot_identifier())
   end
+
+  def change(user, attrs \\ %{}) do
+    User.registration_changeset(user, attrs)
+  end
 end

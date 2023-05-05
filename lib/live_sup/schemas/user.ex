@@ -253,6 +253,12 @@ defmodule LiveSup.Schemas.User do
     "#{location["lat"]}, #{location["lng"]}"
   end
 
+  def random_password() do
+    :crypto.strong_rand_bytes(32)
+    |> Base.encode64()
+    |> String.slice(0..11)
+  end
+
   def default_location(), do: @default_location
 
   def external_provider?(%__MODULE__{provider: nil}), do: false
