@@ -40,6 +40,7 @@ defmodule LiveSup.DataImporter.TeamImporter do
             user
 
           user ->
+            {:ok, user} = Users.update(user, member_attrs)
             user
         end
 
