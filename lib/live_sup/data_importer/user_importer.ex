@@ -2,7 +2,7 @@ defmodule LiveSup.DataImporter.UserImporter do
   alias LiveSup.Core.{Users, Teams}
   alias LiveSup.Schemas.User
 
-  def import(%{"users" => users} = data) do
+  def perform(%{"users" => users} = data) do
     users
     |> Enum.each(fn user_attrs ->
       user_attrs
@@ -14,7 +14,7 @@ defmodule LiveSup.DataImporter.UserImporter do
     data
   end
 
-  def import(data), do: data
+  def perform(data), do: data
 
   defp get_or_create_user(%{"id" => id} = attrs) do
     case Users.get(id) do

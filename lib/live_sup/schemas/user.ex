@@ -112,6 +112,7 @@ defmodule LiveSup.Schemas.User do
       :email,
       :first_name,
       :last_name,
+      :password,
       :avatar_url,
       :location,
       :settings,
@@ -123,6 +124,7 @@ defmodule LiveSup.Schemas.User do
     |> validate_required([])
     |> validate_email()
     |> maybe_set_location()
+    |> maybe_hash_password([])
   end
 
   def onboarded_state, do: "onboarded"

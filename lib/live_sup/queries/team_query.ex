@@ -4,6 +4,22 @@ defmodule LiveSup.Queries.TeamQuery do
   alias LiveSup.Repo
   alias LiveSup.Schemas.{Team, User, Project, TeamMember}
 
+  def count do
+    base()
+    |> Repo.aggregate(:count)
+  end
+
+  def member?(%Team{} = team, %User{} = user) do
+    query =
+      from(
+        tm in TeamMember,
+        where: tm.team_id == ^team.id and tm.user_id == ^user.id
+      )
+
+    query
+    |> Repo.exists?()
+  end
+
   def create!(data) do
     %Team{}
     |> Team.changeset(data)

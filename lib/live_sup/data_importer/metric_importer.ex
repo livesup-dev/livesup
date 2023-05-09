@@ -2,7 +2,7 @@ defmodule LiveSup.DataImporter.MetricImporter do
   alias LiveSup.Core.Metrics
   import Logger
 
-  def import(%{"metrics" => metrics} = data) do
+  def perform(%{"metrics" => metrics} = data) do
     debug("MetricImporter:import")
 
     metrics
@@ -15,9 +15,9 @@ defmodule LiveSup.DataImporter.MetricImporter do
     data
   end
 
-  def import(data), do: data
+  def perform(data), do: data
 
-  # def import(_data), do: :ok
+  # def perform(_data), do: :ok
 
   defp get_or_create_metric(attrs) do
     {:ok, metric} = Metrics.upsert(attrs)

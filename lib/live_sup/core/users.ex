@@ -14,6 +14,9 @@ defmodule LiveSup.Core.Users do
   defdelegate update!(user, attrs), to: UserQuery
   defdelegate onboard!(user), to: UserQuery
   defdelegate create_with_id(attrs), to: UserQuery
+  defdelegate upsert(attrs), to: UserQuery
+  defdelegate count(), to: UserQuery
+  defdelegate get_by_email(email), to: UserQuery
 
   defdelegate get_system_account!(identifier), to: UserQuery
   defdelegate get_system_account(identifier), to: UserQuery

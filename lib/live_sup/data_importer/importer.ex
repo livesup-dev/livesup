@@ -9,21 +9,21 @@ defmodule LiveSup.DataImporter.Importer do
     TodoImporter
   }
 
-  def import(data) do
+  def perform(data) do
     data
     |> parse_yaml()
     |> Cleaner.clean()
-    |> ProjectImporter.import()
-    |> TeamImporter.import()
-    |> UserImporter.import()
-    |> MetricImporter.import()
-    |> NoteImporter.import()
-    |> TodoImporter.import()
+    |> ProjectImporter.perform()
+    |> TeamImporter.perform()
+    |> UserImporter.perform()
+    |> MetricImporter.perform()
+    |> NoteImporter.perform()
+    |> TodoImporter.perform()
 
     :ok
   end
 
-  defp parse_yaml(data) do
+  def parse_yaml(data) do
     {:ok, parsed_data} = YamlElixir.read_from_string(data)
     parsed_data
   end

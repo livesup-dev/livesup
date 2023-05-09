@@ -2,7 +2,7 @@ defmodule LiveSup.DataImporter.ProjectImporter do
   alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets}
   alias LiveSup.Schemas.{Project, WidgetInstance, DashboardWidget}
 
-  def import(%{"projects" => projects} = data) do
+  def perform(%{"projects" => projects} = data) do
     projects
     |> Enum.each(fn project_attrs ->
       project_attrs
@@ -13,7 +13,7 @@ defmodule LiveSup.DataImporter.ProjectImporter do
     data
   end
 
-  def import(data), do: data
+  def perform(data), do: data
 
   defp get_or_create_project(%{"id" => id} = attrs) do
     Projects.get(id) || Projects.create_public_project(attrs)

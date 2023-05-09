@@ -12,7 +12,7 @@ defmodule LiveSupWeb.Test.Live.Team.Member.IndexTest do
       {:ok, _index, html} = live(conn, ~p"/teams/#{id}/members")
 
       assert html =~
-               "\n#{team_name}\n        "
+               "\n      #{team_name}\n    "
     end
   end
 end

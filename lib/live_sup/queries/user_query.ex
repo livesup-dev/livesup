@@ -3,6 +3,17 @@ defmodule LiveSup.Queries.UserQuery do
   alias LiveSup.Repo
   import Ecto.Query
 
+  def count do
+    base()
+    |> Repo.aggregate(:count)
+  end
+
+  def upsert(data) do
+    %User{}
+    |> User.internal_registration_changeset(data)
+    |> Repo.insert(on_conflict: :nothing)
+  end
+
   def get_system_account(identifier) do
     base()
     |> where([u], u.system == true)

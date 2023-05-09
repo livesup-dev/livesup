@@ -2,7 +2,7 @@ defmodule LiveSup.DataImporter.NoteImporter do
   alias LiveSup.Queries.NoteQuery
   import Logger
 
-  def import(%{"notes" => notes} = data) do
+  def perform(%{"notes" => notes} = data) do
     debug("NoteImporter:import")
 
     notes
@@ -14,7 +14,7 @@ defmodule LiveSup.DataImporter.NoteImporter do
     data
   end
 
-  def import(data) do
+  def perform(data) do
     debug("NoteImporter:no-data")
 
     data
