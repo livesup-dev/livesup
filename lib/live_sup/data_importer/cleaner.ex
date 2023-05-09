@@ -1,6 +1,14 @@
 defmodule LiveSup.DataImporter.Cleaner do
   alias LiveSup.Core.{Projects, Dashboards, Teams, Todos}
-  alias LiveSup.Queries.{MetricQuery, MetricValueQuery, WidgetInstanceQuery, NoteQuery}
+
+  alias LiveSup.Queries.{
+    MetricQuery,
+    MetricValueQuery,
+    WidgetInstanceQuery,
+    NoteQuery,
+    UserQuery,
+    LinkQuery
+  }
 
   def clean(data) do
     data
@@ -9,6 +17,7 @@ defmodule LiveSup.DataImporter.Cleaner do
     |> clean_metrics()
     |> clean_widgets_instances()
     |> clean_notes()
+    |> clean_users()
   end
 
   def clean_projects(%{"remove_existing_projects" => true} = data) do
@@ -69,4 +78,19 @@ defmodule LiveSup.DataImporter.Cleaner do
   end
 
   def clean_notes(data), do: data
+
+  def clean_users(%{"remove_existing_users" => true} = data) do
+    UserQuery.all()
+    |> Enum.each(fn user ->
+      user
+      |> LinkQuery.delete_by_user()
+
+      user
+      |> UserQuery.delete()
+    end)
+
+    data
+  end
+
+  def clean_users(data), do: data
 end

@@ -34,13 +34,13 @@ defmodule LiveSup.DataImporter.TeamImporter do
     members
     |> Enum.each(fn member_attrs ->
       user =
-        case Users.get_by_email(member_attrs["email"]) do
+        case Users.get(member_attrs["id"]) do
           nil ->
+            member_attrs["id"] |> dbg
             {:ok, user} = Users.upsert(member_attrs |> set_random_password())
             user
 
           user ->
-            {:ok, user} = Users.update(user, member_attrs)
             user
         end
 

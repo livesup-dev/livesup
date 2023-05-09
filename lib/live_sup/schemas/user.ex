@@ -45,6 +45,7 @@ defmodule LiveSup.Schemas.User do
   end
 
   @optional_fields [
+    :id,
     :email,
     :password,
     :first_name,

@@ -13,9 +13,9 @@ defmodule LiveSup.DataImporter.Importer do
     data
     |> parse_yaml()
     |> Cleaner.clean()
+    |> UserImporter.perform()
     |> ProjectImporter.perform()
     |> TeamImporter.perform()
-    |> UserImporter.perform()
     |> MetricImporter.perform()
     |> NoteImporter.perform()
     |> TodoImporter.perform()
