@@ -3,7 +3,7 @@ defmodule LiveSupWeb.Live.Teams.Index do
 
   alias Exmoji.EmojiChar
   alias LiveSup.Core.Teams
-  alias LiveSup.Schemas.Team
+  alias LiveSup.Schemas.{Team, User}
   alias Palette.Components.Breadcrumb.Step
 
   @impl true
@@ -64,7 +64,11 @@ defmodule LiveSupWeb.Live.Teams.Index do
     socket
   end
 
-  defp team_avatar(%Team{avatar: _avatar}) do
+  defp team_avatar(%Team{avatar: nil}) do
     Exmoji.from_short_name("alien") |> EmojiChar.render()
+  end
+
+  defp team_avatar(%Team{avatar: avatar}) do
+    Exmoji.from_short_name(avatar) |> EmojiChar.render()
   end
 end
