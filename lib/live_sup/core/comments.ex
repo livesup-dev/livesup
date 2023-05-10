@@ -84,6 +84,37 @@ defmodule LiveSup.Core.Comments do
   end
 
   @doc """
+  Deletes all comments.
+  ## Examples
+
+      iex> delete_all()
+      {:ok, %Comments{}}
+
+      iex> delete_all()
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_all() do
+    CommentQuery.delete_all()
+  end
+
+  @doc """
+  Deletes all comments by TodoTask.
+  ## Examples
+
+      iex> delete_all(task)
+      {:ok, %Comments{}}
+
+      iex> delete_all(task)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_all(%TodoTask{} = task) do
+    task
+    |> CommentQuery.delete_all()
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking task changes.
 
   ## Examples

@@ -113,6 +113,10 @@ defmodule LiveSup.Queries.TaskQuery do
     |> delete_all
   end
 
+  def delete_all() do
+    Repo.delete_all(TodoTask)
+  end
+
   def complete!(task_id) when is_binary(task_id) do
     get!(task_id)
     |> update!(%{completed: true, completed_at: DateTime.utc_now()})

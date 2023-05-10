@@ -1,19 +1,18 @@
 # Seeding
 
-Since we don't have a proper UI yet to manage all the components. The easiest way to seed the app is to use a YAML definition. You can see the demo [here](/docs/demo-seed.yaml). 
- 
-There are 2 ways you can import that file. 
+Since we don't have a proper UI yet to manage all the components. The easiest way to seed the app is to use a YAML definition. You can see the demo [here](/docs/demo-seed.yaml).
 
-* Console
+There are 2 ways you can import that file.
 
-Log in into the console and do: 
+- Console
+
+Log in into the console and do:
 
 ```
-YamlElixir.read_from_file('docs/demo-seed.yaml')
-|> LiveSup.LiveSup.DataImporter.Importer.import()
+YamlElixir.read_from_file('docs/demo-seed.yaml')|>LiveSup.DataImporter.Importer.perform()
 ```
 
-* API
+- API
 
 To use the API you first need to have a valid token, to do that, you can use the following curl command (change the host accordingly):
 

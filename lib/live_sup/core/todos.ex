@@ -121,6 +121,10 @@ defmodule LiveSup.Core.Todos do
     |> TodoQuery.delete()
   end
 
+  def delete_all() do
+    TodoQuery.delete_all()
+  end
+
   def delete_all(%Project{} = project) do
     project
     |> TodoQuery.delete_all()

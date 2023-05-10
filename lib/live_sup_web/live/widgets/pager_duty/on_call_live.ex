@@ -62,10 +62,13 @@ defmodule LiveSupWeb.Live.Widgets.PagerDuty.OnCallLive do
                     >
                     </path>
                   </svg>
-                  <%= if on_calls[:days_left] == 0 do %>
-                    Starts Today
-                  <% else %>
-                    In <%= on_calls[:days_left] %> days
+                  <%= cond do %>
+                    <% on_calls[:days_left] == 0 -> %>
+                      Starts Today
+                    <% on_calls[:days_left] > 0 -> %>
+                      In <%= on_calls[:days_left] %> days
+                    <% true -> %>
+                      On Call
                   <% end %>
                 </span>
               </div>

@@ -135,6 +135,34 @@ defmodule LiveSup.Core.Tasks do
     |> TaskQuery.delete()
   end
 
+  @doc """
+  Deletes all tasks.
+
+  ## Examples
+
+      iex> delete_all()
+      {:ok, %Todo{}}
+
+      iex> delete_all()
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_all() do
+    TaskQuery.delete_all()
+  end
+
+  @doc """
+  Deletes all tasks for a todo.
+
+  ## Examples
+
+      iex> delete_all(todo)
+      {:ok, %Todo{}}
+
+      iex> delete_all(todo)
+      {:error, %Ecto.Changeset{}}
+
+  """
   def delete_all(%Todo{} = todo) do
     todo
     |> TaskQuery.delete_all()

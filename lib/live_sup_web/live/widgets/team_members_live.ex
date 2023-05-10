@@ -26,13 +26,13 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
                   class="w-8 h-8 rounded-full transition-opacity duration-200 "
                 />
                 <%= if user[:night] == true do %>
-                  <i class="absolute bottom-0 right-0 rounded-full bg-slate-700 p-[1px]">
+                  <i class="absolute bottom-0 -right-1 rounded-full bg-slate-200 stroke-slate-700 p-0.5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4"
+                      class="h-3.5 w-3.5"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke="currentColor"
+                      stroke=""
                     >
                       <path
                         stroke-linecap="round"
@@ -43,13 +43,13 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
                     </svg>
                   </i>
                 <% else %>
-                  <i class="absolute bottom-0 right-0 rounded-full bg-slate-700 p-[1px]">
+                  <i class="absolute bottom-0 -right-1 rounded-full bg-slate-100 p-0.5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4"
-                      fill="none"
+                      class="h-3.5 w-3.5"
+                      fill="#eab308"
                       viewBox="0 0 24 24"
-                      stroke="rgb(252, 211, 77)"
+                      stroke="#eab308"
                     >
                       <path
                         stroke-linecap="round"
