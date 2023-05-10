@@ -70,7 +70,7 @@
       </div>
       <div class="flex -space-x-3 self-center mb-6">
         <div
-          :for={user <- users_from_groups(project.groups)}
+          :for={user <- project.stats[:users]}
           class="avatar h-8 w-8 hover:z-10"
           x-tooltip={"'#{User.full_name(user)}'"}
         >
@@ -79,6 +79,11 @@
             src={User.default_avatar_url(user)}
             alt="avatar"
           />
+        </div>
+        <div :if={project.stats[:total_users] > 0} class="">
+          <span class="ml-4 rounded-full ring ring-white dark:ring-navy-700">
+            +<%= project.stats[:total_users] %>
+          </span>
         </div>
       </div>
       <div class="mt-auto pb-1">

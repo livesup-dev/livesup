@@ -24,8 +24,8 @@ defmodule LiveSup.DataImporter.UserImporter do
 
   defp get_or_create_user(%{"id" => id} = attrs) do
     case Users.get(id) do
-      {:ok, user} -> {:ok, user}
       nil -> Users.create(attrs)
+      user -> {:ok, user}
     end
   end
 
@@ -44,7 +44,10 @@ defmodule LiveSup.DataImporter.UserImporter do
   end
 
   defp add_to_group({:ok, %User{} = user}, group) do
-    Groups.add_user(user, group)
+    case Groups.member?(group, user) do
+      false -> Groups.add_user(user, group)
+      _ -> :ok
+    end
 
     {:ok, user}
   end

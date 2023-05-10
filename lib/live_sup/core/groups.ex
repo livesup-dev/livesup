@@ -8,6 +8,7 @@ defmodule LiveSup.Core.Groups do
   alias LiveSup.Repo
 
   defdelegate delete_all, to: GroupQuery
+  defdelegate member?(group, user), to: GroupQuery
 
   @doc """
   Returns the list of groups.
