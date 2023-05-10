@@ -36,7 +36,6 @@ defmodule LiveSup.DataImporter.TeamImporter do
       user =
         case Users.get(member_attrs["id"]) do
           nil ->
-            member_attrs["id"] |> dbg
             {:ok, user} = Users.upsert(member_attrs |> set_random_password())
             user
 

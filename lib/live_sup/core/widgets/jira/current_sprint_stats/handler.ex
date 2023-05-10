@@ -8,7 +8,6 @@ defmodule LiveSup.Core.Widgets.Jira.CurrentSprintStats.Handler do
       }) do
     JiraDatasource.get_current_sprint_issues(board_id, token: token, domain: domain)
     |> parse_stats()
-    |> IO.inspect(label: "aaaaaaa")
   end
 
   defp parse_stats({:error, _error} = args), do: args

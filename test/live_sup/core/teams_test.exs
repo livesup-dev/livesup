@@ -48,7 +48,7 @@ defmodule LiveSup.Test.Core.TeamsTest do
     test "all/0 returns all teams", %{team: team, team_with_project: team_with_project} do
       teams = Teams.all() |> Enum.sort()
       created_teams = [team, team_with_project] |> Enum.sort()
-      assert length(teams) == length(created_teams)
+      assert length(teams) == 2
     end
 
     test "all/1 returns all teams by project", %{
@@ -63,7 +63,11 @@ defmodule LiveSup.Test.Core.TeamsTest do
         |> Map.merge(%{project_id: project_x.id, name: "Team 3"})
       )
 
-      assert Teams.all(project) == [team, team_with_project]
+      teams = Teams.all(project)
+      assert length(teams) == 2
+
+      teams_ids = teams |> Enum.map(&Map.get(&1, :id)) |> Enum.sort()
+      assert teams_ids == [team.id, team_with_project.id] |> Enum.sort()
     end
 
     test "get!/1 returns the team with given id", %{team: team} do
@@ -76,7 +80,15 @@ defmodule LiveSup.Test.Core.TeamsTest do
       user_2 = AccountsFixtures.user_fixture()
       Teams.add_member(team, user_2)
 
-      assert Teams.members(team.id) == [user_1, user_2]
+      members = Teams.members(team.id)
+
+      members_ids =
+        members
+        |> Enum.map(&Map.get(&1, :user_id))
+        |> Enum.sort()
+
+      assert length(members) == 2
+      assert members_ids == [user_1.id, user_2.id] |> Enum.sort()
     end
 
     test "create/1 with valid data creates a widget" do

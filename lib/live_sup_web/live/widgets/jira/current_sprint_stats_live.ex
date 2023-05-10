@@ -35,15 +35,6 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive do
   end
 
   def build_spec(widget_data) do
-    widget_data.data |> IO.inspect(label: "widget_data.data")
-
-    # [
-    #   %{count: 10, status: "Complete"},
-    #   %{count: 11, status: "In Progress"},
-    #   %{count: 6, status: "In Review"},
-    #   %{count: 8, status: "Open"}
-    # ]
-
     %{
       series:
         Enum.map(widget_data.data, fn status ->
