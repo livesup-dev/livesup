@@ -16,7 +16,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
 
     test "data is imported" do
       assert DatasourceInstanceQuery.count() == 0
-      LiveSup.DataImporter.Importer.import(yaml_data())
+      LiveSup.DataImporter.Importer.perform(yaml_data())
 
       assert length(Projects.all()) == 1
 
@@ -75,7 +75,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
       assert %{"location" => %{"value" => "Mahon"}} = first_datasource.settings
 
       # Make sure it does not fail when running twice
-      LiveSup.DataImporter.Importer.import(yaml_data())
+      LiveSup.DataImporter.Importer.perform(yaml_data())
 
       assert DatasourceInstanceQuery.count() == 1
     end
@@ -92,7 +92,7 @@ defmodule LiveSup.Test.DataImporter.Importer do
     end
 
     test "data is cleaned and imported", %{project: project} do
-      LiveSup.DataImporter.Importer.import(yaml_clean())
+      LiveSup.DataImporter.Importer.perform(yaml_clean())
 
       assert project.id |> Projects.get() == nil
     end

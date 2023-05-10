@@ -5,7 +5,7 @@ defmodule LiveSup.Core.Widgets.TeamMembers.Handler do
   def get_data(%{"team" => team_id}) do
     # TODO: We need to cache this query
     team_id
-    |> Teams.members()
+    |> Teams.users()
     |> build_times()
   end
 

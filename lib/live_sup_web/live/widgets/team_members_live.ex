@@ -21,11 +21,11 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
         <%= if Enum.any?(widget_data.data) do %>
           <div class="divide-y divide-gray-100 dark:divide-gray-500">
             <%= for user <- widget_data.data do %>
-              <div class="flex py-4 first:pt-0 gap-3 flex-wrap dark:divide-blue-300">
+              <div class="flex py-2 first:pt-0 gap-3 flex-wrap dark:divide-blue-300">
                 <div class="flex-none relative pt-1">
                   <img
                     src={user[:avatar]}
-                    class="w-10 h-10 rounded-full transition-opacity duration-200 "
+                    class="w-8 h-8 rounded-full transition-opacity duration-200 "
                   />
                   <%= if user[:night] == true do %>
                     <i class="absolute bottom-0 right-0 rounded-full bg-slate-700 p-[1px]">
@@ -65,22 +65,8 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
                 </div>
                 <div class="grow">
                   <p>
-                    <strong class="block"><%= user[:full_name] %></strong>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 inline-block"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    <span class="text-sm align-middle inline-block">
+                    <span class="block font-medium"><%= user[:full_name] %></span>
+                    <span class="text-xs align-middle inline-block">
                       <%= user[:address] %>
                     </span>
                     |

@@ -2,7 +2,7 @@ defmodule LiveSup.Queries.GroupQuery do
   import LiveSup.Queries.InternalQueryHelper
   import Ecto.Query
 
-  alias LiveSup.Schemas.Group
+  alias LiveSup.Schemas.{Group, UserGroup}
   alias LiveSup.Repo
 
   @administrators_group "administrators"
@@ -56,6 +56,12 @@ defmodule LiveSup.Queries.GroupQuery do
   def delete_all do
     base()
     |> Repo.delete_all()
+  end
+
+  def member?(group, user) do
+    from(UserGroup, as: :user_group)
+    |> where([user_group: ug], ug.user_id == ^user.id and ug.group_id == ^group.id)
+    |> Repo.exists?()
   end
 
   def base, do: from(Group, as: :group)

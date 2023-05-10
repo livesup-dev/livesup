@@ -1,0 +1,61 @@
+<.breadcrumb title={@title} steps={@steps}>
+  <:actions>
+    <.action_link type={:patch} path={~p"/teams/#{@team.id}/members/add"} tooltip="Add Member" />
+  </:actions>
+</.breadcrumb>
+
+<div
+  id="members-list"
+  phx-update="stream"
+  class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4"
+>
+  <.card
+    :for={{dom_id, team_member} <- @streams.members}
+    class="grow items-center p-4 text-center sm:p-5"
+    id={dom_id}
+  >
+    <div class="avatar h-18 w-18">
+      <img class="rounded-full" src={User.default_avatar_url(team_member.user)} alt="avatar" />
+    </div>
+    <div class="my-2 grow">
+      <h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
+        <%= User.full_name(team_member.user) %>
+      </h3>
+      <div>
+        <a
+          href="#"
+          class="text-xs+ text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
+        >
+          <%= team_member.user.email %>
+        </a>
+      </div>
+    </div>
+    <div class="mt-3 flex space-x-1">
+      <button class="btn h-7 rounded-full bg-slate-150 px-3 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+        Follow
+      </button>
+      <button class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+        <i class="far fa-envelope"></i>
+      </button>
+      <button class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+        <i class="fa fa-ellipsis-h"></i>
+      </button>
+    </div>
+  </.card>
+</div>
+
+<.modal
+  :if={@live_action in [:add]}
+  show
+  title="Add a new member"
+  return_to={~p"/teams/#{@team.id}/members"}
+>
+  <.live_component
+    module={MemberFormComponent}
+    id="add-team-member"
+    title={@page_title}
+    action={@live_action}
+    return_to={~p"/teams/#{@team.id}/members"}
+    team={@team}
+  />
+</.modal>

@@ -9,23 +9,25 @@ defmodule LiveSup.Schemas.Project do
   @foreign_key_type :binary_id
   @derive {Phoenix.Param, key: :id}
   schema "projects" do
-    field :internal, :boolean, default: false
-    field :labels, {:array, :string}
-    field :name, :string
-    field :color, :string
-    field :description, :string
-    field :settings, :map
-    field :parent_id, :binary_id
-    field :slug, ProjectSlug.Type
-    field :avatar_url, :string
+    field(:internal, :boolean, default: false)
+    field(:labels, {:array, :string})
+    field(:name, :string)
+    field(:color, :string)
+    field(:description, :string)
+    field(:settings, :map)
+    field(:parent_id, :binary_id)
+    field(:slug, ProjectSlug.Type)
+    field(:avatar_url, :string)
+
     field(:todos_count, :integer, default: 0, virtual: true)
     field(:dashboards_count, :integer, default: 0, virtual: true)
+    field(:stats, :map, default: %{}, virtual: true)
 
-    has_many :projects_groups, ProjectGroup
-    has_many :groups, through: [:projects_groups, :group]
-    has_many :dashboards, Dashboard
-    has_many :todos, Todo
-    has_many :datasource_instances, DatasourceInstance
+    has_many(:projects_groups, ProjectGroup)
+    has_many(:groups, through: [:projects_groups, :group])
+    has_many(:dashboards, Dashboard)
+    has_many(:todos, Todo)
+    has_many(:datasource_instances, DatasourceInstance)
 
     timestamps()
   end

@@ -4,7 +4,7 @@ defmodule LiveSupWeb.Api.SeedController do
   alias LiveSup.DataImporter.Importer
 
   def create(conn, %{"data" => data}) do
-    with :ok <- Importer.import(data) do
+    with :ok <- Importer.perform(data) do
       conn
       |> put_status(:created)
       |> render(:show, %{result: :ok})

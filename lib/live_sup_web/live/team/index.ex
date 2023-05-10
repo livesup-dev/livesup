@@ -1,17 +1,13 @@
-defmodule LiveSupWeb.Teams.TeamListLive do
+defmodule LiveSupWeb.Live.Teams.Index do
   use LiveSupWeb, :live_view
 
   alias Exmoji.EmojiChar
   alias LiveSup.Core.Teams
-  alias LiveSup.Schemas.Team
+  alias LiveSup.Schemas.{Team, User}
   alias Palette.Components.Breadcrumb.Step
-
-  on_mount(LiveSupWeb.UserLiveAuth)
 
   @impl true
   def mount(_params, _session, socket) do
-    "mount" |> IO.inspect(label: "team_debug")
-
     {:ok,
      socket
      |> assign_defaults()
@@ -68,7 +64,11 @@ defmodule LiveSupWeb.Teams.TeamListLive do
     socket
   end
 
-  defp team_avatar(%Team{avatar: _avatar}) do
+  defp team_avatar(%Team{avatar: nil}) do
     Exmoji.from_short_name("alien") |> EmojiChar.render()
+  end
+
+  defp team_avatar(%Team{avatar: avatar}) do
+    Exmoji.from_short_name(avatar) |> EmojiChar.render()
   end
 end

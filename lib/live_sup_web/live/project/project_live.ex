@@ -41,7 +41,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
   end
 
   defp assign_projects(%{assigns: %{current_user: current_user}} = socket) do
-    projects = current_user |> Projects.by_user()
+    projects = current_user |> Projects.by_user() |> build_stats()
 
     socket
     |> stream(:projects, projects)
@@ -64,11 +64,29 @@ defmodule LiveSupWeb.Project.ProjectLive do
     |> assign(:project, nil)
   end
 
-  defp users_from_groups(groups) do
-    groups
-    |> Enum.map(fn group -> group.users end)
-    |> List.flatten()
-    |> Enum.uniq()
+  # This should be pre-built
+  defp build_stats(projects) do
+    projects
+    |> Enum.map(fn project ->
+      users =
+        project.groups
+        |> Enum.map(fn group -> group.users end)
+        |> List.flatten()
+        |> Enum.uniq()
+
+      total_users =
+        case length(users) do
+          0 -> 0
+          count when count > 5 -> count - 5
+        end
+
+      stats = %{
+        users: users |> Enum.slice(0..6),
+        total_users: total_users
+      }
+
+      Map.put(project, :stats, stats)
+    end)
   end
 
   defp project_color(%Project{color: nil}), do: ""

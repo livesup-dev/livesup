@@ -9,8 +9,8 @@ defmodule LiveSupWeb.Team.Components.TeamFormComponent do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)
-     |> allow_upload(:avatar, accept: ~w(.jpg .jpeg .png), max_entries: 1)}
+     |> assign_form(changeset)
+     |> assign(:error, nil)}
   end
 
   @impl true
@@ -24,22 +24,7 @@ defmodule LiveSupWeb.Team.Components.TeamFormComponent do
   end
 
   def handle_event("save", %{"team" => team_params}, socket) do
-    {entries, _} = uploaded_entries(socket, :avatar)
-    avatar_entry = entries |> Enum.at(0)
-
-    file_path = socket |> copy_file(avatar_entry)
-
-    save_team(socket, socket.assigns.action, Map.put(team_params, "avatar_url", file_path))
-  end
-
-  defp copy_file(_, nil), do: nil
-
-  defp copy_file(socket, avatar_entry) do
-    Phoenix.LiveView.Upload.consume_uploaded_entry(socket, avatar_entry, fn %{path: path} ->
-      dest = Path.join("priv/static/uploads", Path.basename(path))
-      File.cp!(path, dest)
-      Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")
-    end)
+    save_team(socket, socket.assigns.action, team_params)
   end
 
   defp save_team(socket, :new, team_params) do
@@ -66,5 +51,9 @@ defmodule LiveSupWeb.Team.Components.TeamFormComponent do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
     end
+  end
+
+  defp assign_form(socket, %Ecto.Changeset{} = changeset) do
+    assign(socket, :form, to_form(changeset))
   end
 end

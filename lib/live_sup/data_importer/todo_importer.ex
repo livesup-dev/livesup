@@ -1,7 +1,7 @@
 defmodule LiveSup.DataImporter.TodoImporter do
   alias LiveSup.Core.{Todos, Datasources}
 
-  def import(%{"todos" => todos} = data) do
+  def perform(%{"todos" => todos} = data) do
     todos
     |> Enum.each(fn attrs ->
       attrs
@@ -12,7 +12,7 @@ defmodule LiveSup.DataImporter.TodoImporter do
     data
   end
 
-  def import(data), do: data
+  def perform(data), do: data
 
   defp get_or_create(%{"id" => id} = attrs) do
     {:ok, todo} =

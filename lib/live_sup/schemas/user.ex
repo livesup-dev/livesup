@@ -45,6 +45,7 @@ defmodule LiveSup.Schemas.User do
   end
 
   @optional_fields [
+    :id,
     :email,
     :password,
     :first_name,
@@ -112,6 +113,7 @@ defmodule LiveSup.Schemas.User do
       :email,
       :first_name,
       :last_name,
+      :password,
       :avatar_url,
       :location,
       :settings,
@@ -123,6 +125,7 @@ defmodule LiveSup.Schemas.User do
     |> validate_required([])
     |> validate_email()
     |> maybe_set_location()
+    |> maybe_hash_password([])
   end
 
   def onboarded_state, do: "onboarded"
@@ -251,6 +254,12 @@ defmodule LiveSup.Schemas.User do
 
   def address_point(%__MODULE__{location: location}) do
     "#{location["lat"]}, #{location["lng"]}"
+  end
+
+  def random_password() do
+    :crypto.strong_rand_bytes(32)
+    |> Base.encode64()
+    |> String.slice(0..11)
   end
 
   def default_location(), do: @default_location

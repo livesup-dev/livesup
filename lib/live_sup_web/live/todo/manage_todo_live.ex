@@ -76,7 +76,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
       %Step{label: "Home", path: "/"},
       %Step{label: "Projects", path: "/projects"},
       %Step{label: "#{project.name}'s board", path: "/projects/#{project.id}/board"},
-      %Step{label: "Todos"}
+      %Step{label: "Tasks"}
     ])
   end
 

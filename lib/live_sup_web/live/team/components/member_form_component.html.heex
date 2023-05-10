@@ -1,0 +1,13 @@
+<div>
+  <.simple_form target={@myself} for={@form} as={:member}>
+    <.text field={@form[:email]} required={true} label="Email" />
+    <.text field={@form[:first_name]} required={true} label="First Name" />
+    <.text field={@form[:last_name]} required={true} label="Last Name" />
+    <.hidden_input field={@form[:password]} />
+
+    <.alert :if={@error} description={@error} color={:error} />
+    <:actions>
+      <.default_modal_actions action={@action} />
+    </:actions>
+  </.simple_form>
+</div>

@@ -13,10 +13,18 @@ defmodule LiveSup.Test.Setups do
     DashboardsFixtures,
     GroupsFixtures,
     TasksFixtures,
+    TeamsFixtures,
     CommentsFixtures
   }
 
   alias LiveSup.Core.{Groups, Dashboards}
+
+  def setup_team(context) do
+    team = TeamsFixtures.team_fixture()
+
+    context
+    |> add_to_context(%{team: team})
+  end
 
   def setup_dashboard(context) do
     project =
