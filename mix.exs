@@ -75,7 +75,7 @@ defmodule LiveSup.MixProject do
       {:timex, ">= 0.0.0"},
       {:elixir_feed_parser, ">= 0.0.0"},
       {:finch, "~> 0.10"},
-      {:tentacat, "~> 2.0"},
+      {:tentacat, git: "https://github.com/mustela/tentacat", branch: "upgrade_libs"},
       {:bypass, "~> 2.1", only: :test},
       {:mock, "~> 0.3.0", only: :test},
       {:floki, ">= 0.27.0", only: :test},
@@ -113,7 +113,8 @@ defmodule LiveSup.MixProject do
       {:opentelemetry_api, "~> 1.2"},
       {:opentelemetry_ecto, "~> 1.1"},
       {:opentelemetry_phoenix, "~> 1.0"},
-      {:opentelemetry_liveview, "~> 1.0.0-rc.4"}
+      {:opentelemetry_liveview, "~> 1.0.0-rc.4"},
+      {:openai, "~> 0.5.2"}
     ] ++ local_deps()
   end
 

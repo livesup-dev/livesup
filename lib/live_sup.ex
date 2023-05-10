@@ -39,5 +39,19 @@ defmodule LiveSup do
         {:otel_simple_processor, %{}}
       ]
     end
+
+    if openai_api_key = System.get_env("OPENAI_API_KEY") do
+      config :openai,
+        # find it at https://platform.openai.com/account/api-keys
+        api_key: openai_api_key,
+        # find it at https://platform.openai.com/account/org-settings under "Organization ID"
+        organization_key: System.get_env("OPENAI_ORGANIZATION_ID"),
+        # optional, passed to [HTTPoison.Request](https://hexdocs.pm/httpoison/HTTPoison.Request.html) options
+        http_options: [recv_timeout: 30_000],
+        # optional, useful if you want to do local integration tests using Bypass or similar
+        # (https://github.com/PSPDFKit-labs/bypass), do not use it for production code,
+        # but only in your test config!
+        api_url: System.get_env("OPENAI_API_URL") || "http://localhost/"
+    end
   end
 end
