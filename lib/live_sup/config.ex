@@ -36,6 +36,18 @@ defmodule LiveSup.Config do
     end
   end
 
+  def otel_enabled!(env) do
+    if otel = System.get_env(env) do
+      if otel == "true" do
+        true
+      else
+        false
+      end
+    else
+      false
+    end
+  end
+
   @doc """
   Parses and validates the port from env.
   """

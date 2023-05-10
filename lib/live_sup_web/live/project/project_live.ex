@@ -76,7 +76,7 @@ defmodule LiveSupWeb.Project.ProjectLive do
 
       total_users =
         case length(users) do
-          0 -> 0
+          count when count <= 5 -> 0
           count when count > 5 -> count - 5
         end
 

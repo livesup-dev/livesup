@@ -30,5 +30,14 @@ defmodule LiveSup do
     if ssl = LiveSup.Config.db_ssl!("LIVESUP_DATABASE_SSL") do
       config :live_sup, LiveSup.Repo, ssl: ssl
     end
+
+    if not LiveSup.Config.otel_enabled!("OTEL_ENABLED") do
+      config :opentelemetry,
+        traces_exporter: :none
+
+      config :opentelemetry, :processors, [
+        {:otel_simple_processor, %{}}
+      ]
+    end
   end
 end
