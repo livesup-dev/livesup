@@ -1,5 +1,5 @@
 defmodule LiveSup.DataImporter.Cleaner do
-  alias LiveSup.Core.{Projects, Dashboards, Teams, Todos}
+  alias LiveSup.Core.{Projects, Dashboards, Teams, Todos, Comments, Tasks}
 
   alias LiveSup.Queries.{
     MetricQuery,
@@ -23,18 +23,11 @@ defmodule LiveSup.DataImporter.Cleaner do
   end
 
   def clean_projects(%{"remove_existing_projects" => true} = data) do
-    Projects.all()
-    |> Enum.each(fn project ->
-      project
-      |> Dashboards.delete_all()
-
-      project
-      |> Todos.delete_all()
-
-      {:ok, _proj} =
-        project
-        |> Projects.delete()
-    end)
+    Dashboards.delete_all()
+    Comments.delete_all()
+    Tasks.delete_all()
+    Todos.delete_all()
+    Projects.delete_all()
 
     data
   end

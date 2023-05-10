@@ -151,6 +151,22 @@ defmodule LiveSup.Core.Projects do
     Project.changeset(project, attrs)
   end
 
+  @doc """
+  Delete all projects.
+
+  ## Examples
+
+      iex> delete_all()
+      {:ok, %Project{}}
+
+      iex> delete_all()
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_all() do
+    ProjectQuery.delete_all()
+  end
+
   def delete_dashboards(%Project{} = project) do
     project |> Dashboards.delete_all()
   end

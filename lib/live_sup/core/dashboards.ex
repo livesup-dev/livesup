@@ -93,6 +93,32 @@ defmodule LiveSup.Core.Dashboards do
     |> DashboardQuery.delete()
   end
 
+  @doc """
+  Deletes all dashboards.
+  ## Examples
+
+      iex> delete_all()
+      {:ok, %Dashboard{}}
+
+      iex> delete_all()
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_all() do
+    DashboardQuery.delete_all()
+  end
+
+  @doc """
+  Deletes all dashboards by project.
+  ## Examples
+
+      iex> delete_all(project)
+      {:ok, %Dashboard{}}
+
+      iex> delete_all(project)
+      {:error, %Ecto.Changeset{}}
+
+  """
   def delete_all(%Project{} = project) do
     project
     |> DashboardQuery.delete_all()

@@ -52,9 +52,10 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.LastIncidentsLive do
                           href={incident.slack[:url]}
                           target="_blank"
                           class="hover:underline text-black dark:text-primary inline-block"
+                          x-tooltip={incident.slack[:channel]}
                         >
                           <svg
-                            class="w-4 h-4 rounded-full inline-block mr-2"
+                            class="h-8 w-8 rounded-full inline-block mr-2"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -117,7 +118,6 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.LastIncidentsLive do
                               </g>
                             </g>
                           </svg>
-                          <%= incident.slack[:channel] %>
                         </a>
                       </span>
                     <% end %>

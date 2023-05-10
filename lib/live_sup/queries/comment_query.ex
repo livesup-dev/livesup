@@ -72,5 +72,20 @@ defmodule LiveSup.Queries.CommentQuery do
     |> Repo.delete()
   end
 
+  def delete_all() do
+    Repo.delete_all(Comment)
+  end
+
+  def delete_all(%TodoTask{id: task_id}) do
+    query =
+      from(
+        d in TodoTask,
+        where: d.task_id == ^task_id
+      )
+
+    query
+    |> Repo.delete_all()
+  end
+
   def base, do: from(Comment, as: :comment, preload: [:task, :created_by])
 end

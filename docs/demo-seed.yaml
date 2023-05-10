@@ -1,107 +1,686 @@
-remove_existing_projects: false
-remove_existing_teams: false
-remove_existing_metrics: false
+remove_existing_teams: true
+remove_existing_projects: true
+remove_existing_metrics: true
 remove_existing_widgets_instances: true
+remove_existing_notes: true
+users:
+  - id: 9405eaa7-59f3-411e-bda1-f6a3a682763e
+    first_name: Travis
+    last_name: Irby
+    email: tirby@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C4D03AQHVrrqxnba4zw/profile-displayphoto-shrink_100_100/0/1579748425288?e=1689206400&v=beta&t=Xfq3v1YjaSXYLoBYSOb3uSukEMn3ZDMKGGmYkG-QAfA
+    location:
+      timezone: US/Eastern
+      city: Pennsylvania
+      state: Pennsylvania
+      country: United States
+      zip_code: 15017
+      lat: 41.0867338
+      lng: -80.2494486
+  - id: 4df0bd72-289e-416b-a86f-2a8fc7b67269
+    first_name: Rakhee
+    last_name: Malik
+    email: ramalik@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C4E03AQHd2Y6DYynfWQ/profile-displayphoto-shrink_100_100/0/1517661090264?e=1689206400&v=beta&t=R5oD_8s0pQFXDAZJguceb_GyV3BB4QofP4VJTyXjdgA
+    location:
+      timezone: Asia/Kolkata
+      city: Madhya Pradesh
+      state: Madhya Pradesh
+      country: India
+      zip_code: 6
+      lat: 22.7487578
+      lng: 59.0011003
+  - id: 5f5b5b1a-0b0a-4b0c-8b0a-2b0a0b0a0b0a
+    first_name: Andre
+    last_name: Rodrigues
+    email: androdrigues@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C4E03AQH6DjhLUCcR3w/profile-displayphoto-shrink_200_200/0/1517739144486?e=1689206400&v=beta&t=oDp_OuNPNhxE_Hdm4YoGP49HZt1qYoF7aVp3FK251e4
+    location:
+      timezone: US/Eastern
+      city: Pennsylvania
+      state: Pennsylvania
+      country: United States
+      zip_code: 15017
+      lat: 41.0867338
+      lng: -80.2494486
+  - id: 950206e5-61b6-4b3a-9abf-8f68c1d2a1a2
+    first_name: Sukhvir
+    last_name: Singh
+    email: suksingh@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C4E03AQHLk4aURbMIKg/profile-displayphoto-shrink_100_100/0/1620707966652?e=1689206400&v=beta&t=sTnnD_nuIwnMgdLONnrv9bwEvPsnNFC6HJ7ajUvcGX4
+    location:
+      timezone: US/Central
+      city: Missouri
+      state: Missouri
+      country: United States
+      zip_code: 63376
+      lat: 38.1855416
+      lng: -97.7318725
+  - id: 6f5b5b1a-0b0a-4b0c-8b0a-2b0a0b0a0b0a
+    first_name: Vladimir
+    last_name: Veytser
+    email: vveytser@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/615222b1c669a60069fe7d4f/517a66b6-9264-4158-96db-237d8ced7a17/128
+    location:
+      timezone: US/Pacific
+      city: California
+      state: California
+      country: United States
+      zip_code: 90011
+      lat: 30.5983048
+      lng: -158.3075248
+  - id: e1b099c0-bc7e-4cc9-aa85-2ee1afdee240
+    first_name: Seong
+    last_name: Jung
+    email: sjung@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C5603AQEQBU6X51xCxw/profile-displayphoto-shrink_200_200/0/1633544875835?e=1689206400&v=beta&t=AD796to9OURJDEmskVBEeDRhyzlOqDxJOMOmUZvYVoQ
+    location:
+      timezone: US/Eastern
+      city: Pennsylvania
+      state: Pennsylvania
+      country: United States
+      zip_code: 15017
+      lat: 41.0867338
+      lng: -80.2494486
+  - id: 9ded1fd9-37e3-4b3f-89b2-070d99f9b2f7
+    first_name: Omkar
+    last_name: Galvankar
+    email: ogalvankar@equinix.com
+    password: Very@Safe@Password
+    location:
+      timezone: Asia/Kolkata
+      city: Madhya Pradesh
+      state: Madhya Pradesh
+      country: India
+      zip_code: 6
+      lat: 22.7487578
+      lng: 59.0011003
+  - id: 7c64aa37-805e-43fc-8a0c-970efba4de77
+    first_name: Linda
+    last_name: Hemerik
+    email: lhemerik@equinix.com
+    password: Very@Safe@Password
+    location:
+      timezone: US/Eastern
+      city: Pennsylvania
+      state: Pennsylvania
+      country: United States
+      zip_code: 15017
+      lat: 41.0867338
+      lng: -80.2494486
+  - id: 622b89d7-8ecb-452e-bd94-c2eb6c6b8db4
+    first_name: Adam
+    last_name: Mohammed
+    email: admohammed@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C4E03AQEAfavJXUr_0A/profile-displayphoto-shrink_200_200/0/1600784908409?e=1689206400&v=beta&t=8AsqPAcnkVP4Qm0RaK4KDZyzuCLMHgWHnbvnMEuM4lI
+    location:
+      timezone: US/Eastern
+      city: Pennsylvania
+      state: Pennsylvania
+      country: United States
+      zip_code: 15017
+      lat: 41.0867338
+      lng: -80.2494486
+  - id: 9c71455d-53c9-462f-bd74-1c8300cfea8e
+    first_name: Emiliano
+    last_name: Jankowski
+    password: Very@Safe@Password
+    email: emiliano.jankowski@eu.equinix.com
+    avatar_url: https://media.licdn.com/dms/image/C4E03AQEqugskxEgIHw/profile-displayphoto-shrink_200_200/0/1656922828146?e=1689206400&v=beta&t=l7eNqVs-QEdfUvZtU75KzomETtqlweH5ABrxkF89r0g
+    location:
+      timezone: Europe/Madrid
+      city: Es Castell
+      state: Balearic Islands
+      country: Spain
+      zip_code: 07720
+      lat: 9.9991163
+      lng: 9.9991163
+  - id: d06558df-65cb-4f9c-8d64-1336b8e5162a
+    first_name: Gazal
+    last_name: Sahai
+    email: gsahai@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C5603AQEMKjNO-PuqQQ/profile-displayphoto-shrink_100_100/0/1616189969765?e=1689206400&v=beta&t=nUM2YGe0MUR6eDUruJn66qO6MQy_J0ii91DWRSzhq6E
+    location:
+      timezone: US/Pacific
+      city: California
+      state: California
+      country: United States
+      zip_code: 90011
+      lat: 30.5983048
+      lng: -158.3075248
+  - id: ee6cf5a5-a026-485e-8a66-fea74869037d
+    first_name: James
+    last_name: Hogle
+    email: jhogle@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/5cd0598e3e6fd40fe82c3d14/079954da-187d-47ee-92fa-07a7a0feb160/128
+    location:
+      timezone: US/Central
+      city: Missouri
+      state: Missouri
+      country: United States
+      zip_code: 63376
+      lat: 38.1855416
+      lng: -97.7318725
+  - id: 066850b5-04d9-467e-898b-8aa0ec5b15e7
+    first_name: John
+    last_name: Schaeffer
+    email: jschaeffer@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C4D03AQGUZtFMpFFYhw/profile-displayphoto-shrink_100_100/0/1601004757553?e=1689206400&v=beta&t=b3utI0V6OePngiTalJrOYIopWqnG8SPdDfR0AKc8mWI
+    location:
+      timezone: US/Eastern
+      city: Pennsylvania
+      state: Pennsylvania
+      country: United States
+      zip_code: 15017
+      lat: 41.0867338
+      lng: -80.2494486
+  - id: 474c31fc-90f9-42ca-8947-28abdbc42c3f
+    first_name: Navaneeth
+    last_name: Ayirneni
+    email: nayirneni@equinix.com
+    password: Very@Safe@Password
+    location:
+      timezone: US/Pacific
+      city: California
+      state: California
+      country: United States
+      zip_code: 90011
+      lat: 30.5983048
+      lng: -158.3075248
+  - id: 593fba6f-eb79-4d83-b90e-97d8eb584a8e
+    first_name: Surbhit
+    last_name: Bhatnagar
+    email: sbhatnagar@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C5603AQHHpBCTGNVOBg/profile-displayphoto-shrink_100_100/0/1653366636665?e=1689206400&v=beta&t=IYdutK2C4eIQ2J6zAzKScofxW1CK9FNqtnfrdl8WMsA
+    location:
+      timezone: US/Pacific
+      city: California
+      state: California
+      country: United States
+      zip_code: 90011
+      lat: 30.5983048
+      lng: -158.3075248
+  - id: 08e3feaf-5e96-4de1-bd14-f9d1a9da4dfb
+    first_name: Lucas
+    last_name: Perez
+    email: lucperez@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C4D03AQE9m0pLPgnO_Q/profile-displayphoto-shrink_100_100/0/1517509656744?e=1689206400&v=beta&t=FBl0vtR6yX0CBj2Q684T7m8V4I_XF58rrrNVtv2F-sY
+    location:
+      timezone: Europe/Madrid
+      city: Sevilla
+      state: Sevilla
+      country: Spain
+      zip_code: 07720
+      lat: 9.9991163
+      lng: 9.9991163
+  - id: 78a04e17-3be4-46d1-b591-dcf5223d0a06
+    first_name: Nikita
+    last_name: Mehta
+    email: nmehta@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C5603AQGTESsQit9IIA/profile-displayphoto-shrink_100_100/0/1621899046749?e=1689206400&v=beta&t=54XdgGaSaAThjsXB1ojN1IvfO5iG1uNBcG0WBOjoqwA
+    location:
+      timezone: US/Pacific
+      city: California
+      state: California
+      country: United States
+      zip_code: 90011
+      lat: 30.5983048
+      lng: -158.3075248
+  - id: 2898fc73-2e1c-4790-9a25-a2bf4c29421d
+    first_name: Sahil
+    last_name: Wadhwa
+    email: sawadhwa@equinix.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C5603AQE1NAMk4KprTA/profile-displayphoto-shrink_200_200/0/1609798433295?e=1689206400&v=beta&t=ikkI3_yiibn53jvkH6ukS0QG3x-Er8UNRq2vsYosRMU
+    location:
+      timezone: US/Pacific
+      city: California
+      state: California
+      country: United States
+      zip_code: 90011
+      lat: 30.5983048
+      lng: -158.3075248
+  - id: 3ea40e0d-2c50-4a39-adc0-142ff1d34ea0
+    first_name: Thiago
+    last_name: Evandson T
+    email: evandson.l@turing.com
+    password: Very@Safe@Password
+    avatar_url: https://media.licdn.com/dms/image/C4D03AQGlBGSNwiw8pA/profile-displayphoto-shrink_200_200/0/1622031600998?e=1689206400&v=beta&t=fId0-oYDQqx8V1_VzIJHO8_Dsm0aDLIiJrX7pG_87e4
+    location:
+      timezone: America/Maceio
+      city: Maceio
+      state: Maceio
+      country: Brazil
+      zip_code: 90011
+      lat: -9.5945356
+      lng: -35.8518313
+
 projects:
-  - id: 5b75ff88-43fd-4a94-9ec6-6bb4211c5b46
-    name: My Cool Project
-    slug: my-cool-project
-    internal: false
+  - id: 83df8de9-5291-4303-8798-036358d268cd
+    name: Billing
+    avatar_url: https://pythiabot.s3.amazonaws.com/dashboards/nautilus.png
     default: false
-    avatar_url: https://picsum.photos/200/300
     dashboards:
-      - id: 92ab7435-626e-4c87-915c-fab6d46efc16
+      - id: 9b288ed3-b402-45bd-a602-1284377b9b27
         name: Default
-        avatar_url: https://picsum.photos/200/300
         default: false
         widgets:
-          - id: 0be259d2-8450-4b2f-aea4-3b383ec1c34e
-            datasource_slug: chuck-norries-datasource
-            widget_slug: chuck-norris-joke
-            name: Chuck Norris Joke
-          - id: f81c5daa-ac42-4d19-b863-3d8495ac1e17
+          - id: b22d7808-00f8-4787-bdac-0724859a7da1
             datasource_slug: local-datasource
             widget_slug: team-members
-            name: My Cool Team
+            name: Billing Team
             settings:
               team:
                 source: local
                 type: string
-                value: b58f3773-666f-4aa5-866b-793c94021e05
+                value: 9d5a7cc2-0ffb-4825-86da-d00d640a62d4
               title:
                 source: local
                 type: string
-                value: My Cool Team
-          - id: bcee4d7d-f2b8-4b2a-9325-97f4299bf0e4
-            datasource_slug: local-datasource
-            widget_slug: metrics-gauge
-            name: P95 Api Latency
+                value: Billing team
+          - id: 0be259d2-8450-4b2f-aea4-3b383ec1c34e
+            datasource_slug: blameless-datasource
+            widget_slug: blameless-current-incidents
+            name: Incidents in progress
             settings:
+              runs_every:
+                source: local
+                type: int
+                value: 60
+          - id: c8e4542f-9e36-4d7b-98dc-b0324b669123
+            datasource_slug: jira-datasource
+            widget_slug: jira-current-sprint
+            name: Current Sprint
+            settings:
+              board_id:
+                source: local
+                type: string
+                value: 139
               title:
                 source: local
                 type: string
-                value: P95 Api Latency
-              metric:
+                value: Billing Scrum
+          - id: 595e3d3e-bede-469c-bcd0-7cd24673951c
+            datasource_slug: jira-datasource
+            widget_slug: jira-list-of-issues
+            name: Jira list of issues
+            settings:
+              statuses:
+                source: local
+                type: array
+                value: Open,In Progress,In Review
+          - id: c509e560-8d4c-42ff-aa12-ab4ff27395a3
+            datasource_slug: jira-datasource
+            widget_slug: jira-current-sprint-stats
+            name: Current Sprint
+            settings:
+              board_id:
                 source: local
                 type: string
-                value: p95-api-latency
+                value: 139
+              title:
+                source: local
+                type: string
+                value: Billing Sprint
+          - id: 2ab8d9e2-7b53-49be-88f7-23b38538c4ef
+            datasource_slug: pager-duty-datasource
+            widget_slug: pager-duty-on-call
+            name: On Call
+            settings:
+              schedule_ids:
+                source: local
+                type: array
+                value: PP375HF
+              title:
+                source: local
+                type: string
+                value: Billing On Call
+          - id: b97d86a8-f6ae-4c54-92ed-5ed29d516b82
+            datasource_slug: rss-datasource
+            widget_slug: rss-service-status-list
+            name: Services
+            settings:
+              services:
+                source: local
+                type: array
+                value:
+                  - url: https://status.quay.io/history.rss
+                    icon: /images/widgets/logos/quay.png
+                    name: Quay
+                  - url: https://status.rollbar.com/history.rss
+                    icon: /images/widgets/logos/rollbar.png
+                    name: Rollbar
+                  - url: https://www.githubstatus.com/history.rss
+                    icon: /images/widgets/logos/github.png
+                    name: Github
+                  - url: https://status.launchdarkly.com/history.rss
+                    icon: /images/widgets/logos/launchdarkly.png
+                    name: Launchdarkly
+                  - url: https://status.jumpcloud.com/history.rss
+                    icon: /images/widgets/logos/jumpcloud.png
+                    name: Jumpcloud
+                  - url: https://status.atlassian.com/history.rss
+                    icon: /images/widgets/logos/atlassian.png
+                    name: Atlassian
+                  - url: https://status.blameless.io/history.rss
+                    icon: /images/widgets/logos/blameless.png
+                    name: Blameless
+  # ---- ENDS: Billing Project ----
+  # ---- BEGINS: Nautilus Project ----
+  - id: c423ba44-253e-462a-bd27-d6c88f136dd3
+    name: Nautilus (API and Identify Management Team)
+    avatar_url: https://pythiabot.s3.amazonaws.com/dashboards/nautilus.png
+    default: false
+    dashboards:
+      - id: dfd7fcf8-5db4-420d-a39f-051e804826a4
+        name: Default
+        default: false
+        widgets:
+          - id: 41f4828f-8709-4ea7-89f8-9fa7fd72f562
+            datasource_slug: jira-datasource
+            widget_slug: jira-current-sprint
+            name: Current Sprint
+            settings:
+              board_id:
+                source: local
+                type: string
+                value: 145
+              title:
+                source: local
+                type: string
+                value: Nautilus Scrum
+          - id: eabf4eee-888e-44ed-b3b1-913d3f26e469
+            datasource_slug: jira-datasource
+            widget_slug: jira-list-of-issues
+            name: Jira list of issues
+            settings:
+              statuses:
+                source: local
+                type: array
+                value: Open,In Progress,In Review
+          - id: c509e560-8d4c-42ff-aa12-ab4ff27395a3
+            datasource_slug: jira-datasource
+            widget_slug: jira-current-sprint-stats
+            name: Current Sprint
+            settings:
+              board_id:
+                source: local
+                type: string
+                value: 145
+              title:
+                source: local
+                type: string
+                value: Nautilus Sprint
+          - id: 0be259d2-8450-4b2f-aea4-3b383ec1c34e
+            datasource_slug: blameless-datasource
+            widget_slug: blameless-current-incidents
+            name: Incidents in progress
+            settings:
+              runs_every:
+                source: local
+                type: int
+                value: 60
+          - id: df290a3c-b87d-4f48-a720-8dece4335f44
+            datasource_slug: local-datasource
+            widget_slug: team-members
+            name: Nautilus Team
+            settings:
+              team:
+                source: local
+                type: string
+                value: 1ca6244d-d481-4a6c-b99b-b3ccbda915fb
+              title:
+                source: local
+                type: string
+                value: Nautilus team
+              runs_every:
+                source: local
+                type: int
+                value: 60
           - id: a17bad1c-a70d-4dc6-85b8-fb6543e23504
-            datasource_slug: local-datasource
-            widget_slug: note
-            name: Note
+            datasource_slug: rollbar-datasource
+            widget_slug: rollbar-list-of-isuess
+            name: Rollbar
             settings:
-              note:
+              limit:
+                source: local
+                type: int
+                value: 5
+              item_prefix:
                 source: local
                 type: string
-                value: test
-          
+                value: Equinix/Api
+
+          - id: 4179916d-3ab9-490d-8a15-e7ac50326d8f
+            datasource_slug: pager-duty-datasource
+            widget_slug: pager-duty-on-call
+            name: On Call
+            settings:
+              schedule_ids:
+                source: local
+                type: array
+                value: PLBW9ZW
+              title:
+                source: local
+                type: string
+                value: Nautilus On Call
+          - id: b97d86a8-f6ae-4c54-92ed-5ed29d516b82
+            datasource_slug: rss-datasource
+            widget_slug: rss-service-status-list
+            name: Services
+            settings:
+              services:
+                source: local
+                type: array
+                value:
+                  - url: https://status.quay.io/history.rss
+                    icon: /images/widgets/logos/quay.png
+                    name: Quay
+                  - url: https://status.rollbar.com/history.rss
+                    icon: /images/widgets/logos/rollbar.png
+                    name: Rollbar
+                  - url: https://www.githubstatus.com/history.rss
+                    icon: /images/widgets/logos/github.png
+                    name: Github
+                  - url: https://status.launchdarkly.com/history.rss
+                    icon: /images/widgets/logos/launchdarkly.png
+                    name: Launchdarkly
+                  - url: https://status.jumpcloud.com/history.rss
+                    icon: /images/widgets/logos/jumpcloud.png
+                    name: Jumpcloud
+                  - url: https://status.atlassian.com/history.rss
+                    icon: /images/widgets/logos/atlassian.png
+                    name: Atlassian
+                  - url: https://status.blameless.io/history.rss
+                    icon: /images/widgets/logos/blameless.png
+                    name: Blameless
+          # ---- ENDS: Nautilus Project ----
 teams:
-  - id: b58f3773-666f-4aa5-866b-793c94021e05
-    name: My Cool Team 
-    slug: my-cool-team 
-    avatar_url: https://pythiabot.s3.amazonaws.com/teams/finance.png
-    
-metrics:
-  - id: 91e874bb-ee84-41e4-95a0-ad9867371d74
-    name: P95 API Latency
-    slug: p95-api-latency
-    target: 600
-    unit: ms
-    labels:
-      - rocks
-    values:
-      - id: 00b62cd5-057e-4a3e-a943-b4868ce269fe
-        value: 581
-        value_date: 2022-03-18 00:00:00
-      - id: 86cffd8d-e023-4493-a0d1-c7a881d43fab
-        value: 581
-        value_date: 2022-03-11 00:00:00
-      - id: c7807c7b-384a-4c57-9468-32d96bb98b3b
-        value: 638
-        value_date: 2022-03-04 00:00:00
-      - id: 0971b1ba-7646-418b-ae74-339b77fa4d93
-        value: 668
-        value_date: 2022-02-25 00:00:00
-      - id: 41af9db6-84a7-4875-938d-9dcfa87f55ec
-        value: 689
-        value_date: 2022-02-18 00:00:00
-      - id: a84fafa7-73f4-4f0d-9467-947e984d4d8a
-        value: 830
-        value_date: 2022-02-11 00:00:00
-      - id: e34ce051-a579-42c3-8928-3e8982473581
-        value: 946
-        value_date: 2022-02-04 00:00:00
-      - id: 79e98e3e-4896-4dd4-9309-103f7272cd39
-        value: 936
-        value_date: 2022-01-28 00:00:00
-        
-notes:
-  - id: f1f14230-f546-443d-9b9f-a3cac60e1f96
-    title: Test note
-    slug: test
-    content: |
-      *This is a test
-      [Dinosuars](https://en.wikipedia.org/wiki/Dinosaurs)
-      **Some** of these **words** are bold.
-      ## Heading level 2
-  
+  - id: 9d5a7cc2-0ffb-4825-86da-d00d640a62d4
+    name: Billing
+    slug: billing
+    avatar: moneybag
+    members:
+      - id: 9405eaa7-59f3-411e-bda1-f6a3a682763e
+      - id: 4df0bd72-289e-416b-a86f-2a8fc7b67269
+      - id: 5f5b5b1a-0b0a-4b0c-8b0a-2b0a0b0a0b0a
+      - id: 950206e5-61b6-4b3a-9abf-8f68c1d2a1a2
+      - id: 6f5b5b1a-0b0a-4b0c-8b0a-2b0a0b0a0b0a
+      - id: e1b099c0-bc7e-4cc9-aa85-2ee1afdee240
+      - id: 9ded1fd9-37e3-4b3f-89b2-070d99f9b2f7
+      - id: 7c64aa37-805e-43fc-8a0c-970efba4de77
+
+  - id: 1ca6244d-d481-4a6c-b99b-b3ccbda915fb
+    name: Nautilus
+    slug: nautilus
+    avatar: shell
+    members:
+      - id: 622b89d7-8ecb-452e-bd94-c2eb6c6b8db4
+      - id: 9c71455d-53c9-462f-bd74-1c8300cfea8e
+      - id: d06558df-65cb-4f9c-8d64-1336b8e5162a
+      - id: ee6cf5a5-a026-485e-8a66-fea74869037d
+      - id: 066850b5-04d9-467e-898b-8aa0ec5b15e7
+      - id: 474c31fc-90f9-42ca-8947-28abdbc42c3f
+      - id: 593fba6f-eb79-4d83-b90e-97d8eb584a8e
+      - id: 08e3feaf-5e96-4de1-bd14-f9d1a9da4dfb
+      - id: 78a04e17-3be4-46d1-b591-dcf5223d0a06
+      - id: 2898fc73-2e1c-4790-9a25-a2bf4c29421d
+      - id: 3ea40e0d-2c50-4a39-adc0-142ff1d34ea0
+
+todos:
+  - id: cd5c19b7-a460-4a42-a64a-937dfad3f3f3
+    title: Nautilus Tasks
+    project_id: c423ba44-253e-462a-bd27-d6c88f136dd3
+    datasources:
+      - id: 3f9adddb-1180-41a4-bda5-20018c9c5ef4
+        slug: jira-datasource
+        settings:
+          board_id:
+            source: local
+            type: string
+            value: 145
+      - id: 3f9adddb-1180-41a4-bda5-20018c9c5ef4
+        slug: github-datasource
+        settings:
+          owner:
+            source: local
+            type: string
+            value: equinixmetal
+          repository:
+            source: local
+            type: string
+            value: identity-gate
+          limit:
+            source: local
+            type: int
+            value: 100
+      - id: d5e6c027-2fb3-4a0b-b712-d94ebc5035aa
+        slug: github-datasource
+        settings:
+          owner:
+            source: local
+            type: string
+            value: equinixmetal
+          repository:
+            source: local
+            type: string
+            value: identity-inspector
+          limit:
+            source: local
+            type: int
+            value: 100
+      - id: 3a3a3f55-05d6-4d62-ac69-2edad0cb9e91
+        slug: github-datasource
+        settings:
+          owner:
+            source: local
+            type: string
+            value: equinixmetal
+          repository:
+            source: local
+            type: string
+            value: postie
+          limit:
+            source: local
+            type: int
+            value: 100
+      - id: 99f5d294-a4bc-41e4-aa4c-ce29ebaee21e
+        slug: github-datasource
+        settings:
+          owner:
+            source: local
+            type: string
+            value: packethost
+          repository:
+            source: local
+            type: string
+            value: api
+          limit:
+            source: local
+            type: int
+            value: 100
+
+  - id: fcfb3f2a-2835-44c8-9e51-7b20e849eeae
+    title: Billing Tasks
+    project_id: 83df8de9-5291-4303-8798-036358d268cd
+    datasources:
+      - id: 43591c3a-b89e-4352-80a9-5c8a7d338665
+        slug: github-datasource
+        settings:
+          owner:
+            source: local
+            type: string
+            value: packethost
+          repository:
+            source: local
+            type: string
+            value: embs
+          limit:
+            source: local
+            type: int
+            value: 100
+      - id: b3615835-9871-4bff-803c-d764d04ac512
+        slug: github-datasource
+        settings:
+          owner:
+            source: local
+            type: string
+            value: packethost
+          repository:
+            source: local
+            type: string
+            value: billing-api
+          limit:
+            source: local
+            type: int
+            value: 100
+      - id: 588c2d55-f2e7-436c-9bbd-6edbcdf0bfd9
+        slug: github-datasource
+        settings:
+          owner:
+            source: local
+            type: string
+            value: packethost
+          repository:
+            source: local
+            type: string
+            value: billing-it
+          limit:
+            source: local
+            type: int
+            value: 100
+      - id: 2063f1e2-df4a-4d1e-a99a-dcdc5a6c8d78
+        slug: github-datasource
+        settings:
+          owner:
+            source: local
+            type: string
+            value: packethost
+          repository:
+            source: local
+            type: string
+            value: kb-deploy
+          limit:
+            source: local
+            type: int
+            value: 100
+      - id: fc64192a-5f4d-4dd0-b014-41ef10bd142d
+        slug: jira-datasource
+        settings:
+          board_id:
+            source: local
+            type: string
+            value: 139

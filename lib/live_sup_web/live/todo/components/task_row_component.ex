@@ -68,7 +68,7 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
         n when n >= 4 -> "border-l-orange-700"
       end
 
-    "border-l-4 #{color} border-b py-2 dark:border-navy-500 hover:bg-slate-100 dark:hover:bg-navy-600 mb-1"
+    "border-l-4 #{color} border-b py-2 dark:border-b-navy-500 hover:bg-slate-100 dark:hover:bg-navy-600 mb-1"
   end
 
   def row_class(true) do
