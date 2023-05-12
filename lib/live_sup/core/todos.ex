@@ -7,6 +7,7 @@ defmodule LiveSup.Core.Todos do
   alias LiveSup.Queries.{TodoQuery, TaskQuery, TodoDatasourceQuery}
   alias LiveSup.Helpers.StringHelper
   alias LiveSup.Core.Users
+  alias LiveSup.Core.Datasources.JiraDatasource
 
   @doc """
   Returns the list of todos.
@@ -211,6 +212,62 @@ defmodule LiveSup.Core.Todos do
           inserted_at: pull_request[:created_at],
           updated_at: pull_request[:updated_at],
           completed: pull_request[:merged] || pull_request[:closed]
+        }
+        |> upsert_task()
+      end)
+
+    {:ok, tasks}
+  end
+
+  def do_run_datasource(%{
+        run_from: run_from,
+        run_to: run_to,
+        todo_datasource:
+          %{
+            todo: todo,
+            datasource_instance:
+              %DatasourceInstance{
+                datasource: %{slug: "jira-datasource"}
+              } = datasource_instance
+          } = todo_datasource
+      }) do
+    %{"board_id" => board_id, "token" => token, "domain" => domain} =
+      todo_datasource
+      |> TodoDatasource.get_settings([
+        "board_id",
+        "token",
+        "domain"
+      ])
+
+    case JiraDatasource.get_current_sprint_issues(board_id, token: token, domain: domain) do
+      {:ok, issues} ->
+        issues |> add_tasks_jira_issues(todo, datasource_instance)
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
+  def add_tasks_jira_issues(issues, todo, %{
+        id: datasource_instance_id,
+        datasource: %{slug: datasource_slug}
+      }) do
+    tasks =
+      issues
+      |> Enum.map(fn issue ->
+        %{
+          title: "[#{issue[:key]}] - #{issue[:summary]}",
+          description: issue[:description],
+          todo_id: todo.id,
+          tags: ["jira"],
+          external_identifier: issue[:id],
+          external_metadata: issue,
+          datasource_instance_id: datasource_instance_id,
+          datasource_slug: datasource_slug,
+          created_by_id: Users.get_default_system_account!().id,
+          inserted_at: issue[:created_at],
+          updated_at: issue[:created_at],
+          completed: false
         }
         |> upsert_task()
       end)

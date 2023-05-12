@@ -10,7 +10,13 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskActionComponent do
 
   defp do_render(%{task: %{datasource_slug: "github-datasource"}} = assigns) do
     ~H"""
-    <i class="fa-brands fa-github text-2xl"></i>
+    <i class="fa-brands fa-github text-2xl text-black"></i>
+    """
+  end
+
+  defp do_render(%{task: %{datasource_slug: "jira-datasource"}} = assigns) do
+    ~H"""
+    <i class="fa-brands fa-jira text-2xl text-blue-600"></i>
     """
   end
 

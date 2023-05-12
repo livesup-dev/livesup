@@ -181,8 +181,10 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
         components = issue |> parse_components()
 
         %{
+          id: issue["id"],
           key: issue["key"],
           summary: issue["fields"]["summary"],
+          description: issue["fields"]["description"],
           status: issue["fields"]["status"]["name"],
           author: author,
           assignee: assignee,
