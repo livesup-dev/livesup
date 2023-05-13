@@ -24,8 +24,7 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
         <div class="flex flex-wrap items-center font-inter text-xs">
           <p><.from_now value={@task.inserted_at} /></p>
           <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
-          <span class="flex items-center space-x-1">
-          </span>
+          <span class="flex items-center space-x-1"></span>
           <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
           <div :if={@task.priority} class={TodoTaskHelper.priority_class(@task.priority)}>
             <div class="h-2 w-2 rounded-full bg-current"></div>

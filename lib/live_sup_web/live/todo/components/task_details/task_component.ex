@@ -3,7 +3,8 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.TaskComponent do
 
   alias LiveSupWeb.Live.Todo.Components.TaskDetails.{
     LocalTaskComponent,
-    GithubPullRequestTaskComponent
+    GithubPullRequestTaskComponent,
+    JiraTaskComponent
   }
 
   attr(:task, :map, required: true)
@@ -19,5 +20,10 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.TaskComponent do
   def render(%{task: %{datasource_slug: "github-datasource"}} = assigns) do
     assigns
     |> GithubPullRequestTaskComponent.render()
+  end
+
+  def render(%{task: %{datasource_slug: "jira-datasource"}} = assigns) do
+    assigns
+    |> JiraTaskComponent.render()
   end
 end
