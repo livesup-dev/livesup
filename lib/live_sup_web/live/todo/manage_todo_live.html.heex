@@ -6,28 +6,27 @@
   open_tasks_count={@open_tasks_count}
 />
 
+<div class="space-y-4">
+  <.card>
+    <TodoAddTaskComponent.render todo={@todo} />
+    <div class="max-h-screen overflow-auto" id="tasks" phx-update="stream">
+      <TaskRowComponent.render
+        :for={{dom_id, task} <- @streams.tasks}
+        task={task}
+        dom_id={dom_id}
+      />
+    </div>
+  </.card>
 
-  <div class="space-y-4">
-    <.card>
-      <TodoAddTaskComponent.render todo={@todo} />
-      <div class="max-h-screen overflow-auto" id="tasks" phx-update="stream">
-        <TaskRowComponent.render
-          :for={{dom_id, task} <- @streams.tasks}
-          task={task}
-          dom_id={dom_id}
-        />
-      </div>
-    </.card>
-
-    <.card title="Completed">
-      <div class="max-h-screen overflow-auto" id="completed_tasks" phx-update="stream">
-        <TaskRowComponent.render
-          :for={{dom_id, task} <- @streams.completed_tasks}
-          task={task}
-          dom_id={dom_id}
-        />
-      </div>
-    </.card>
+  <.card title="Completed">
+    <div class="max-h-screen overflow-auto" id="completed_tasks" phx-update="stream">
+      <TaskRowComponent.render
+        :for={{dom_id, task} <- @streams.completed_tasks}
+        task={task}
+        dom_id={dom_id}
+      />
+    </div>
+  </.card>
 </div>
 
 <.modal
