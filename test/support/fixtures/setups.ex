@@ -60,6 +60,20 @@ defmodule LiveSup.Test.Setups do
     })
   end
 
+  def setup_jira_datasource(context) do
+    datasource = DatasourcesFixtures.add_jira_datasource()
+
+    datasource_instance =
+      datasource
+      |> LiveSup.Test.DatasourcesFixtures.datasource_instance_fixture()
+
+    context
+    |> add_to_context(%{
+      jira_datasource: datasource,
+      jira_datasource_instance: datasource_instance
+    })
+  end
+
   def setup_project(context) do
     project = ProjectsFixtures.project_fixture()
 
@@ -90,6 +104,13 @@ defmodule LiveSup.Test.Setups do
 
     context
     |> add_to_context(%{todo_github_datasource: todo_datasource})
+  end
+
+  def setup_jira_todo_datasource(%{todo: todo, jira_datasource: datasource} = context) do
+    todo_datasource = TodosFixtures.todo_datasource(todo, datasource)
+
+    context
+    |> add_to_context(%{todo_jira_datasource: todo_datasource})
   end
 
   def setup_task(context) do

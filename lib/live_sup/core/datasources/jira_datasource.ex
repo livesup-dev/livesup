@@ -173,6 +173,9 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   end
 
   defp parse_issues(%{"issues" => issues}) do
+    first_issue = issues |> Enum.at(0)
+    url = "https://#{extract_host(first_issue["self"])}/browse/"
+
     data =
       issues
       |> Enum.map(fn issue ->
@@ -181,12 +184,15 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
         components = issue |> parse_components()
 
         %{
+          id: issue["id"],
           key: issue["key"],
           summary: issue["fields"]["summary"],
+          description: issue["fields"]["description"],
           status: issue["fields"]["status"]["name"],
           author: author,
           assignee: assignee,
           created_at: created_at,
+          url: "#{url}#{issue["key"]}",
           components: components,
           created_at_ago: created_at |> DateHelper.from_now()
         }
@@ -264,6 +270,11 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
       name: jira_user["displayName"],
       email: jira_user["emailAddress"]
     }
+  end
+
+  def extract_host(url) do
+    %{host: host} = URI.parse(url)
+    host
   end
 
   def headers(token) do

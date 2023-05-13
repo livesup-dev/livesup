@@ -77,7 +77,7 @@ defmodule LiveSup.Test.DatasourcesFixtures do
       slug: "jira-datasource",
       enabled: true,
       labels: [],
-      settings: %{"token" => "1234", "domain" => "livesup.jira.com"}
+      settings: %{"token" => "1234", "domain" => "livesup.jira.com", "board_id" => "1234"}
     }
     |> datasource_fixture()
   end
