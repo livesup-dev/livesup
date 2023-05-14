@@ -20,7 +20,7 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
           <%= @task.title %>
         </h2>
       </div>
-      <div class="mt-1 flex items-end justify-between ml-2">
+      <div class="flex items-end justify-between ml-2">
         <div class="flex flex-wrap items-center font-inter text-xs">
           <p><.from_now value={@task.inserted_at} /></p>
           <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
@@ -44,7 +44,7 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
           >
             <%= length(@task.comments) %>
           </div>
-          <div class="avatar h-6 w-6">
+          <div class="avatar h-6 w-6" x-tooltip={"'#{User.full_name(@task.created_by)}'"}>
             <img class="rounded-full" src={created_by_avatar(@task)} alt="avatar" />
           </div>
         </div>
