@@ -28,7 +28,7 @@ defmodule LiveSupWeb.Live.Widgets.Rollbar.ListOfIssuesLive do
               <%= for issue <- widget_data.data do %>
                 <div class="gap-4 py-2 flex">
                   <a
-                    class="text-black dark:text-primary hover:underline break-all basis-9/12"
+                    class="dark:text-primary hover:underline break-all basis-9/12"
                     target="_blank"
                     href={issue[:url]}
                   >

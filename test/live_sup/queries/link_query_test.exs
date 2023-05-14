@@ -11,7 +11,12 @@ defmodule LiveSup.Tests.Queries.LinkQueryTest do
     jira_link = LinksFixtures.add_jira_link(user)
     pager_duty_link = LinksFixtures.add_pager_duty_link(user)
 
-    %{jira_link: jira_link, pager_duty_link: pager_duty_link, user: user}
+    %{
+      jira_link: jira_link,
+      pager_duty_link: pager_duty_link,
+      user: user,
+      jira_datasource_instance: jira_link.datasource_instance
+    }
   end
 
   setup [:setup_links]
@@ -30,6 +35,12 @@ defmodule LiveSup.Tests.Queries.LinkQueryTest do
     } do
       found_jira_link = user |> LinkQuery.get_by_datasource("jira-datasource")
       assert [jira_link] == found_jira_link
+    end
+
+    @tag :skip
+    test "getting link by setting", %{jira_datasource_instance: jira_datasource_instance} do
+      jira_link = LinkQuery.get_by_setting("account_id", "1234", jira_datasource_instance)
+      assert jira_link.settings[:account_id] == "1234"
     end
 
     test "deleting link", %{jira_link: jira_link} do

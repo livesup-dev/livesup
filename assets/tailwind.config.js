@@ -43,6 +43,7 @@ module.exports = {
   content: [
     "../**/*.*exs",
     "./js/**/*.js",
+    "../lib/live_sup/views/**/*.ex",
     "../lib/*_web.ex",
     "../lib/*_web/**/*.*ex",
   ],

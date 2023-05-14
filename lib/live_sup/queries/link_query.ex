@@ -62,6 +62,17 @@ defmodule LiveSup.Queries.LinkQuery do
     |> Repo.one()
   end
 
+  def get_by_setting(key, value, %DatasourceInstance{
+        id: datasource_instance_id
+      }) do
+    base()
+    |> where(
+      [link: link, datasource_instance: datasource_instance],
+      link.settings[^key] == ^value and datasource_instance.id == ^datasource_instance_id
+    )
+    |> Repo.one()
+  end
+
   def update(%Link{} = model, attrs) do
     model
     |> Link.changeset(attrs)

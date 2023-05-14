@@ -204,6 +204,7 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
   def find_author(%{"fields" => %{"creator" => creator, "created" => created}}) do
     author = %{
       full_name: creator["displayName"],
+      account_id: creator["accountId"],
       avatar: creator["avatarUrls"]["48x48"],
       email: creator["emailAddress"]
     }
@@ -218,7 +219,8 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
 
     author = %{
       full_name: last["author"]["displayName"],
-      avatar: last["author"]["avatarUrls"]["48x48"]
+      avatar: last["author"]["avatarUrls"]["48x48"],
+      account_Id: last["author"]["accountId"]
     }
 
     created_at = last["created"] |> DateHelper.parse_date()
