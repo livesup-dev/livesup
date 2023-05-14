@@ -40,12 +40,12 @@ defmodule LiveSupWeb.Live.Widgets.Jira.ListOfIssuesLive do
                   <span class="justify-center text-center basis-1/12">
                     <%= Palette.Utils.DateHelper.from_now(issue[:created_at], :short) %>
                   </span>
-                  <span class="justify-center text-center basis-2/12"
-                  x-tooltip.light={"'#{issue[:status]}'"}
-                   >
+                  <span
+                    class="justify-center text-center basis-2/12"
+                    x-tooltip.light={"'#{issue[:status]}'"}
+                  >
                     <i class={JiraStateHelper.status_icon(issue[:status])} />
-                    </span>
-
+                  </span>
                 </div>
               <% end %>
             </div>

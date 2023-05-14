@@ -63,8 +63,8 @@ defmodule LiveSup.Queries.LinkQuery do
   end
 
   def get_by_setting(key, value, %DatasourceInstance{
-    id: datasource_instance_id
-  }) do
+        id: datasource_instance_id
+      }) do
     base()
     |> where(
       [link: link, datasource_instance: datasource_instance],

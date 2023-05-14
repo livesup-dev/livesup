@@ -220,7 +220,7 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
     author = %{
       full_name: last["author"]["displayName"],
       avatar: last["author"]["avatarUrls"]["48x48"],
-      account_Id: last["author"]["accountId"],
+      account_Id: last["author"]["accountId"]
     }
 
     created_at = last["created"] |> DateHelper.parse_date()

@@ -11,7 +11,12 @@ defmodule LiveSup.Tests.Queries.LinkQueryTest do
     jira_link = LinksFixtures.add_jira_link(user)
     pager_duty_link = LinksFixtures.add_pager_duty_link(user)
 
-    %{jira_link: jira_link, pager_duty_link: pager_duty_link, user: user, jira_datasource_instance: jira_link.datasource_instance}
+    %{
+      jira_link: jira_link,
+      pager_duty_link: pager_duty_link,
+      user: user,
+      jira_datasource_instance: jira_link.datasource_instance
+    }
   end
 
   setup [:setup_links]
