@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - testing_ssl
     tags:
       - "v*.*.*"
 jobs:
