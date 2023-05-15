@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
       widget_data={@widget_data}
     >
       <!-- Current Incidents -->
-        <WidgetHeaderComponent.render widget_data={widget_data} />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="ls-widget-body-default">
         <%= if Enum.any?(widget_data.data) do %>

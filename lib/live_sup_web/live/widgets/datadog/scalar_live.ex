@@ -12,11 +12,7 @@ defmodule LiveSupWeb.Live.Widgets.Datadog.ScalarLive do
       widget_data={@widget_data}
     >
       <!-- Metrics Goal -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 grid justify-items-center  min-h-[200px]">
         <%= live_component(LiveSupWeb.Output.PlotlyStaticComponent,

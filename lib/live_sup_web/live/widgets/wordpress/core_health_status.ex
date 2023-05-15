@@ -11,11 +11,7 @@ defmodule LiveSupWeb.Live.Widgets.Wordpress.CoreHealthStatusLive do
       widget_data={@widget_data}
     >
       <!-- WordPress Core Health -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="flex-1 grid grid-cols-1 divide-y divide-gray-100 dark:divide-gray-500 text-sm p-2">
         <%= for {_key, value} <- widget_data.data[:wp_core] do %>
@@ -26,11 +22,7 @@ defmodule LiveSupWeb.Live.Widgets.Wordpress.CoreHealthStatusLive do
       </div>
       <!-- /Widget Content -->
       <!-- /WordPress Core Health -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

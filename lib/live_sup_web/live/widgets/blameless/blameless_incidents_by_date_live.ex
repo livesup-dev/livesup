@@ -12,7 +12,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByDateLive do
       widget_data={@widget_data}
     >
       <!-- Incidents by Type -->
-        <WidgetHeaderComponent.render widget_data={widget_data} />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 grid justify-items-center  min-h-[132px]">
         <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent,
@@ -22,7 +22,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByDateLive do
       </div>
       <!-- /Widget Content -->
       <!-- /Incidents by Type -->
-        <WidgetFooterComponent.render widget_data={widget_data} />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

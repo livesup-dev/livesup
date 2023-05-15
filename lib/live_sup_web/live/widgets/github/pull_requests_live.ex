@@ -13,7 +13,8 @@ defmodule LiveSupWeb.Live.Widgets.Github.PullRequestsLive do
       widget_data={@widget_data}
     >
       <!-- Github Pull Requests -->
-        <WidgetHeaderComponent.render widget_data={widget_data}
+      <WidgetHeaderComponent.render
+        widget_data={widget_data}
         icon_svg={GithubHelper.icon(widget_data.public_settings["state"])}
       />
       <!-- Widget Content -->

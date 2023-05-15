@@ -13,7 +13,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.LastIncidentsLive do
       widget_data={@widget_data}
     >
       <!-- Last Incidents -->
-        <WidgetHeaderComponent.render widget_data={widget_data} />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="ls-widget-body-default">
         <%= if Enum.any?(widget_data.data) do %>
@@ -178,7 +178,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.LastIncidentsLive do
         <% end %>
       </div>
       <!-- /Widget Content -->
-        <WidgetFooterComponent.render widget_data={widget_data} />
+      <WidgetFooterComponent.render widget_data={widget_data} />
       <!-- /Last Incidents -->
     </.live_component>
     """
