@@ -12,11 +12,7 @@ defmodule LiveSupWeb.Live.Widgets.Jira.ListOfIssuesLive do
       widget_data={@widget_data}
     >
       <!-- Incidents by Type -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="items-center p-4 bg-white rounded-md dark:bg-darker">
         <div class="">
@@ -76,11 +72,7 @@ defmodule LiveSupWeb.Live.Widgets.Jira.ListOfIssuesLive do
       </div>
       <!-- /Widget Content -->
       <!-- /Incidents by Type -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

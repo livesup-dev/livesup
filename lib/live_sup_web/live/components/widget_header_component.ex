@@ -1,5 +1,5 @@
 defmodule LiveSupWeb.Live.Components.WidgetHeaderComponent do
-  use Phoenix.LiveComponent
+  use LiveSupWeb, :component
 
   def render(assigns) do
     ~H"""

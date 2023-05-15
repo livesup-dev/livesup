@@ -11,22 +11,14 @@ defmodule LiveSupWeb.Live.Widgets.ChuckNorrisLive do
       widget_data={@widget_data}
     >
       <!-- Chuck Norris -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="flex-auto min-h-[132px]">
         <p class="p-2"><%= widget_data.data %></p>
       </div>
       <!-- /Widget Content -->
       <!-- /Chuck Norris -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

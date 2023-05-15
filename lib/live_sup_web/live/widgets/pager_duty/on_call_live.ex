@@ -11,11 +11,7 @@ defmodule LiveSupWeb.Live.Widgets.PagerDuty.OnCallLive do
       widget_data={@widget_data}
     >
       <!-- Metrics Goal -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="ls-widget-body-default">
         <%= for {on_calls, key} <-  Enum.with_index(widget_data.data) do %>
@@ -79,11 +75,7 @@ defmodule LiveSupWeb.Live.Widgets.PagerDuty.OnCallLive do
       </div>
       <!-- /Widget Content -->
       <!-- /Metrics Goal -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

@@ -12,11 +12,7 @@ defmodule LiveSupWeb.Live.Widgets.WeatherLive do
     >
       <!-- Weather Start -->
       <!-- Card header -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- /Card header -->
       <!-- Weather Start -->
       <div class="flex items-center p-2 bg-white rounded-md dark:bg-darker">
@@ -44,11 +40,7 @@ defmodule LiveSupWeb.Live.Widgets.WeatherLive do
         </div>
       </div>
       <!-- Weather End -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

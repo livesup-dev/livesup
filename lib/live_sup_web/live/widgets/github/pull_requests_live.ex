@@ -1,6 +1,7 @@
 defmodule LiveSupWeb.Live.Widgets.Github.PullRequestsLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
   alias LiveSupWeb.Widgets.Github.GithubHelper
+  alias LiveSupWeb.Live.Components.{WidgetHeaderComponent, WidgetFooterComponent}
 
   @impl true
   def render_widget(assigns) do
@@ -12,9 +13,7 @@ defmodule LiveSupWeb.Live.Widgets.Github.PullRequestsLive do
       widget_data={@widget_data}
     >
       <!-- Github Pull Requests -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
+      <WidgetHeaderComponent.render
         widget_data={widget_data}
         icon_svg={GithubHelper.icon(widget_data.public_settings["state"])}
       />
@@ -67,11 +66,7 @@ defmodule LiveSupWeb.Live.Widgets.Github.PullRequestsLive do
           </p>
         <% end %>
       </div>
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
       <!-- /Github Pull Requests -->
     </.live_component>
     """

@@ -10,11 +10,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive do
       id="core-health-status"
       widget_data={@widget_data}
     >
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <div class="flex-auto divide-y divide-gray-100 dark:divide-gray-500 p-2">
         <%= for {entry, _counter} <- Enum.with_index(widget_data.data) do %>
           <div class="flex pt-2 pb-2">
@@ -77,11 +73,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive do
           </div>
         <% end %>
       </div>
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

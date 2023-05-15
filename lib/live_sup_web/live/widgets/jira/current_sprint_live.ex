@@ -1,5 +1,6 @@
 defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
+  alias LiveSupWeb.Live.Components.{WidgetHeaderComponent, WidgetFooterComponent}
 
   @impl true
   def render_widget(assigns) do
@@ -11,11 +12,7 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintLive do
       widget_data={@widget_data}
     >
       <!-- Jira Current Sprint -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 text-left min-h-[132px]">
         <span class="text-center text-lg"><%= widget_data.data.name %></span>
@@ -28,11 +25,7 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintLive do
       </div>
       <!-- /Widget Content -->
       <!-- /Jira Current Sprint -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

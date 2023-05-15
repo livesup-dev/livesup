@@ -1,6 +1,7 @@
 defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
   alias LiveSupWeb.Widgets.Blameless.BlamelessHelper
+  alias LiveSupWeb.Live.Components.{WidgetHeaderComponent, WidgetFooterComponent}
 
   @impl true
   def render_widget(assigns) do
@@ -12,11 +13,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
       widget_data={@widget_data}
     >
       <!-- Current Incidents -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="ls-widget-body-default">
         <%= if Enum.any?(widget_data.data) do %>
@@ -181,11 +178,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
         <% end %>
       </div>
       <!-- /Widget Content -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
       <!-- /Current Incidents -->
     </.live_component>
     """

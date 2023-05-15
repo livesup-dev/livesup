@@ -12,11 +12,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
       widget_data={@widget_data}
     >
       <!-- Metrics Goal -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 grid justify-items-center  min-h-[200px]">
         <%= live_component(LiveSupWeb.Output.PlotlyStaticComponent,
@@ -26,11 +22,7 @@ defmodule LiveSupWeb.Live.Widgets.Metrics.GaugeLive do
       </div>
       <!-- /Widget Content -->
       <!-- /Metrics Goal -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end
