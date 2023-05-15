@@ -1,5 +1,6 @@
 defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByDateLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
+  alias LiveSupWeb.Live.Components.{WidgetHeaderComponent, WidgetFooterComponent}
 
   @impl true
   def render_widget(assigns) do
@@ -11,11 +12,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByDateLive do
       widget_data={@widget_data}
     >
       <!-- Incidents by Type -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+        <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2 grid justify-items-center  min-h-[132px]">
         <%= live_component(LiveSupWeb.Output.VegaLiteStaticComponent,
@@ -25,11 +22,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.IncidentsByDateLive do
       </div>
       <!-- /Widget Content -->
       <!-- /Incidents by Type -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+        <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

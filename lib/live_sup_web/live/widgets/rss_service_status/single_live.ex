@@ -11,11 +11,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.SingleLive do
       widget_data={@widget_data}
     >
       <!-- RSS Service -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="p-2">
         <%= if widget_data.data.status == :incident do %>
@@ -72,11 +68,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.SingleLive do
       </div>
       <!-- /Widget Content -->
       <!-- /RSS Service -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

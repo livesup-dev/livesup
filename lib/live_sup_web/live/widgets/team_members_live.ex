@@ -11,11 +11,7 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
       widget_data={@widget_data}
     >
       <!-- Team Members -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="ls-widget-body-default">
         <div
@@ -99,11 +95,7 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
       </div>
       <!-- /Widget Content -->
       <!-- /Team Members -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end

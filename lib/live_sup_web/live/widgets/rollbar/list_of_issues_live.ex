@@ -11,11 +11,7 @@ defmodule LiveSupWeb.Live.Widgets.Rollbar.ListOfIssuesLive do
       widget_data={@widget_data}
     >
       <!-- Rollbar list of issues -->
-      <.live_component
-        module={WidgetHeaderComponent}
-        id={"#{widget_data.id}-header"}
-        widget_data={widget_data}
-      />
+      <WidgetHeaderComponent.render widget_data={widget_data} />
       <div class="ls-widget-body-default">
         <div class="my-3">
           <%= if Enum.any?(widget_data.data) do %>
@@ -70,11 +66,7 @@ defmodule LiveSupWeb.Live.Widgets.Rollbar.ListOfIssuesLive do
       </div>
       <!-- /Widget Content -->
       <!-- /Rollbar list of issues -->
-      <.live_component
-        module={WidgetFooterComponent}
-        id={"#{widget_data.id}-footer"}
-        widget_data={widget_data}
-      />
+      <WidgetFooterComponent.render widget_data={widget_data} />
     </.live_component>
     """
   end
