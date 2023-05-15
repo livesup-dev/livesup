@@ -12,7 +12,7 @@ import Config
 config :live_sup, LiveSupWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 8080],
   server: true,
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
   force_ssl: [rewrite_on: [:x_forwarded_proto], host: nil]
 
 # Do not print debug messages in production
