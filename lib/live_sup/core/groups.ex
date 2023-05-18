@@ -7,6 +7,7 @@ defmodule LiveSup.Core.Groups do
   alias LiveSup.Queries.GroupQuery
   alias LiveSup.Repo
 
+  defdelegate count, to: GroupQuery
   defdelegate delete_all, to: GroupQuery
   defdelegate member?(group, user), to: GroupQuery
 
@@ -123,6 +124,28 @@ defmodule LiveSup.Core.Groups do
 
     user
     |> add_user(group)
+  end
+
+  def user_default_group(%User{id: user_id}) do
+    user_id
+    |> GroupQuery.get()
+  end
+
+  def create_user_default_group(%{id: user_id} = user) do
+    short_id = Palette.Utils.StringHelper.short_id(user.id)
+
+    case GroupQuery.create(%{
+           id: user_id,
+           name: "#{short_id} - #{user.first_name} Personal Group",
+           description: "Your personal group"
+         }) do
+      {:ok, group} ->
+        add_user(user, group)
+        {:ok, group}
+
+      {:error, _} ->
+        {:error, "Could not create personal group"}
+    end
   end
 
   def add_project(%Project{} = project, %Group{} = group) do

@@ -35,6 +35,9 @@ defmodule LiveSup.Core.Todos do
     |> found()
   end
 
+  def tasks(todo_id, filters \\ []), do: get_tasks(todo_id, filters)
+
+  @deprecated "Use tasks/2 instead"
   def get_tasks(todo_id, filters \\ []) do
     todo_id
     |> TaskQuery.by_todo(filters)
@@ -220,7 +223,6 @@ defmodule LiveSup.Core.Todos do
   end
 
   def do_run_datasource(%{
-        run_from: run_from,
         run_to: run_to,
         todo_datasource:
           %{

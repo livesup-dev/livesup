@@ -7,7 +7,8 @@ defmodule LiveSup.DataImporter.Cleaner do
     WidgetInstanceQuery,
     NoteQuery,
     UserQuery,
-    LinkQuery
+    LinkQuery,
+    GroupQuery
   }
 
   def clean(data) do
@@ -17,6 +18,7 @@ defmodule LiveSup.DataImporter.Cleaner do
     |> clean_metrics()
     |> clean_widgets_instances()
     |> clean_notes()
+    |> clean_groups()
     |> clean_users()
   end
 
@@ -78,6 +80,18 @@ defmodule LiveSup.DataImporter.Cleaner do
   end
 
   def clean_notes(data), do: data
+
+  def clean_groups(%{"remove_existing_groups" => true} = data) do
+    GroupQuery.non_internal_groups()
+    |> Enum.each(fn group ->
+      group
+      |> GroupQuery.delete()
+    end)
+
+    data
+  end
+
+  def clean_groups(data), do: data
 
   def clean_users(%{"remove_existing_users" => true} = data) do
     UserQuery.all()

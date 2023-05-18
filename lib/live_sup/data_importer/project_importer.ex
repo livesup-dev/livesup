@@ -1,5 +1,5 @@
 defmodule LiveSup.DataImporter.ProjectImporter do
-  alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets}
+  alias LiveSup.Core.{Projects, Dashboards, Datasources, Widgets, Users}
   alias LiveSup.Schemas.{Project, WidgetInstance, DashboardWidget}
 
   def perform(%{"projects" => projects} = data) do
@@ -14,6 +14,11 @@ defmodule LiveSup.DataImporter.ProjectImporter do
   end
 
   def perform(data), do: data
+
+  defp get_or_create_project(%{"id" => id, "personal" => user_id} = attrs) do
+    user = Users.get(user_id)
+    Projects.get(id) || Projects.create_personal_project(user, attrs)
+  end
 
   defp get_or_create_project(%{"id" => id} = attrs) do
     Projects.get(id) || Projects.create_public_project(attrs)

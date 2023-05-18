@@ -3,9 +3,9 @@ defmodule LiveSup.Core.Projects do
   The Projects context.
   """
 
-  alias LiveSup.Schemas.Project
+  alias LiveSup.Schemas.{Project, User}
   alias LiveSup.Queries.{ProjectQuery, GroupQuery, ProjectGroupQuery}
-  alias LiveSup.Core.{Todos, Dashboards}
+  alias LiveSup.Core.{Todos, Dashboards, Groups}
   alias Palette.Utils.{ColorHelper, StringHelper}
 
   @doc """
@@ -84,6 +84,23 @@ defmodule LiveSup.Core.Projects do
       |> ProjectQuery.create!()
 
     group = GroupQuery.get_all_users_group()
+
+    ProjectGroupQuery.create!(%{
+      project_id: project.id,
+      group_id: group.id
+    })
+
+    {:ok, project}
+  end
+
+  def create_personal_project(%User{} = user, attrs \\ %{}) do
+    project =
+      %{"color" => ColorHelper.hex()}
+      |> StringHelper.keys_to_strings()
+      |> Map.merge(attrs)
+      |> ProjectQuery.create!()
+
+    group = Groups.user_default_group(user)
 
     ProjectGroupQuery.create!(%{
       project_id: project.id,
