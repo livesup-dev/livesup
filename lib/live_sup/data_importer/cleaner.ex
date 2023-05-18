@@ -91,6 +91,8 @@ defmodule LiveSup.DataImporter.Cleaner do
     data
   end
 
+  def clean_groups(data), do: data
+
   def clean_users(%{"remove_existing_users" => true} = data) do
     UserQuery.all()
     |> Enum.each(fn user ->
