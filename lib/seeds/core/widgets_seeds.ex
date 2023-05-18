@@ -85,6 +85,10 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       },
       %{
         datasource_slug: "local-datasource",
+        attrs: &todo_widget_attrs/1
+      },
+      %{
+        datasource_slug: "local-datasource",
         attrs: &goal_widget_attrs/1
       },
       %{
@@ -144,6 +148,24 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 5},
         "team" => %{"source" => "local", "string" => "string", "value" => ""}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  defp todo_widget_attrs(datasource) do
+    %{
+      name: "Todo",
+      slug: "todo",
+      enabled: true,
+      global: true,
+      feature_image_url: "/images/widgets/todo.png",
+      ui_handler: "LiveSupWeb.Live.Widgets.TodoLive",
+      worker_handler: "LiveSup.Core.Widgets.Todo.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 5},
+        "todo" => %{"source" => "local", "string" => "string", "value" => ""}
       },
       datasource_id: datasource.id
     }

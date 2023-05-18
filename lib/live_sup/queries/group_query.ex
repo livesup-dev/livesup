@@ -8,9 +8,31 @@ defmodule LiveSup.Queries.GroupQuery do
   @administrators_group "administrators"
   @all_users_group "all-users"
 
+  def count do
+    base()
+    |> Repo.aggregate(:count)
+  end
+
   def all do
     base()
     |> Repo.all()
+  end
+
+  def internal_groups() do
+    base()
+    |> where([g], g.internal == true)
+    |> Repo.all()
+  end
+
+  def non_internal_groups() do
+    base()
+    |> where([g], g.internal == false)
+    |> Repo.all()
+  end
+
+  def get(id) do
+    base()
+    |> Repo.get(id)
   end
 
   def get!(id) do

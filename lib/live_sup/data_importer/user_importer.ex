@@ -3,6 +3,12 @@ defmodule LiveSup.DataImporter.UserImporter do
   alias LiveSup.Schemas.User
   alias LiveSup.Queries.GroupQuery
 
+  def perform(data) when is_binary(data) do
+    data
+    |> LiveSup.DataImporter.Importer.parse_yaml()
+    |> perform()
+  end
+
   def perform(%{"users" => users} = data) do
     all_users_group = GroupQuery.get_all_users_group()
 
@@ -13,6 +19,7 @@ defmodule LiveSup.DataImporter.UserImporter do
       user_attrs
       |> Map.put("password", password)
       |> get_or_create_user()
+      |> create_default_personal_group()
       |> add_to_group(all_users_group)
       |> find_links()
     end)
@@ -38,9 +45,22 @@ defmodule LiveSup.DataImporter.UserImporter do
   # end
 
   defp find_links({:ok, %User{} = user}) do
-    LiveSup.Core.LinksScanners.Scanner.scan(user, "jira-datasource")
+    LiveSup.Core.LinksScanners.Scanner.scan_all(user)
 
     {:ok, user}
+  end
+
+  defp create_default_personal_group({:ok, user}) do
+    case Groups.user_default_group(user) do
+      nil ->
+        user
+        |> Groups.create_user_default_group()
+
+        {:ok, user}
+
+      _ ->
+        {:ok, user}
+    end
   end
 
   defp add_to_group({:ok, %User{} = user}, group) do

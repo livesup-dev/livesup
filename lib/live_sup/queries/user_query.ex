@@ -44,6 +44,12 @@ defmodule LiveSup.Queries.UserQuery do
     |> Repo.get(id)
   end
 
+  def get_with_groups(id) do
+    base()
+    |> preload(:groups)
+    |> Repo.get(id)
+  end
+
   def create!(data) do
     %User{}
     |> User.registration_changeset(data)

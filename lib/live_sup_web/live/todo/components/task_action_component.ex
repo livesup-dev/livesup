@@ -8,18 +8,6 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskActionComponent do
     |> do_render()
   end
 
-  defp do_render(%{task: %{datasource_slug: "github-datasource"}} = assigns) do
-    ~H"""
-    <i class="fa-brands fa-github text-2xl text-black"></i>
-    """
-  end
-
-  defp do_render(%{task: %{datasource_slug: "jira-datasource"}} = assigns) do
-    ~H"""
-    <i class="fa-brands fa-jira text-2xl text-blue-600"></i>
-    """
-  end
-
   defp do_render(%{task: %{datasource_slug: nil}} = assigns) do
     ~H"""
     <input
@@ -30,6 +18,16 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskActionComponent do
       type="radio"
       checked={@task.completed}
     />
+    """
+  end
+
+  defp do_render(%{task: %{datasource_slug: datasource_slug}} = assigns) do
+    assigns =
+      assigns
+      |> assign(:icon, LiveSup.Views.TodoTaskHelper.task_icon(datasource_slug))
+
+    ~H"""
+    <i class={"#{@icon} text-2xl"}></i>
     """
   end
 end
