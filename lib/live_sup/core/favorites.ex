@@ -8,6 +8,8 @@ defmodule LiveSup.Core.Favorites do
 
   defdelegate create(attrs), to: FavoriteQuery
   defdelegate delete(favorite), to: FavoriteQuery
+  defdelegate exists?(user_id, entity), to: FavoriteQuery
+  defdelegate toggle(user_id, entity), to: FavoriteQuery
 
   def all(%User{id: user_id}) do
     user_id

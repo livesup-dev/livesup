@@ -1,13 +1,11 @@
 defmodule LiveSupWeb.Project.DashboardLive do
   use LiveSupWeb, :live_view
 
-  alias LiveSup.Core.{Projects, Dashboards, Widgets.WidgetManager}
+  alias LiveSup.Core.{Projects, Dashboards, Widgets.WidgetManager, Favorites}
   alias LiveSup.Core.Utils
   alias LiveSup.Schemas.{Dashboard}
   alias Palette.Components.Breadcrumb.Step
   alias LiveSupWeb.ProjectLive.LiveComponents.DashboardFormComponent
-
-  on_mount(LiveSupWeb.UserLiveAuth)
 
   @impl true
   def mount(_params, session, socket) do
@@ -19,6 +17,17 @@ defmodule LiveSupWeb.Project.DashboardLive do
      |> assign(:current_user, current_user)
      |> assign(:dashboard, nil)
      |> assign_defaults()}
+  end
+
+  @impl true
+  def handle_event(
+        "favorite",
+        params,
+        %{assigns: %{dashboard: dashboard, current_user: current_user}} = socket
+      ) do
+    {:noreply,
+     socket
+     |> assign(:favorite, Favorites.toggle(current_user, dashboard))}
   end
 
   @impl true
@@ -72,6 +81,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
     |> assign(:widget_instances, widget_instances)
     |> assign(:current_dashboard, dashboard)
     |> assign(:dashboard, dashboard)
+    |> assign(:favorite, Favorites.exists?(socket.assigns.current_user, dashboard))
     |> assign_dashboards(dashboard.project)
     |> assign(:project, dashboard.project)
     |> assign(:section, :dashboard)

@@ -1,4 +1,10 @@
-<.breadcrumb title="Todos" steps={@breadcrumb_steps} />
+<.breadcrumb title="Todos" steps={@breadcrumb_steps}>
+  <:actions>
+    <.action_link type={:patch} path={~p"/projects/new"} tooltip="Add Project" />
+    <.favorite value={@favorite} />
+  </:actions>
+</.breadcrumb>
+
 <.modal
   :if={@live_action == :new}
   show

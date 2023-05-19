@@ -46,6 +46,20 @@ defmodule LiveSup.Queries.FavoriteQueryTest do
       assert Enum.all?(favorites, fn f -> f.user_id == user_id end)
     end
 
+    @tag :favorite_exists
+    test "exists?/2", %{user: %{id: user_id} = user, project: project} do
+      assert FavoriteQuery.exists?(user_id, project)
+      assert FavoriteQuery.exists?(user, project)
+    end
+
+    @tag :favorite_toggle
+    test "toggle/2", %{user: %{id: user_id} = user, project: project} do
+      assert FavoriteQuery.toggle(user_id, project) == false
+      assert FavoriteQuery.exists?(user, project) == false
+      assert FavoriteQuery.toggle(user_id, project)
+      assert FavoriteQuery.exists?(user, project)
+    end
+
     def setup_other_favorites(context) do
       project = ProjectsFixtures.project_fixture()
       user = AccountsFixtures.user_fixture()

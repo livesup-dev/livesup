@@ -33,7 +33,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.JiraTaskComponent do
   end
 
   defp body_to_html(nil), do: "No description provided."
-  defp body_to_html(""), do: "No description provided."
+  defp body_to_html(body) when is_binary(body) and body == "", do: "No description provided."
 
   defp body_to_html(body) when is_binary(body) do
     Palette.Utils.StringHelper.markdown_to_html(body)

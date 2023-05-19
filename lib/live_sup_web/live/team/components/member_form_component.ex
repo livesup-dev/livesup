@@ -2,7 +2,7 @@ defmodule LiveSupWeb.Live.Team.Components.MemberFormComponent do
   use LiveSupWeb, :live_component
 
   alias LiveSup.Core.{Teams, Users}
-  alias LiveSup.Schemas.{User, Team}
+  alias LiveSup.Schemas.User
 
   @impl true
   def update(assigns, socket) do
