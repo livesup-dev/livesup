@@ -45,9 +45,8 @@ defmodule LiveSup.Test.Core.TeamsTest do
       {:ok, team: team, team_with_project: team_with_project, project: project}
     end
 
-    test "all/0 returns all teams", %{team: team, team_with_project: team_with_project} do
+    test "all/0 returns all teams" do
       teams = Teams.all() |> Enum.sort()
-      created_teams = [team, team_with_project] |> Enum.sort()
       assert length(teams) == 2
     end
 

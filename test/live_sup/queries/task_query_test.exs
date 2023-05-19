@@ -91,7 +91,7 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
     end
 
     test "delete todo's tasks", %{todo: %{id: todo_id}} do
-      tasks = Todos.get_tasks(todo_id)
+      tasks = Todos.tasks(todo_id)
 
       assert length(tasks) == 2
 
@@ -99,7 +99,7 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
         todo_id
         |> TaskQuery.delete_all()
 
-      tasks = Todos.get_tasks(todo_id)
+      tasks = Todos.tasks(todo_id)
       assert Enum.empty?(tasks) == true
     end
 

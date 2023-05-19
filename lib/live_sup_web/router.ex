@@ -130,7 +130,7 @@ defmodule LiveSupWeb.Router do
   scope "/", LiveSupWeb do
     pipe_through([:browser, :require_authenticated_user])
 
-    get("/", HomeController, :index)
+    # get("/", HomeController, :index)
     # get "/projects", ProjectController, :index
     # get "/projects/:id", ProjectController, :show
 
@@ -153,6 +153,8 @@ defmodule LiveSupWeb.Router do
     # get "/dashboards/:dashboard_id", DashboardController, :show
 
     live_session :default, on_mount: LiveSupWeb.UserLiveAuth do
+      live("/", Home.IndexLive, :home)
+
       live("/welcome", WelcomeLive, :home)
       live("/welcome/teams", WelcomeLive, :teams)
       live("/welcome/location", WelcomeLive, :location)
