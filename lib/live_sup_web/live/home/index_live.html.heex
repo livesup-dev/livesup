@@ -1,0 +1,37 @@
+<div class="mt-4 grid grid-cols-12 gap-4 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6">
+  <div class="col-span-12 lg:col-span-8 xl:col-span-9 space-y-4">
+    <div class="card mt-12 bg-gradient-to-l from-pink-300 to-indigo-400 p-5 sm:mt-0 sm:flex-row via-purple-300">
+      <div class="flex justify-center sm:order-last">
+        <img
+          class="-mt-16 h-40 sm:mt-0 rounded-lg"
+          src={User.default_avatar_url(@current_user)}
+          alt=""
+        />
+      </div>
+      <div class="mt-2 flex-1 pt-2 text-center text-white sm:mt-0 sm:text-left">
+        <h3 class="text-xl">
+          Welcome Back, <span class="font-semibold"><%= @current_user.first_name %></span>
+        </h3>
+        <p class="mt-2 leading-relaxed">
+          Your student completed <span class="font-semibold text-navy-700">85%</span> of tasks
+        </p>
+        <p>Progress is <span class="font-semibold">excellent!</span></p>
+
+        <.link
+          navigate={~p"/projects"}
+          class="btn mt-6 bg-slate-50 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80"
+        >
+          View Projects
+        </.link>
+      </div>
+    </div>
+
+    <.card title="Your favorites">
+      <div class="scrollbar-sm flex space-x-4 overflow-x-auto overflow-y-hidden px-4 pb-2 sm:px-5">
+        <div :for={{_dom_id, favorite} <- @streams.favorites} class="flex w-72 shrink-0 flex-col">
+          <FavoriteRowComponent.render entity={favorite.entity} />
+        </div>
+      </div>
+    </.card>
+  </div>
+</div>

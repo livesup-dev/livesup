@@ -223,7 +223,7 @@ defmodule LiveSup.Core.Todos do
   end
 
   def do_run_datasource(%{
-        run_to: run_to,
+        run_to: _run_to,
         todo_datasource:
           %{
             todo: todo,

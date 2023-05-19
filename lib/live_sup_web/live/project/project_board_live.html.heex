@@ -1,6 +1,7 @@
 <.breadcrumb title={@title} steps={@breadcrumb_steps}>
   <:actions>
     <.action_link type={:patch} path={~p"/projects/#{@project}/todos/new"} tooltip="Add Todo" />
+    <.favorite value={@favorite} />
   </:actions>
 </.breadcrumb>
 

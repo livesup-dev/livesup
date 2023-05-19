@@ -81,7 +81,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   end
 
   defp assign_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
-    tasks = Todos.get_tasks(todo_id, completed: false)
+    tasks = Todos.tasks(todo_id, completed: false)
 
     socket
     |> stream(:tasks, tasks)
@@ -89,7 +89,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   end
 
   defp assign_completed_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
-    completed_tasks = Todos.get_tasks(todo_id, completed: true)
+    completed_tasks = Todos.tasks(todo_id, completed: true)
 
     socket
     |> stream(:completed_tasks, completed_tasks)

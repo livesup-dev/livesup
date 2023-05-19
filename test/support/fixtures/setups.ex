@@ -14,10 +14,25 @@ defmodule LiveSup.Test.Setups do
     GroupsFixtures,
     TasksFixtures,
     TeamsFixtures,
-    CommentsFixtures
+    CommentsFixtures,
+    FavoritesFixtures
   }
 
   alias LiveSup.Core.{Groups, Dashboards}
+  alias LiveSup.Schemas.Favorite
+
+  def setup_favorite(%{user: %{id: user_id}, project: %{id: project_id}} = context) do
+    attrs = %{
+      user_id: user_id,
+      entity_id: project_id,
+      entity_type: Favorite.project_type()
+    }
+
+    favorite = FavoritesFixtures.favorite_fixture(attrs)
+
+    context
+    |> add_to_context(%{favorite: favorite})
+  end
 
   def setup_team(context) do
     team = TeamsFixtures.team_fixture()

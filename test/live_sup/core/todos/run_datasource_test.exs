@@ -110,7 +110,7 @@ defmodule LiveSup.Core.Todos.RunDatasourceTest do
       %{todo: todo} = todo_github_datasource = TodoDatasourceQuery.get!(todo_github_datasource.id)
       {:ok, new_tasks} = Todos.run_datasource(todo_github_datasource)
 
-      tasks = Todos.get_tasks(todo.id)
+      tasks = Todos.tasks(todo.id)
       assert length(new_tasks) == 1
       assert length(tasks) == 1
 
@@ -130,7 +130,7 @@ defmodule LiveSup.Core.Todos.RunDatasourceTest do
       # Re run the same datasource and check that the task is not duplicated
       {:ok, _new_tasks} = Todos.run_datasource(todo_github_datasource)
 
-      tasks = Todos.get_tasks(todo.id)
+      tasks = Todos.tasks(todo.id)
       assert length(tasks) == 1
     end
   end
@@ -145,7 +145,7 @@ defmodule LiveSup.Core.Todos.RunDatasourceTest do
       %{todo: todo} = todo_jira_datasource = TodoDatasourceQuery.get!(todo_jira_datasource.id)
       {:ok, new_tasks} = Todos.run_datasource(todo_jira_datasource)
 
-      tasks = Todos.get_tasks(todo.id)
+      tasks = Todos.tasks(todo.id)
       assert length(new_tasks) == 2
       assert length(tasks) == 2
 
@@ -170,7 +170,7 @@ defmodule LiveSup.Core.Todos.RunDatasourceTest do
       # Re run the same datasource and check that the task is not duplicated
       {:ok, _new_tasks} = Todos.run_datasource(todo_jira_datasource)
 
-      tasks = Todos.get_tasks(todo.id)
+      tasks = Todos.tasks(todo.id)
       assert length(tasks) == 2
     end
   end

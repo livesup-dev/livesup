@@ -3,12 +3,10 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
 
   alias LiveSup.Schemas.Dashboard
 
-  alias LiveSup.Core.{Projects, Todos, Tasks}
+  alias LiveSup.Core.{Projects, Todos, Tasks, Favorites}
   alias LiveSup.Schemas.Dashboard
 
   alias Palette.Components.Breadcrumb.Step
-
-  on_mount(LiveSupWeb.UserLiveAuth)
 
   @impl true
   def mount(%{"id" => project_id}, _session, socket) do
@@ -20,9 +18,12 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
      |> assign_breadcrumb_steps()}
   end
 
-  defp assign_project(socket, project_id) do
+  defp assign_project(%{assigns: %{current_user: current_user}} = socket, project_id) do
+    project = Projects.get_with_dashboards!(project_id)
+
     socket
-    |> assign(:project, Projects.get_with_dashboards!(project_id))
+    |> assign(:project, project)
+    |> assign(:favorite, Favorites.exists?(current_user, project))
   end
 
   defp assign_todos(%{assigns: %{project: %{id: project_id}}} = socket) do
@@ -68,6 +69,17 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
     {:noreply,
      socket
      |> assign(:project, Projects.get_with_dashboards!(project_id))}
+  end
+
+  @impl true
+  def handle_event(
+        "favorite",
+        params,
+        %{assigns: %{project: project, current_user: current_user}} = socket
+      ) do
+    {:noreply,
+     socket
+     |> assign(:favorite, Favorites.toggle(current_user, project))}
   end
 
   defp open_tasks(%{id: id}) do

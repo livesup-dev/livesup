@@ -1,18 +1,13 @@
-<%= if assigns[:section] == :dashboard_selection do %>
-  <.breadcrumb title={@title} steps={@steps}>
-    <:actions>
-      <.action_link
-        type={:patch}
-        path={~p"/projects/#{@project.id}/dashboards/new"}
-        tooltip="Add Dashboard"
-      />
-    </:actions>
-  </.breadcrumb>
-<% end %>
-
-<%= if assigns[:section] == :dashboard do %>
-  <.breadcrumb title={@title} steps={@steps}></.breadcrumb>
-<% end %>
+<.breadcrumb title={@title} steps={@steps}>
+  <:actions>
+    <.action_link
+      type={:patch}
+      path={~p"/projects/#{@project.id}/dashboards/new"}
+      tooltip="Add Dashboard"
+    />
+    <.favorite value={@favorite} />
+  </:actions>
+</.breadcrumb>
 
 <%= if @live_action in [:index] do %>
   <.live_component

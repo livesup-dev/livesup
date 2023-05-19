@@ -1,5 +1,5 @@
 defmodule LiveSup.DataImporter.UserImporter do
-  alias LiveSup.Core.{Users, Teams, Groups}
+  alias LiveSup.Core.{Users, Groups}
   alias LiveSup.Schemas.User
   alias LiveSup.Queries.GroupQuery
 
