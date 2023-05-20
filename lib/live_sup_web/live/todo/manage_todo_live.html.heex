@@ -1,4 +1,8 @@
-<.breadcrumb title={@todo.title} steps={@breadcrumb_steps} />
+<.breadcrumb title={@todo.title} steps={@breadcrumb_steps}>
+  <:actions>
+    <.favorite value={@favorite} />
+  </:actions>
+</.breadcrumb>
 
 <TodoHeaderComponent.render
   todo={@todo}

@@ -102,7 +102,7 @@ defmodule LiveSup.Queries.FavoriteQuery do
         false
 
       false ->
-        {:ok, favorite} =
+        {:ok, _favorite} =
           create(%{user_id: user_id, entity_id: entity_id, entity_type: entity_type})
 
         true

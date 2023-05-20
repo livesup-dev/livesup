@@ -7,10 +7,17 @@ defmodule LiveSupWeb.Home.Components.FavoriteRowComponent do
 
   def render(assigns) do
     ~H"""
-    <div class={"w-48 shrink-0 rounded-lg bg-gradient-to-br #{color(@entity)} p-[3px]"}>
+    <div class={"w-48 rounded-2xl border #{color(@entity)} p-4 dark:border-navy-600 "}>
       <div class="rounded-lg bg-white p-3 dark:bg-navy-700">
         <div class="flex items-center justify-between">
-          <p><.link navigate={entity_link(@entity)}><%= title(@entity) %></.link></p>
+          <p>
+            <.link
+              navigate={entity_link(@entity)}
+              class="text-slate-700 line-clamp-1 hover:text-primary focus:text-primary dark:text-navy-100 dark:hover:text-accent-light dark:focus:text-accent-light"
+            >
+              <%= title(@entity) %>
+            </.link>
+          </p>
           <i class={"text-lg #{entity_icon(@entity)}"} x-tooltip.light={"'#{tooltip(@entity)}'"} />
         </div>
       </div>
@@ -22,19 +29,19 @@ defmodule LiveSupWeb.Home.Components.FavoriteRowComponent do
   defp title(%Todo{} = entity), do: entity.title
   defp title(%Dashboard{} = entity), do: entity.name
 
-  defp entity_icon(%Project{}), do: "fa-solid fa-diagram-project text-color-blue-500"
-  defp entity_icon(%Todo{}), do: "fa-solid fa-list text-color-orange-500"
-  defp entity_icon(%Dashboard{}), do: "fa-solid fa-chart-line text-color-green-500"
+  defp entity_icon(%Project{}), do: "fa-solid fa-diagram-project text-blue-500"
+  defp entity_icon(%Todo{}), do: "fa-solid fa-list text-orange-500"
+  defp entity_icon(%Dashboard{}), do: "fa-solid fa-chart-line text-green-500"
 
-  defp tooltip(%Project{} = entity), do: "Project"
-  defp tooltip(%Todo{} = entity), do: "Todo"
-  defp tooltip(%Dashboard{} = entity), do: "Dashboard"
+  defp tooltip(%Project{}), do: "Project"
+  defp tooltip(%Todo{}), do: "Todo"
+  defp tooltip(%Dashboard{}), do: "Dashboard"
 
-  defp color(%Project{} = entity), do: "from-amber-400 to-orange-600"
-  defp color(%Todo{} = entity), do: "from-purple-500 to-indigo-600"
-  defp color(%Dashboard{} = entity), do: "from-info to-info-focus"
+  defp color(%Project{}), do: "border-blue-150"
+  defp color(%Todo{}), do: "border-blue-150"
+  defp color(%Dashboard{}), do: "border-green-150"
 
   defp entity_link(%Project{} = entity), do: "/projects/#{entity.id}/board"
-  defp entity_link(%Todo{} = entity), do: "/projects/#{entity.id}/board"
-  defp entity_link(%Dashboard{} = entity), do: "/projects/#{entity.id}/board"
+  defp entity_link(%Todo{} = entity), do: "/todos/#{entity.id}/manage"
+  defp entity_link(%Dashboard{} = entity), do: "/dashboards/#{entity.id}"
 end

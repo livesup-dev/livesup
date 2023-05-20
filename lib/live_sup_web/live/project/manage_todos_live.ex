@@ -1,10 +1,8 @@
 defmodule LiveSupWeb.Project.ManageTodosLive do
   use LiveSupWeb, :live_view
 
-  alias LiveSup.Core.Projects
+  alias LiveSup.Core.{Projects, Favorites}
   alias Palette.Components.Breadcrumb.Step
-
-  on_mount(LiveSupWeb.UserLiveAuth)
 
   @impl true
   def mount(%{"id" => project_id}, _session, socket) do
@@ -16,13 +14,27 @@ defmodule LiveSupWeb.Project.ManageTodosLive do
   end
 
   def assign_project(socket, project_id) do
+    project = Projects.get_with_todos!(project_id)
+
     socket
-    |> assign(:project, Projects.get_with_todos!(project_id))
+    |> assign(:project, project)
+    |> assign(:favorite, Favorites.exists?(socket.assigns.current_user, project))
   end
 
   @impl true
   def handle_params(_params, _url, socket) do
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event(
+        "favorite",
+        _params,
+        %{assigns: %{todo: todo, current_user: current_user}} = socket
+      ) do
+    {:noreply,
+     socket
+     |> assign(:favorite, Favorites.toggle(current_user, todo))}
   end
 
   defp assign_defaults(socket) do

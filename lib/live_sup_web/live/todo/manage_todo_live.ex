@@ -1,7 +1,7 @@
 defmodule LiveSupWeb.Todo.ManageTodoLive do
   use LiveSupWeb, :live_view
 
-  alias LiveSup.Core.{Todos, Tasks}
+  alias LiveSup.Core.{Todos, Tasks, Favorites}
   alias LiveSup.Schemas.TodoTask
 
   alias Palette.Components.Breadcrumb.Step
@@ -11,8 +11,6 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     TaskRowComponent,
     TodoAddTaskComponent
   }
-
-  on_mount(LiveSupWeb.UserLiveAuth)
 
   @section :projects
 
@@ -62,12 +60,13 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      |> assign(:todo_task, nil)}
   end
 
-  def assign_todo(socket, todo_id) do
+  def assign_todo(%{assigns: %{current_user: current_user}} = socket, todo_id) do
     todo = Todos.get!(todo_id)
 
     socket
     |> assign(:todo, todo)
     |> assign(:project, todo.project)
+    |> assign(:favorite, Favorites.exists?(current_user, todo))
   end
 
   def assign_breadcrumb_steps(%{assigns: %{project: project}} = socket) do
@@ -132,6 +131,17 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      |> stream_insert(:completed_tasks, task)
      |> stream_delete(:tasks, task)
      |> assign(:completed_tasks_count, completed_tasks_count + 1)}
+  end
+
+  @impl true
+  def handle_event(
+        "favorite",
+        _params,
+        %{assigns: %{todo: todo, current_user: current_user}} = socket
+      ) do
+    {:noreply,
+     socket
+     |> assign(:favorite, Favorites.toggle(current_user, todo))}
   end
 
   def toggle(task_id, "on"), do: Tasks.complete!(task_id)

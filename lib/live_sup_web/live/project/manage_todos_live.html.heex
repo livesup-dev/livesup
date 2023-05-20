@@ -9,14 +9,14 @@
   :if={@live_action == :new}
   show
   title="New Todo"
-  return_to={~p"/projects/#{@project.id}/todos"}
+  on_cancel={JS.navigate(~p"/projects/#{@project.id}/board")}
 >
   <.live_component
     module={LiveSupWeb.ProjectLive.LiveComponents.TodoFormComponent}
     id="manage_todo"
     action={@live_action}
     project={@project}
-    return_to={~p"/projects/#{@project.id}/todos"}
+    return_to={~p"/projects/#{@project.id}/board"}
   />
 </.modal>
 
