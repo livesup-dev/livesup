@@ -12,14 +12,13 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
     <div class="card px-4 py-4 sm:px-5 ">
       <div class="flex justify-between">
         <h3 class="text-base font-medium text-slate-600 dark:text-navy-100">
-          Todo filter styles
+          <%= @task.title %>
         </h3>
         <span class=" badge bg-success text-white">open</span>
       </div>
     </div>
 
     <.simple_form as={:task}>
-      <.field label="Title" value={@task.title} />
       <.markdown_field value={@task.description} empty_value="No description provided." />
 
       <:actions>

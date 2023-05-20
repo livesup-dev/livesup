@@ -8,9 +8,12 @@ defmodule LiveSupWeb.Home.Components.FavoriteRowComponent do
   def render(assigns) do
     ~H"""
     <div class={"w-48 rounded-2xl border #{color(@entity)} p-4 dark:border-navy-600 "}>
-      <div class="rounded-lg bg-white p-3 dark:bg-navy-700">
-        <div class="flex items-center justify-between">
-          <p>
+      <div class="flex items-center space-x-3">
+        <div>
+          <i class={"text-lg #{entity_icon(@entity)}"} x-tooltip.light={"'#{tooltip(@entity)}'"} />
+        </div>
+        <div>
+          <p class="text-base font-medium text-slate-700 dark:text-navy-100">
             <.link
               navigate={entity_link(@entity)}
               class="text-slate-700 line-clamp-1 hover:text-primary focus:text-primary dark:text-navy-100 dark:hover:text-accent-light dark:focus:text-accent-light"
@@ -18,7 +21,9 @@ defmodule LiveSupWeb.Home.Components.FavoriteRowComponent do
               <%= title(@entity) %>
             </.link>
           </p>
-          <i class={"text-lg #{entity_icon(@entity)}"} x-tooltip.light={"'#{tooltip(@entity)}'"} />
+          <p class="text-xs text-slate-400 line-clamp-1 dark:text-navy-300">
+            <%= desc(@entity) %>
+          </p>
         </div>
       </div>
     </div>
@@ -44,4 +49,7 @@ defmodule LiveSupWeb.Home.Components.FavoriteRowComponent do
   defp entity_link(%Project{} = entity), do: "/projects/#{entity.id}/board"
   defp entity_link(%Todo{} = entity), do: "/todos/#{entity.id}/manage"
   defp entity_link(%Dashboard{} = entity), do: "/dashboards/#{entity.id}"
+
+  defp desc(%Project{} = entity), do: ""
+  defp desc(entity), do: entity.project.name
 end
