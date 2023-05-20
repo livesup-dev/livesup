@@ -195,33 +195,6 @@ defmodule LiveSup.Core.Todos do
     end
   end
 
-  def add_tasks_from_pull_requests(pull_requests, todo, %{
-        id: datasource_instance_id,
-        datasource: %{slug: datasource_slug}
-      }) do
-    tasks =
-      pull_requests
-      |> Enum.map(fn pull_request ->
-        %{
-          title: pull_request[:title],
-          description: pull_request[:body],
-          todo_id: todo.id,
-          tags: ["github", pull_request[:repo][:name]],
-          external_identifier: pull_request[:id],
-          external_metadata: pull_request,
-          datasource_instance_id: datasource_instance_id,
-          datasource_slug: datasource_slug,
-          created_by_id: Users.get_default_system_account!().id,
-          inserted_at: pull_request[:created_at],
-          updated_at: pull_request[:updated_at],
-          completed: pull_request[:merged] || pull_request[:closed]
-        }
-        |> upsert_task()
-      end)
-
-    {:ok, tasks}
-  end
-
   def do_run_datasource(%{
         run_to: _run_to,
         todo_datasource:
@@ -248,6 +221,33 @@ defmodule LiveSup.Core.Todos do
       {:error, error} ->
         {:error, error}
     end
+  end
+
+  def add_tasks_from_pull_requests(pull_requests, todo, %{
+        id: datasource_instance_id,
+        datasource: %{slug: datasource_slug}
+      }) do
+    tasks =
+      pull_requests
+      |> Enum.map(fn pull_request ->
+        %{
+          title: pull_request[:title],
+          description: pull_request[:body],
+          todo_id: todo.id,
+          tags: ["github", pull_request[:repo][:name]],
+          external_identifier: pull_request[:id],
+          external_metadata: pull_request,
+          datasource_instance_id: datasource_instance_id,
+          datasource_slug: datasource_slug,
+          created_by_id: Users.get_default_system_account!().id,
+          inserted_at: pull_request[:created_at],
+          updated_at: pull_request[:updated_at],
+          completed: pull_request[:merged] || pull_request[:closed]
+        }
+        |> upsert_task()
+      end)
+
+    {:ok, tasks}
   end
 
   def add_tasks_jira_issues(issues, todo, %{

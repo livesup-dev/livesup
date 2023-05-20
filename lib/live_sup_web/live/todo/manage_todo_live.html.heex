@@ -22,7 +22,7 @@
     </div>
   </.card>
 
-  <.card title="Completed">
+  <.card :if={@completed_tasks_count > 0} title="Completed">
     <div class="max-h-screen overflow-auto" id="completed_tasks" phx-update="stream">
       <TaskRowComponent.render
         :for={{dom_id, task} <- @streams.completed_tasks}

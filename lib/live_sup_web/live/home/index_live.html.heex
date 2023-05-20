@@ -1,9 +1,9 @@
 <div class="mt-4 grid grid-cols-12 gap-4 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6">
   <div class="col-span-12 lg:col-span-8 xl:col-span-9 space-y-4">
-    <div class="card mt-12 bg-gradient-to-l from-pink-300 to-indigo-400 p-5 sm:mt-0 sm:flex-row via-purple-300">
+    <div class="card mt-12 bg-gradient-to-l from-pink-200 to-indigo-200 p-5 sm:mt-0 sm:flex-row via-purple-300">
       <div class="flex justify-center sm:order-last">
         <img
-          class="-mt-16 h-40 sm:mt-0 rounded-lg"
+          class="-mt-16 h-20 sm:mt-0 rounded-lg"
           src={User.default_avatar_url(@current_user)}
           alt=""
         />
@@ -28,9 +28,10 @@
 
     <.card title="Your favorites">
       <div class="scrollbar-sm flex space-x-4 overflow-x-auto overflow-y-hidden px-4 pb-2 sm:px-5">
-        <div :for={{_dom_id, favorite} <- @streams.favorites} class="flex w-72 shrink-0 flex-col">
-          <FavoriteRowComponent.render entity={favorite.entity} />
-        </div>
+        <FavoriteRowComponent.render
+          :for={{_dom_id, favorite} <- @streams.favorites}
+          entity={favorite.entity}
+        />
       </div>
     </.card>
   </div>

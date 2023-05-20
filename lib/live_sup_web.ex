@@ -45,7 +45,6 @@ defmodule LiveSupWeb do
 
       import Plug.Conn
       import LiveSupWeb.Gettext
-      # alias LiveSupWeb.Router.Helpers, as: Routes
 
       action_fallback(LiveSupWeb.FallbackController)
 
@@ -75,7 +74,6 @@ defmodule LiveSupWeb do
 
       import Plug.Conn
       import LiveSupWeb.Gettext
-      alias LiveSupWeb.Router.Helpers, as: Routes
 
       action_fallback(LiveSupWeb.Api.FallbackController)
     end
@@ -140,7 +138,6 @@ defmodule LiveSupWeb do
 
       import LiveSupWeb.ErrorHelpers
       import LiveSupWeb.Gettext
-      alias LiveSupWeb.Router.Helpers, as: Routes
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
