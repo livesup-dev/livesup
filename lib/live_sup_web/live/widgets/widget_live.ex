@@ -23,6 +23,11 @@ defmodule LiveSupWeb.Live.Widgets.WidgetLive do
       import LiveSupWeb.Gettext
       alias LiveSupWeb.Router.Helpers, as: Routes
 
+      use Phoenix.VerifiedRoutes,
+        endpoint: LiveSupWeb.Endpoint,
+        router: LiveSupWeb.Router,
+        statics: LiveSupWeb.static_paths()
+
       alias LiveSupWeb.Live.Components.{
         SmartRenderComponent,
         WidgetHeaderComponent,

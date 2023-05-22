@@ -4,7 +4,28 @@ defmodule LiveSup.Queries.TodoQuery do
   alias LiveSup.Schemas.{Project, Todo, TodoDatasource}
   alias LiveSup.Repo
 
-  def all do
+  def search(params \\ %{}) do
+    base()
+    |> where(^filter_where(params))
+    |> limit(^filter_limit(params))
+    |> Repo.all()
+  end
+
+  defp filter_limit(%{limit: limit}), do: limit
+  defp filter_limit(_), do: 100
+
+  def filter_where(params) do
+    Enum.reduce(params, dynamic(true), fn
+      {:project, %{id: project_id}}, dynamic ->
+        dynamic([todo: t], ^dynamic and t.project_id == ^project_id)
+
+      {_, _}, dynamic ->
+        # Not a where parameter
+        dynamic
+    end)
+  end
+
+  def all() do
     base()
     |> Repo.all()
   end

@@ -5,6 +5,39 @@ defmodule LiveSup.Queries.TaskQuery do
   alias LiveSup.Schemas.TodoTask
   alias LiveSup.Repo
 
+  def search(params \\ %{}) do
+    base()
+    |> where(^filter_where(params))
+    |> limit(^filter_limit(params))
+    |> order_by(^filter_order_by(params))
+    |> Repo.all()
+  end
+
+  defp filter_order_by(%{order_by: :updated_at_desc}),
+    do: [desc: dynamic([p], p.updated_at)]
+
+  defp filter_order_by(%{order_by: :updated_at_asc}),
+    do: [asc: dynamic([p], p.updated_at)]
+
+  defp filter_order_by(_), do: []
+
+  defp filter_limit(%{limit: limit}), do: limit
+  defp filter_limit(_), do: 100
+
+  def filter_where(params) do
+    Enum.reduce(params, dynamic(true), fn
+      {:completed, value}, dynamic ->
+        dynamic([tasks: t], ^dynamic and t.completed == ^value)
+
+      {:todo, %{id: todo_id}}, dynamic ->
+        dynamic([tasks: t], ^dynamic and t.todo_id == ^todo_id)
+
+      {_, _}, dynamic ->
+        # Not a where parameter
+        dynamic
+    end)
+  end
+
   def all do
     base()
     |> Repo.all()
@@ -152,6 +185,6 @@ defmodule LiveSup.Queries.TaskQuery do
       params
       |> Keyword.get(:preload, [:todo, :assigned_to, :created_by, :comments])
 
-    from(TodoTask, as: :todo, preload: ^preload)
+    from(TodoTask, as: :tasks, preload: ^preload)
   end
 end
