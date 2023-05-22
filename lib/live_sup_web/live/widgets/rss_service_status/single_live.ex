@@ -1,5 +1,6 @@
 defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.SingleLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
+  import LiveSupWeb.Components.IconsComponent
 
   @impl true
   def render_widget(assigns) do
@@ -13,7 +14,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.SingleLive do
       <!-- RSS Service -->
       <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
-      <div class="p-2">
+      <div class="ls-widget-body-default px-2">
         <%= if widget_data.data.status == :incident do %>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -11,7 +11,7 @@ defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.ListLive do
       widget_data={@widget_data}
     >
       <WidgetHeaderComponent.render widget_data={widget_data} />
-      <div class="flex-auto divide-y divide-gray-100 dark:divide-gray-500 p-2">
+      <div class="ls-widget-body-default flex-auto divide-y divide-gray-100 dark:divide-gray-500 px-2">
         <%= for {entry, _counter} <- Enum.with_index(widget_data.data) do %>
           <div class="flex pt-2 pb-2">
             <p class="basis-1/6 pt-1">
