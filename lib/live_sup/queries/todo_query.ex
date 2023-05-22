@@ -73,6 +73,10 @@ defmodule LiveSup.Queries.TodoQuery do
     |> Repo.delete()
   end
 
+  def delete_all() do
+    Repo.delete_all(Todo)
+  end
+
   def delete_all(%Project{id: project_id}) do
     query =
       from(

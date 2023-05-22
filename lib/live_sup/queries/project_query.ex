@@ -101,6 +101,10 @@ defmodule LiveSup.Queries.ProjectQuery do
     |> Repo.delete()
   end
 
+  def delete_all() do
+    Repo.delete_all(Project)
+  end
+
   def get_internal_default_project do
     base()
     |> with_internal_resource(@internal_default_project_slug)
