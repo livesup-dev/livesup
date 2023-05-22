@@ -23,16 +23,105 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                 <span class={"animate-ping absolute inline-flex h-full w-full rounded-full #{BlamelessHelper.severity_bg_ping_color(incident[:severity])}"}>
                 </span>
               </span>
-              <div>
-                <p class="text-base font-medium text-slate-600 dark:text-navy-100">
-                  <a
-                    href={incident[:url]}
-                    class="hover:underline text-black dark:text-primary block"
-                    target="_blank"
-                  >
-                    <%= incident[:description] %>
-                  </a>
-                </p>
+              <div id="incident">
+                <div class="flex justify-between space-x-2 items-start">
+                  <p class="text-base font-medium text-slate-600 dark:text-navy-100">
+                    <a
+                      href={incident[:url]}
+                      class="hover:underline text-black dark:text-primary block"
+                      target="_blank"
+                    >
+                      <%= incident[:description] %>
+                    </a>
+                  </p>
+                  <div id="social-media">
+                    <%= if incident.slack && incident.slack[:url] do %>
+                      <a
+                        href={incident.slack[:url]}
+                        target="_blank"
+                        class="hover:underline text-xs dark:text-primary inline-block"
+                        x-tooltip={"'#{incident.slack[:channel]}'"}
+                      >
+                        <svg
+                          class="h-4 w-4 rounded-full"
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="60 60 140 140"
+                          style="enable-background:new 60 60 140 140; display:inline-block;"
+                          xml:space="preserve"
+                        >
+                          <style type="text/css">
+                            .st0{fill:#E01E5A;}
+                            .st1{fill:#36C5F0;}
+                            .st2{fill:#2EB67D;}
+                            .st3{fill:#ECB22E;}
+                          </style>
+                          <g>
+                            <g>
+                              <path
+                                class="st0"
+                                d="M99.4,151.2c0,7.1-5.8,12.9-12.9,12.9c-7.1,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9h12.9V151.2z"
+                              />
+                              <path
+                                class="st0"
+                                d="M105.9,151.2c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v32.3c0,7.1-5.8,12.9-12.9,12.9
+                                    s-12.9-5.8-12.9-12.9V151.2z"
+                              />
+                            </g>
+                            <g>
+                              <path
+                                class="st1"
+                                d="M118.8,99.4c-7.1,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v12.9H118.8z"
+                              />
+                              <path
+                                class="st1"
+                                d="M118.8,105.9c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9H86.5c-7.1,0-12.9-5.8-12.9-12.9
+                                    s5.8-12.9,12.9-12.9H118.8z"
+                              />
+                            </g>
+                            <g>
+                              <path
+                                class="st1"
+                                d="M118.8,99.4c-7.1,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v12.9H118.8z"
+                              />
+                              <path
+                                class="st1"
+                                d="M118.8,105.9c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9H86.5c-7.1,0-12.9-5.8-12.9-12.9
+                                    s5.8-12.9,12.9-12.9H118.8z"
+                              />
+                            </g>
+                            <g>
+                              <path
+                                class="st2"
+                                d="M170.6,118.8c0-7.1,5.8-12.9,12.9-12.9c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9h-12.9V118.8z"
+                              />
+                              <path
+                                class="st2"
+                                d="M164.1,118.8c0,7.1-5.8,12.9-12.9,12.9c-7.1,0-12.9-5.8-12.9-12.9V86.5c0-7.1,5.8-12.9,12.9-12.9
+                                    c7.1,0,12.9,5.8,12.9,12.9V118.8z"
+                              />
+                            </g>
+                            <g>
+                              <path
+                                class="st3"
+                                d="M151.2,170.6c7.1,0,12.9,5.8,12.9,12.9c0,7.1-5.8,12.9-12.9,12.9c-7.1,0-12.9-5.8-12.9-12.9v-12.9H151.2z"
+                              />
+                              <path
+                                class="st3"
+                                d="M151.2,164.1c-7.1,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9h32.3c7.1,0,12.9,5.8,12.9,12.9
+                                    c0,7.1-5.8,12.9-12.9,12.9H151.2z"
+                              />
+                            </g>
+                          </g>
+                        </svg>
+                        <span class="hidden">Slack Channel</span>
+                      </a>
+                    <% end %>
+                  </div>
+                </div>
                 <p class="text-xs text-slate-400 dark:text-navy-300">
                   <%= incident[:created_at_ago] %>
                 </p>
@@ -44,7 +133,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                 </div>
               </div>
               <div>
-                <div class="mt-6 flex items-center justify-between space-x-2">
+                <div class="mt-4 flex items-center justify-between space-x-2">
                   <%= if incident.commander && incident.commander[:full_name] do %>
                     <div class="flex">
                       <div class="avatar h-10 w-10">
@@ -62,7 +151,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
                       </div>
                     </div>
                   <% else %>
-                    <div class="avatar h-7 w-7">
+                    <div class="avatar h-8 w-8">
                       <div class="is-initial rounded-full bg-success text-xs+ uppercase text-white ring ring-white dark:ring-navy-700">
                         N/A
                       </div>
