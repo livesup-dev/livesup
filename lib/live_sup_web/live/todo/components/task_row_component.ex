@@ -7,11 +7,11 @@ defmodule LiveSupWeb.Todo.Components.TaskRowComponent do
   alias LiveSupWeb.Live.Todo.Components.TaskActionComponent
 
   attr(:task, :map, required: true)
-  attr(:dom_id, :string, required: true)
+  attr(:id, :string, required: true)
 
   def render(assigns) do
     ~H"""
-    <div id={@dom_id} class={"#{border_color(@task.inserted_at)} flex items-center space-x-4"}>
+    <div id={@id} class={"#{border_color(@task.inserted_at)} flex items-center space-x-4"}>
       <div class="w-full">
         <div class="flex items-center space-x-2 sm:space-x-3 ml-2">
           <label class="flex">

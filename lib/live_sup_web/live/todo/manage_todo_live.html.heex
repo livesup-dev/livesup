@@ -14,15 +14,9 @@
   <.card>
     <TodoAddTaskComponent.render todo={@todo} />
     <div class="max-h-screen overflow-auto" id="tasks" phx-update="stream">
-      <TaskRowComponent.render
-        :for={{dom_id, task} <- @streams.tasks}
-        task={task}
-        dom_id={dom_id}
-      />
-      <%= if @open_tasks_count == 0 do %>
-        <p class="mt-4">There are no open tasks.</p>
-      <% end %>
+      <TaskRowComponent.render :for={{dom_id, task} <- @streams.tasks} task={task} id={dom_id} />
     </div>
+    <p :if={@open_tasks_count == 0} class="mt-4">There are no open tasks.</p>
   </.card>
 
   <.card :if={@completed_tasks_count > 0} title="Completed">
