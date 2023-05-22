@@ -14,6 +14,35 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
     :setup_github_datasource
   ]
 
+  describe "search/1" do
+    @describetag :tasks_query_search
+
+    setup [
+      :setup_task,
+      :setup_completed_tasks
+    ]
+
+    test "searches by todo", %{todo: todo, task: %{updated_at: updated_at}} do
+      tasks = TaskQuery.search(%{todo: todo})
+
+      assert length(tasks) == 3
+
+      tasks = TaskQuery.search(%{todo: todo, completed: true})
+
+      assert length(tasks) == 2
+
+      tasks_desc = TaskQuery.search(%{todo: todo, order_by: :updated_at_desc})
+
+      tasks_asc = TaskQuery.search(%{todo: todo, order_by: :updated_at_asc})
+
+      %{updated_at: updated_at_desc} = tasks_desc |> List.first()
+      %{updated_at: updated_at_asc} = tasks_asc |> List.last()
+
+      assert updated_at_asc == updated_at
+      assert updated_at_desc == updated_at
+    end
+  end
+
   describe "getting tasks" do
     @describetag :tasks_query
 

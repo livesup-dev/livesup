@@ -117,15 +117,17 @@ defmodule LiveSup.Test.Setups do
     |> add_to_context(%{tasks: tasks})
   end
 
-  def setup_completed_tasks(context) do
+  def setup_completed_tasks(%{todo: todo} = context) do
     tasks = [
-      TasksFixtures.task_fixture(context[:todo], %{
+      TasksFixtures.task_fixture(todo, %{
         completed: true,
-        completed_at: DateTime.utc_now()
+        completed_at: DateTime.utc_now(),
+        updated_at: DateTime.utc_now() |> DateTime.add(-1, :day)
       }),
-      TasksFixtures.task_fixture(context[:todo], %{
+      TasksFixtures.task_fixture(todo, %{
         completed: true,
-        completed_at: DateTime.utc_now()
+        completed_at: DateTime.utc_now(),
+        updated_at: DateTime.utc_now() |> DateTime.add(-2, :day)
       })
     ]
 

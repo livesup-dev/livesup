@@ -4,7 +4,7 @@ defmodule LiveSup.Tests.Queries.TodoQueryTest do
 
   alias LiveSup.Queries.TodoQuery
   alias LiveSup.Core.{Projects}
-  alias LiveSup.Test.TodosFixtures
+  alias LiveSup.Test.{TodosFixtures, ProjectsFixtures}
 
   import LiveSup.Test.Setups
 
@@ -13,6 +13,22 @@ defmodule LiveSup.Tests.Queries.TodoQueryTest do
     :setup_todos,
     :setup_task
   ]
+
+  describe "search/1" do
+    @describetag :todos_query_search
+
+    setup [:setup_another_project]
+
+    test "searches by project", %{project: project, another_project: another_project} do
+      todos = TodoQuery.search(%{project: project})
+
+      assert length(todos) == 3
+
+      todos = TodoQuery.search(%{project: another_project})
+
+      assert length(todos) == 1
+    end
+  end
 
   describe "managing todos queries" do
     @describetag :todos_query
@@ -92,5 +108,13 @@ defmodule LiveSup.Tests.Queries.TodoQueryTest do
 
       assert NaiveDateTime.diff(NaiveDateTime.utc_now(), archived_todo.archived_at, :second) <= 1
     end
+  end
+
+  def setup_another_project(%{user: user} = context) do
+    project = ProjectsFixtures.project_fixture()
+    todo = TodosFixtures.todo_fixture(project, %{author_id: user.id})
+
+    context
+    |> Map.put(:another_project, project)
   end
 end

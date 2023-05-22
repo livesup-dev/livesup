@@ -23,6 +23,11 @@ defmodule LiveSup.Core.Todos do
   defdelegate create!(attrs), to: TodoQuery
   defdelegate upsert_datasource!(todo, data), to: TodoQuery
 
+  def search_tasks(params) do
+    params
+    |> TaskQuery.search()
+  end
+
   def get(id) do
     id
     |> TodoQuery.get()

@@ -35,9 +35,7 @@ defmodule LiveSupWeb.Live.Widgets.TeamMembersLive do
                   <span class="text-grey-200">|</span>
                   <i class={"h-4 w-4 #{day_icon(user)}"}></i>
                   <span class="text-grey-200">|</span>
-                  <span class="text-sm">
-                    <date class=" align-middle inline-block"><%= user[:now_str] %></date>
-                  </span>
+                  <span class="text-sm align-middle inline-block"><%= user[:now_str] %></span>
                 </p>
               </div>
             </div>

@@ -19,6 +19,11 @@ defmodule LiveSup.Test.Core.TodosTest do
 
     setup [:setup_user, :setup_project, :setup_todo]
 
+    test "search_tasks/1 returns all tasks", %{todo: todo} do
+      tasks = Todos.search_tasks(%{todo: todo})
+      assert length(tasks) == 0
+    end
+
     test "by_project/1 returns all todos", %{todo: todo, project: project} do
       todos = Todos.by_project(project)
       assert todos == [todo]

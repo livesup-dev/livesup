@@ -25,13 +25,19 @@ defmodule LiveSupWeb.Live.Widgets.TodoLive do
             </div>
             <div class="grow">
               <p>
-                <span class="block font-medium"><%= task.title %></span>
-                <span class="text-xs align-middle inline-block">
-                  something here
-                </span>
-                <span>
-                  <date class=" align-middle inline-block">another item</date>
-                </span>
+                <a
+                  class="dark:text-primary hover:underline break-all basis-9/12"
+                  target="_blank"
+                  href={~p"/tasks/#{task.id}/edit"}
+                  x-tooltip.light={"'#{task.title}'"}
+                >
+                  <%= Palette.Utils.StringHelper.truncate(task.title, max_length: 35) %>
+                </a>
+
+                <div :for={tag <- task.tags} class="badge space-x-2.5 px-1 text-info">
+                  <div class="h-2 w-2 rounded-full bg-current"></div>
+                  <span><%= tag %></span>
+                </div>
               </p>
             </div>
           </div>
