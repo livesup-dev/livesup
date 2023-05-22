@@ -3,7 +3,7 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
 
   alias LiveSup.Schemas.Dashboard
 
-  alias LiveSup.Core.{Projects, Todos, Tasks, Favorites}
+  alias LiveSup.Core.{Projects, Todos, Favorites}
   alias LiveSup.Schemas.Dashboard
 
   alias Palette.Components.Breadcrumb.Step
@@ -74,15 +74,11 @@ defmodule LiveSupWeb.Project.ProjectBoardLive do
   @impl true
   def handle_event(
         "favorite",
-        params,
+        _params,
         %{assigns: %{project: project, current_user: current_user}} = socket
       ) do
     {:noreply,
      socket
      |> assign(:favorite, Favorites.toggle(current_user, project))}
-  end
-
-  defp open_tasks(%{id: id}) do
-    Tasks.by_todo(id, limit: 3, completed: false)
   end
 end

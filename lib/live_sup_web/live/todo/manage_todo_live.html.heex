@@ -25,7 +25,7 @@
         :for={{dom_id, task} <- @streams.completed_tasks}
         :if={@streams.completed_tasks}
         task={task}
-        dom_id={dom_id}
+        id={dom_id}
       />
       <%= if @completed_tasks_count == 0 do %>
         <p>There are no completed tasks</p>

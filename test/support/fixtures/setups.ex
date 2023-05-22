@@ -107,6 +107,32 @@ defmodule LiveSup.Test.Setups do
     |> add_to_context(%{todo: todo})
   end
 
+  def setup_tasks(context) do
+    tasks = [
+      TasksFixtures.task_fixture(context[:todo]),
+      TasksFixtures.task_fixture(context[:todo])
+    ]
+
+    context
+    |> add_to_context(%{tasks: tasks})
+  end
+
+  def setup_completed_tasks(context) do
+    tasks = [
+      TasksFixtures.task_fixture(context[:todo], %{
+        completed: true,
+        completed_at: DateTime.utc_now()
+      }),
+      TasksFixtures.task_fixture(context[:todo], %{
+        completed: true,
+        completed_at: DateTime.utc_now()
+      })
+    ]
+
+    context
+    |> add_to_context(%{completed_tasks: tasks})
+  end
+
   def setup_todo_datasource(%{todo: todo, datasource: datasource} = context) do
     todo_datasource = TodosFixtures.todo_datasource(todo, datasource)
 

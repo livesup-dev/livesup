@@ -42,7 +42,7 @@ defmodule LiveSupWeb.Admin.ProjectLive.FormComponent do
       Phoenix.LiveView.Upload.consume_uploaded_entry(socket, avatar_entry, fn %{path: path} ->
         dest = Path.join("priv/static/uploads", Path.basename(path))
         File.cp!(path, dest)
-        Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")
+        Phoenix.Endpoint.static_path("/uploads/#{Path.basename(dest)}")
       end)
 
     %{
