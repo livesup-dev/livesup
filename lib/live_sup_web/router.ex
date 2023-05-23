@@ -155,6 +155,8 @@ defmodule LiveSupWeb.Router do
     live_session :default, on_mount: LiveSupWeb.UserLiveAuth do
       live("/", Home.IndexLive, :home)
 
+      live("/profile", Profile.ShowLive, :show)
+
       live("/welcome", WelcomeLive, :home)
       live("/welcome/teams", WelcomeLive, :teams)
       live("/welcome/location", WelcomeLive, :location)
