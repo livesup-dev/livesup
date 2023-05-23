@@ -20,8 +20,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      socket
      |> assign_todo(todo_id)
      |> assign_defaults()
-     |> assign_tasks()
-     |> assign_completed_tasks()}
+     |> assign_tasks()}
   end
 
   @impl true
@@ -33,8 +32,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
      |> assign_todo(task.todo_id)
      |> assign_defaults()
      |> assign(:selected_task, task)
-     |> assign_tasks()
-     |> assign_completed_tasks()}
+     |> assign_tasks()}
   end
 
   @impl true
@@ -79,20 +77,29 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     ])
   end
 
-  defp assign_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
-    tasks = Todos.tasks(todo_id, completed: false)
+  defp assign_tasks(%{assigns: %{todo: todo}} = socket), do: assign_tasks(socket, "")
+
+  defp assign_tasks(%{assigns: %{todo: todo}} = socket, query) do
+    open_tasks = Todos.search_tasks(todo: todo, query: query, completed: false)
+    completed_tasks = Todos.search_tasks(todo: todo, query: query, completed: true)
 
     socket
-    |> stream(:tasks, tasks)
-    |> assign(:open_tasks_count, length(tasks))
+    |> stream(:completed_tasks, completed_tasks, reset: true)
+    |> stream(:tasks, open_tasks, reset: true)
+    |> assign(:completed_tasks_count, length(completed_tasks))
+    |> assign(:open_tasks_count, length(open_tasks))
   end
 
-  defp assign_completed_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
-    completed_tasks = Todos.tasks(todo_id, completed: true)
+  # defp assign_completed_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
+  #   completed_tasks = Todos.tasks(todo_id, completed: true)
 
-    socket
-    |> stream(:completed_tasks, completed_tasks)
-    |> assign(:completed_tasks_count, length(completed_tasks))
+  #   socket
+  #   |> stream(:completed_tasks, completed_tasks)
+  #   |> assign(:completed_tasks_count, length(completed_tasks))
+  # end
+
+  def handle_event("search", %{"value" => query}, %{assigns: %{todo: todo}} = socket) do
+    {:noreply, assign_tasks(socket, query)}
   end
 
   @impl true

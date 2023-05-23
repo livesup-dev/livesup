@@ -112,7 +112,7 @@ defmodule LiveSup.Tests.Queries.TodoQueryTest do
 
   def setup_another_project(%{user: user} = context) do
     project = ProjectsFixtures.project_fixture()
-    todo = TodosFixtures.todo_fixture(project, %{author_id: user.id})
+    TodosFixtures.todo_fixture(project, %{author_id: user.id})
 
     context
     |> Map.put(:another_project, project)

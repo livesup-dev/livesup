@@ -62,7 +62,9 @@ defmodule LiveSup.MixProject do
       {:phoenix, "~> 1.7.2"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_ecto, "~> 4.1"},
-      {:phoenix_live_view, "~> 0.18"},
+      # {:phoenix_live_view, "~> 0.18"},
+      {:phoenix_live_view,
+       github: "phoenixframework/phoenix_live_view", branch: "main", override: true},
       {:phoenix_html, "~> 3.1"},
       {:phoenix_live_dashboard, "~> 0.5"},
       {:ecto_sql, "~> 3.4"},
@@ -127,7 +129,7 @@ defmodule LiveSup.MixProject do
 
   def palette_dep(false) do
     [
-      {:palette, git: "https://github.com/livesup-dev/palette", tag: "0.2.0"}
+      {:palette, git: "https://github.com/livesup-dev/palette", tag: "0.2.1"}
     ]
   end
 

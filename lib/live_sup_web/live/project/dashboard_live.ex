@@ -21,8 +21,19 @@ defmodule LiveSupWeb.Project.DashboardLive do
 
   @impl true
   def handle_event(
+        "dropped",
+        %{"widget_id" => widget_id, "old_index" => _old_index, "new_index" => new_index},
+        %{assigns: %{current_dashboard: %{id: dashboard_id}}} = socket
+      ) do
+    {:ok, _updated} = Dashboards.update_widget_instance_order(dashboard_id, widget_id, new_index)
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event(
         "favorite",
-        params,
+        _params,
         %{assigns: %{dashboard: dashboard, current_user: current_user}} = socket
       ) do
     {:noreply,
@@ -99,17 +110,6 @@ defmodule LiveSupWeb.Project.DashboardLive do
 
   def redirect_if_one_dashboard(socket) when length(socket.assigns.dashboards) != 1, do: socket
 
-  @impl true
-  def handle_event(
-        "dropped",
-        %{"widget_id" => widget_id, "old_index" => _old_index, "new_index" => new_index},
-        %{assigns: %{current_dashboard: %{id: dashboard_id}}} = socket
-      ) do
-    {:ok, _updated} = Dashboards.update_widget_instance_order(dashboard_id, widget_id, new_index)
-
-    {:noreply, socket}
-  end
-
   defp assign_defaults(socket) do
     steps = [
       %Step{label: "Home"}
@@ -137,7 +137,7 @@ defmodule LiveSupWeb.Project.DashboardLive do
       %Step{label: "Projects", path: ~p"/projects"},
       %Step{
         label: dashboard.project.name,
-        path: ~p"/projects"
+        path: ~p"/projects/#{dashboard.project.id}/board"
       },
       %Step{
         label: "Dashboards",

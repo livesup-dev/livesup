@@ -14,10 +14,24 @@ defmodule LiveSup.Queries.TaskQuery do
   end
 
   defp filter_order_by(%{order_by: :updated_at_desc}),
-    do: [desc: dynamic([p], p.updated_at)]
+    do: [desc: dynamic([t], t.updated_at)]
 
   defp filter_order_by(%{order_by: :updated_at_asc}),
-    do: [asc: dynamic([p], p.updated_at)]
+    do: [asc: dynamic([t], t.updated_at)]
+
+  defp filter_order_by(%{query: ""}), do: []
+
+  defp filter_order_by(%{query: value}),
+    do: [
+      desc:
+        dynamic(
+          [t],
+          fragment(
+            "ts_rank_cd(searchable, websearch_to_tsquery(?), 4)",
+            ^value
+          )
+        )
+    ]
 
   defp filter_order_by(_), do: []
 
@@ -31,6 +45,19 @@ defmodule LiveSup.Queries.TaskQuery do
 
       {:todo, %{id: todo_id}}, dynamic ->
         dynamic([tasks: t], ^dynamic and t.todo_id == ^todo_id)
+
+      {:query, ""}, dynamic ->
+        dynamic
+
+      {:query, value}, dynamic ->
+        dynamic(
+          [tasks: t],
+          ^dynamic and
+            fragment(
+              "searchable @@ websearch_to_tsquery(?)",
+              ^value
+            )
+        )
 
       {_, _}, dynamic ->
         # Not a where parameter
