@@ -12,6 +12,7 @@ defmodule LiveSup.Schemas.TodoTask do
   schema "tasks" do
     field(:title, :string)
     field(:description, :string)
+    # TODO: We are not using "notes", so let's remove it
     field(:notes, :string)
     field(:priority, :string)
     field(:tags, {:array, :string}, default: [])
