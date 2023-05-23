@@ -1,0 +1,27 @@
+<.breadcrumb title="Your Profile" steps={@steps} />
+
+<div class="grid-rows-2">
+  <div class="grid grid-cols-4 gap-4">
+    <.card title="Details">
+      <.card_field label="Name" value={User.full_name(@current_user)} />
+      <.card_field label="Email" value={@current_user.email} />
+    </.card>
+
+    <div class="card px-4 pb-5 sm:px-5">
+      <div class="flex items-center justify-between py-3">
+        <h2 class="font-medium tracking-wide text-slate-700 dark:text-navy-100">
+          Your Links
+        </h2>
+      </div>
+
+      <div class="mt-5 space-y-4">
+        <div :for={{dom_id, link} <- @streams.links} class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <.brand_icon brand={link.datasource_instance.name} />
+            <p><%= link.datasource_instance.name %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
