@@ -1,5 +1,6 @@
 defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
+  import LiveSupWeb.Components.IconsComponent
 
   @impl true
   def render_widget(assigns) do
@@ -13,11 +14,18 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintStatsLive do
       <!-- Current Sprint Stats -->
       <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
-      <div class="p-2 grid justify-items-center  min-h-[132px]">
-        <%= live_component(Palette.Components.Live.Chart,
-          id: "jira-current-sprint-#{@widget_data.id}",
-          spec: build_spec(widget_data)
-        ) %>
+      <div class="ls-widget-body-default">
+        <div :if={Enum.any?(widget_data.data)}>
+          <%= live_component(Palette.Components.Live.Chart,
+            id: "jira-current-sprint-#{@widget_data.id}",
+            spec: build_spec(widget_data)
+          ) %>
+        </div>
+        <.empty_data_icon
+          :if={Enum.empty?(widget_data.data)}
+          svg_class="h-20 w-20"
+          description="No Jira current sprint data."
+        />
       </div>
       <!-- /Widget Content -->
       <!-- /Incidents by Type -->

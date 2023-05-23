@@ -19,7 +19,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.LastIncidentsLive do
       <div class="ls-widget-body-default">
         <div :if={Enum.any?(widget_data.data)}>
           <%= for {incident, _counter} <- Enum.with_index(widget_data.data) do %>
-            <div class={"flex flex-col justify-between border-4 border-transparent #{BlamelessHelper.severity_border_color(incident[:severity])} px-4 mt-4 mb-8 relative"}>
+            <div class={"flex flex-col justify-between border-4 border-transparent #{BlamelessHelper.severity_border_color(incident[:severity])} px-4 mb-7 relative"}>
               <span class="absolute -left-2 -top-1 flex h-3 w-3">
                 <span class={"animate-ping absolute inline-flex h-full w-full rounded-full #{BlamelessHelper.severity_bg_ping_color(incident[:severity])}"}>
                 </span>
