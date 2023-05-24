@@ -100,4 +100,4 @@ Or you could just do `docker-compose up` using the existing [docker-compose.yml]
 
 Copyright (c) 2021, Emiliano Jankowski.
 
-LiveSup source code is licensed under the [MIT License](LICENSE.md).
+LiveSup source code is licensed under the [Apache License 2.0](LICENSE).
