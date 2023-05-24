@@ -14,7 +14,7 @@ defmodule LiveSupWeb.Live.Widgets.Jira.CurrentSprintLive do
       <!-- Jira Current Sprint -->
       <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
-      <div class="p-2 text-left min-h-[132px]">
+      <div class="ls-widget-body-default">
         <span class="text-center text-lg"><%= widget_data.data.name %></span>
         <p :if={widget_data.data.goal} class="text-xs text-stone-400">
           <%= Palette.Utils.StringHelper.truncate(widget_data.data.goal, max_length: 100) %>
