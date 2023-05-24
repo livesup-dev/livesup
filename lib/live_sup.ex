@@ -11,6 +11,7 @@ defmodule LiveSup do
     import Config
 
     config :live_sup, LiveSupWeb.Endpoint,
+      force_ssl: [hsts: false],
       secret_key_base:
         LiveSup.Config.secret!("LIVESUP_SECRET_KEY_BASE") ||
           Base.encode64(:crypto.strong_rand_bytes(48))
