@@ -1,6 +1,5 @@
 defmodule LiveSupWeb.Live.Widgets.RssServiceStatus.SingleLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
-  import LiveSupWeb.Components.IconsComponent
 
   @impl true
   def render_widget(assigns) do

@@ -15,7 +15,7 @@
       </div>
 
       <div class="mt-5 space-y-4">
-        <div :for={{dom_id, link} <- @streams.links} class="flex items-center justify-between">
+        <div :for={{_dom_id, link} <- @streams.links} class="flex items-center justify-between">
           <div class="flex items-center space-x-2">
             <.brand_icon brand={link.datasource_instance.name} />
             <p><%= link.datasource_instance.name %></p>

@@ -157,6 +157,12 @@ defmodule LiveSup.Seeds.Core.DatasourcesSeeds do
             "required" => true,
             "source" => "local",
             "value" => 10
+          },
+          "url" => %{
+            "type" => "string",
+            "source" => "env",
+            "value" => "MERGESTAT_URL",
+            "required" => true
           }
         }
       },
