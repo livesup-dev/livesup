@@ -1,6 +1,6 @@
 <div class="w-full px-4 py-6 space-y-6 bg-white rounded-md dark:bg-darker">
-  <div class="flex">
-    <div class="w-1/2 h-600px overflow-y-auto overflow-x-hidden border border-gray-200">
+  <div class="flex-none md:flex">
+    <div class="w-full md:w-1/2 h-600px overflow-y-auto overflow-x-hidden border border-gray-200">
       <TaskComponent.render
         task={@task}
         error={@error}
@@ -8,7 +8,7 @@
         target={@myself}
       />
     </div>
-    <div class="w-1/2 h-600px overflow-y-auto overflow-x-hidden border border-gray-200">
+    <div class="w-full md:w-1/2 h-600px overflow-y-auto overflow-x-hidden border border-gray-200">
       <CommentsComponent.render
         comments={@streams.comments}
         target={@myself}

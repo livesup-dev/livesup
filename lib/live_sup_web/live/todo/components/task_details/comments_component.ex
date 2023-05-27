@@ -16,7 +16,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
         <div
           id="comments"
           phx-update="stream"
-          class="grow overflow-y-auto overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm"
+          class="grow overflow-y-auto max-h-[75vh] overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm"
         >
           <div
             :for={{dom_id, comment} <- @comments}
@@ -32,7 +32,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
             </div>
             <div class="flex flex-col items-start space-y-3.5">
               <div class="flex relative rounded-2xl rounded-tl-none bg-info/10 p-3 text-slate-700 shadow-sm dark:bg-accent dark:text-white">
-                <div class="grow pb-2 shrink-0">
+                <div class="grow pb-2">
                   <.markdown_field value={comment.body} />
                 </div>
                 <p class="mt-1 mb-1 mr-3 bottom-0 right-0 absolute flex-1 text-right text-tiny text-slate-400 dark:text-navy-300">
