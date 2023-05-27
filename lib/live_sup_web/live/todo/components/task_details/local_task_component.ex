@@ -19,7 +19,9 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
     </div>
 
     <.simple_form as={:task}>
-      <.markdown_field value={@task.description} empty_value="No description provided." />
+      <div class="overflow-y-scroll max-h-[65vh]">
+        <.markdown_field value={@task.description} empty_value="No description provided." />
+      </div>
 
       <:actions>
         <.close_modal_button />
