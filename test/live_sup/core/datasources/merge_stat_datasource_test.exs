@@ -12,81 +12,320 @@ defmodule LiveSup.Test.Core.Datasources.MergeStatDatasourceTest do
       {:ok, bypass: bypass}
     end
 
-    test "Get list committers", %{bypass: bypass} do
-      Bypass.expect_once(bypass, "POST", "/", fn conn ->
+    @tag :mergestat_run_query
+    test "run query", %{bypass: bypass} do
+      Bypass.expect(bypass, fn conn ->
         Plug.Conn.resp(conn, 200, response())
       end)
 
       {:ok, data} =
         MergeStatDatasource.run_query(
-          %{
-            "repo" => "livesup",
-            "query" =>
-              "SELECT author_name, count(*) as count FROM commits GROUP BY author_name ORDER BY count DESC "
-          },
+          "SELECT author_name, count(*) as count FROM commits GROUP BY author_name ORDER BY count DESC",
+          url: endpoint_url(bypass.port)
+        )
+
+      assert %{
+               "data" => %{
+                 "execSQL" => %{
+                   "__typename" => "ExecSQLResult",
+                   "columns" => [
+                     %{"format" => "text", "name" => "author_name"},
+                     %{"format" => "text", "name" => "count"}
+                   ],
+                   "queryRunningTimeMs" => 4,
+                   "rowCount" => 5,
+                   "rows" => [
+                     ["mustela", "300"],
+                     ["Emiliano Jankowski", "96"],
+                     ["Memo", "78"],
+                     ["dependabot[bot]", "8"],
+                     ["Pierre-Alexandre Meyer", "1"]
+                   ]
+                 }
+               }
+             } = data
+    end
+
+    @tag :mergestat_first_commit
+    test "first_commit/2", %{bypass: bypass} do
+      Bypass.expect(bypass, fn conn ->
+        Plug.Conn.resp(conn, 200, first_commit_response())
+      end)
+
+      {:ok, data} =
+        MergeStatDatasource.first_commit(
+          "https://github.com/livesup-dev/livesup",
+          url: endpoint_url(bypass.port)
+        )
+
+      assert %{
+               "_mergestat_synced_at" => "2023-05-26T22:29:04.896Z",
+               "author_email" => "ejankowski@gmail.com",
+               "author_name" => "mustela",
+               "author_when" => "2022-02-03T09:15:16.000Z",
+               "committer_email" => "ejankowski@gmail.com",
+               "committer_name" => "mustela",
+               "committer_when" => "2022-02-03T09:15:16.000Z",
+               "hash" => "ef452c4b8db986c5d33cab0c252d7b6c42390eda",
+               "message" => "Init",
+               "parents" => 0,
+               "repo_id" => "294e7377-622c-44f5-b640-5793dc346b6b"
+             } = data
+    end
+
+    @tag :mergestat_total_commits
+    test "total_commits/2", %{bypass: bypass} do
+      Bypass.expect(bypass, fn conn ->
+        Plug.Conn.resp(conn, 200, total_commit_response())
+      end)
+
+      {:ok, data} =
+        MergeStatDatasource.total_commits(
+          "https://github.com/livesup-dev/livesup",
+          url: endpoint_url(bypass.port)
+        )
+
+      assert 363 = data
+    end
+
+    @tag :mergestat_commits_by_authors
+    test "commits_by_authors/2", %{bypass: bypass} do
+      Bypass.expect(bypass, fn conn ->
+        Plug.Conn.resp(conn, 200, commits_by_authors_response())
+      end)
+
+      {:ok, data} =
+        MergeStatDatasource.commits_by_author(
+          "https://github.com/livesup-dev/livesup",
           url: endpoint_url(bypass.port)
         )
 
       assert [
-               %{"author_name" => "Jonatan Kłosko", "count" => 341},
-               %{"author_name" => "jonatanklosko", "count" => 123},
-               %{"author_name" => "José Valim", "count" => 91},
-               %{"author_name" => "josevalim", "count" => 10},
-               %{"author_name" => "Wojtek Mach", "count" => 10}
+               %{
+                 "author_email" => "ejankowski@gmail.com",
+                 "author_name" => "mustela",
+                 "count" => "296"
+               },
+               %{
+                 "author_email" => "guillermo@dinkuminteractive.com",
+                 "author_name" => "Memo",
+                 "count" => "47"
+               },
+               %{
+                 "author_email" => "ejankowski@gmail.com",
+                 "author_name" => "Emiliano Jankowski",
+                 "count" => "11"
+               },
+               %{
+                 "author_email" => "49699333+dependabot[bot]@users.noreply.github.com",
+                 "author_name" => "dependabot[bot]",
+                 "count" => "8"
+               },
+               %{
+                 "author_email" => "pierre@mouraf.org",
+                 "author_name" => "Pierre-Alexandre Meyer",
+                 "count" => "1"
+               }
              ] = data
     end
 
-    test "Failing to run query", %{bypass: bypass} do
-      Bypass.expect_once(bypass, "POST", "/", fn conn ->
-        Plug.Conn.resp(conn, 500, error_response())
-      end)
+    def first_commit_response do
+      """
+      {
+        "data": {
+            "execSQL": {
+                "rowCount": 1,
+                "columns": [
+                    {
+                        "name": "repo_id",
+                        "format": "text"
+                    },
+                    {
+                        "name": "hash",
+                        "format": "text"
+                    },
+                    {
+                        "name": "message",
+                        "format": "text"
+                    },
+                    {
+                        "name": "author_name",
+                        "format": "text"
+                    },
+                    {
+                        "name": "author_email",
+                        "format": "text"
+                    },
+                    {
+                        "name": "author_when",
+                        "format": "text"
+                    },
+                    {
+                        "name": "committer_name",
+                        "format": "text"
+                    },
+                    {
+                        "name": "committer_email",
+                        "format": "text"
+                    },
+                    {
+                        "name": "committer_when",
+                        "format": "text"
+                    },
+                    {
+                        "name": "parents",
+                        "format": "text"
+                    },
+                    {
+                        "name": "_mergestat_synced_at",
+                        "format": "text"
+                    }
+                ],
+                "rows": [
+                    [
+                        "294e7377-622c-44f5-b640-5793dc346b6b",
+                        "ef452c4b8db986c5d33cab0c252d7b6c42390eda",
+                        "Init",
+                        "mustela",
+                        "ejankowski@gmail.com",
+                        "2022-02-03T09:15:16.000Z",
+                        "mustela",
+                        "ejankowski@gmail.com",
+                        "2022-02-03T09:15:16.000Z",
+                        0,
+                        "2023-05-26T22:29:04.896Z"
+                    ]
+                ],
+                "queryRunningTimeMs": 6,
+                "__typename": "ExecSQLResult"
+            }
+        }
+      }
+      """
+    end
 
-      data =
-        MergeStatDatasource.run_query(
-          %{
-            "repo" => "livesup",
-            "query" => "invalid query"
-          },
-          url: endpoint_url(bypass.port)
-        )
+    def commits_by_authors_response do
+      """
+      {
+        "data": {
+            "execSQL": {
+                "rowCount": 5,
+                "columns": [
+                    {
+                        "name": "author_name",
+                        "format": "text"
+                    },
+                    {
+                        "name": "author_email",
+                        "format": "text"
+                    },
+                    {
+                        "name": "count",
+                        "format": "text"
+                    }
+                ],
+                "rows": [
+                    [
+                        "mustela",
+                        "ejankowski@gmail.com",
+                        "296"
+                    ],
+                    [
+                        "Memo",
+                        "guillermo@dinkuminteractive.com",
+                        "47"
+                    ],
+                    [
+                        "Emiliano Jankowski",
+                        "ejankowski@gmail.com",
+                        "11"
+                    ],
+                    [
+                        "dependabot[bot]",
+                        "49699333+dependabot[bot]@users.noreply.github.com",
+                        "8"
+                    ],
+                    [
+                        "Pierre-Alexandre Meyer",
+                        "pierre@mouraf.org",
+                        "1"
+                    ]
+                ],
+                "queryRunningTimeMs": 5,
+                "__typename": "ExecSQLResult"
+            }
+        }
+      }
+      """
+    end
 
-      assert {:error, "500: could not execute query: near \"asdf\": syntax error"} = data
+    def total_commit_response do
+      """
+      {
+        "data": {
+            "execSQL": {
+                "rowCount": 1,
+                "columns": [
+                    {
+                        "name": "count",
+                        "format": "text"
+                    }
+                ],
+                "rows": [
+                    [
+                        "363"
+                    ]
+                ],
+                "queryRunningTimeMs": 3,
+                "__typename": "ExecSQLResult"
+            }
+        }
+      }
+      """
     end
 
     def response() do
       """
       {
-        "runningTime": 2667410254,
-        "rows": [
-            {
-                "author_name": "Jonatan Kłosko",
-                "count": 341
-            },
-            {
-                "author_name": "jonatanklosko",
-                "count": 123
-            },
-            {
-                "author_name": "José Valim",
-                "count": 91
-            },
-            {
-                "author_name": "josevalim",
-                "count": 10
-            },
-            {
-                "author_name": "Wojtek Mach",
-                "count": 10
+        "data": {
+            "execSQL": {
+                "rowCount": 5,
+                "columns": [
+                    {
+                        "name": "author_name",
+                        "format": "text"
+                    },
+                    {
+                        "name": "count",
+                        "format": "text"
+                    }
+                ],
+                "rows": [
+                    [
+                        "mustela",
+                        "300"
+                    ],
+                    [
+                        "Emiliano Jankowski",
+                        "96"
+                    ],
+                    [
+                        "Memo",
+                        "78"
+                    ],
+                    [
+                        "dependabot[bot]",
+                        "8"
+                    ],
+                    [
+                        "Pierre-Alexandre Meyer",
+                        "1"
+                    ]
+                ],
+                "queryRunningTimeMs": 4,
+                "__typename": "ExecSQLResult"
             }
-        ],
-        "columnNames": [
-            "author_name",
-            "count"
-        ],
-        "columnTypes": [
-            "TEXT",
-            ""
-        ]
+        }
       }
       """
     end

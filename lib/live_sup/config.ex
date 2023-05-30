@@ -24,6 +24,18 @@ defmodule LiveSup.Config do
       """
   end
 
+  def merge_stat_url do
+    System.get_env("MERGESTAT_URL")
+  end
+
+  def merge_stat_user do
+    System.get_env("MERGESTAT_USER")
+  end
+
+  def merge_stat_password do
+    System.get_env("MERGESTAT_PASSWORD")
+  end
+
   def db_ssl!(env) do
     if ssl = System.get_env(env) do
       if ssl == "true" do

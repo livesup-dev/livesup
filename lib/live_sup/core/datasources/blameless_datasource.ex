@@ -158,6 +158,7 @@ defmodule LiveSup.Core.Datasources.BlamelessDatasource do
     }
   end
 
+  # TODO: Fix url
   def build_incident_url(id) do
     "https://livesup.blameless.io/incidents/#{id}/events"
   end

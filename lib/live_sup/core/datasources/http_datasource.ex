@@ -9,36 +9,53 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
   import LiveSup.Core.Datasources.Helper
   alias LiveSup.Helpers.StringHelper
 
+  @receive_timeout 15_000
   @error_message "Something happened, but we don't have too many details"
 
-  def get(url: url, headers: headers) do
-    manage_request(:get, url, headers)
+  def get([url: url, headers: headers] ++ opts) do
+    manage_request(:get, url, headers, opts)
   end
 
-  def post(url: url, body: body, headers: headers) do
-    manage_request(:post, url, body, headers)
+  def post([url: url, body: body, headers: headers] ++ opts) do
+    manage_request(:post, url, body, headers, opts)
   end
 
-  defp manage_request(action, url, body, headers) do
+  def headers([url: url, body: body, headers: headers] ++ opts) do
+    receive_timeout = Keyword.get(opts, :receive_timeout, @receive_timeout)
+
+    request =
+      Finch.build(:post, url, headers, body |> Jason.encode!())
+      |> Finch.request(SupFinch, receive_timeout: receive_timeout)
+
+    case request do
+      {:ok, %Finch.Response{status: 200, headers: headers}} ->
+        {:ok, headers}
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
+  defp manage_request(action, url, body, headers, opts) do
     url = build_url(url: url)
-
-    debug("HttpDatasource: #{url}")
+    receive_timeout = Keyword.get(opts, :receive_timeout, @receive_timeout)
 
     Finch.build(action, url, headers, body |> Jason.encode!())
-    |> Finch.request(SupFinch)
+    |> Finch.request(SupFinch, receive_timeout: receive_timeout)
     |> execute
   rescue
     e in ArgumentError ->
       {:error, e.message}
   end
 
-  defp manage_request(action, url, headers) do
+  defp manage_request(action, url, headers, opts) do
     url = build_url(url: url)
+    receive_timeout = Keyword.get(opts, :receive_timeout, @receive_timeout)
 
     debug("HttpDatasource: #{url}")
 
     Finch.build(action, url, headers)
-    |> Finch.request(SupFinch)
+    |> Finch.request(SupFinch, receive_timeout: receive_timeout)
     |> execute
   rescue
     e in ArgumentError -> {:error, StringHelper.truncate(e.message, max_length: 50)}

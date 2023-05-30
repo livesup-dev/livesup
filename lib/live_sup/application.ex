@@ -16,6 +16,7 @@ defmodule LiveSup.Application do
       {Phoenix.PubSub, name: LiveSup.PubSub},
       # Start the Endpoint (http/https)
       LiveSupWeb.Endpoint,
+      LiveSup.Core.MemoryStore,
       {Task.Supervisor, name: LiveSup.Core.Widgets.WorkerTaskSupervisor},
       {LiveSup.Core.Widgets.WidgetSupervisor, [name: :widget_supervisor]},
       {Oban, Application.fetch_env!(:live_sup, Oban)}

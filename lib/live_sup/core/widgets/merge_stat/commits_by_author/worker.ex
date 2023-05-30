@@ -10,7 +10,7 @@ defmodule LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker do
   def public_settings, do: []
 
   @impl true
-  def settings_keys, do: ["repo", "limit"]
+  def settings_keys, do: ["repo", "limit", "url"]
 
   @impl true
   def build_data(settings, _context) do
