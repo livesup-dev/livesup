@@ -129,6 +129,88 @@ defmodule LiveSup.Test.Core.Datasources.MergeStatDatasourceTest do
              ] = data
     end
 
+    @tag :mergestat_reviews_by_author
+    test "reviews_by_author/2", %{bypass: bypass} do
+      Bypass.expect(bypass, fn conn ->
+        Plug.Conn.resp(conn, 200, reviews_by_author_response())
+      end)
+
+      {:ok, data} =
+        MergeStatDatasource.reviews_by_author(
+          "https://github.com/livesup-dev/livesup",
+          url: endpoint_url(bypass.port)
+        )
+
+      assert [
+               %{
+                 "author_login" => "adammohammed",
+                 "total_pull_requests_reviewed" => "52"
+               },
+               %{
+                 "author_login" => "sahil311289",
+                 "total_pull_requests_reviewed" => "31"
+               },
+               %{
+                 "author_login" => "RaptorGandalf",
+                 "total_pull_requests_reviewed" => "28"
+               },
+               %{
+                 "author_login" => "jnschaeffer",
+                 "total_pull_requests_reviewed" => "23"
+               },
+               %{
+                 "author_login" => "JAORMX",
+                 "total_pull_requests_reviewed" => "4"
+               }
+             ] = data
+    end
+
+    def reviews_by_author_response do
+      """
+      {
+        "data":{
+           "execSQL":{
+              "rowCount":5,
+              "columns":[
+                 {
+                    "name":"author_login",
+                    "format":"text"
+                 },
+                 {
+                    "name":"total_pull_requests_reviewed",
+                    "format":"text"
+                 }
+              ],
+              "rows":[
+                 [
+                    "adammohammed",
+                    "52"
+                 ],
+                 [
+                    "sahil311289",
+                    "31"
+                 ],
+                 [
+                    "RaptorGandalf",
+                    "28"
+                 ],
+                 [
+                    "jnschaeffer",
+                    "23"
+                 ],
+                 [
+                    "JAORMX",
+                    "4"
+                 ]
+              ],
+              "queryRunningTimeMs":18,
+              "__typename":"ExecSQLResult"
+           }
+        }
+      }
+      """
+    end
+
     def first_commit_response do
       """
       {
