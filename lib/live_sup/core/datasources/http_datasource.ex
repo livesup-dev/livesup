@@ -5,7 +5,6 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
 
   use Timex
 
-  import Logger
   import LiveSup.Core.Datasources.Helper
   alias LiveSup.Helpers.StringHelper
 
@@ -51,8 +50,6 @@ defmodule LiveSup.Core.Datasources.HttpDatasource do
   defp manage_request(action, url, headers, opts) do
     url = build_url(url: url)
     receive_timeout = Keyword.get(opts, :receive_timeout, @receive_timeout)
-
-    debug("HttpDatasource: #{url}")
 
     Finch.build(action, url, headers)
     |> Finch.request(SupFinch, receive_timeout: receive_timeout)

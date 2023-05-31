@@ -33,11 +33,20 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
   end
 
   def build_spec(widget_data) do
+    widget_data.data |> dbg()
+
+    series =
+      Enum.map(widget_data.data, fn review ->
+        review["total_pull_requests_reviewed"] |> String.to_integer()
+      end)
+      |> dbg()
+
     %{
-      series:
-        Enum.map(widget_data.data, fn review ->
-          review["total_pull_requests_reviewed"]
-        end),
+      series: [
+        %{
+          data: series
+        }
+      ],
       chart: %{
         type: "bar",
         height: 350,

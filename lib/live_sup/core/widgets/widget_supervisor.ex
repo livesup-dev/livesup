@@ -1,11 +1,9 @@
 defmodule LiveSup.Core.Widgets.WidgetSupervisor do
   use Supervisor
-  import Logger
 
   alias LiveSup.Core.Widgets.{WidgetManager, WidgetRegistry}
 
   def start_link(args) do
-    debug("WidgetSupervisor: started")
     Supervisor.start_link(__MODULE__, %{}, args)
   end
 
@@ -13,7 +11,6 @@ defmodule LiveSup.Core.Widgets.WidgetSupervisor do
   def init(_args) do
     LiveSup.Telemetry.init()
 
-    debug("WidgetSupervisor: init")
     # :one_for_one - if a child process terminates, only that process is restarted.
     children = [
       {Registry, [name: WidgetRegistry.name(), keys: :unique]},

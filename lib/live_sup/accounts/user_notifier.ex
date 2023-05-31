@@ -6,8 +6,6 @@ defmodule LiveSup.Core.Accounts.UserNotifier do
   #   * Bamboo - https://hexdocs.pm/bamboo
   #
   defp deliver(to, body) do
-    require Logger
-    Logger.debug(body)
     {:ok, %{to: to, body: body}}
   end
 

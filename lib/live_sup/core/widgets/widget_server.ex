@@ -26,8 +26,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
       alias LiveSup.Schemas.{Widget, WidgetInstance, User}
 
       def start_link(%WidgetContext{} = widget_context) do
-        debug("#{__MODULE__}: start_link")
-
         GenServer.start_link(
           __MODULE__,
           widget_context,
@@ -36,7 +34,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
       end
 
       def init(%{widget_instance: widget_instance} = widget_context) do
-        debug("init")
         # TODO: Refactor these lines. Move all into a module
         Telemetry.execute(
           Telemetry.Events.widget_init_for_user(),
@@ -76,7 +73,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
       #       widget_data: widget_data,
       #       user: user
       #     ) do
-      #   debug("widget_server.handle_info:fetch_data: #{name}")
 
       #   # Im not really sure if this is ok to use a Task inside
       #   # a genserver, but I didn't want to have calls hanging because
@@ -91,8 +87,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
             :fetch_data,
             %{widget_instance: %{id: id}} = widget_context
           ) do
-        debug("handle_info:fetch_data: #{id}")
-
         # Im not really sure if this is ok to use a Task inside
         # a genserver, but I didn't want to have calls hanging because
         # the fetching data is taking too long.
@@ -105,8 +99,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
       # When the task is completed, this is the handler
       # that will receive the message
       def fetch_data(%{widget_instance: widget_instance} = widget_context) do
-        debug("fetch_data: #{widget_instance.id}")
-
         data =
           :telemetry.span(
             Telemetry.Events.widget_build_data(),
@@ -124,15 +116,12 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
           data
           |> build_model(widget_instance)
 
-        debug("fetch_data.widget_data.state: #{widget_data.state}")
-
         {:from_task, widget_data}
       end
 
       # When the task is completed, this is the handler
       # that will receive the message
       # def fetch_data(%{widget_instance: widget_instance, user: user}) do
-      #   debug("fetch_data: #{widget_instance.name}")
 
       #   data =
       #     :telemetry.span(
@@ -170,9 +159,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
         |> calculate_next_cycle_delay()
         |> run_next()
 
-        debug("handle_info.from_task:#{widget_instance.id}")
-        debug("handle_info.from_task:#{widget_data.state}")
-
         # TODO: Broadcast to the user if the widget is for users
         widget_context |> broadcast_data()
 
@@ -183,8 +169,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
             :broadcast,
             %{widget_data: widget_data} = widget_context
           ) do
-        debug("widget_server.broadcasting: widgets:#{widget_data.id}")
-
         widget_context |> broadcast_data()
 
         {:noreply, widget_context}
@@ -216,8 +200,6 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
             from,
             %{widget_data: widget_data, widget_instance: widget_instance} = widget_context
           ) do
-        debug("handle_call: #{widget_instance.id}")
-        debug("handle_call.state: #{widget_data.state}")
         {:reply, widget_data, widget_context}
       end
 
@@ -243,12 +225,10 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
       end
 
       def get_data(widget_instance_id) do
-        debug("get_data.from_instance: #{widget_instance_id}")
         GenServer.call(via_tuple(widget_instance_id), :data)
       end
 
       def get_data(widget_instance_id, user_id) do
-        debug("get_data.from_user: #{widget_instance_id}/#{user_id}")
         GenServer.call(via_tuple(widget_instance_id, user_id), :data)
       end
 
@@ -324,26 +304,20 @@ defmodule LiveSup.Core.Widgets.WidgetServer do
              widget_instance: %{id: widget_instance_id, widget: %{global: false}},
              user: %{id: user_id}
            }) do
-        debug("via_tuple.global:false")
-        debug("via_tuple.widget_instance_id:#{widget_instance_id}")
         {:via, Registry, {WidgetRegistry.name(), "#{widget_instance_id}:#{user_id}"}}
       end
 
       defp via_tuple(%{
              widget_instance: %{id: widget_instance_id, widget: %{global: true}}
            }) do
-        debug("via_tuple.global:true")
-        debug("via_tuple.widget_instance_id:#{widget_instance_id}")
         {:via, Registry, {WidgetRegistry.name(), "#{widget_instance_id}"}}
       end
 
       defp via_tuple(widget_instance_id, user_id) do
-        debug("via_tuple.global:false")
         {:via, Registry, {WidgetRegistry.name(), "#{widget_instance_id}:#{user_id}"}}
       end
 
       defp via_tuple(widget_instance_id) do
-        debug("via_tuple.global:true")
         {:via, Registry, {WidgetRegistry.name(), "#{widget_instance_id}"}}
       end
 

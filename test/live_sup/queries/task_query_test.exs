@@ -42,7 +42,7 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
       assert updated_at_desc == updated_at
     end
 
-    test "searches by query", %{todo: todo, task: %{updated_at: updated_at}} do
+    test "searches by query", %{todo: _todo, task: %{updated_at: _updated_at}} do
       tasks = TaskQuery.search(%{query: "generic"})
       assert length(tasks) == 3
     end

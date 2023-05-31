@@ -1,10 +1,7 @@
 defmodule LiveSup.DataImporter.NoteImporter do
   alias LiveSup.Queries.NoteQuery
-  import Logger
 
   def perform(%{"notes" => notes} = data) do
-    debug("NoteImporter:import")
-
     notes
     |> Enum.each(fn note_attrs ->
       note_attrs
@@ -15,8 +12,6 @@ defmodule LiveSup.DataImporter.NoteImporter do
   end
 
   def perform(data) do
-    debug("NoteImporter:no-data")
-
     data
   end
 
