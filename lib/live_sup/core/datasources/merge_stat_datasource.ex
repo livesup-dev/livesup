@@ -7,6 +7,63 @@ defmodule LiveSup.Core.Datasources.MergeStatDatasource do
 
   @receive_timeout 15_000
 
+  def reviews_by_author(repo, params) do
+    limit = params |> Keyword.get(:limit, 10)
+
+    sql = """
+    SELECT
+      prr.author_login,
+      COUNT(DISTINCT CONCAT(prr.repo_id, prr.pr_number)) AS total_pull_requests_reviewed
+    FROM github_pull_request_reviews prr
+    INNER JOIN github_pull_requests pr ON prr.repo_id = pr.repo_id and prr.pr_number = pr.number
+    INNER JOIN repos ON repos.id = pr.repo_id
+    WHERE pr.author_login <> prr.author_login
+      AND repos.repo = '#{repo}'
+    GROUP BY 1
+    ORDER BY 2 DESC
+    LIMIT #{limit}
+    """
+
+    # This query takes some times to load, so we need
+    # a higger timeout
+    {:ok, result} =
+      sql
+      |> run_query(Keyword.merge(params, receive_timeout: 40_000))
+
+    {:ok,
+     result
+     |> parse_list()}
+  end
+
+  def time_to_merge(repos, params) when is_binary(repos) do
+    repos = String.split(repos, ",") |> Enum.join("','")
+    limit = params |> Keyword.get(:limit, 10)
+
+    sql =
+      """
+      SELECT
+        public.repos.repo,
+        round(avg(extract(EPOCH FROM (public.github_pull_requests.merged_at - public.github_pull_requests.created_at))/60/60/24)::numeric, 2) AS avg_days_to_merge
+      FROM public.github_pull_requests
+      INNER JOIN public.repos ON public.github_pull_requests.repo_id = public.repos.id
+      WHERE public.github_pull_requests.merged_at IS NOT NULL
+        and repos.repo in ('#{repos}')
+      GROUP BY 1
+      order by 2 desc
+      """
+      |> dbg()
+
+    # This query takes some times to load, so we need
+    # a higger timeout
+    {:ok, result} =
+      sql
+      |> run_query(Keyword.merge(params, receive_timeout: 40_000))
+
+    {:ok,
+     result
+     |> parse_list()}
+  end
+
   def commits_by_author(repo, params) do
     limit = params |> Keyword.get(:limit, 10)
 
@@ -217,7 +274,7 @@ defmodule LiveSup.Core.Datasources.MergeStatDatasource do
   end
 
   def run_query(sql, params \\ []) do
-    url = params |> Keyword.get(:url)
+    url = params |> Keyword.get(:url, LiveSup.Config.merge_stat_url())
     token = params |> Keyword.get(:token, fetch_token(params))
     receive_timeout = params |> Keyword.get(:receive_timeout, @receive_timeout)
 

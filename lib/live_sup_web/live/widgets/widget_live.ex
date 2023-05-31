@@ -7,8 +7,6 @@ defmodule LiveSupWeb.Live.Widgets.WidgetLive do
       use Phoenix.LiveView,
         layout: {LiveSupWeb.LayoutView, :live}
 
-      import Logger
-
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
@@ -45,7 +43,6 @@ defmodule LiveSupWeb.Live.Widgets.WidgetLive do
       @impl true
       def mount(_params, session, socket) do
         current_user = get_current_user(session, socket)
-        debug("mount: #{__MODULE__}")
         # TODO: We need to get rid of having the widget_instance in the session.
         %{id: widget_instance_id, widget: %{global: global}} = session["widget_instance"]
 
@@ -121,8 +118,6 @@ defmodule LiveSupWeb.Live.Widgets.WidgetLive do
 
       @impl true
       def handle_info(%{event: "update", payload: %{body: widget_data}}, socket) do
-        debug("widget_live.handle_info: #{widget_data.title}")
-
         send_update(SmartRenderComponent,
           id: widget_data.id,
           widget_data: widget_data

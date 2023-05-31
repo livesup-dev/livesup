@@ -1,5 +1,4 @@
 defmodule LiveSup.Core.LinksScanners.JiraScanner do
-  import Logger
   alias LiveSup.Core.Links
   alias LiveSup.Schemas.{User, LinkSchemas, DatasourceInstance, Datasource}
   alias LiveSup.Core.Datasources.JiraDatasource
@@ -12,8 +11,6 @@ defmodule LiveSup.Core.LinksScanners.JiraScanner do
         found_link =
           user
           |> Links.get_by_datasource_instance(datasource_instance)
-
-        debug("JiraScanner:scan")
 
         case found_link do
           nil -> create_link(datasource_instance, user)
@@ -32,8 +29,6 @@ defmodule LiveSup.Core.LinksScanners.JiraScanner do
   defp create_link(%{id: datasource_instance_id} = datasource_instance, %{id: user_id} = user) do
     case user |> find_link(datasource_instance) do
       {:ok, account_id} ->
-        debug("JiraScanner:link_found:#{account_id}")
-
         %{
           datasource_instance_id: datasource_instance_id,
           user_id: user_id,

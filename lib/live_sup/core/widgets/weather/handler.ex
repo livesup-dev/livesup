@@ -1,10 +1,7 @@
 defmodule LiveSup.Core.Widgets.Weather.Handler do
   alias LiveSup.Core.Datasources.WeatherApiDatasource
-  import Logger
 
-  def get_data(%{"key" => _key, "location" => location} = args) do
-    debug("Handler: #{location}")
-
+  def get_data(%{"key" => _key, "location" => _location} = args) do
     args
     |> WeatherApiDatasource.get_current_weather()
     |> process_response()

@@ -2,7 +2,6 @@ defmodule LiveSup.Core.Widgets.WorkerTaskSupervisor do
   use LiveSup.Core.Widgets.WidgetLogger
 
   def fetch_data(module, widget_context) do
-    debug("fetch_data")
     Task.Supervisor.async(__MODULE__, module, :fetch_data, [widget_context], restart: :temporary)
   end
 

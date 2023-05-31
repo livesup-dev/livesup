@@ -77,7 +77,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     ])
   end
 
-  defp assign_tasks(%{assigns: %{todo: todo}} = socket), do: assign_tasks(socket, "")
+  defp assign_tasks(%{assigns: %{todo: _todo}} = socket), do: assign_tasks(socket, "")
 
   defp assign_tasks(%{assigns: %{todo: todo}} = socket, query) do
     open_tasks = Todos.search_tasks(todo: todo, query: query, completed: false)
@@ -98,7 +98,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   #   |> assign(:completed_tasks_count, length(completed_tasks))
   # end
 
-  def handle_event("search", %{"value" => query}, %{assigns: %{todo: todo}} = socket) do
+  def handle_event("search", %{"value" => query}, %{assigns: %{todo: _todo}} = socket) do
     {:noreply, assign_tasks(socket, query)}
   end
 

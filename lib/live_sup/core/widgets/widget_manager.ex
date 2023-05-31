@@ -9,8 +9,6 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
   alias LiveSup.Core.Widgets.WidgetContext
 
   def start_link(_arg) do
-    debug("WidgetManager: started")
-
     DynamicSupervisor.start_link(
       __MODULE__,
       [],
@@ -19,18 +17,12 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
   end
 
   def init(_arg) do
-    debug("WidgetManager: init")
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
   def start_widgets(widget_instances, %User{} = user) do
-    debug("WidgetManager: start_widgets")
-
     widget_instances
     |> Enum.each(fn widget_instance ->
-      debug("WidgetManager: starting <#{widget_instance.name}> widget")
-      debug("WidgetManager: global: #{widget_instance.widget.global}")
-
       widget_instance
       |> WidgetContext.build(user)
       |> start_widget()
@@ -43,8 +35,6 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
   end
 
   def start_widget(%WidgetContext{widget_instance: widget_instance} = widget_context) do
-    debug("WidgetManager: starting <#{widget_instance.name}> widget")
-
     DynamicSupervisor.start_child(
       __MODULE__,
       {
@@ -55,8 +45,6 @@ defmodule LiveSup.Core.Widgets.WidgetManager do
   end
 
   def start_widget(%WidgetInstance{} = widget_instance) do
-    debug("WidgetManager: starting <#{widget_instance.name}> widget")
-
     context =
       widget_instance
       |> WidgetContext.build()

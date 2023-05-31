@@ -1,7 +1,6 @@
 defmodule LiveSup.Schemas.Datasource do
   use Ecto.Schema
   import Ecto.Changeset
-  import Logger
 
   alias LiveSup.Schemas.{Widget, Datasource}
   alias LiveSup.Core.LinksScanners.JiraScanner
@@ -12,16 +11,16 @@ defmodule LiveSup.Schemas.Datasource do
   @foreign_key_type :binary_id
   @derive {Phoenix.Param, key: :id}
   schema "datasources" do
-    field :name, :string
-    field :slug, :string
-    field :description, :string
-    field :feature_image_url, :string
-    field :category, :string
-    field :enabled, :boolean
-    field :settings, :map
-    field :labels, {:array, :string}, default: []
+    field(:name, :string)
+    field(:slug, :string)
+    field(:description, :string)
+    field(:feature_image_url, :string)
+    field(:category, :string)
+    field(:enabled, :boolean)
+    field(:settings, :map)
+    field(:labels, {:array, :string}, default: [])
 
-    has_many :widgets, Widget
+    has_many(:widgets, Widget)
 
     timestamps()
   end
@@ -49,8 +48,6 @@ defmodule LiveSup.Schemas.Datasource do
   def jira_slug(), do: @jira_datasource
 
   def scanner(slug) do
-    debug("LiveSup.Schemas.Datasource:#{slug}")
-
     case slug do
       @jira_datasource -> {:ok, JiraScanner}
       _ -> {:error, "no scanner for #{slug}"}
