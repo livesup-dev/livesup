@@ -80,6 +80,10 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
         attrs: &merge_stat_github_reviews_widget_attrs/1
       },
       %{
+        datasource_slug: "merge-stat-datasource",
+        attrs: &merge_stat_github_time_to_merge_widget_attrs/1
+      },
+      %{
         datasource_slug: "rollbar-datasource",
         attrs: &rollbar_list_of_issues_widget_attrs/1
       },
@@ -597,6 +601,23 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       global: true,
       ui_handler: "LiveSupWeb.Live.Widgets.MergeStat.CommitsByAuthorsLive",
       worker_handler: "LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 600}
+      },
+      datasource_id: datasource.id
+    }
+  end
+
+  def merge_stat_github_time_to_merge_widget_attrs(datasource) do
+    %{
+      name: "Merge Stat - Github time to merge",
+      slug: "merge-stat-github-time-to-merge",
+      feature_image_url: "/images/widgets/merge-stat-github-time-to-merge.png",
+      enabled: true,
+      global: true,
+      ui_handler: "LiveSupWeb.Live.Widgets.MergeStat.TimeToMergeLive",
+      worker_handler: "LiveSup.Core.Widgets.MergeStat.TimeToMerge.Worker",
       labels: [],
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 600}

@@ -1,4 +1,4 @@
-defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
+defmodule LiveSupWeb.Live.Widgets.MergeStat.TimeToMergeLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
   import LiveSupWeb.Components.IconsComponent
 
@@ -11,13 +11,13 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
       id={@widget_data.id}
       widget_data={@widget_data}
     >
-      <!-- Reviews by author -->
+      <!-- Time to merge -->
       <WidgetHeaderComponent.render widget_data={widget_data} />
       <!-- Widget Content -->
       <div class="ls-widget-body-default">
         <div :if={Enum.any?(widget_data.data)}>
           <%= live_component(Palette.Components.Live.Chart,
-            id: "reviews-by-author-#{@widget_data.id}",
+            id: "time-to-merge-#{@widget_data.id}",
             spec: build_spec(widget_data)
           ) %>
         </div>
@@ -35,7 +35,7 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
   def build_spec(widget_data) do
     series =
       Enum.map(widget_data.data, fn review ->
-        review["total_pull_requests_reviewed"] |> String.to_integer()
+        review["avg_days_to_merge"]
       end)
 
     %{
@@ -43,6 +43,13 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
         %{
           data: series
         }
+      ],
+      colors: [
+        "#33b2df",
+        "#546E7A",
+        "#d4526e",
+        "#13d8aa",
+        "#A5978B"
       ],
       chart: %{
         type: "bar",
@@ -54,7 +61,8 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
       plotOptions: %{
         bar: %{
           borderRadius: 4,
-          horizontal: true
+          horizontal: true,
+          distributed: true
         }
       },
       stroke: %{
@@ -64,12 +72,25 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
         opacity: 0.8
       },
       dataLabels: %{
-        enabled: false
+        enabled: true,
+        textAnchor: "start",
+        style: %{
+          colors: ["#fff"]
+        },
+        offsetX: 0
+      },
+      yaxis: %{
+        labels: %{
+          show: true
+        }
       },
       xaxis: %{
+        labels: %{
+          show: false
+        },
         categories:
           Enum.map(widget_data.data, fn status ->
-            status["author_login"]
+            status["label"]
           end)
       }
     }

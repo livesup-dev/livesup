@@ -129,6 +129,33 @@ defmodule LiveSup.Test.Core.Datasources.MergeStatDatasourceTest do
              ] = data
     end
 
+    @tag :mergestat_time_to_merge
+    test "time_to_merge/2", %{bypass: bypass} do
+      Bypass.expect(bypass, fn conn ->
+        Plug.Conn.resp(conn, 200, time_to_merge_response())
+      end)
+
+      {:ok, data} =
+        MergeStatDatasource.time_to_merge(
+          "https://github.com/livesup/billing-it,https://github.com/livesup/embs,https://github.com/livesup/billing-api,https://github.com/livesup/kb-deploy,https://github.com/livesup/api",
+          url: endpoint_url(bypass.port)
+        )
+
+      assert [
+               %{
+                 "avg_days_to_merge" => "6.24",
+                 "repo" => "https://github.com/livesup/billing-it"
+               },
+               %{"avg_days_to_merge" => "3.61", "repo" => "https://github.com/livesup/embs"},
+               %{"avg_days_to_merge" => "3.41", "repo" => "https://github.com/livesup/kb-deploy"},
+               %{"avg_days_to_merge" => "2.21", "repo" => "https://github.com/livesup/api"},
+               %{
+                 "avg_days_to_merge" => "1.68",
+                 "repo" => "https://github.com/livesup/billing-api"
+               }
+             ] = data
+    end
+
     @tag :mergestat_reviews_by_author
     test "reviews_by_author/2", %{bypass: bypass} do
       Bypass.expect(bypass, fn conn ->
@@ -143,19 +170,19 @@ defmodule LiveSup.Test.Core.Datasources.MergeStatDatasourceTest do
 
       assert [
                %{
-                 "author_login" => "adammohammed",
+                 "author_login" => "dammhammed",
                  "total_pull_requests_reviewed" => "52"
                },
                %{
-                 "author_login" => "sahil311289",
+                 "author_login" => "shl311289",
                  "total_pull_requests_reviewed" => "31"
                },
                %{
-                 "author_login" => "RaptorGandalf",
+                 "author_login" => "RptorGndalf",
                  "total_pull_requests_reviewed" => "28"
                },
                %{
-                 "author_login" => "jnschaeffer",
+                 "author_login" => "jnscheffr",
                  "total_pull_requests_reviewed" => "23"
                },
                %{
@@ -163,6 +190,52 @@ defmodule LiveSup.Test.Core.Datasources.MergeStatDatasourceTest do
                  "total_pull_requests_reviewed" => "4"
                }
              ] = data
+    end
+
+    def time_to_merge_response do
+      """
+      {
+        "data":{
+           "execSQL":{
+              "rowCount":5,
+              "columns":[
+                 {
+                    "name":"repo",
+                    "format":"text"
+                 },
+                 {
+                    "name":"avg_days_to_merge",
+                    "format":"text"
+                 }
+              ],
+              "rows":[
+                 [
+                    "https://github.com/livesup/billing-it",
+                    "6.24"
+                 ],
+                 [
+                    "https://github.com/livesup/embs",
+                    "3.61"
+                 ],
+                 [
+                    "https://github.com/livesup/kb-deploy",
+                    "3.41"
+                 ],
+                 [
+                    "https://github.com/livesup/api",
+                    "2.21"
+                 ],
+                 [
+                    "https://github.com/livesup/billing-api",
+                    "1.68"
+                 ]
+              ],
+              "queryRunningTimeMs":35,
+              "__typename":"ExecSQLResult"
+           }
+        }
+      }
+      """
     end
 
     def reviews_by_author_response do
@@ -183,19 +256,19 @@ defmodule LiveSup.Test.Core.Datasources.MergeStatDatasourceTest do
               ],
               "rows":[
                  [
-                    "adammohammed",
+                    "dammhammed",
                     "52"
                  ],
                  [
-                    "sahil311289",
+                    "shl311289",
                     "31"
                  ],
                  [
-                    "RaptorGandalf",
+                    "RptorGndalf",
                     "28"
                  ],
                  [
-                    "jnschaeffer",
+                    "jnscheffr",
                     "23"
                  ],
                  [

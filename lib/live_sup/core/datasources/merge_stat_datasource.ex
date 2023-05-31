@@ -35,6 +35,35 @@ defmodule LiveSup.Core.Datasources.MergeStatDatasource do
      |> parse_list()}
   end
 
+  def time_to_merge(repos, params) when is_binary(repos) do
+    repos = String.split(repos, ",") |> Enum.join("','")
+    limit = params |> Keyword.get(:limit, 10)
+
+    sql =
+      """
+      SELECT
+        public.repos.repo,
+        round(avg(extract(EPOCH FROM (public.github_pull_requests.merged_at - public.github_pull_requests.created_at))/60/60/24)::numeric, 2) AS avg_days_to_merge
+      FROM public.github_pull_requests
+      INNER JOIN public.repos ON public.github_pull_requests.repo_id = public.repos.id
+      WHERE public.github_pull_requests.merged_at IS NOT NULL
+        and repos.repo in ('#{repos}')
+      GROUP BY 1
+      order by 2 desc
+      """
+      |> dbg()
+
+    # This query takes some times to load, so we need
+    # a higger timeout
+    {:ok, result} =
+      sql
+      |> run_query(Keyword.merge(params, receive_timeout: 40_000))
+
+    {:ok,
+     result
+     |> parse_list()}
+  end
+
   def commits_by_author(repo, params) do
     limit = params |> Keyword.get(:limit, 10)
 
