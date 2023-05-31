@@ -125,4 +125,12 @@ defmodule LiveSupWeb.Helpers do
     </div>
     """
   end
+
+  def page_head(assigns) do
+    alias Palette.Components.Head
+
+    ~H"""
+    <Head.head title_suffix="Livesup" />
+    """
+  end
 end
