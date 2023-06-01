@@ -56,6 +56,10 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
         attrs: &jira_list_of_issues_widget_attrs/1
       },
       %{
+        datasource_slug: "jira-datasource",
+        attrs: &jira_list_of_epics_widget_attrs/1
+      },
+      %{
         datasource_slug: "github-datasource",
         attrs: &github_pull_requests_widget_attrs/1
       },
@@ -496,6 +500,23 @@ defmodule LiveSup.Seeds.Core.WidgetsSeeds do
       global: false,
       ui_handler: "LiveSupWeb.Live.Widgets.Jira.ListOfIssuesLive",
       worker_handler: "LiveSup.Core.Widgets.Jira.ListOfIssues.Worker",
+      labels: [],
+      settings: %{
+        "runs_every" => %{"source" => "local", "type" => "int", "value" => 120}
+      },
+      datasource_id: jira_datasource.id
+    }
+  end
+
+  defp jira_list_of_epics_widget_attrs(jira_datasource) do
+    %{
+      name: "Jira list of epics",
+      slug: "jira-list-of-epics",
+      feature_image_url: "/images/widgets/jira-list-of-epics.png",
+      enabled: true,
+      global: false,
+      ui_handler: "LiveSupWeb.Live.Widgets.Jira.ListOfEpicsLive",
+      worker_handler: "LiveSup.Core.Widgets.Jira.ListOfEpics.Worker",
       labels: [],
       settings: %{
         "runs_every" => %{"source" => "local", "type" => "int", "value" => 120}
