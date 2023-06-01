@@ -52,7 +52,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfEpics.WorkerTest do
 
     test "get list of epics", %{user: user} do
       with_mock JiraDatasource,
-        search_tickets: fn _query, _args -> {:ok, jira_issues()} end do
+        epic_issues: fn _project, _component, _args -> {:ok, jira_issues()} end do
         {:ok, _pid} = WidgetManager.start_widget(@widget_instance, user)
 
         WorkerTaskSupervisor.wait_for_completion()
@@ -60,13 +60,13 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfEpics.WorkerTest do
         data = Worker.get_data(@widget_instance, user)
 
         assert %WidgetData{
-                 data: %{error_description: :jira_link_not_found},
+                 data: _,
                  icon: nil,
                  icon_svg: nil,
                  id: "e36d593e-f5a0-47bd-b6e8-c2fec3af3fbc",
                  public_settings: %{},
-                 state: :error,
-                 title: "Your Jira issues",
+                 state: :ready,
+                 title: "Epics for Network",
                  ui_settings: %{"size" => 1},
                  updated_in_minutes: _
                } = data
