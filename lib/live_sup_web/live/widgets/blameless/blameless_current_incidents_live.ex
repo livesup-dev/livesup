@@ -26,7 +26,7 @@ defmodule LiveSupWeb.Live.Widgets.Blameless.CurrentIncidentsLive do
               </span>
               <div id="incident">
                 <div class="flex justify-between space-x-2 items-start">
-                  <p class="text-base font-medium text-slate-600 dark:text-navy-100">
+                  <p class="font-medium text-slate-600 dark:text-navy-100">
                     <a
                       href={incident[:url]}
                       class="hover:underline text-black dark:text-primary block"
