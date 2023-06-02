@@ -130,6 +130,13 @@ defmodule LiveSup.Core.Datasources.JiraDatasource do
     end
   end
 
+  def epic_issues(project, component, token: token, domain: domain) do
+    query =
+      "project = #{project} AND issuetype = Epic AND component = #{component} AND status != Complete"
+
+    search_tickets(query, token: token, domain: domain)
+  end
+
   defp build_statuses(issues_types) do
     data =
       issues_types
