@@ -2,6 +2,7 @@ defmodule LiveSup.DataImporter.UserImporter do
   alias LiveSup.Core.{Users, Groups}
   alias LiveSup.Schemas.User
   alias LiveSup.Queries.GroupQuery
+  alias LiveSup.DataImporter.Users.LinkImporter
 
   def perform(data) when is_binary(data) do
     data
@@ -16,12 +17,17 @@ defmodule LiveSup.DataImporter.UserImporter do
     |> Enum.each(fn user_attrs ->
       password = Map.get(user_attrs, "password", :crypto.strong_rand_bytes(16))
 
-      user_attrs
-      |> Map.put("password", password)
-      |> get_or_create_user()
-      |> create_default_personal_group()
-      |> add_to_group(all_users_group)
-      |> find_links()
+      {:ok, user} =
+        user_attrs
+        |> Map.put("password", password)
+        |> get_or_create_user()
+        |> create_default_personal_group()
+        |> add_to_group(all_users_group)
+
+      # |> find_links()
+
+      user
+      |> import_links(user_attrs)
     end)
 
     data
@@ -49,6 +55,14 @@ defmodule LiveSup.DataImporter.UserImporter do
 
     {:ok, user}
   end
+
+  defp import_links(user, %{"links" => links}) do
+    LinkImporter.perform(user, links)
+
+    {:ok, user}
+  end
+
+  defp import_links(user, _data), do: {:ok, user}
 
   defp create_default_personal_group({:ok, user}) do
     case Groups.user_default_group(user) do

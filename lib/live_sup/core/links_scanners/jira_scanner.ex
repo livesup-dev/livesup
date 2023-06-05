@@ -31,6 +31,7 @@ defmodule LiveSup.Core.LinksScanners.JiraScanner do
       {:ok, account_id} ->
         %{
           datasource_instance_id: datasource_instance_id,
+          datasource_slug: datasource_instance.datasource.slug,
           user_id: user_id,
           settings: %LinkSchemas.Jira{account_id: account_id}
         }

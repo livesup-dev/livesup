@@ -3,10 +3,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfEpics.HandlerTest do
   import Mock
 
   alias LiveSup.Core.Widgets.Jira.ListOfEpics.Handler
-  alias LiveSup.Core.Widgets.WidgetContext
   alias LiveSup.Core.Datasources.JiraDatasource
-  alias LiveSup.Test.AccountsFixtures
-  alias LiveSup.Schemas.WidgetInstance
 
   describe "Managing Jira list of epics" do
     @describetag :widget

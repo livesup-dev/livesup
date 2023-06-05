@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.WidgetsTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   import LiveSup.Test.ProjectsFixtures

@@ -8,6 +8,7 @@ defmodule LiveSup.Core.Links do
   alias LiveSup.Schemas.{Link, User, DatasourceInstance, Datasource}
   alias LiveSup.Queries.LinkQuery
 
+  defdelegate count(), to: LinkQuery
   defdelegate get(id), to: LinkQuery
   defdelegate get!(id), to: LinkQuery
   defdelegate get_by_datasource(user, slug), to: LinkQuery
@@ -18,40 +19,55 @@ defmodule LiveSup.Core.Links do
   defdelegate update(team, attrs), to: LinkQuery
   defdelegate update!(team, attrs), to: LinkQuery
   defdelegate delete(team), to: LinkQuery
+  defdelegate upsert(attrs), to: LinkQuery
+
+  def get(%User{} = user, %DatasourceInstance{id: datasource_instance_id}) do
+    user
+    |> get_by_datasource_instance(datasource_instance_id)
+    |> build_link_schema()
+  end
 
   def get_jira_link(%User{} = user, %DatasourceInstance{id: datasource_instance_id}) do
     user
     |> get_by_datasource_instance(datasource_instance_id)
-    |> build_jira_link_schema()
+    |> build_link_schema()
+  end
+
+  def get_github_links(%User{} = user) do
+    user
+    |> get_by_datasource(Datasource.github_slug())
+    |> build_links_schemas()
   end
 
   def get_jira_links(%User{} = user) do
-    get_by_datasource(user, Datasource.jira_slug())
-    |> build_jira_links_schemas()
+    user
+    |> get_by_datasource(Datasource.jira_slug())
+    |> build_links_schemas()
   end
 
   def get_jira_links(user_id) do
     get_by_datasource(user_id, Datasource.jira_slug())
-    |> build_jira_links_schemas()
+    |> build_links_schemas()
   end
 
-  defp build_jira_links_schemas([]) do
-    {:error, :jira_links_not_found}
+  defp build_links_schemas([]) do
+    {:error, :links_not_found}
   end
 
-  defp build_jira_links_schemas(links) do
+  defp build_links_schemas(links) do
     links
-    |> Enum.map(fn link ->
-      link
-      |> build_jira_link_schema()
-    end)
+    |> Enum.map(&build_link_schema/1)
   end
 
-  defp build_jira_link_schema(nil) do
-    {:error, :jira_link_not_found}
+  defp build_link_schema(nil) do
+    {:error, :no_link_found}
   end
 
-  defp build_jira_link_schema(%Link{settings: settings}) do
+  defp build_link_schema(%Link{settings: settings, datasource_slug: "jira-datasource"}) do
     {:ok, struct(LinkSchemas.Jira, account_id: settings["account_id"])}
+  end
+
+  defp build_link_schema(%Link{settings: settings, datasource_slug: "github-datasource"}) do
+    {:ok, struct(LinkSchemas.Github, username: settings["username"])}
   end
 end

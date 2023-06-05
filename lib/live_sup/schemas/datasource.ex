@@ -6,6 +6,7 @@ defmodule LiveSup.Schemas.Datasource do
   alias LiveSup.Core.LinksScanners.JiraScanner
 
   @jira_datasource "jira-datasource"
+  @github_datasource "github-datasource"
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -46,6 +47,7 @@ defmodule LiveSup.Schemas.Datasource do
   end
 
   def jira_slug(), do: @jira_datasource
+  def github_slug(), do: @github_datasource
 
   def scanner(slug) do
     case slug do

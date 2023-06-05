@@ -4,6 +4,11 @@ defmodule LiveSup.Queries.LinkQuery do
   alias LiveSup.Repo
   alias LiveSup.Schemas.{Link, User, Datasource, DatasourceInstance}
 
+  def count do
+    base()
+    |> Repo.aggregate(:count)
+  end
+
   def create!(data) do
     %Link{}
     |> Link.changeset(data)
@@ -139,6 +144,6 @@ defmodule LiveSup.Queries.LinkQuery do
       join: datasource_instance in assoc(link, :datasource_instance),
       as: :datasource_instance
     )
-    |> preload(:datasource_instance)
+    |> preload(datasource_instance: [:datasource])
   end
 end

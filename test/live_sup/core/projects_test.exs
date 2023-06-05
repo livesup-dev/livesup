@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.ProjectsTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   alias LiveSup.Core.Projects

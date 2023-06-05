@@ -30,13 +30,15 @@ defmodule LiveSup.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(LiveSup.Repo)
+    LiveSup.DataCase.setup_sandbox(tags)
+  end
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(LiveSup.Repo, {:shared, self()})
-    end
-
-    :ok
+  @doc """
+  Sets up the sandbox based on the test tags.
+  """
+  def setup_sandbox(tags) do
+    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(LiveSup.Repo, shared: not tags[:async])
+    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
   end
 
   @doc """

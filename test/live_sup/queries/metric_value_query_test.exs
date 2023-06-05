@@ -1,5 +1,5 @@
 defmodule LiveSup.Tests.Queries.MetricValueQueryTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   alias LiveSup.Helpers.DateHelper

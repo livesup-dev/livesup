@@ -17,7 +17,8 @@ defmodule LiveSupWeb.Api.LinkScanJSON do
       id: link.id,
       settings: link.settings,
       user_id: link.user_id,
-      datasource_instance_id: link.datasource_instance_id
+      datasource_instance_id: link.datasource_instance_id,
+      datasource_slug: link.datasource_slug
     }
   end
 end

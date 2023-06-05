@@ -1,5 +1,5 @@
 defmodule LiveSup.Workers.TodoDatasourceWorkerSupervisorTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   import LiveSup.Test.Setups

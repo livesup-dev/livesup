@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.LinksScanners.ScannerTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
   import Mock
 

@@ -1,5 +1,5 @@
 defmodule LiveSup.Tests.Queries.TeamQueryTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   alias LiveSup.Queries.TeamQuery

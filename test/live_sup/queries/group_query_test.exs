@@ -1,5 +1,5 @@
 defmodule LiveSup.Tests.Queries.GroupQueryTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   import LiveSup.Test.Setups

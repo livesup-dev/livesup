@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Widgets.Note.WorkerTest do
-  use LiveSup.DataCase
+  use LiveSup.DataCase, async: false
 
   alias LiveSup.Core.Widgets.Note.Worker
   alias LiveSup.Schemas.WidgetInstance

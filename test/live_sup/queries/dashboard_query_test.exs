@@ -1,5 +1,5 @@
 defmodule LiveSup.Tests.Queries.DashboardQueryTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   alias LiveSup.Queries.DashboardQuery

@@ -27,10 +27,22 @@ defmodule LiveSup.Test.LinksFixtures do
     |> add_link(LiveSup.Test.DatasourcesFixtures.add_pager_duty_datasource_instance(), %{})
   end
 
-  defp add_link(%User{id: user_id}, %DatasourceInstance{id: datasource_instance_id}, settings) do
+  def add_github_link(%User{} = user) do
+    user
+    |> add_link(LiveSup.Test.DatasourcesFixtures.add_github_datasource_instance(), %{
+      username: "myuser"
+    })
+  end
+
+  defp add_link(
+         %User{id: user_id},
+         %DatasourceInstance{id: datasource_instance_id, datasource: %{slug: datasource_slug}},
+         settings
+       ) do
     %{id: id} =
       %{
         datasource_instance_id: datasource_instance_id,
+        datasource_slug: datasource_slug,
         user_id: user_id,
         settings: settings
       }
