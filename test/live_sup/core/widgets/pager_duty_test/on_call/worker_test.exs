@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Widgets.PagerDuty.OnCall.WorkerTest do
-  use LiveSup.DataCase
+  use LiveSup.DataCase, async: false
   import Mock
 
   alias LiveSup.Core.Widgets.PagerDuty.OnCall.{Worker, Handler}

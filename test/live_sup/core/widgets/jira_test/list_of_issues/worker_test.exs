@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.WorkerTest do
-  use LiveSup.DataCase
+  use LiveSup.DataCase, async: false
   import Mock
 
   alias LiveSup.Core.Widgets.Jira.ListOfIssues.Worker
@@ -55,7 +55,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.WorkerTest do
         data = Worker.get_data(@widget_instance, user)
 
         assert %WidgetData{
-                 data: %{error_description: :jira_link_not_found},
+                 data: %{error_description: :no_link_found},
                  icon: nil,
                  icon_svg: nil,
                  id: "e36d593e-f5a0-47bd-b6e8-c2fec3af3fbc",

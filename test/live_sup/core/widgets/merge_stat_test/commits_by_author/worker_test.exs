@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.WorkerTest do
-  use LiveSup.DataCase
+  use LiveSup.DataCase, async: false
   import Mock
 
   alias LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.{

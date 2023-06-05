@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Widgets.Jira.CurrentSprint.WorkerTest do
-  use LiveSup.DataCase
+  use LiveSup.DataCase, async: false
   import Mock
 
   alias LiveSup.Core.Widgets.Jira.CurrentSprint.{Worker, Handler}

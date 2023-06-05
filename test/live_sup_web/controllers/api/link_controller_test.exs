@@ -31,13 +31,16 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
     @tag :links_create
     test "renders link when data is valid", %{
       conn: conn,
-      link: %{datasource_instance_id: datasource_instance_id}
+      link: %{
+        datasource_instance: %{id: datasource_instance_id, datasource: %{slug: datasource_slug}}
+      }
     } do
       %{id: user_id} = AccountsFixtures.user_fixture()
 
       create_attrs = %{
         datasource_instance_id: datasource_instance_id,
-        settings: %{account: "1234"}
+        settings: %{account: "1234"},
+        datasource_slug: datasource_slug
       }
 
       conn = post(conn, "/api/users/#{user_id}/links", link: create_attrs)
@@ -101,9 +104,9 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
       conn = delete(conn, "/api/links/#{link.id}")
       assert response(conn, 204)
 
-      assert_error_sent 404, fn ->
+      assert_error_sent(404, fn ->
         get(conn, "/api/links/#{link.id}")
-      end
+      end)
     end
   end
 

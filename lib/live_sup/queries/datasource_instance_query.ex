@@ -69,6 +69,11 @@ defmodule LiveSup.Queries.DatasourceInstanceQuery do
     |> Repo.all()
   end
 
+  def get!(%DatasourceInstance{id: id}) do
+    base()
+    |> Repo.get!(id)
+  end
+
   def get!(id) do
     base()
     |> Repo.get!(id)

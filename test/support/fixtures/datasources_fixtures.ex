@@ -1,5 +1,6 @@
 defmodule LiveSup.Test.DatasourcesFixtures do
   alias LiveSup.Core.Datasources
+  alias LiveSup.Queries.DatasourceInstanceQuery
 
   @moduledoc """
   This module defines test helpers for creating
@@ -88,6 +89,7 @@ defmodule LiveSup.Test.DatasourcesFixtures do
       |> LiveSup.Core.Datasources.create_instance()
 
     instance
+    |> DatasourceInstanceQuery.get!()
   end
 
   def add_pager_duty_datasource() do
@@ -101,11 +103,21 @@ defmodule LiveSup.Test.DatasourcesFixtures do
     |> datasource_fixture()
   end
 
+  def add_github_datasource_instance() do
+    {:ok, instance} =
+      add_github_datasource()
+      |> LiveSup.Core.Datasources.create_instance()
+
+    instance
+    |> DatasourceInstanceQuery.get!()
+  end
+
   def add_pager_duty_datasource_instance() do
     {:ok, instance} =
       add_pager_duty_datasource()
       |> LiveSup.Core.Datasources.create_instance()
 
     instance
+    |> DatasourceInstanceQuery.get!()
   end
 end

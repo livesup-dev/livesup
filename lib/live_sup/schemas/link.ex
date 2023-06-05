@@ -8,17 +8,20 @@ defmodule LiveSup.Schemas.Link do
   @foreign_key_type :binary_id
   @derive {Phoenix.Param, key: :id}
   schema "links" do
-    field :settings, :map, default: %{}
+    field(:settings, :map, default: %{})
+    # Redundant field, but it's needed for filtering
+    field(:datasource_slug, :string)
 
-    belongs_to :user, User
-    belongs_to :datasource_instance, DatasourceInstance
+    belongs_to(:user, User)
+    belongs_to(:datasource_instance, DatasourceInstance)
 
     timestamps()
   end
 
   @required_fields [
     :user_id,
-    :datasource_instance_id
+    :datasource_instance_id,
+    :datasource_slug
   ]
 
   @optional_fields [

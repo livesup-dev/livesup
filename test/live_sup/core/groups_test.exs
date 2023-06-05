@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.GroupsTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   alias LiveSup.Core.Groups

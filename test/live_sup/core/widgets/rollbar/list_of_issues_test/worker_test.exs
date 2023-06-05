@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Widgets.Rollbar.ListOfIssues.WorkerTest do
-  use LiveSup.DataCase
+  use LiveSup.DataCase, async: false
   import Mock
 
   alias LiveSup.Core.Widgets.Rollbar.ListOfIssues.{
@@ -72,13 +72,6 @@ defmodule LiveSup.Test.Core.Widgets.Rollbar.ListOfIssues.WorkerTest do
         }
       }
     }
-
-    setup do
-      # https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.Sandbox.html#module-shared-mode
-      Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
-
-      :ok
-    end
 
     test "checking rollbar list of issues widget server" do
       with_mock Handler, get_data: fn _args -> handler_response() end do

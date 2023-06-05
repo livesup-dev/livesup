@@ -1,22 +1,23 @@
 defmodule LiveSup.Test.DataImporter.UserImporterTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   import LiveSup.Test.Setups
 
-  alias LiveSup.Core.{Users, Groups}
+  alias LiveSup.Core.{Users, Groups, Links}
+  alias LiveSup.DataImporter.UserImporter
 
   describe "Import from a yaml file" do
     @describetag :importer_user
 
-    setup [:setup_groups]
+    setup [:setup_groups, :setup_jira_datasource, :setup_github_datasource]
 
     test "data is imported" do
       assert Users.count() == 0
       assert Groups.count() == 2
 
       yaml_data()
-      |> LiveSup.DataImporter.UserImporter.perform()
+      |> UserImporter.perform()
 
       assert Users.count() == 2
 
@@ -25,9 +26,12 @@ defmodule LiveSup.Test.DataImporter.UserImporterTest do
       assert emi.last_name == "Dumont"
       assert emi.email == "emiliano@livesup.com"
 
+      links = Links.get_by_user(emi)
+      assert length(links) == 2
+
       # re run the import to make sure we don't duplicate data
       yaml_data()
-      |> LiveSup.DataImporter.UserImporter.perform()
+      |> UserImporter.perform()
 
       assert Users.count() == 2
     end
@@ -36,14 +40,14 @@ defmodule LiveSup.Test.DataImporter.UserImporterTest do
   describe "importing data when we already have data" do
     @describetag :importer_user
 
-    setup [:setup_groups, :setup_user]
+    setup [:setup_groups, :setup_user, :setup_jira_datasource, :setup_github_datasource]
 
     test "data is cleaned and imported" do
       assert Users.count() == 1
       assert Groups.count() == 2
 
       yaml_clean()
-      |> LiveSup.DataImporter.UserImporter.perform()
+      |> UserImporter.perform()
 
       assert Users.count() == 2
 
@@ -78,6 +82,13 @@ defmodule LiveSup.Test.DataImporter.UserImporterTest do
         avatar_url: https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/5a390ef9280a8d389404eebe/53550071-f045-44f3-bc75-96956f8541c3/48
         email: emiliano@livesup.com
         password: Very@Safe@Password
+        links:
+          - settings:
+              username: myusername
+            datasource_slug: github-datasource
+          - settings:
+              account_id: 5cd9ceaa6673c80fe175c597
+            datasource_slug: jira-datasource
       - id: c7bdf25e-2f7b-498a-82fc-f2f6279943a6
         first_name: John
         last_name: Doe

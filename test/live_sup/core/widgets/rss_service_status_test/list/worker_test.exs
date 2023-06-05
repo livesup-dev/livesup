@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.List.WorkerTest do
-  use LiveSup.DataCase
+  use LiveSup.DataCase, async: false
 
   alias LiveSup.Core.Widgets.RssServiceStatus.List.Worker
   alias LiveSup.Core.Widgets.{WidgetManager, WorkerTaskSupervisor}
@@ -43,9 +43,6 @@ defmodule LiveSup.Test.Core.Widgets.RssServiceStatus.List.WorkerTest do
 
     setup do
       WidgetManager.stop_widgets()
-
-      # https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.Sandbox.html#module-shared-mode
-      Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
     end
 
     test "checking rss services status widget server" do

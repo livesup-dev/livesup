@@ -74,7 +74,7 @@ defmodule LiveSup.Test.Core.Widgets.Jira.ListOfIssues.HandlerTest do
 
         assert {
                  :error,
-                 :jira_link_not_found
+                 :no_link_found
                } = data
       end
     end

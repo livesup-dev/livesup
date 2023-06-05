@@ -1,5 +1,5 @@
 defmodule LiveSup.Tests.Queries.MetricQueryTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   use LiveSup.DataCase
 
   alias LiveSup.Queries.MetricQuery

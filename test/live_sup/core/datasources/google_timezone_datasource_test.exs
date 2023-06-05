@@ -1,5 +1,5 @@
 defmodule LiveSup.Test.Core.Datasources.GoogleTimezoneDatasourceTest do
-  use LiveSup.DataCase, async: true
+  use LiveSup.DataCase, async: false
 
   alias LiveSup.Core.Datasources.GoogleTimezoneDatasource
 

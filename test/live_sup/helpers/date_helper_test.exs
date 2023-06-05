@@ -1,5 +1,5 @@
 defmodule LiveSup.Tests.Helpers.DateHelperTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias LiveSup.Helpers.DateHelper
 

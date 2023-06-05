@@ -15,6 +15,7 @@ defmodule LiveSupWeb.Api.LinkJSON do
       settings: link.settings,
       user_id: link.user_id,
       datasource_instance_id: link.datasource_instance_id,
+      datasource_slug: link.datasource_slug,
       inserted_at: link.inserted_at,
       updated_at: link.updated_at
     }

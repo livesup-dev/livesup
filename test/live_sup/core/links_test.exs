@@ -12,8 +12,14 @@ defmodule LiveSup.Test.Core.LinksTest do
 
       jira_link = LinksFixtures.add_jira_link(user)
       pager_duty_link = LinksFixtures.add_pager_duty_link(user)
+      github_link = LinksFixtures.add_github_link(user)
 
-      %{jira_link: jira_link, pager_duty_link: pager_duty_link, user: user}
+      %{
+        jira_link: jira_link,
+        pager_duty_link: pager_duty_link,
+        user: user,
+        github_link: github_link
+      }
     end
 
     setup [:setup_links]
@@ -24,6 +30,14 @@ defmodule LiveSup.Test.Core.LinksTest do
         |> Links.get_jira_links()
 
       assert jira_links == [ok: %LiveSup.Schemas.LinkSchemas.Jira{account_id: "1234"}]
+    end
+
+    test "get_github_links/1", %{user: user} do
+      links =
+        user
+        |> Links.get_github_links()
+
+      assert links == [ok: %LiveSup.Schemas.LinkSchemas.Github{username: "myuser"}]
     end
   end
 end
