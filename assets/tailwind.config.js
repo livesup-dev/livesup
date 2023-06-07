@@ -113,6 +113,18 @@ module.exports = {
       ])
     ),
     plugin(({ addVariant }) =>
+      addVariant("phx-keyup-loading", [
+        "&.phx-keyup-loading",
+        ".phx-keyup-loading &",
+      ])
+    ),
+    plugin(({ addVariant }) =>
+      addVariant("phx-keydown-loading", [
+        "&.phx-keydown-loading",
+        ".phx-keydown-loading &",
+      ])
+    ),
+    plugin(({ addVariant }) =>
       addVariant("phx-submit-loading", [
         "&.phx-submit-loading",
         ".phx-submit-loading &",

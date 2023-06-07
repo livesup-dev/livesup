@@ -8,15 +8,19 @@
   todo={@todo}
   completed_tasks_count={@completed_tasks_count}
   open_tasks_count={@open_tasks_count}
+  query={@query}
+  target="#todo-tasks-list"
 />
 
-<div class="space-y-4">
+<BindKeyEventLoading.key_up id="todo-tasks-list">
   <.card>
     <TodoAddTaskComponent.render todo={@todo} />
     <div class="max-h-screen overflow-auto" id="tasks" phx-update="stream">
       <TaskRowComponent.render :for={{dom_id, task} <- @streams.tasks} task={task} id={dom_id} />
     </div>
-    <p :if={@open_tasks_count == 0} class="mt-4">There are no open tasks.</p>
+    <p :if={@open_tasks_count == 0} class="mt-4">
+      There are no open tasks<span :if={@query}> matching your search criteria</span>.
+    </p>
   </.card>
 
   <.card :if={@completed_tasks_count > 0} title="Completed">
@@ -32,7 +36,7 @@
       <% end %>
     </div>
   </.card>
-</div>
+</BindKeyEventLoading.key_up>
 
 <.modal
   :if={@live_action in [:edit_task]}

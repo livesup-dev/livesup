@@ -4,6 +4,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   alias LiveSup.Core.{Todos, Tasks, Favorites}
   alias LiveSup.Schemas.TodoTask
 
+  alias LiveSupWeb.Todo.Live.Components.BindKeyEventLoading
   alias Palette.Components.Breadcrumb.Step
 
   alias LiveSupWeb.Todo.Components.{
@@ -88,6 +89,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     |> stream(:tasks, open_tasks, reset: true)
     |> assign(:completed_tasks_count, length(completed_tasks))
     |> assign(:open_tasks_count, length(open_tasks))
+    |> assign(:query, query)
   end
 
   # defp assign_completed_tasks(%{assigns: %{todo: %{id: todo_id}}} = socket) do
@@ -98,8 +100,12 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
   #   |> assign(:completed_tasks_count, length(completed_tasks))
   # end
 
-  def handle_event("search", %{"value" => query}, %{assigns: %{todo: _todo}} = socket) do
-    {:noreply, assign_tasks(socket, query)}
+  def handle_event(
+        "search",
+        %{"key" => _key, "value" => value} = e,
+        %{assigns: %{todo: _todo}} = socket
+      ) do
+    {:noreply, assign_tasks(socket, value)}
   end
 
   @impl true
@@ -172,6 +178,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
     |> assign(:editing_task, false)
     |> assign(selected_task: %TodoTask{todo_id: todo_id})
     |> assign(:completed_tasks, [])
+    |> assign(:query, "")
   end
 
   def completed?(%{completed: true}), do: "completed"

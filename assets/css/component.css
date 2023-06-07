@@ -1,2 +1,6 @@
 @import "components/widget";
 @import "components/incident";
+
+.phx-keyup-loading {
+  @apply bg-white/25 ease-out duration-1000;
+}

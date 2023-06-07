@@ -4,6 +4,8 @@ defmodule LiveSupWeb.Todo.Components.TodoHeaderComponent do
   attr(:todo, :map, required: true)
   attr(:completed_tasks_count, :integer, required: true)
   attr(:open_tasks_count, :integer, required: true)
+  attr(:query, :string, default: "")
+  attr(:target, :string, default: "")
 
   def render(assigns) do
     ~H"""
@@ -16,8 +18,9 @@ defmodule LiveSupWeb.Todo.Components.TodoHeaderComponent do
               type="text"
               placeholder="Search tasks..."
               name="query"
+              value={@query}
               autocomplete="off"
-              phx-keyup="search"
+              phx-keyup={JS.push("search", target: @target, loading: @target)}
               phx-debounce="500"
               id="query"
             />
