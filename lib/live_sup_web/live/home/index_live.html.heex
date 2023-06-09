@@ -27,7 +27,11 @@
     </div>
 
     <.card title="Your favorites">
-      <div class="scrollbar-sm flex space-x-4 overflow-x-auto overflow-y-hidden px-4 pb-2 sm:px-5">
+      <p :if={!Enum.any?(@streams.favorites)}>You don't have any favorite yet.</p>
+      <div
+        :if={Enum.any?(@streams.favorites)}
+        class="scrollbar-sm flex space-x-4 overflow-x-auto overflow-y-hidden px-4 pb-2 sm:px-5"
+      >
         <FavoriteRowComponent.render
           :for={{_dom_id, favorite} <- @streams.favorites}
           entity={favorite.entity}
