@@ -34,6 +34,11 @@ defmodule LiveSup.Test.LinksFixtures do
     })
   end
 
+  def add_github_link(%User{} = user, %LinkSchemas.Github{} = github) do
+    user
+    |> add_link(LiveSup.Test.DatasourcesFixtures.add_github_datasource_instance(), github)
+  end
+
   defp add_link(
          %User{id: user_id},
          %DatasourceInstance{id: datasource_instance_id, datasource: %{slug: datasource_slug}},

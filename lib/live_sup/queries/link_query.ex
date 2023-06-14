@@ -106,6 +106,11 @@ defmodule LiveSup.Queries.LinkQuery do
     |> Repo.delete_all()
   end
 
+  def delete_all() do
+    from(l in Link)
+    |> Repo.delete_all()
+  end
+
   defp get_by_datasource_query(user_id, slug) do
     base()
     |> join(:inner, [datasource_instance: datasource_instance], datasource in Datasource,
