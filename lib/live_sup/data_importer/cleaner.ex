@@ -8,11 +8,15 @@ defmodule LiveSup.DataImporter.Cleaner do
     NoteQuery,
     UserQuery,
     LinkQuery,
-    GroupQuery
+    GroupQuery,
+    CommentQuery,
+    TaskQuery,
+    TodoQuery
   }
 
   def clean(data) do
     data
+    |> clean_tasks()
     |> clean_projects()
     |> clean_teams()
     |> clean_metrics()
@@ -21,6 +25,16 @@ defmodule LiveSup.DataImporter.Cleaner do
     |> clean_groups()
     |> clean_users()
   end
+
+  def clean_tasks(%{"remove_existing_tasks" => true} = data) do
+    CommentQuery.delete_all()
+    TaskQuery.delete_all()
+    TodoQuery.delete_all()
+
+    data
+  end
+
+  def clean_tasks(data), do: data
 
   def clean_projects(%{"remove_existing_projects" => true} = data) do
     Dashboards.delete_all()
@@ -87,14 +101,8 @@ defmodule LiveSup.DataImporter.Cleaner do
   def clean_groups(data), do: data
 
   def clean_users(%{"remove_existing_users" => true} = data) do
-    UserQuery.all()
-    |> Enum.each(fn user ->
-      user
-      |> LinkQuery.delete_by_user()
-
-      user
-      |> UserQuery.delete()
-    end)
+    LinkQuery.delete_all()
+    UserQuery.delete_all()
 
     data
   end

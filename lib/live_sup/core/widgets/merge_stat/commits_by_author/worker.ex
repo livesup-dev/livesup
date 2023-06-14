@@ -13,9 +13,9 @@ defmodule LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Worker do
   def settings_keys, do: ["repo", "limit", "url"]
 
   @impl true
-  def build_data(settings, _context) do
+  def build_data(settings, context) do
     settings
-    |> Handler.get_data()
+    |> Handler.get_data(context)
   end
 
   @impl true

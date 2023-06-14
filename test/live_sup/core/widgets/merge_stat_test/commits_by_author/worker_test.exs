@@ -62,16 +62,12 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.WorkerTest do
     }
 
     setup do
-      # https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.Sandbox.html#module-shared-mode
-      Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
-
       WidgetManager.stop_widgets()
-
       :ok
     end
 
     test "checking merge stat github authors widget server" do
-      with_mock Handler, get_data: fn _args -> handler_response() end do
+      with_mock Handler, get_data: fn _args, _context -> handler_response() end do
         {:ok, _pid} = WidgetManager.start_widget(@widget_instance)
 
         WorkerTaskSupervisor.wait_for_completion()
@@ -109,7 +105,7 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.WorkerTest do
     end
 
     test "checking weather widget state with error" do
-      with_mock Handler, get_data: fn _args -> @handler_error_response end do
+      with_mock Handler, get_data: fn _args, _context -> @handler_error_response end do
         {:ok, _pid} = WidgetManager.start_widget(@widget_instance_with_error)
 
         WorkerTaskSupervisor.wait_for_completion()
