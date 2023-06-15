@@ -5,6 +5,7 @@ defmodule LiveSup.Schemas.TodoTask do
   import Ecto.Changeset
 
   alias LiveSup.Schemas.{User, Todo, TodoTask, Comment, DatasourceInstance}
+  alias LiveSup.Schemas.TodoTaskPriority
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -32,12 +33,6 @@ defmodule LiveSup.Schemas.TodoTask do
 
     timestamps()
   end
-
-  @priorities [
-    "high",
-    "medium",
-    "low"
-  ]
 
   @required_fields [
     :title,
@@ -67,7 +62,7 @@ defmodule LiveSup.Schemas.TodoTask do
     model
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
-    |> validate_inclusion(:priority, @priorities)
+    |> validate_inclusion(:priority, TodoTaskPriority.priorities_values())
   end
 
   def update_changeset(%TodoTask{} = model, attrs) do
@@ -76,14 +71,6 @@ defmodule LiveSup.Schemas.TodoTask do
     |> validate_required(@required_fields)
   end
 
-  def priorities do
-    @priorities
-  end
-
   def local?(%TodoTask{datasource_instance_id: nil}), do: true
   def local?(%TodoTask{datasource_instance_id: _}), do: false
-
-  def high_priority, do: "high"
-  def medium_priority, do: "medium"
-  def low_priority, do: "low"
 end
