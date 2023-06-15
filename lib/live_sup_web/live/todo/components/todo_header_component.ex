@@ -70,6 +70,8 @@ defmodule LiveSupWeb.Todo.Components.TodoHeaderComponent do
                   <ul class="my-2">
                     <li :for={priority <- @priorities}>
                       <a
+                        phx-value-priority={priority.id}
+                        phx-click={JS.push("search", target: @target, loading: @target)}
                         href="#"
                         class="flex items-center space-x-2.5 px-3 py-1 tracking-wide outline-none transition-all hover:bg-slate-100 focus:bg-slate-100 dark:hover:bg-navy-600 dark:focus:bg-navy-600"
                       >

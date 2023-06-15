@@ -16,7 +16,7 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.CommitsByAuthorsLive do
       <div class="p-2 divide-y divide-gray-100 dark:divide-gray-500 ">
         <%= for value <- widget_data.data do %>
           <div class="grid grid-cols-3 pt-1 pb-1">
-            <p class="col-span-2 justify-self-start"><%= value["author_name"] %></p>
+            <p class="col-span-2 justify-self-start"><%= User.full_name(value["user"]) %></p>
             <p class="col-span-1 justify-self-end"><%= value["count"] %></p>
           </div>
         <% end %>

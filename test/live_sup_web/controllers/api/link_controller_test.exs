@@ -72,7 +72,7 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
     @tag :links_update
     test "renders link when data is valid", %{
       conn: conn,
-      link: %Link{id: id, datasource_instance_id: datasource_instance_id, user_id: user_id} = link
+      link: %Link{id: id, datasource_slug: datasource_slug, user_id: user_id} = link
     } do
       conn = put(conn, "/api/links/#{link.id}", link: @update_attrs)
 
@@ -83,7 +83,7 @@ defmodule LiveSupWeb.Api.LinkControllerTest do
       assert %{
                "id" => ^id,
                "settings" => %{"account_id" => "4321"},
-               "datasource_instance_id" => ^datasource_instance_id,
+               "datasource_slug" => ^datasource_slug,
                "user_id" => ^user_id
              } = json_response(conn, 200)["data"]
     end
