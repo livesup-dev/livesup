@@ -13,9 +13,9 @@ defmodule LiveSup.Core.Widgets.MergeStat.ReviewsByAuthor.Worker do
   def settings_keys, do: ["repo", "limit", "url"]
 
   @impl true
-  def build_data(settings, context) do
+  def build_data(settings, _context) do
     settings
-    |> Handler.get_data(context)
+    |> Handler.get_data()
   end
 
   @impl true

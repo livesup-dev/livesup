@@ -2,6 +2,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
   use LiveSupWeb, :component
 
   alias LiveSup.Schemas.TodoTask
+  alias LiveSup.Core.Priorities
 
   attr(:task, :map, required: true)
   attr(:editing_task, :boolean, default: false)
@@ -51,7 +52,7 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.LocalTaskComponent do
       <.select
         id="priority"
         name="priority"
-        options={TodoTask.priorities()}
+        options={Priorities.all()}
         label="Priority"
         value={@task.priority}
         prompt="Select Priority"

@@ -5,6 +5,7 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
   alias LiveSup.Queries.TaskQuery
   alias LiveSup.Core.Todos
   alias LiveSup.Test.TasksFixtures
+  alias LiveSup.Schemas.TodoTaskPriority
 
   import LiveSup.Test.Setups
 
@@ -19,13 +20,15 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
 
     setup [
       :setup_task,
+      :setup_medium_tasks,
+      :setup_high_tasks,
       :setup_completed_tasks
     ]
 
     test "searches by todo", %{todo: todo, task: %{updated_at: updated_at}} do
       tasks = TaskQuery.search(%{todo: todo})
 
-      assert length(tasks) == 3
+      assert length(tasks) == 8
 
       tasks = TaskQuery.search(%{todo: todo, completed: true})
 
@@ -44,6 +47,15 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
 
     test "searches by query", %{todo: _todo, task: %{updated_at: _updated_at}} do
       tasks = TaskQuery.search(%{query: "generic"})
+      assert length(tasks) == 8
+    end
+
+    @tag :task_query_search_priority
+    test "searches by query and priority", %{todo: _todo, task: %{updated_at: _updated_at}} do
+      tasks = TaskQuery.search(%{query: "generic", priority: TodoTaskPriority.high_priority()})
+      assert length(tasks) == 2
+
+      tasks = TaskQuery.search(%{query: "generic", priority: TodoTaskPriority.medium_priority()})
       assert length(tasks) == 3
     end
   end
@@ -179,5 +191,23 @@ defmodule LiveSup.Tests.Queries.TaskQueryTest do
       found_task = TaskQuery.get!(task.id)
       assert found_task.description == "new description"
     end
+  end
+
+  def setup_high_tasks(context) do
+    tasks =
+      TasksFixtures.tasks_fixture(2, context[:todo], %{priority: TodoTaskPriority.high_priority()})
+
+    context
+    |> Map.merge(%{high_tasks: tasks})
+  end
+
+  def setup_medium_tasks(context) do
+    tasks =
+      TasksFixtures.tasks_fixture(3, context[:todo], %{
+        priority: TodoTaskPriority.medium_priority()
+      })
+
+    context
+    |> Map.merge(%{medium_tasks: tasks})
   end
 end

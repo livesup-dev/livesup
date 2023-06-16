@@ -80,9 +80,16 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   defp assign_tasks(%{assigns: %{todo: _todo}} = socket), do: assign_tasks(socket, "")
 
-  defp assign_tasks(%{assigns: %{todo: todo}} = socket, query) do
-    open_tasks = Todos.search_tasks(todo: todo, query: query, completed: false)
-    completed_tasks = Todos.search_tasks(todo: todo, query: query, completed: true)
+  defp assign_tasks(%{assigns: %{todo: _todo}} = socket, query) do
+    socket |> assign_tasks(query, "")
+  end
+
+  defp assign_tasks(%{assigns: %{todo: todo}} = socket, query, priority) do
+    open_tasks =
+      Todos.search_tasks(todo: todo, query: query, completed: false, priority: priority)
+
+    completed_tasks =
+      Todos.search_tasks(todo: todo, query: query, completed: true, priority: priority)
 
     socket
     |> stream(:completed_tasks, completed_tasks, reset: true)
@@ -102,10 +109,18 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   def handle_event(
         "search",
-        %{"key" => _key, "value" => value} = e,
+        %{"priority" => priority},
+        %{assigns: %{todo: _todo, query: query}} = socket
+      ) do
+    {:noreply, socket |> assign_tasks(query, priority) |> assign(:priority, priority)}
+  end
+
+  def handle_event(
+        "search",
+        %{"key" => _key, "value" => value},
         %{assigns: %{todo: _todo}} = socket
       ) do
-    {:noreply, assign_tasks(socket, value)}
+    {:noreply, assign_tasks(socket, value) |> assign(:query, value)}
   end
 
   @impl true

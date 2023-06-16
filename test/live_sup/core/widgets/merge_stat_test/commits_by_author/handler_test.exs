@@ -23,21 +23,15 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.HandlerTest do
           username: "mustela"
         })
 
-      widget_context =
-        WidgetContext.build(
-          %WidgetInstance{datasource_instance: datasource_instance},
-          user
-        )
-
-      %{widget_context: widget_context}
+      :ok
     end
 
-    test "getting top n authors of a github repository", %{widget_context: widget_context} do
+    test "getting top n authors of a github repository" do
       with_mock MergeStatDatasource,
         commits_by_author: fn _repo, _params -> repo_authors() end do
         data =
           %{"repo" => "https://github.com/livebook-dev/livebook", "limit" => 5}
-          |> Handler.get_data(widget_context)
+          |> Handler.get_data()
 
         assert {:ok,
                 [
@@ -70,12 +64,12 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.HandlerTest do
       end
     end
 
-    test "failing getting the list of authors", %{widget_context: widget_context} do
+    test "failing getting the list of authors" do
       with_mock MergeStatDatasource,
         commits_by_author: fn _repo, _params -> @error end do
         data =
           %{"repo" => "https://github.com/livebook-dev/livebook", "limit" => 5}
-          |> Handler.get_data(widget_context)
+          |> Handler.get_data()
 
         assert {:error, "could not execute query: near \"asdf\": syntax error"} = data
       end

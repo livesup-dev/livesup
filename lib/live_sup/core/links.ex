@@ -33,6 +33,10 @@ defmodule LiveSup.Core.Links do
     |> build_link_schema()
   end
 
+  def get_from_github_username(username) do
+    LinkQuery.get_by_setting("username", username)
+  end
+
   def get_from_github_username(username, %DatasourceInstance{} = datasource_instance) do
     LinkQuery.get_by_setting("username", username, datasource_instance)
   end

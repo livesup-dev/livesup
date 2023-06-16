@@ -67,6 +67,15 @@ defmodule LiveSup.Queries.LinkQuery do
     |> Repo.one()
   end
 
+  def get_by_setting(key, value) do
+    base()
+    |> where(
+      [link: link],
+      link.settings[^key] == ^value
+    )
+    |> Repo.one()
+  end
+
   def get_by_setting(key, value, %DatasourceInstance{
         id: datasource_instance_id
       }) do
@@ -149,6 +158,6 @@ defmodule LiveSup.Queries.LinkQuery do
       join: datasource_instance in assoc(link, :datasource_instance),
       as: :datasource_instance
     )
-    |> preload(datasource_instance: [:datasource])
+    |> preload([:user, datasource_instance: [:datasource]])
   end
 end
