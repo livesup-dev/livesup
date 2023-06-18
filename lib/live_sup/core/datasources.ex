@@ -149,7 +149,12 @@ defmodule LiveSup.Core.Datasources do
     DatasourceInstance.changeset(datasource, attrs)
   end
 
-  def create_instance(%Datasource{} = datasource, settings \\ %{}) do
+  def create_instance(datasource, settings \\ %{})
+
+  def create_instance(datasource, _settings) when is_binary(datasource),
+    do: raise("Datasource not found")
+
+  def create_instance(%Datasource{} = datasource, settings) do
     %{
       name: datasource.name,
       enabled: datasource.enabled,

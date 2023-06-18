@@ -4,10 +4,9 @@ defmodule LiveSup.Test.Core.DatasourcesTest do
 
   import LiveSup.Test.ProjectsFixtures
   alias LiveSup.Core.Datasources
+  alias LiveSup.Schemas.{Datasource, DatasourceInstance}
 
   describe "datasources" do
-    alias LiveSup.Schemas.Datasource
-
     @valid_attrs %{
       name: "Rollbar",
       slug: "rollbar",
@@ -35,6 +34,24 @@ defmodule LiveSup.Test.Core.DatasourcesTest do
       datasource = datasource_fixture()
       {:ok, datasources} = Datasources.all()
       assert datasources == [datasource]
+    end
+
+    @tag :skip
+    test "find_or_create_instance/1 with valid slug returns the datasource instance" do
+      datasource =
+        datasource_fixture(%{
+          name: "Github",
+          slug: "github-datasource",
+          enabled: true,
+          handler: "GithubDatasource",
+          labels: [],
+          settings: %{api_key: nil}
+        })
+
+      {:ok, %DatasourceInstance{} = datasource_instance} =
+        Datasources.find_or_create_instance("github-datasource")
+
+      assert datasource_instance.datasource_id == datasource.id
     end
 
     test "get!/1 returns the datasource with given id" do

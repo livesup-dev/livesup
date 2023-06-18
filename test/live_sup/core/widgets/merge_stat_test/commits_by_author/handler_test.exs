@@ -4,9 +4,8 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.HandlerTest do
 
   alias LiveSup.Core.Widgets.MergeStat.CommitsByAuthor.Handler
   alias LiveSup.Core.Datasources.MergeStatDatasource
-  alias LiveSup.Schemas.{LinkSchemas, WidgetInstance}
+  alias LiveSup.Schemas.LinkSchemas
   alias LiveSup.Test.AccountsFixtures
-  alias LiveSup.Core.Widgets.WidgetContext
 
   describe "Managing MergeStat.CommitsByAuthor handler" do
     @describetag :widget
@@ -18,7 +17,7 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.HandlerTest do
     setup do
       user = AccountsFixtures.user_fixture()
 
-      %{datasource_instance: datasource_instance} =
+      %{datasource_instance: _datasource_instance} =
         LiveSup.Test.LinksFixtures.add_github_link(user, %LinkSchemas.Github{
           username: "mustela"
         })
