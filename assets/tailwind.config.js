@@ -136,7 +136,6 @@ module.exports = {
         ".phx-change-loading &",
       ])
     ),
-    require("@tailwindcss/line-clamp"),
     function ({ addVariant }) {
       addVariant(
         "supports-backdrop",

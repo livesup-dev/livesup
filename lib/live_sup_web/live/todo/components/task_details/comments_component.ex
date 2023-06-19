@@ -4,19 +4,49 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
   use Phoenix.HTML
 
   alias LiveSup.Schemas.User
+  use Phoenix.HTML
 
   attr(:comments, :list, required: true)
   attr(:target, :any, required: true)
   attr(:current_user, :any, required: true)
+  attr(:task, :list, required: true)
 
   def render(assigns) do
     ~H"""
+    <div class="flex items-center space-x-4 pl-4 w-full sm:h-14 border-b border-slate-100 dark:border-navy-400">
+      <div class="h-14 sm:h-8">
+        <p class="text-tiny uppercase text-slate-400 dark:text-navy-300">
+          Created By
+        </p>
+        <p class="mt-1 text-xs font-medium text-slate-700 dark:text-navy-100">
+          <%= @task.created_by.first_name %> <%= @task.created_by.last_name %>
+        </p>
+      </div>
+      <div class="mx-4 my-1 h-14 sm:h-8 w-px bg-slate-200 dark:bg-navy-500"></div>
+      <div class="h-14 sm:h-8">
+        <p class="text-tiny uppercase text-slate-400 dark:text-navy-300">
+          Created On
+        </p>
+        <p class="mt-1 text-xs font-medium text-slate-700 dark:text-navy-100">
+          <%= Timex.format!(@task.inserted_at, "%m-%d-%y %H:%M", :strftime) %>
+        </p>
+      </div>
+      <div class="mx-4 my-1 h-14 sm:h-8 w-px bg-slate-200 dark:bg-navy-500"></div>
+      <div class="h-14 sm:h-8">
+        <p class="text-tiny uppercase text-slate-400 dark:text-navy-300">
+          Due On
+        </p>
+        <p class="mt-1 text-xs font-medium text-slate-700 dark:text-navy-100">
+          <%= (@task.due_on && Timex.format!(@task.due_on, "%m-%d-%y %H:%M", :strftime)) || "N/A" %>
+        </p>
+      </div>
+    </div>
     <div class="mt-0 flex w-full flex-col lg:mr-80">
       <%= if Enum.count(@comments) > 0 do %>
         <div
           id="comments"
           phx-update="stream"
-          class="grow overflow-y-auto max-h-[75vh] overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm"
+          class="grow overflow-y-auto overflow-x-hidden px-2 pt-4 transition-all duration-[.25s] scrollbar-sm min-h-[100px] sm:h-[calc(100vh-239px)]"
         >
           <div
             :for={{dom_id, comment} <- @comments}
@@ -31,11 +61,11 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
               />
             </div>
             <div class="flex flex-col items-start space-y-3.5">
-              <div class="flex relative rounded-2xl rounded-tl-none bg-info/10 p-3 text-slate-700 shadow-sm dark:bg-accent dark:text-white">
+              <div class="flex relative rounded-2xl rounded-tl-none bg-info/10 p-3 text-slate-700 shadow-sm dark:bg-navy-600 dark:text-slate-300">
                 <div class="grow pb-2">
-                  <.markdown_field value={comment.body} />
+                  <.markdown_field value={comment.body} class="text-xs dark:text-slate-300" />
                 </div>
-                <p class="mt-1 mb-1 mr-3 bottom-0 right-0 absolute flex-1 text-right text-tiny text-slate-400 dark:text-navy-300">
+                <p class="mt-1 mb-1 mr-3 bottom-0 right-0 absolute flex-1 text-right text-tiny text-slate-400 dark:text-navy-300 h-">
                   <%= Timex.format!(comment.inserted_at, "%H:%M", :strftime) %>
                 </p>
               </div>
@@ -43,12 +73,14 @@ defmodule LiveSupWeb.Live.Todo.Components.TaskDetails.CommentsComponent do
           </div>
         </div>
       <% else %>
-        <p class="m-2">There are no comments yet.</p>
+        <p class="m-4 min-h-[100px] sm:h-[calc(100vh-233px)]">
+          There are no comments yet.
+        </p>
       <% end %>
 
       <.form for={%{}} as={:comment} phx-submit="add_comment" phx-target={@target}>
-        <div class="chat-footer relative flex h-12 w-full shrink-0 items-center justify-between border-t border-slate-150 bg-white px-2 transition-[padding,width] duration-[.25s] dark:border-navy-600 dark:bg-navy-800">
-          <div class="-ml-1.5 flex flex-1 space-x-2">
+        <div class="before:block  before:w-full before:absolute before:h-3 before:-top-3 before:from-slate-100 before:to-transparent before:bg-gradient-to-t dark:before:from-navy-500 chat-footer relative flex h-12 w-full shrink-0 items-center justify-between border-t border-slate-150 bg-white py-2 transition-[padding,width] duration-[.25s] dark:border-navy-600 dark:bg-navy-800">
+          <div class="-ml-1.5 flex flex-1 space-x-2 pl-4">
             <button class="btn h-9 w-9 shrink-0 rounded-full p-0 text-slate-500 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-200 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

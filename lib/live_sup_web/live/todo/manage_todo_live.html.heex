@@ -44,6 +44,7 @@
   show
   width={:large}
   return_to={~p"/todos/#{@todo.id}/manage"}
+  class="overflow-y-auto md:overflow-y-hidden"
 >
   <.live_component
     module={LiveSupWeb.ManageTodoLive.LiveComponents.ManageTaskComponent}

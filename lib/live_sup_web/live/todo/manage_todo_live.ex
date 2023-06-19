@@ -102,7 +102,7 @@ defmodule LiveSupWeb.Todo.ManageTodoLive do
 
   def handle_event(
         "search",
-        %{"key" => _key, "value" => value} = e,
+        %{"key" => _key, "value" => value},
         %{assigns: %{todo: _todo}} = socket
       ) do
     {:noreply, assign_tasks(socket, value)}
