@@ -1,6 +1,7 @@
 defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
   use LiveSupWeb.Live.Widgets.WidgetLive
   import LiveSupWeb.Components.IconsComponent
+  alias LiveSup.Schemas.User
 
   @impl true
   def render_widget(assigns) do
@@ -69,7 +70,7 @@ defmodule LiveSupWeb.Live.Widgets.MergeStat.ReviewsByAuthorsLive do
       xaxis: %{
         categories:
           Enum.map(widget_data.data, fn status ->
-            status["author_login"]
+            User.full_name(status["user"])
           end)
       }
     }

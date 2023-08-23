@@ -43,6 +43,9 @@ defmodule LiveSup.Queries.TaskQuery do
       {:completed, value}, dynamic ->
         dynamic([tasks: t], ^dynamic and t.completed == ^value)
 
+      {:priority, value}, dynamic ->
+        dynamic([tasks: t], ^dynamic and t.priority == ^value)
+
       {:todo, %{id: todo_id}}, dynamic ->
         dynamic([tasks: t], ^dynamic and t.todo_id == ^todo_id)
 

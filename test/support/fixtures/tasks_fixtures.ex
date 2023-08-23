@@ -6,6 +6,13 @@ defmodule LiveSup.Test.TasksFixtures do
 
   alias LiveSup.Queries.TaskQuery
   alias LiveSup.Schemas.Todo
+  alias LiveSup.Schemas.TodoTaskPriority
+
+  def tasks_fixture(count, %Todo{} = todo, attrs \\ %{}) do
+    Enum.map(1..count, fn _ ->
+      task_fixture(todo, attrs)
+    end)
+  end
 
   def task_fixture(%Todo{} = todo, attrs \\ %{}) do
     attrs =

@@ -32,12 +32,12 @@ defmodule LiveSup.Test.Core.Widgets.MergeStat.CommitsByAuthor.HandlerTest do
       %{widget_context: widget_context}
     end
 
-    test "getting top n authors of a github repository", %{widget_context: widget_context} do
+    test "getting top n authors of a github repository" do
       with_mock MergeStatDatasource,
         commits_by_author: fn _repo, _params -> repo_authors() end do
         data =
           %{"repo" => "https://github.com/livebook-dev/livebook", "limit" => 5}
-          |> Handler.get_data(widget_context)
+          |> Handler.get_data()
 
         assert {:ok,
                 [
